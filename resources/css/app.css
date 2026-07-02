@@ -2,15 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
 * {
     margin: 0;
     box-sizing: border-box;
+    @apply text-black-500;
 }
 
 body {
-    @apply bg-main_bg;
+    @apply bg-white ;
+}
+
+h1 {
+    @apply text-7xl;
 }
 
 h2 {
-    @apply font-[Forum] font-normal text-5xl;
+    @apply font-normal text-5xl text-blue-500;
+}
+
+.container {
+    @apply mx-auto max-w-[1374px] w-[90%];
+}
+
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+section {
+    position: relative;
 }

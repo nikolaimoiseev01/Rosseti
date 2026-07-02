@@ -11,9 +11,11 @@ class Logo extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public string $color;
+
+    public function __construct(string $color = 'blue-500')
     {
-        //
+        $this->color = $color;
     }
 
     /**

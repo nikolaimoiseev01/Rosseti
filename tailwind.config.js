@@ -8,17 +8,28 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
+    safelist: [
+        'fill-white',
+        'fill-blue-500',
+        'fill-blue',
+    ],
 
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Lato', ...defaultTheme.fontFamily.sans],
+                sans: ['PFDinTextCondPro', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                main_bg: '#ECEBF3',
-                maroon: {
-                    500: '#ECEBF3'
-                }
+                blue:  {
+                    400: '#2196F3',
+                    500: '#005B9C',
+                    700: '#1B2733'
+                },
+                black: {
+                    400: "#6B7785",
+                    500: "#595959"
+                },
+                white: '#FFFFFF'
             },
             screens: {
                 '2xl': {'max': '1535px'}, // => @media (max-width: 1535px) { ... }
