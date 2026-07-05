@@ -8,6 +8,8 @@ use App\Livewire\Pages\Auth\LoginPage;
 use App\Livewire\Pages\Auth\RegisterPage;
 use App\Livewire\Pages\Auth\ResetPasswordPage;
 use App\Livewire\Pages\Auth\VerifyEmailPage;
+use App\Http\Controllers\PageController;
+use App\Livewire\Pages\Portal\ArticlePage;
 use App\Livewire\Pages\Portal\IndexPage;
 use Illuminate\Support\Facades\Route;
 
@@ -55,3 +57,5 @@ Route::middleware('auth')->prefix('account')->group(function () {
     Route::get('settings', SettingsPage::class)->middleware(['auth', 'verified'])->name('account.settings');
 });
 
+Route::get('/{slug}', ArticlePage::class)
+    ->name('article.index');

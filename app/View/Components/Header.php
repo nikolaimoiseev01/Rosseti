@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Page;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -11,19 +12,11 @@ class Header extends Component
     /**
      * Create a new component instance.
      */
-    public array $navLinks = [];
+    public $navLinks = [];
 
     public function __construct()
     {
-        $this->navLinks = [
-            ['title' => 'О компании', 'href' => '#about'],
-            ['title' => 'Управление устойчивым развитием', 'href' => '#sustainability'],
-            ['title' => 'Вклад в развитие страны', 'href' => '#impact'],
-            ['title' => 'Забота об окружающей среде', 'href' => '#environment'],
-            ['title' => 'Защита прав человека', 'href' => '#human-rights'],
-            ['title' => 'Вклад в общество', 'href' => '#society'],
-            ['title' => 'Управленческий аспект', 'href' => '#management'],
-        ];
+        $this->navLinks = Page::all();
     }
 
     /**

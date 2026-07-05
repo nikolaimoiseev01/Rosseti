@@ -16,7 +16,8 @@
 </head>
 <body class="antialiased flex flex-col min-h-screen">
 <x-header/>
-{{ $slot }}
+{{ $slot ?? '' }}
+@yield('content')
 <x-footer/>
 @stack('page-js')
 </body>

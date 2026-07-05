@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/*@import "tailwindcss";*/
+/*@plugin "@tailwindcss/typography";*/
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
@@ -24,6 +26,21 @@ h1 {
 h2 {
     @apply font-normal text-5xl text-blue-500;
 }
+
+
+h3 {
+    @apply text-blue-500 text-5xl mb-8;
+}
+
+ul {
+    @apply list-disc list-outside pl-6;
+}
+
+
+h4 {
+    @apply text-blue-700 text-2xl mb-8;
+}
+
 
 .container {
     @apply mx-auto max-w-[1374px] w-[90%];

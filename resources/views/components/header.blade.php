@@ -1,11 +1,11 @@
-<header class="fixed z-20 w-full bg-white top-0">
+<header class="fixed z-40 w-full bg-white top-0 border-b border-black-100">
 
         <div class="flex container items-center justify-between text-sm text-white/90">
             <x-logo class="w-[100px]"/>
 
             <nav class="flex gap-3 text-base md:hidden text-black-400 text-nowrap">
                 @foreach($navLinks as $link)
-                    <a href="{{ $link['href'] }}">{{ $link['title'] }}</a>
+                    <a href="{{ route('article.index', $link['slug'])}}">{{ $link['title'] }}</a>
                 @endforeach
             </nav>
 

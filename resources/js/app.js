@@ -147,19 +147,19 @@ document.addEventListener('livewire:navigated', () => {
     }, 300);
 });
 
-// function initParallax() {
-//     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-//
-//     gsap.to('#welcome > div:first-child', {
-//         y: -120,
-//         ease: 'none',
-//         scrollTrigger: {
-//             trigger: '#about',
-//             start: 'top bottom',
-//             end: 'top top',
-//             scrub: true,
-//             markers: true,
-//         },
-//     });
-// }
+function initParallax() {
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+
+    gsap.to('#welcome > div:first-child', {
+        y: -120,
+        ease: 'none',
+        scrollTrigger: {
+            trigger: '#about',
+            start: 'top bottom',
+            end: 'top top',
+            scrub: true,
+            // markers: true,
+        },
+    });
+}
 
