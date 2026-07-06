@@ -17,6 +17,6 @@
 
     <div class="bg-black-300 relative min-w-[460px] max-w-[460px] rounded-[10px]">
         <img src="/fixed/zam-director.png" class="max-w-[430px] max-h-[560px] object-cover mx-auto" alt="">
-        <span class="absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-nowrap">Врио Заместителя Генерального директора<br>  по стратегии, А. А. Полинов</span>
+        <span class="absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-white text-xl text-nowrap">Врио Заместителя Генерального директора<br>  по стратегии, А. А. Полинов</span>
     </div>
 </section>
