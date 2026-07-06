@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PageResource\Pages\CreatePage;
 use App\Filament\Resources\PageResource\Pages\EditPage;
 use App\Filament\Resources\PageResource\Pages\ListPages;
+use App\Filament\Resources\PageResource\RelationManagers\BlocksRelationManager;
 use App\Filament\Resources\PageResource\Schemas\PageForm;
 use App\Filament\Resources\PageResource\Tables\PagesTable;
 use App\Models\Page;
@@ -40,6 +41,13 @@ class PageResource extends Resource
             'index' => ListPages::route('/'),
             'create' => CreatePage::route('/create'),
             'edit' => EditPage::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            'blocks' => BlocksRelationManager::class,
         ];
     }
 }

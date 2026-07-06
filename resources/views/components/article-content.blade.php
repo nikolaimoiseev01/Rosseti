@@ -23,8 +23,8 @@
     <!-- Main Article -->
     <main class="flex-1 lg:w-full">
         <article class="prose pr-6 space-y-12">
-            @foreach($page->content as $block)
-                @include('components.page-blocks.' . $block['type'], ['data' => $block['data']])
+            @foreach($page->blocks as $block)
+                @include('components.page-blocks.' . $block->type, ['data' => $block->data])
             @endforeach
         </article>
     </main>
