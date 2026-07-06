@@ -12,6 +12,13 @@ export default {
         'fill-white',
         'fill-blue-500',
         'fill-blue',
+        // Report block colors
+        'text-white', 'bg-white', 'border-white',
+        'text-blue-400', 'bg-blue-400', 'border-blue-400',
+        'text-blue-500', 'bg-blue-500', 'border-blue-500',
+        'text-blue-600', 'bg-blue-600', 'border-blue-600',
+        'text-blue-700', 'bg-blue-700', 'border-blue-700',
+        'text-black-400', 'text-black-500',
     ],
 
     theme: {
