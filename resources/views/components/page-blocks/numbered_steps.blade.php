@@ -9,53 +9,54 @@
 
     $styleClass = function($style) use ($colorHex) {
         return match($style) {
-            'large_bold' => 'text-lg font-bold text-[#1A1A1A]',
-            'normal' => 'text-base text-[#333]',
-            'small' => 'text-sm text-[#333]',
+            'large_bold' => 'text-lg font-bold',
+            'normal' => 'text-base',
+            'small' => 'text-sm',
             'accent' => 'text-base font-bold',
-            'muted' => 'text-sm text-[#6B7785]',
-            default => 'text-base text-[#333]',
+            'muted' => 'text-sm',
+            default => 'text-base',
+        };
+    };
+    $styleColor = function($style) use ($colorHex) {
+        return match($style) {
+            'large_bold' => '#1A1A1A',
+            'accent' => $colorHex,
+            'muted' => '#6B7785',
+            default => '#333',
         };
     };
 @endphp
 
 @if(!empty($data['title']))
-    <p class="text-xl font-bold text-[#1A1A1A] mb-6">{{ $data['title'] }}</p>
+    <p class="text-xl font-bold mb-6" style="color: #1A1A1A;">{{ $data['title'] }}</p>
 @endif
 
-<div class="space-y-0">
+<div>
     @foreach($data['steps'] ?? [] as $index => $step)
-        @php
-            $isLast = $loop->last;
-            $isTitleAccent = ($step['title_style'] ?? 'large_bold') === 'accent';
-            $isDescAccent = ($step['desc_style'] ?? 'normal') === 'accent';
-        @endphp
-        <div class="flex items-center gap-5 {{ !$isLast ? 'mb-0' : '' }}">
-            {{-- Circle + connecting line --}}
-            <div class="relative flex flex-col items-center shrink-0" style="width: 44px;">
-                @if($connected && !$isLast)
-                    <div class="absolute top-[44px] w-[2px] h-full" style="background-color: {{ $colorHex }}20; left: 50%; transform: translateX(-50%);"></div>
+        @php $isLast = $loop->last; @endphp
+
+        {{-- Separator line between steps --}}
+        @if(!$loop->first)
+            <div style="border-top: 1px solid #E1E7F0; margin: 0;"></div>
+        @endif
+
+        <div style="display: flex; align-items: flex-start; gap: 20px; padding: 20px 0;">
+            {{-- Circle --}}
+            <div style="width: 44px; min-width: 44px; height: 44px; min-height: 44px; border-radius: 50%; background-color: {{ $colorHex }}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                @if($iconStyle === 'checkmarks')
+                    <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                @elseif($iconStyle === 'dots')
+                    <span style="width: 12px; height: 12px; border-radius: 50%; background: white; display: block;"></span>
+                @else
+                    <span style="color: white; font-weight: bold; font-size: 14px;">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
                 @endif
-                <div class="w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0" style="background-color: {{ $colorHex }}">
-                    @if($iconStyle === 'checkmarks')
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                    @elseif($iconStyle === 'dots')
-                        <span class="w-3 h-3 rounded-full bg-white"></span>
-                    @else
-                        {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
-                    @endif
-                </div>
             </div>
 
             {{-- Content --}}
-            <div class="{{ $connected && !$isLast ? 'pb-6' : 'pb-4' }}">
-                <p class="{{ $styleClass($step['title_style'] ?? 'large_bold') }}"
-                   @if($isTitleAccent) style="color: {{ $colorHex }}" @endif
-                >{{ $step['title'] }}</p>
+            <div style="padding-top: 4px;">
+                <p class="{{ $styleClass($step['title_style'] ?? 'large_bold') }}" style="color: {{ $styleColor($step['title_style'] ?? 'large_bold') }}; margin: 0;">{{ $step['title'] }}</p>
                 @if(!empty($step['description']))
-                    <p class="{{ $styleClass($step['desc_style'] ?? 'normal') }} mt-1"
-                       @if($isDescAccent) style="color: {{ $colorHex }}" @endif
-                    >{{ $step['description'] }}</p>
+                    <p class="{{ $styleClass($step['desc_style'] ?? 'normal') }}" style="color: {{ $styleColor($step['desc_style'] ?? 'normal') }}; margin: 4px 0 0 0;">{{ $step['description'] }}</p>
                 @endif
             </div>
         </div>
