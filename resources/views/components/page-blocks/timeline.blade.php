@@ -20,7 +20,7 @@
                 <div class="absolute -left-8 top-1.5 w-4 h-4 rounded-full border-[3px] bg-white" style="border-color: {{ $colorHex }}"></div>
 
                 <div class="flex items-baseline gap-4">
-                    <span class="text-lg font-bold shrink-0" style="color: {{ $colorHex }}">{{ $event['year'] }}</span>
+                    <span class="text-lg font-bold min-w-[80px]" style="color: {{ $colorHex }}">{{ $event['year'] }}</span>
                     <div>
                         <p class="font-bold text-[#1A1A1A]">{{ $event['title'] }}</p>
                         @if(!empty($event['description']))
