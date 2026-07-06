@@ -68,6 +68,39 @@ class PageForm
                                             ->columnSpanFull(),
                                     ])
                                     ->columns(2),
+
+                                // 1. Rich Text Block
+                                Block::make('rich_text')
+                                    ->label('Текстовый блок')
+                                    ->icon('heroicon-o-document-text')
+                                    ->schema([
+                                        Forms\Components\RichEditor::make('content')
+                                            ->label('Содержимое')
+                                            ->required()
+                                            ->columnSpanFull(),
+                                        Forms\Components\Select::make('text_color')
+                                            ->label('Цвет текста')
+                                            ->options([
+                                                'default' => 'Чёрный (по умолчанию)',
+                                                'primary' => 'Тёмно-синий (#00355A)',
+                                                'accent' => 'Голубой (#2196F3)',
+                                                'muted' => 'Серый',
+                                                'white' => 'Белый (для тёмных фонов)',
+                                            ])
+                                            ->default('default'),
+                                        Forms\Components\Select::make('spacing')
+                                            ->label('Отступ снизу')
+                                            ->options([
+                                                'none' => 'Без отступа',
+                                                'small' => 'Маленький (8px)',
+                                                'normal' => 'Обычный (16px)',
+                                                'large' => 'Большой (32px)',
+                                                'xl' => 'Очень большой (48px)',
+                                            ])
+                                            ->default('normal'),
+                                    ]),
+
+                                // 2. Image Block
                                 Block::make('image')
                                     ->label('Изображение')
                                     ->icon('heroicon-o-photo')
@@ -177,7 +210,7 @@ class PageForm
                                             ->required(),
                                     ]),
 
-                                // 8. Image Row (multiple images/icons in a row)
+                                // 8. Image Row
                                 Block::make('image_row')
                                     ->label('Изображения в ряд')
                                     ->icon('heroicon-o-squares-2x2')
@@ -202,6 +235,9 @@ class PageForm
                                                 'small' => 'Маленький (иконки, ~60px)',
                                                 'medium' => 'Средний (~120px)',
                                                 'large' => 'Большой (~200px)',
+                                                'xlarge' => 'Крупный (~300px)',
+                                                'xxlarge' => 'Очень крупный (~400px)',
+                                                'full' => 'На всю ширину (~500px)',
                                             ])
                                             ->default('small'),
                                         Forms\Components\Select::make('gap')
@@ -221,6 +257,22 @@ class PageForm
                                     ->schema([
                                         Forms\Components\TextInput::make('caption')
                                             ->label('Заголовок таблицы'),
+                                        Forms\Components\Select::make('header_style')
+                                            ->label('Стиль заголовков')
+                                            ->options([
+                                                'blue' => 'Синий фон, белый текст',
+                                                'light' => 'Светлый фон',
+                                                'none' => 'Без фона',
+                                            ])
+                                            ->default('blue'),
+                                        Forms\Components\Select::make('cell_padding')
+                                            ->label('Отступы в ячейках')
+                                            ->options([
+                                                'compact' => 'Компактные',
+                                                'normal' => 'Обычные',
+                                                'spacious' => 'Просторные',
+                                            ])
+                                            ->default('normal'),
                                         Forms\Components\Repeater::make('headers')
                                             ->label('Заголовки столбцов')
                                             ->schema([
@@ -233,6 +285,12 @@ class PageForm
                                         Forms\Components\Repeater::make('rows')
                                             ->label('Строки')
                                             ->schema([
+                                                Forms\Components\Toggle::make('is_accent')
+                                                    ->label('Акцентная строка (на всю ширину)')
+                                                    ->default(false),
+                                                Forms\Components\TextInput::make('accent_text')
+                                                    ->label('Текст акцентной строки')
+                                                    ->visible(fn ($get) => $get('is_accent')),
                                                 Forms\Components\Repeater::make('cells')
                                                     ->label('Ячейки')
                                                     ->schema([
@@ -240,13 +298,14 @@ class PageForm
                                                             ->label('Значение')
                                                             ->required(),
                                                     ])
-                                                    ->defaultItems(3),
+                                                    ->defaultItems(3)
+                                                    ->visible(fn ($get) => !$get('is_accent')),
                                             ])
                                             ->defaultItems(3)
                                             ->columnSpanFull(),
                                     ]),
 
-                                // 10. Key Figure (highlighted number)
+                                // 10. Key Figure
                                 Block::make('key_figure')
                                     ->label('Ключевая цифра')
                                     ->icon('heroicon-o-presentation-chart-bar')
@@ -281,7 +340,7 @@ class PageForm
                                             ->default('primary'),
                                     ]),
 
-                                // 11. Subtitle (decorative subheading)
+                                // 11. Subtitle
                                 Block::make('subtitle')
                                     ->label('Подзаголовок')
                                     ->icon('heroicon-o-bars-3-bottom-left')
@@ -292,8 +351,8 @@ class PageForm
                                         Forms\Components\Select::make('style')
                                             ->label('Стиль')
                                             ->options([
-                                                'default' => 'Обычный (серый, мелкий)',
-                                                'accent' => 'Акцентный (с линией)',
+                                                'default' => 'Обычный (чёрный)',
+                                                'accent' => 'Акцентный (цветной)',
                                                 'uppercase' => 'Капслок (маленький, трекинг)',
                                             ])
                                             ->default('default'),
@@ -306,7 +365,7 @@ class PageForm
                                             ->default('primary'),
                                     ]),
 
-                                // 12. Person Card (quote + circular photo)
+                                // 12. Person Card
                                 Block::make('person_card')
                                     ->label('Карточка сотрудника')
                                     ->icon('heroicon-o-user-circle')
@@ -338,7 +397,7 @@ class PageForm
                                             ->default('primary'),
                                     ]),
 
-                                // 13. Info Block (colored background)
+                                // 13. Info Block
                                 Block::make('info_block')
                                     ->label('Информационный блок')
                                     ->icon('heroicon-o-information-circle')
@@ -350,12 +409,20 @@ class PageForm
                                         Forms\Components\Select::make('style')
                                             ->label('Стиль')
                                             ->options([
-                                                'blue' => 'Синий фон',
+                                                'blue' => 'Синий фон (белый текст)',
                                                 'light' => 'Светлый фон',
                                                 'accent' => 'Голубая полоска слева',
-                                                'dark' => 'Тёмный фон',
+                                                'dark' => 'Тёмный фон (белый текст)',
                                             ])
                                             ->default('light'),
+                                        Forms\Components\Select::make('text_size')
+                                            ->label('Размер текста')
+                                            ->options([
+                                                'small' => 'Мелкий',
+                                                'normal' => 'Обычный',
+                                                'large' => 'Крупный',
+                                            ])
+                                            ->default('normal'),
                                     ]),
 
                                 // 14. Divider
@@ -411,14 +478,45 @@ class PageForm
                                     ->schema([
                                         Forms\Components\TextInput::make('title')
                                             ->label('Заголовок'),
+                                        Forms\Components\Select::make('icon_style')
+                                            ->label('Стиль иконки')
+                                            ->options([
+                                                'numbers' => 'Цифры (01, 02...)',
+                                                'checkmarks' => 'Галочки ✓',
+                                                'dots' => 'Точки ●',
+                                            ])
+                                            ->default('numbers'),
+                                        Forms\Components\Toggle::make('connected')
+                                            ->label('Соединять линией')
+                                            ->default(false),
                                         Forms\Components\Repeater::make('steps')
                                             ->label('Шаги')
                                             ->schema([
                                                 Forms\Components\TextInput::make('title')
                                                     ->label('Заголовок шага')
                                                     ->required(),
+                                                Forms\Components\Select::make('title_style')
+                                                    ->label('Стиль заголовка')
+                                                    ->options([
+                                                        'large_bold' => 'Крупный жирный',
+                                                        'normal' => 'Обычный',
+                                                        'small' => 'Мелкий',
+                                                        'accent' => 'Акцентный цветной',
+                                                        'muted' => 'Серый приглушённый',
+                                                    ])
+                                                    ->default('large_bold'),
                                                 Forms\Components\Textarea::make('description')
                                                     ->label('Описание'),
+                                                Forms\Components\Select::make('desc_style')
+                                                    ->label('Стиль описания')
+                                                    ->options([
+                                                        'large_bold' => 'Крупный жирный',
+                                                        'normal' => 'Обычный',
+                                                        'small' => 'Мелкий',
+                                                        'accent' => 'Акцентный цветной',
+                                                        'muted' => 'Серый приглушённый',
+                                                    ])
+                                                    ->default('normal'),
                                             ])
                                             ->defaultItems(3)
                                             ->columnSpanFull(),
@@ -428,7 +526,7 @@ class PageForm
                                                 'primary' => 'Тёмно-синий (#00355A)',
                                                 'accent' => 'Голубой (#2196F3)',
                                             ])
-                                            ->default('primary'),
+                                            ->default('accent'),
                                     ]),
 
                                 // 17. Cards Grid
@@ -459,6 +557,53 @@ class PageForm
                                                 '4' => '4 колонки',
                                             ])
                                             ->default('3'),
+                                        Forms\Components\Select::make('color')
+                                            ->label('Акцентный цвет')
+                                            ->options([
+                                                'primary' => 'Тёмно-синий (#00355A)',
+                                                'accent' => 'Голубой (#2196F3)',
+                                            ])
+                                            ->default('primary'),
+                                    ]),
+
+                                // 18. Icon List (list with custom icons)
+                                Block::make('icon_list')
+                                    ->label('Перечисление с иконками')
+                                    ->icon('heroicon-o-queue-list')
+                                    ->schema([
+                                        Forms\Components\Repeater::make('items')
+                                            ->label('Пункты')
+                                            ->schema([
+                                                Forms\Components\FileUpload::make('icon')
+                                                    ->label('Иконка (PNG/SVG)')
+                                                    ->image()
+                                                    ->directory('report-images'),
+                                                Forms\Components\TextInput::make('title')
+                                                    ->label('Заголовок')
+                                                    ->required(),
+                                                Forms\Components\Textarea::make('text')
+                                                    ->label('Описание'),
+                                                Forms\Components\Select::make('title_style')
+                                                    ->label('Стиль заголовка')
+                                                    ->options([
+                                                        'large_bold' => 'Крупный жирный',
+                                                        'normal' => 'Обычный',
+                                                        'small' => 'Мелкий',
+                                                        'accent' => 'Акцентный цветной',
+                                                        'muted' => 'Серый приглушённый',
+                                                    ])
+                                                    ->default('large_bold'),
+                                            ])
+                                            ->defaultItems(3)
+                                            ->columnSpanFull(),
+                                        Forms\Components\Select::make('icon_size')
+                                            ->label('Размер иконок')
+                                            ->options([
+                                                'small' => 'Маленький (24px)',
+                                                'medium' => 'Средний (40px)',
+                                                'large' => 'Большой (60px)',
+                                            ])
+                                            ->default('medium'),
                                         Forms\Components\Select::make('color')
                                             ->label('Акцентный цвет')
                                             ->options([

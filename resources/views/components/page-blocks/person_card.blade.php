@@ -7,7 +7,7 @@
 @endphp
 <div class="max-w-3xl">
     @if(!empty($data['heading']))
-        <h3 class="text-2xl font-bold leading-snug mb-6" style="color: {{ $colorHex }}">{{ $data['heading'] }}</h3>
+        <p class="text-2xl font-bold leading-snug mb-6" style="color: {{ $colorHex }}">{{ $data['heading'] }}</p>
     @endif
 
     <div class="text-[15px] leading-relaxed text-[#333] space-y-4 mb-8">
