@@ -10,7 +10,7 @@
 <div class="mx-auto flex max-w-7xl pt-10 mb-[180px] gap-8 md:mb-[80px] justify-between">
 
     <!-- Table of Contents -->
-    <aside class="max-w-[263px] overflow-hidden lg:hidden">
+    <aside class="max-w-[263px] lg:hidden">
         <div class="sticky top-20">
             <h3 class="mb-4 text-[28px] uppercase ">Навигация</h3>
             <nav class="space-y-2 mb-10" id="toc-nav">
