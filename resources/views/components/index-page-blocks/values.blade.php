@@ -1,11 +1,17 @@
 @php
     $economyItems = [
-        ['type' => 'blue', 'text' => 'Стратегический партнер промышленности'],
-        ['type' => 'light', 'text' => 'Вклад в технологический суверенитет страны'],
-        ['type' => 'blue', 'text' => 'Ключевая инфраструктура'],
-        ['type' => 'light', 'text' => 'Обеспечение растущих потребностей экономики<br>в энергоснабжении и энергобезопасности страны'],
-        ['type' => 'blue', 'text' => 'Государственный актив'],
-        ['type' => 'light', 'text' => 'Комплексный социально-экономический<br>эффект для государства'],
+        [
+            'title' => 'Стратегический партнер промышленности',
+            'text' => 'Вклад в технологический суверенитет страны'
+        ],
+        [
+            'title' => 'Ключевая инфраструктура',
+            'text' => 'Обеспечение растущих потребностей экономики<br>в энергоснабжении и энергобезопасности страны'
+        ],
+        [
+            'title' => 'Государственный актив',
+            'text' => 'Комплексный социально-экономический<br>эффект для государства'
+        ]
     ];
 
     $values = [
@@ -35,25 +41,36 @@
 <section class="container py-8 text-[#0B4775]">
     <div class="grid grid-cols-2 gap-16 lg:grid-cols-1 lg:gap-10">
         <div>
-            <h3 class="mb-7 text-[18px] font-semibold text-[#0B4775]">
+            <h3 x-data="revealOnScroll()" class="mb-7 text-2xl">
                 Группа «Россети» для экономики страны
             </h3>
 
-            <div class="max-w-[540px]">
+            <div class="max-w-[600px]">
                 @foreach($economyItems as $item)
-                    <div class="relative">
-                        <div
-                            class="{{ $item['type'] === 'blue'
-                                ? 'bg-[#2497E8] text-white'
-                                : 'bg-[#F1F6FE] text-[#0B4775]'
-                            }} flex min-h-[50px] items-center justify-center rounded-[6px] px-6 text-center text-[14px] leading-[1.35]"
-                        >
-                            {!! $item['text'] !!}
+                    <div x-data="revealOnScroll()" class="flex flex-col relative">
+                        <div class="text-lg bg-blue-400 text-white text-center py-5 rounded-lg">
+                            {{$item['title']}}
                         </div>
-
-                        @if(!$loop->last && $item['type'] === 'light')
-                            <div class="flex h-[10px] items-center justify-center text-[#2497E8]">
-                                ⌄
+                        <div
+                            class="text-lg bg-black-600 pb-5 pt-7 -top-2 relative -z-10 text-center text-blue-900 rounded-b-lg">
+                            {!! $item['text']!!}
+                        </div>
+                        @if(!$loop->last)
+                            <div
+                                class="absolute z-40 left-1/2 rounded-full -bottom-1 -translate-x-1/2 flex items-center justify-center min-h-5 min-w-5 h-5 w-5 bg-white">
+                                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_300_1233)">
+                                        <path
+                                            d="M0.13729 0.909585C0.049383 0.821675 -1.83136e-06 0.702445 0 0.578123C1.83146e-06 0.453802 0.0493902 0.334573 0.1373 0.246665C0.22521 0.158758 0.34444 0.109373 0.468762 0.109375C0.593084 0.109377 0.712313 0.158765 0.80022 0.246675L5.00001 4.44646L9.19979 0.246675C9.2877 0.158765 9.40693 0.109377 9.53125 0.109375C9.65557 0.109373 9.7748 0.158758 9.86271 0.246665C9.95062 0.334573 10 0.453802 10 0.578123C10 0.702445 9.95063 0.821675 9.86272 0.909585L5.33147 5.44083C5.28794 5.48436 5.23627 5.5189 5.17939 5.54245C5.12252 5.56601 5.06156 5.57814 5.00001 5.57814C4.93845 5.57814 4.87749 5.56601 4.82062 5.54245C4.76374 5.5189 4.71207 5.48436 4.66854 5.44083L0.13729 0.909585ZM9.19979 4.56033L5.00001 8.76011L0.80022 4.56033C0.712313 4.47242 0.593084 4.42303 0.468762 4.42303C0.34444 4.42303 0.22521 4.47241 0.1373 4.56032C0.0493902 4.64822 1.84162e-06 4.76745 8.6053e-09 4.89178C-1.82441e-06 5.0161 0.049383 5.13533 0.13729 5.22324L4.66854 9.75449C4.71207 9.79802 4.76374 9.83255 4.82062 9.85611C4.87749 9.87966 4.93845 9.89179 5.00001 9.89179C5.06156 9.89179 5.12252 9.87966 5.17939 9.85611C5.23627 9.83255 5.28794 9.79802 5.33147 9.75449L9.86272 5.22324C9.95063 5.13533 10 5.0161 10 4.89178C10 4.76745 9.95062 4.64822 9.86271 4.56032C9.7748 4.47241 9.65557 4.42303 9.53125 4.42303C9.40693 4.42303 9.2877 4.47242 9.19979 4.56033Z"
+                                            fill="#2196F3"/>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_300_1233">
+                                            <rect width="10" height="10" fill="white"/>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
                             </div>
                         @endif
                     </div>
@@ -62,24 +79,26 @@
         </div>
 
         <div>
-            <h3 class="mb-5 text-[18px] font-semibold text-[#0B4775]">
+            <h3 x-data="revealOnScroll()" class="mb-5  text-2xl">
                 Наши ценности
             </h3>
 
-            <div class="relative space-y-5 pl-7 text-[14px] leading-[1.45] text-[#4A4A4A]">
-                <div class="absolute left-[7px] top-1 bottom-3 w-px bg-[#BFD7EF]"></div>
+            <div class="relative space-y-5 pl-7 text-lg leading-[1.45] text-[#4A4A4A]">
 
                 @foreach($values as $value)
-                    <div class="relative">
-                        <span class="absolute -left-[24px] top-1.5 flex h-[9px] w-[9px] items-center justify-center rounded-full border border-[#2497E8] bg-white">
-                            <span class="h-[3px] w-[3px] rounded-full bg-[#2497E8]"></span>
-                        </span>
+                    <div x-data="revealOnScroll()" class="relative">
 
-                        <h4 class="mb-1 font-semibold text-[#0B4775]">
+                        <div
+                            class="z-40 absolute -left-[24px] top-1.5 flex h-[9px] w-[9px] items-center justify-center rounded-full border border-[#2497E8] bg-white">
+                            <span class="h-[3px] w-[3px] rounded-full bg-[#2497E8]"></span>
+                        </div>
+                        <div class="w-px -left-[20px] h-full bg-gradient-to-b from-blue-400 to-transparent absolute top-2"></div>
+
+                        <h4 class="mb-1 text-lg">
                             {{ $value['title'] }}
                         </h4>
 
-                        <p>
+                        <p class="leading-6">
                             {{ $value['text'] }}
                         </p>
                     </div>

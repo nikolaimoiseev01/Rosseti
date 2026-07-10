@@ -22,16 +22,16 @@
     ];
 @endphp
 
-<section class="container py-8 text-[#4A4A4A]">
-    <h3 class="mb-6 text-center text-[20px] text-[#0060A8] md:text-left md:text-lg">
+<section class="container mb-24 text-[#4A4A4A]">
+    <h3 x-data="revealOnScroll()" class="mb-6 text-center text-2xl text-[#0060A8] md:text-left md:text-lg">
         Перечень существенных тем
     </h3>
 
-    <div class="grid grid-cols-2 gap-5 lg:grid-cols-1">
+    <div x-data="revealOnScroll()" class="grid grid-cols-2 gap-5 lg:grid-cols-1 lg:overflow-scroll">
         @foreach($tables as $rows)
             <table class="w-full border-collapse text-[14px] leading-[1.35]">
                 <thead>
-                <tr class="bg-[#2497E8] text-left text-white">
+                <tr class="bg-[#2497E8] text-left text-lg text-white">
                     <th class="w-[36px] px-3 py-1.5 font-normal text-white"></th>
                     <th class="px-3 py-1.5 font-normal text-white">Тема</th>
                     <th class="w-[140px] px-3 py-1.5 font-normal text-white">Аспект</th>
@@ -42,13 +42,13 @@
                 <tbody>
                 @foreach($rows as $row)
                     <tr class="@if(!$loop->last) border-b border-[#B8B8B8] @endif">
-                        <td class="p-3 align-top text-lg">{{ $row['num'] }}</td>
+                        <td class="p-3 align-top leading-6 text-lg">{{ $row['num'] }}</td>
 
-                        <td class="px-3 py-3 text-lg">
+                        <td class="px-3 py-3 pt-1.5  text-lg">
                             {{ $row['theme'] }}
                         </td>
 
-                        <td class="px-3 py-3 text-lg align-top {{ $row['aspect'] === 'Экологический' ? 'text-[#008DFF]' : '' }}">
+                        <td class="px-3 py-3 pt-1.5  text-lg align-top {{ $row['aspect'] === 'Экологический' ? 'text-[#008DFF]' : '' }}">
                             {{ $row['aspect'] }}
                         </td>
 

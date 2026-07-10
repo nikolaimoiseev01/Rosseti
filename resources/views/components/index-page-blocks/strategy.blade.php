@@ -1,7 +1,7 @@
 <section x-data="revealOnScroll()"
-         class="container bg-gradient-to-br from-[#5CACF0]/[0.13] to-[#0E3A5C]/[0.13] rounded-[32px] flex p-3 relative justify-between mb-14">
-    <div class="flex flex-col p-[36px]">
-        <h3>Каковы стратегические цели и практическая значимость подготовки ПАО «Россети» Отчета о социальной
+         class="container bg-gradient-to-br from-[#5CACF0]/[0.13] to-[#0E3A5C]/[0.13] rounded-[32px] flex lg:flex-col p-3 relative justify-between mb-14">
+    <div class="flex flex-col p-[36px] lg:p-0 lg:mb-8">
+        <h3 class="leading-[120%]">Каковы стратегические цели и практическая значимость подготовки ПАО «Россети» Отчета о социальной
             ответственности и корпоративном устойчивом развитии?</h3>
         <p>ПАО «Россети» более 15 лет раскрывает нефинансовую информацию в формате отдельного отчета, рассматривая его
             в качестве важного управленческого инструмента. Подготовка документа позволяет проводить самооценку,
@@ -15,8 +15,8 @@
             люди и проекты складываются в единый процесс по развитию энергетики и будущего страны.</p>
     </div>
 
-    <div class="bg-black-300 relative min-w-[460px] max-w-[460px] rounded-[10px]">
-        <img src="/fixed/zam-director.png" class="max-w-[430px] max-h-[560px] object-cover mx-auto" alt="">
-        <span class="absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-white text-xl text-nowrap">Врио Заместителя Генерального директора<br>  по стратегии, А. А. Полинов</span>
+    <div class="bg-black-300 relative min-w-[460px] max-w-[460px] lg:min-w-0 rounded-[10px] lg:mx-auto">
+        <img src="/fixed/zam-director.png" class="max-w-[430px] max-h-[560px] lg:w-full object-cover mx-auto" alt="">
+        <span class="absolute bottom-6 lg:relative lg:text-center lg:left-auto lg:translate-x-0 lg:bottom-auto left-1/2 -translate-x-1/2 text-center flex text-white text-xl lg:text-lg  lg:p-2 text-nowrap lg:text-wrap">Врио Заместителя Генерального директора<br class="lg:hidden">  по стратегии, А. А. Полинов</span>
     </div>
 </section>

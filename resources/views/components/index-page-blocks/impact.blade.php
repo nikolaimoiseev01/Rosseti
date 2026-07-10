@@ -6,12 +6,12 @@
                 [
                     'value' => '9,07',
                     'text' => 'уровень удовлетворенности потребителей — участников национальных проектов качеством оказанных Группой компаний «Россети» услуг (индекс CSI)',
-                    'class' => 'col-span-1',
+                    'class' => 'col-span-full',
                 ],
                 [
                     'value' => '974',
                     'text' => 'объекта подключено к сетям в рамках реализации национальных проектов России',
-                    'class' => 'col-span-1',
+                    'class' => 'col-span-full',
                 ],
                 [
                     'value' => '230 МВА',
@@ -53,21 +53,21 @@
     ];
 @endphp
 
-<section class="container py-8 text-[#0B4775]">
+<section class="container mb-24 text-[#0B4775]">
     @foreach($sections as $section)
         <div class="mb-9 last:mb-0">
-            <h2 class="mb-6 text-[34px] uppercase leading-[1.25] text-[#0B4775] md:text-[26px]">
+            <h2 x-data="revealOnScroll()" class="mb-6 text-5xl uppercase leading-[1.25] text-[#0B4775] md:text-[26px]">
                 {!! $section['title'] !!}
             </h2>
 
-            <div class="grid grid-cols-3 gap-1.5 lg:grid-cols-2 md:grid-cols-1">
+            <div class="grid grid-cols-3 gap-1.5 lg:flex-col lg:flex lg:grid-cols-2 md:grid-cols-1">
                 @foreach($section['cards'] as $card)
-                    <div class="{{ $card['class'] ?? '' }} flex min-h-[130px] flex-col justify-between rounded-[10px] bg-[#F1F6FE] px-5 py-5 lg:col-span-1">
-                        <div class="text-[48px] font-light leading-none text-[#2497E8] md:text-[38px]">
+                    <div x-data="revealOnScroll()" class="{{ $card['class'] ?? '' }} flex min-h-[130px] flex-col justify-between rounded-[10px] bg-[#F1F6FE] px-5 py-5 lg:col-span-1">
+                        <div class="text-7xl font-light leading-none text-[#2497E8] md:text-[38px]">
                             {{ $card['value'] }}
                         </div>
 
-                        <p class="max-w-[520px] text-[16px] leading-[1.35]">
+                        <p class="max-w-[520px] text-2xl md:text-xl leading-[28px]">
                             {{ $card['text'] }}
                         </p>
                     </div>

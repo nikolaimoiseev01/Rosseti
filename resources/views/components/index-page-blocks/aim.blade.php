@@ -8,16 +8,16 @@
     ];
 @endphp
 
-<section class="container py-8 text-[#0B4775]">
+<section class="container mb-16">
     <div
         class="mb-2 overflow-hidden rounded-[10px] bg-cover bg-center px-10 py-10 text-white md:px-5 md:py-7"
         style="background-image: url('/fixed/aim-bg.jpg');"
     >
-        <h2 class="mb-7 max-w-[760px] text-[58px] font-light uppercase leading-[1.08] md:text-[34px]">
-            Ключевая цель в области устойчивого развития
+        <h2 x-data="revealOnScroll()" class="mb-7 text-white text-7xl font-light uppercase leading-[1.08] md:text-[34px]">
+            Ключевая цель в области<br> устойчивого развития
         </h2>
 
-        <p class="max-w-[620px] text-[18px] font-semibold leading-[1.35] md:text-[15px]">
+        <p x-data="revealOnScroll()" class="max-w-[620px] text-white text-2xl md:text-xl leading-[28px]">
             Группа компаний «Россети» стремится максимально содействовать достижению Целей устойчивого развития ООН
             в рамках своей операционной деятельности, а также формировать дополнительную ценность для всех
             заинтересованных сторон в контексте национальных и глобальных задач.
@@ -25,12 +25,12 @@
     </div>
 
     <div class="grid grid-cols-2 gap-2 lg:grid-cols-1">
-        <div class="rounded-[10px] bg-[#F1F6FE] px-10 py-8 md:px-5">
+        <div x-data="revealOnScroll()" class="rounded-[10px] bg-[#F1F6FE] px-10 py-8 md:px-5">
             <h3 class="mb-5 text-[20px] font-normal text-[#0B4775]">
                 Наша миссия
             </h3>
 
-            <div class="space-y-5 text-[14px] leading-[1.6] text-[#4A4A4A]">
+            <div class="space-y-5 leading-[1.6] text-[#4A4A4A]">
                 <p>
                     Доступная и качественная электроэнергия в каждый дом, учреждение и производство
                     для комфортной жизни людей, ведения бизнеса и развития экономики страны.
@@ -51,10 +51,13 @@
 
             <div class="grid grid-cols-2 gap-x-8 gap-y-6 text-[14px] leading-[1.45] text-[#4A4A4A] md:grid-cols-1">
                 @foreach($goals as $goal)
-                    <div class="flex gap-3">
-                        <span class="mt-1 flex h-[16px] w-[16px] shrink-0 items-center justify-center rounded-full bg-[#2497E8] text-[10px] text-white">
-                            ✓
-                        </span>
+                    <div x-data="revealOnScroll()" class="flex gap-3">
+                        <svg class="min-w-[23px] min-h-[23px]" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="11.5" cy="11.5" r="11.5" fill="#2196F3" fill-opacity="0.2"/>
+                            <path d="M11.4733 3C6.80092 3 3 6.81291 3 11.5C3 16.1871 6.80092 20 11.4733 20C16.1456 20 19.9465 16.1871 19.9465 11.5C19.9465 6.81291 16.1456 3 11.4733 3Z" fill="#2196F3"/>
+                            <path d="M15.0901 9.70151L10.5003 14.3056C10.3626 14.4437 10.1819 14.5132 10.0011 14.5132C9.82037 14.5132 9.63962 14.4437 9.50193 14.3056L7.20713 12.0035C6.93096 11.7266 6.93096 11.2789 7.20713 11.002C7.48316 10.725 7.92935 10.725 8.20552 11.002L10.0011 12.8033L14.0917 8.69997C14.3677 8.42293 14.8139 8.42293 15.0901 8.69997C15.3661 8.97688 15.3661 9.42447 15.0901 9.70151Z" fill="white"/>
+                        </svg>
+
 
                         <p>{{ $goal }}</p>
                     </div>

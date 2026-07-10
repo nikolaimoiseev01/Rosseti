@@ -7,7 +7,7 @@
         margin: 34px 0;
     }
 </style>
-<div class="mx-auto flex max-w-7xl pt-10 mb-[180px] gap-8 md:mb-[80px] justify-between">
+<div class="container mx-auto flex max-w-7xl pt-10 mb-[180px] gap-8 md:mb-[80px] justify-between">
 
     <!-- Table of Contents -->
     <aside class="max-w-[263px] lg:hidden">

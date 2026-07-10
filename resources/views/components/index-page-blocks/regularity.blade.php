@@ -1,4 +1,4 @@
-<section class="container rounded-[10px] bg-gradient-to-b from-blue-500 to-blue-300 p-8 text-white mb-4">
+<section class="container rounded-[10px] bg-blue-300 p-8 text-white mb-4">
     <div class="grid grid-cols-2 gap-x-10 gap-y-8 md:grid-cols-1 md:gap-y-6">
         <div class="space-y-8">
             <x-general-text-with-title
@@ -17,21 +17,21 @@
                 />
 
                 <ul class="mt-4 p-4 text-[14px] leading-[1.45]">
-                    <li class="relative pl-4 before:absolute before:left-0 before:top-2 ">
+                    <li class="relative text-white text-lg pl-4 before:absolute before:left-0 before:top-2 ">
                         1 декабря 2025 года завершилась реорганизация, в результате которой АО «Россети Кубань»
                         прекратило свою деятельность и присоединилось к ПАО «Россети Юг». Вся операционная
                         деятельность АО «Россети Кубань» осуществляется в рамках филиала ПАО «Россети Юг» —
                         «Кубаньэнерго»
                     </li>
-                    <li class="relative mt-2 pl-4 before:absolute before:left-0 before:top-2">
+                    <li class="text-white text-lg relative mt-2 pl-4 before:absolute before:left-0 before:top-2">
                         АО «Энергетик» исключено из периметра.
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="space-y-8">
-            <p class="leading-[1.55] text-white">
+        <div x-data="revealOnScroll()" class="space-y-8">
+            <p class="leading-[1.55] text-lg text-white">
                 Данные, приводимые в Отчете в динамике за определенные периоды времени, сопоставимы и охватывают
                 электросетевые активы Группы как наиболее полно и материально участвующие во всех существенных
                 воздействиях Компании, если не указано иное.
@@ -62,13 +62,13 @@
                         ['АО «Россети Сибирь Тываэнерго»', 'АО «РЭС»'],
                         ['ПАО «Россети Юг»1', 'АО «Электромагистраль»'],
                     ] as [$left, $right])
-                        <div class="contents md:block">
+                        <div class="contents md:block md:text-center">
                             <div
-                                class=" text-white  border-t border-white/25 py-2.5 pl-[60px] text-[14px] leading-tight md:pl-0">
+                                class=" text-white @if(!$loop->first) border-t border-white/25 @endif py-1 pl-[60px] text-lg leading-tight md:pl-0">
                                 {{ $left }}
                             </div>
                             <div
-                                class=" text-white border-t border-white/25 py-2.5 pl-8 text-[14px] leading-tight md:pl-0">
+                                class=" text-white @if(!$loop->first) border-t border-white/25 @endif py-1 pl-8 text-lg leading-tight md:pl-0">
                                 {{ $right }}
                             </div>
                         </div>

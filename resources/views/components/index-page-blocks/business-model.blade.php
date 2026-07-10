@@ -3,7 +3,7 @@
         [
             'title' => 'Производственный (активы)',
             'subtitle' => 'Развитие и реновация инфраструктуры',
-            'image' => '/images/business-model-bg.jpg',
+            'image' => '/fixed/aim-bg.jpg',
             'stats' => [
                 ['value' => '2,6', 'unit' => 'млн км', 'text' => 'протяженность ЛЭП'],
                 ['value' => '612', 'unit' => 'тыс. шт.', 'text' => 'количество подстанций'],
@@ -15,67 +15,68 @@
         [
             'title' => 'Потребители',
             'stats' => [
-                ['value' => '837', 'unit' => 'млрд кВт•ч', 'text' => 'объем переданной электроэнергии'],
-                ['value' => '14,7', 'unit' => 'ГВт', 'text' => 'объем присоединенной мощности'],
-                ['value' => '2,4 SAIDI<br>1,2 SAIFI', 'unit' => '', 'text' => ''],
-                ['value' => '35', 'unit' => 'тыс. км', 'text' => 'увеличение протяженности ЛЭП'],
-                ['value' => '15', 'unit' => 'тыс. МВА', 'text' => 'ввод новых мощностей подстанций'],
+                ['value' => '837', 'diff' => [['value' => '-0,7%', 'class' => '-top-2 left-[50px]']], 'unit' => 'млрд кВт•ч', 'text' => 'объем переданной электроэнергии'],
+                ['value' => '14,7', 'diff' => [['value' => '-6,9%', 'class' => '-top-2 left-[50px]']], 'unit' => 'ГВт', 'text' => 'объем присоединенной мощности'],
+                ['value' => '2,4 SAIDI<br>1,2 SAIFI', 'diff' => [['value' => '-11%', 'class' => 'top-2 right-[30px]'], ['value' => '-7%', 'class' => 'top-10 right-[30px]']], 'unit' => '', 'text' => ''],
+                ['value' => '35', 'unit' => 'тыс. км', 'diff' => [['value' => '+200%', 'class' => '-top-2 left-[50px]']], 'text' => 'увеличение протяженности ЛЭП'],
+                ['value' => '15', 'unit' => 'тыс. МВА', 'diff' => [['value' => '+55%', 'class' => '-top-2 left-[50px]']], 'text' => 'ввод новых мощностей подстанций'],
                 ['value' => '2 880', 'unit' => 'МВт•ч I-ens', 'text' => ''],
             ],
         ],
     ];
 @endphp
 
-<section class="container py-10 text-[#0B4775]">
-    <h2 class="mb-4 text-[34px] uppercase leading-none md:text-[26px]">
+<section class="container py-10 ">
+    <h2 x-data="revealOnScroll()" class="mb-4 text-5xl text-blue-900 uppercase leading-none md:text-[26px]">
         Бизнес-модель
     </h2>
 
-    <p class="mb-6 max-w-[520px] text-[14px] leading-[1.5] text-[#4A4A4A]">
+    <p x-data="revealOnScroll()" class="mb-6 max-w-[609px] text-[#4A4A4A]">
         Оказание услуг по передаче электроэнергии, технологическому присоединению потребителей,
         строительству и реконструкции электросетевых объектов — основные виды экономической деятельности Компании.
     </p>
 
     <div class="grid grid-cols-2 gap-8 lg:grid-cols-1">
         <div>
-            <h3 class="mb-2 text-[18px] font-semibold text-[#0060A8]">
+            <h3 x-data="revealOnScroll()" class="mb-2 text-2xl">
                 Капиталы (ресурсы)
             </h3>
 
-            <p class="mb-8 text-[14px] leading-[1.5] text-[#4A4A4A]">
+            <p x-data="revealOnScroll()" class="mb-8">
                 Ресурсы, используемые в цепочке создания стоимости, сгруппированы в шесть капиталов:
                 человеческий, производственный, финансовый, интеллектуальный, социально-репутационный и природный.
             </p>
 
-            <div class="swiper business-capitals-swiper">
+            <div x-data="revealOnScroll()" class="swiper business-capitals-swiper">
                 <div class="swiper-wrapper">
                     @foreach($capitalSlides as $slide)
-                        <div class="swiper-slide pb-10">
+                        <div class="swiper-slide h-64 min-h-64 lg:h-auto">
                             <div
-                                class="relative min-h-[230px] overflow-hidden rounded-[10px] bg-cover bg-center px-7 py-6 text-white shadow-[18px_26px_22px_rgba(0,96,168,.28)]"
-                                style="background-image: linear-gradient(90deg, rgba(0,45,25,.55), rgba(0,45,25,.1)), url('{{ $slide['image'] }}');"
+                                class="relative min-h-64 overflow-hidden lg:flex-col lg:flex rounded-[10px] bg-inherit bg-center px-7 py-6 text-white"
+                                style="background-image: url('{{ $slide['image'] }}');"
                             >
-                                <h4 class="mb-1 text-[15px] font-semibold">
+                                <div class="absolute inset-0 bg-black-900/10 w-full h-full"></div>
+                                <p class="mb-1 text-white">
                                     {{ $slide['title'] }}
-                                </h4>
+                                </p>
 
-                                <p class="text-[14px]">
+                                <p class="text-white">
                                     {{ $slide['subtitle'] }}
                                 </p>
 
-                                <div class="absolute bottom-7 left-7 right-7 grid grid-cols-2 gap-8">
+                                <div class="absolute lg:relative lg:bottom-auto lg:left-auto bottom-7 left-7 right-7 lg:mt-8 lg:right-auto grid grid-cols-2 md:grid-cols-1 gap-8">
                                     @foreach($slide['stats'] as $stat)
                                         <div>
-                                            <div class="flex items-end gap-2">
-                                                <span class="text-[52px] font-light leading-none">
+                                            <div class="flex items-end gap-2 relative">
+                                                <span class="text-7xl leading-[50px] text-white leading-none">
                                                     {{ $stat['value'] }}
                                                 </span>
-                                                <span class="mb-1 text-[13px] font-semibold">
+                                                <span class="text-white">
                                                     {{ $stat['unit'] }}
                                                 </span>
                                             </div>
 
-                                            <p class="text-[13px]">
+                                            <p class=" text-white">
                                                 {{ $stat['text'] }}
                                             </p>
                                         </div>
@@ -100,40 +101,51 @@
         </div>
 
         <div>
-            <h3 class="mb-2 text-[18px] font-semibold text-[#0060A8]">
+            <h3 x-data="revealOnScroll()" class="mb-2 text-2xl">
                 Результаты для заинтересованных сторон
             </h3>
 
-            <p class="mb-8 text-[14px] leading-[1.5] text-[#4A4A4A]">
+            <p x-data="revealOnScroll()" class="mb-8">
                 Ресурсы, используемые в цепочке создания стоимости, сгруппированы в шесть капиталов:
                 человеческий, производственный, финансовый, интеллектуальный, социально-репутационный и природный.
             </p>
 
-            <div class="swiper business-results-swiper">
+            <div x-data="revealOnScroll()" class="swiper business-results-swiper">
                 <div class="swiper-wrapper">
                     @foreach($resultSlides as $slide)
-                        <div class="swiper-slide pb-10">
+                        <div class="swiper-slide max-h-64 lg:max-h-fit">
                             <div
-                                class="min-h-[230px] rounded-[10px] bg-[#F1F6FE] px-7 py-7 shadow-[18px_26px_22px_rgba(11,71,117,.10)]">
-                                <h4 class="mb-6 text-[15px] font-semibold">
+                                class="min-h-[230px] rounded-[10px] bg-[#F1F6FE] px-7 py-7">
+                                <h4 class="mb-5 text-lg text-blue-900">
                                     {{ $slide['title'] }}
                                 </h4>
 
-                                <div class="grid grid-cols-3 gap-x-8 gap-y-5 md:grid-cols-2 sm:grid-cols-1">
+                                <div class="grid grid-cols-3 gap-x-8 gap-y-4 lg:grid-cols-2 md:!grid-cols-1">
                                     @foreach($slide['stats'] as $stat)
                                         <div>
-                                            <div class="text-[28px] font-light leading-none text-[#2497E8]">
-                                                {!! $stat['value'] !!}
+                                            <div class="flex gap-2 items-baseline relative">
+                                                @if($stat['diff'] ?? null)
+                                                    @foreach($stat['diff'] as $diff)
+                                                        <span class="bg-white px-2 text-[10px] rounded-full {{$diff['class']}} absolute text-green-300">
+                                                        {{$diff['value']}}
+                                                    </span>
+                                                    @endforeach
+                                                @endif
+
+                                                <div class="text-3xl text-blue-400">
+                                                    {!! $stat['value'] !!}
+                                                </div>
+
+                                                @if($stat['unit'])
+                                                    <div class="mt-1 text-lg text-blue-400">
+                                                        {{ $stat['unit'] }}
+                                                    </div>
+                                                @endif
                                             </div>
 
-                                            @if($stat['unit'])
-                                                <div class="mt-1 text-[13px] font-semibold text-[#2497E8]">
-                                                    {{ $stat['unit'] }}
-                                                </div>
-                                            @endif
 
                                             @if($stat['text'])
-                                                <p class="mt-1 text-[11px] leading-[1.25] text-[#4A4A4A]">
+                                                <p class="text-sm leading-[14px]">
                                                     {{ $stat['text'] }}
                                                 </p>
                                             @endif

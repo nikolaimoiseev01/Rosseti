@@ -1,6 +1,7 @@
-<section class="container flex gap-6">
-    <div class="flex flex-col w-1/2">
+<section class="container flex md:flex-col gap-6 mb-12">
+    <div class="flex flex-col w-1/2 md:w-full">
         <h2  x-data="revealOnScroll()" class="uppercase">Уважаемые коллеги!</h2>
+        <x-g-r-i gri="2-22" class="mt-2"/>
         <p  x-data="revealOnScroll()" class="mb-6">Группа «Россети» завершила прошедший год с высокими результатами. Мы построили более 35 тыс. км
             линий
             электропередачи и ввели около 15 тыс. МВА трансформаторной мощности, присоединили к сети 340 тыс. новых
@@ -37,7 +38,7 @@
             документах — Политике устойчивого развития и Кодексе корпоративной этики.</p>
     </div>
 
-    <div class="flex flex-col w-1/2">
+    <div class="flex flex-col w-1/2 md:w-full">
         <p x-data="revealOnScroll()"  class="mb-12"> Продолжилась системная работа, нацеленная на повышение экологической безопасности сетевого
             комплекса и
             бережное
@@ -47,7 +48,7 @@
             электроснабжения. В 2025 году было установлено более 153 тыс. таких устройств.
         </p>
         <div x-data="revealOnScroll()" class="flex flex-col items-center mb-12">
-            <h3 class="text-blue-400 text-5xl">1,2 млрд руб.</h3>
+            <h3 class="text-blue-400 text-5xl mb-0">1,2 млрд руб.</h3>
             <p>расходы на охрану окружающей среды</p>
         </div>
         <p x-data="revealOnScroll()" class="mb-12">
@@ -57,7 +58,7 @@
             формирование условий для их безопасного труда и профессионального роста.
         </p>
         <div x-data="revealOnScroll()" class="flex flex-col items-center mb-12">
-            <h3 class="text-blue-400 text-5xl">10,8 млрд руб.</h3>
+            <h3 class="text-blue-400 text-5xl mb-0">10,8 млрд руб.</h3>
             <p>расходы на мероприятия по охране труда</p>
         </div>
         <p x-data="revealOnScroll()">Также мы стремимся играть активную роль в жизни регионов присутствия, создаем специальные программы поддержки

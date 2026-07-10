@@ -1,37 +1,26 @@
 <section id="contents" class="container py-24 md:py-16">
-    <h2 class="mb-12 text-[52px] font-semibold leading-none md:text-[36px]">
+    <h2 x-data="revealOnScroll()" class="mb-4 text-5xl text-blue-900 uppercase leading-none md:text-[26px]">
         Содержание
     </h2>
 
-    @php
-        $contents = [
-            ['num' => '01', 'title' => 'О компании', 'text' => 'Ключевая роль в обеспечении надежного электроснабжения страны.', 'img' => '/images/content-01.jpg', 'slug' => 'about-company'],
-            ['num' => '02', 'title' => 'Управление устойчивым развитием', 'text' => 'Последовательное развитие устойчивого управления.', 'img' => '/images/content-02.jpg', 'slug' => 'sustainability'],
-            ['num' => '03', 'title' => 'Вклад в развитие страны', 'text' => 'Инвестиции и вклад в экономику регионов.', 'img' => '/images/content-03.jpg', 'slug' => 'contribution'],
-            ['num' => '04', 'title' => 'Забота об окружающей среде', 'text' => 'Снижение экологического воздействия.', 'img' => '/images/content-04.jpg', 'slug' => 'environment'],
-            ['num' => '05', 'title' => 'Защита прав человека', 'text' => 'Сильная команда и ответственность работодателя.', 'img' => '/images/content-05.png', 'slug' => 'human-rights'],
-            ['num' => '06', 'title' => 'Вклад в общество', 'text' => 'Поддержка регионов и социальных инициатив.', 'img' => '/images/content-06.jpg', 'slug' => 'society'],
-            ['num' => '07', 'title' => 'Управленческий аспект', 'text' => 'Финансовая устойчивость и корпоративное управление.', 'img' => '/images/content-07.jpg', 'slug' => 'governance'],
-            ['num' => '08', 'title' => 'Приложения', 'text' => 'Прозрачная отчетность по международным стандартам.', 'img' => '/images/content-08.jpg', 'slug' => 'appendix'],
-        ];
-    @endphp
-
-    <div class="grid grid-cols-4 gap-5 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1">
-        @foreach($contents as $card)
-            <a href="" class="group overflow-hidden rounded-[28px] bg-white shadow-sm transition duration-300 hover:-translate-y-1">
-                <div class="relative h-48 overflow-hidden">
+    <div class="grid grid-cols-4 gap-5 xl:grid-cols-2 md:!grid-cols-1">
+        @foreach($pages as $page)
+            <a x-data="revealOnScroll()" href="{{route('article.index', $page->slug)}}" wire:navigate class="group flex flex-col overflow-hidden rounded-[28px] bg-white border border-1 border-black-100 transition duration-300 hover:-translate-y-1">
+                <div class="relative overflow-hidden">
                     <img
-                        src="{{ $card['img'] }}"
-                        alt="{{ $card['title'] }}"
-                        class="h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                        src="{{ $page->getFirstMediaUrl('cover') }}"
+                        class="min-h-60 w-full object-cover transition duration-700 group-hover:scale-110"
                     >
                     <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                    <div class="absolute left-5 top-5 text-5xl font-semibold text-white">{{ $card['num'] }}</div>
+                    <div class="absolute right-4 leading-[100%] top-4 text-[100px] bg-gradient-to-b from-white to-transparent
+      bg-clip-text text-transparent">0{{ $loop->index + 1 }}</div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold text-blue-500">{{ $card['title'] }}</h3>
-                    <p class="mt-3 text-sm text-black-400">{{ $card['text'] }}</p>
-                    <span class="mt-6 inline-block text-sm font-semibold text-[#009FE3] group-hover:translate-x-1 transition-transform">Подробнее →</span>
+                <div class="p-6 flex flex-col flex-1">
+                    <h3 class="text-2xl mb-0">{{ $page->title }}</h3>
+                    <div class="flex flex-col mt-auto">
+                        <p class="text-lg text-black-400">{{ $page->description }}</p>
+                        <span class="text-blue-400 inline-block text-lg group-hover:translate-x-1 transition-transform">Подробнее →</span>
+                    </div>
                 </div>
             </a>
         @endforeach

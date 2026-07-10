@@ -28,6 +28,10 @@ class PageForm
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
+                        Forms\Components\TextInput::make('description')
+                            ->label('Описание')
+                            ->required()
+                            ->maxLength(255),
 
                         Forms\Components\Toggle::make('is_active')
                             ->label('Активна')

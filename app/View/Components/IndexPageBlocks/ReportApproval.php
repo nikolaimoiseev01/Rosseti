@@ -2,15 +2,12 @@
 
 namespace App\View\Components\IndexPageBlocks;
 
-use App\Models\Page;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Content extends Component
+class ReportApproval extends Component
 {
-    public $pages;
-
     /**
      * Create a new component instance.
      */
@@ -24,9 +21,6 @@ class Content extends Component
      */
     public function render(): View|Closure|string
     {
-        $this->pages = Page::all();
-        return view('components.index-page-blocks.content', [
-            'pages' => $this->pages
-        ]);
+        return view('components.index-page-blocks.report-approval');
     }
 }

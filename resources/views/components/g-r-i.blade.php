@@ -6,7 +6,9 @@
         : 'text-inherit';
 @endphp
 
-<div class="flex mb-4">
-    <span class="bg-blue-400 text-white mr-2 px-2">GRI</span>
-    <span class="{{$textClass}}">{{ $gri }}</span>
+<div x-data="revealOnScroll()" {{ $attributes->merge(['class' => 'flex mb-4']) }}>
+    <div class="bg-blue-400 mr-2 px-2 flex items-center">
+        <span class="text-white">GRI</span>
+    </div>
+    <span  class="text-lg {{$textClass}}">{{ $gri }}</span>
 </div>

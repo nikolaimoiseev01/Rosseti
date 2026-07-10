@@ -64,33 +64,43 @@
     ];
 @endphp
 
-<section class="container py-10 text-[#4A4A4A] mb-28">
-    <div class="grid grid-cols-[1fr_0.95fr] gap-6 lg:grid-cols-1">
+<section class="container py-10 text-[#4A4A4A] mb-28 md:mb-16">
+    <div class="grid grid-cols-[1fr_0.95fr] gap-6 lg:grid-cols-1 lg:gap-32 md:!gap-48">
         <div>
-            <h2 class="mb-4 text-[34px] leading-none uppercase  lg:text-[28px] md:text-[24px]">
+            <h2 x-data="revealOnScroll()" class="mb-4 text-[34px] leading-none uppercase  lg:text-[28px] md:text-[24px]">
                 Матрица существенных тем
             </h2>
 
-            <div class="rounded-b-[14px] relative">
+            <div x-data="revealOnScroll()" class="rounded-b-[14px] relative">
                 <div class="rounded-2xl bg-white px-6 pb-6 rounded-3xl">
-                    <img src="/fixed/matrix-chart.png" alt="">
+                    <img src="/fixed/matrix-chart.png" class="mb-3" alt="">
 
                     <div class="grid grid-cols-2 gap-x-8 gap-y-5 text-[12px] leading-[1.15] md:grid-cols-1">
                         @foreach($legendGroups as $group)
                             <div class="{{ $loop->last ? 'col-span-2 md:col-span-1' : '' }}">
-                                <h4 class="mb-3 font-semibold text-lg" style="color: {{ $group['color'] }}">
+                                <h4 class="mb-3 font-medium text-lg" style="color: {{ $group['color'] }}">
                                     {{ $group['title'] }}
                                 </h4>
 
-                                <div class="flex flex-col {{$group['class'] ?? ''}} gap-x-6 gap-y-2 {{ $loop->last ? '' : 'md:grid-cols-1' }}">
+                                <div
+                                    class="flex flex-col {{$group['class'] ?? ''}} gap-x-6 gap-y-2 {{ $loop->last ? '' : 'md:grid-cols-1' }}">
                                     @foreach($group['items'] as [$number, $text])
                                         <div class="flex gap-2">
-                                            <span
-                                                class="mt-0.5 flex h-[14px] w-[14px] shrink-0 items-center justify-center rounded-full border text-[8px] font-semibold"
-                                                style="border-color: {{ $group['color'] }}; color: {{ $group['color'] }};"
-                                            >
-                                                {{ $number }}
-                                            </span>
+                                            <div
+                                                class="relative flex items-center justify-center w-[18px] min-w-[18px] bg-white h-[18px] border rounded-full"
+                                                style="border-color: {{ $group['color'] }};">
+                                                <span
+                                                    class="flex h-3 w-3 shrink-0 items-center justify-center pt-[2px] rounded-full text-[8px] font-semibold text-white"
+                                                    style="background: {{ $group['color'] }};"
+                                                >
+                                                    {{ $number }}
+
+                                                </span>
+                                                @if(!$loop->last)
+                                                    <div
+                                                        class="w-px h-[150%] absolute top-full bg-gradient-to-b from-blue-400 to-transparent"></div>
+                                                @endif
+                                            </div>
                                             <span class="text-base leading-[16px]">{{ $text }}</span>
                                         </div>
                                     @endforeach
@@ -98,40 +108,43 @@
                             </div>
                         @endforeach
                     </div>
+                    <div
+                        class="flex items-start  gap-3 rounded-b-[14px] left-0 bg-blue-400 absolute top-[97%] -z-[1] px-6 pb-5 pt-12 text-[14px] leading-[1.35] text-white">
+                        <svg class="min-w-6 min-h-6" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="11.5" cy="11.5" r="11.5" fill="white" fill-opacity="0.2"/>
+                            <path d="M11.5 3C6.81291 3 3 6.81291 3 11.5C3 16.1871 6.81291 20 11.5 20C16.1871 20 20 16.1871 20 11.5C20 6.81291 16.1871 3 11.5 3Z" fill="white"/>
+                            <path d="M15.808 9.70151L11.2037 14.3056C11.0656 14.4437 10.8843 14.5132 10.703 14.5132C10.5217 14.5132 10.3403 14.4437 10.2022 14.3056L7.90016 12.0035C7.62312 11.7266 7.62312 11.2789 7.90016 11.002C8.17707 10.725 8.62466 10.725 8.9017 11.002L10.703 12.8033L14.8064 8.69997C15.0833 8.42293 15.5309 8.42293 15.808 8.69997C16.0849 8.97688 16.0849 9.42447 15.808 9.70151Z" fill="#2196F3"/>
+                        </svg>
+                        <p class="text-white">
+                            Внутренние заинтересованные стороны оценили существенность заявленных тем Компании
+                            в среднем на 10% выше внешних заинтересованных сторон.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="flex items-start gap-4 rounded-b-[14px] bg-blue-400 absolute -bottom-[80px] -z-[1] px-6 pb-5 pt-12 text-[14px] leading-[1.35] text-white">
-                    <span class="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white text-[11px] text-[#2497E8]">
-                        ✓
-                    </span>
-                    <p class="text-white">
-                        Внутренние заинтересованные стороны оценили существенность заявленных тем Компании
-                        в среднем на 10% выше внешних заинтересованных сторон.
-                    </p>
-                </div>
             </div>
         </div>
 
-        <div class="space-y-6 pt-1">
+        <div x-data="revealOnScroll()" class="space-y-6 pt-1">
             @foreach($topTables as $table)
-                <div>
-                    <h3 class="mb-4 text-[18px] font-semibold leading-[1.25] text-[#0060A8]">
+                <div class="md:overflow-scroll">
+                    <h3 class="mb-4 text-2xl leading-[1.25] text-[#0060A8]">
                         {{ $table['title'] }}
                     </h3>
 
                     <table class="w-full border-collapse text-[13px] leading-[1.35]">
                         <thead>
                         <tr class="bg-[#2497E8] text-left text-white">
-                            <th class="w-1/2 px-4 py-1.5 font-normal">Внешние стейкхолдеры</th>
-                            <th class="w-1/2 px-4 py-1.5 font-normal">Внутренние стейкхолдеры</th>
+                            <th class="w-1/2 px-4 font-normal text-white text-lg">Внешние стейкхолдеры</th>
+                            <th class="w-1/2 px-4 font-normal text-white text-lg">Внутренние стейкхолдеры</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($table['rows'] as [$external, $internal])
                             <tr class="border-b border-[#B8B8B8]">
-                                <td class="px-4 py-3 align-top">{{ $external }}</td>
-                                <td class="px-4 py-3 align-top">{{ $internal }}</td>
+                                <td class="px-4 py-3 align-top leading-6 text-lg">{{ $external }}</td>
+                                <td class="px-4 py-3 align-top leading-6 text-lg">{{ $internal }}</td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -34,12 +34,12 @@
         >
     </div>
 
-    <div class="flex flex-col items-center justify-center h-full text-center relative z-20 ">
+    <div x-data="revealOnScroll()" class="flex flex-col items-center justify-center h-full text-center relative z-20 ">
         <x-logo color="white" class="w-[186px] mb-12" />
         <h1 class="mb-4 uppercase text-white">Создаем потенциал<br>развития страны</h1>
-        <h3 class="text-2xl font-normal text-white">Отчет о социальной ответственности <br>и корпоративном устойчивом развитии </h3>
+        <h3 class="text-2xl md:text-xl font-normal text-white">Отчет о социальной ответственности <br>и корпоративном устойчивом развитии </h3>
     </div>
 
-    <h3 class="absolute left-1/2 bottom-[104px] -translate-x-1/2 text-2xl text-white">2025</h3>
+    <h3 x-data="revealOnScroll()" class="absolute left-1/2 bottom-[104px] -translate-x-1/2 text-2xl text-white">2025</h3>
 
 </section>

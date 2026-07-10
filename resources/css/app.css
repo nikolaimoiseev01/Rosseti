@@ -20,20 +20,24 @@ body {
 }
 
 h1 {
-    @apply text-7xl;
+    @apply text-7xl lg:text-5xl md:!text-3xl;
 }
 
 h2 {
-    @apply font-normal text-5xl text-blue-500;
+    @apply font-normal text-5xl text-blue-500 lg:text-4xl md:text-3xl;
 }
 
 
 h3 {
-    @apply text-blue-500 text-5xl mb-8;
+    @apply text-blue-500 text-5xl mb-8 lg:text-4xl md:!text-3xl;
 }
 
 ul {
     @apply list-disc list-outside pl-6;
+}
+
+p {
+    @apply text-lg leading-6 text-black-500;
 }
 
 

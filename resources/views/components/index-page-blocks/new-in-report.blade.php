@@ -1,6 +1,6 @@
-<section class="flex flex-col gap-4 p-8 bg-blue-400 container rounded-[10px]">
-    <p class="text-white text-2xl">Новое в Отчете</p>
-    <div class="flex gap-4">
+<section class="flex flex-col gap-4 p-8 bg-blue-400 container rounded-[10px] mb-24">
+    <p x-data="revealOnScroll()" class="text-white text-2xl">Новое в Отчете</p>
+    <div x-data="revealOnScroll()" class="flex gap-4 lg:flex-col">
         <p class="text-white">В этом году наш Отчет получил более выраженную стратегическую направленность за счет углубленного
             раскрытия вклада Компании в достижение национальных целей развития и реализацию приоритетных
             национальных проектов Российской Федерации. Деятельность Группы представлена в тесной увязке
