@@ -1,162 +1,206 @@
 @php
+    $blockBgClasses = [
+        'blue' => 'bg-blue-400 text-white',
+        'grey' => 'bg-black-600 text-[#4A4A4A]',
+        'white' => 'bg-white text-[#4A4A4A]',
+        'green' => 'bg-green-50 text-[#4A4A4A]',
+    ];
+
+    $arrowBgClasses = [
+        'white' => 'bg-white',
+        'grey' => 'bg-black-600',
+        'green' => 'bg-green-50',
+        'blue' => 'bg-blue-400',
+    ];
+
+    $rowClasses = [
+        'top' => 'h-[68px]',
+        'center' => 'h-[136px]',
+        'bottom' => 'h-[68px]',
+    ];
+
+    $arrowPositionClasses = [
+        'top' => 'top-[-14px] left-1/2 -translate-x-1/2',
+        'right' => 'right-[-14px] top-1/2 -translate-y-1/2',
+        'bottom' => 'bottom-[-14px] left-1/2 -translate-x-1/2',
+        'left' => 'left-[-14px] top-1/2 -translate-y-1/2',
+    ];
+
+    $arrowRotateClasses = [
+        'top' => '-rotate-90',
+        'right' => 'rotate-0',
+        'bottom' => 'rotate-90',
+        'left' => 'rotate-180',
+    ];
+
     $columns = [
         [
             'blocks' => [
                 [
-                    'type' => 'blue',
+                    'row' => 'top',
+                    'bg' => 'blue',
                     'text' => 'Внутренняя группа по вопросам<br>устойчивого развития',
-                    'arrow_down' => true,
-                    'arrow_color' => 'grey',
+                    'arrows' => [
+                        [
+                            'position' => 'bottom',
+                            'bg' => 'grey',
+                        ],
+                    ],
                 ],
                 [
-                    'type' => 'white',
+                    'row' => 'center',
+                    'bg' => 'grey',
                     'text' => 'Анализ контекста<br>и трендов',
-                    'arrow_right' => true,
+                    'arrows' => [
+                        [
+                            'position' => 'right',
+                            'bg' => 'white',
+                        ],
+                    ],
                 ],
             ],
         ],
         [
             'blocks' => [
                 [
-                    'type' => 'white',
-                    'class' => 'my-auto',
+                    'row' => 'center',
+                    'bg' => 'grey',
                     'text' => 'Формирование списка потенциально существенных тем на основе обзора отраслевых практик, рекомендаций, национальных и международных стандартов',
-                    'arrow_right' => true,
+                    'arrows' => [
+                        [
+                            'position' => 'right',
+                            'bg' => 'white',
+                        ],
+                    ],
                 ],
             ],
         ],
         [
             'blocks' => [
                 [
-                    'type' => 'blue',
+                    'row' => 'top',
+                    'bg' => 'blue',
                     'text' => 'Внутренние<br>Заинтересованные стороны',
-                    'arrow_down' => true,
+                    'arrows' => [
+                        [
+                            'position' => 'bottom',
+                            'bg' => 'white',
+                        ],
+                    ],
                 ],
                 [
-                    'type' => 'white',
+                    'row' => 'center',
+                    'bg' => 'grey',
                     'text' => 'Анкетирование<br>респондентов',
-                    'arrow_right' => true,
+                    'arrows' => [
+                        [
+                            'position' => 'right',
+                            'bg' => 'white',
+                        ],
+                    ],
                 ],
                 [
-                    'type' => 'blue',
+                    'row' => 'bottom',
+                    'bg' => 'blue',
                     'text' => 'Внешние<br>Заинтересованные стороны',
-                    'arrow_up' => true,
+                    'arrows' => [
+                        [
+                            'position' => 'top',
+                            'bg' => 'white',
+                        ],
+                    ],
                 ],
             ],
         ],
         [
             'blocks' => [
                 [
-                    'type' => 'white',
-                    'class' => 'my-auto',
+                    'row' => 'center',
+                    'bg' => 'grey',
                     'text' => 'Анализ результатов анкетирования, приоритизация<br>и утверждение существенных тем',
-                    'arrow_right' => true,
+                    'arrows' => [
+                        [
+                            'position' => 'right',
+                            'bg' => 'white',
+                        ],
+                    ],
                 ],
             ],
         ],
         [
             'blocks' => [
                 [
-                    'type' => 'white',
-                    'class' => 'my-auto',
+                    'row' => 'center',
+                    'bg' => 'grey',
                     'text' => 'Раскрытие информации<br>в Отчете',
                 ],
             ],
         ],
     ];
+
+    $rows = ['top', 'center', 'bottom'];
 @endphp
 
 <section class="container mb-16 text-[#4A4A4A]">
-    <h3 x-data="revealOnScroll()" class="mb-6 text-center text-[24px] text-blue-500 leading-snug md:text-left md:text-[16px]">
+    <h3
+        x-data="revealOnScroll()"
+        class="mb-6 text-center text-[24px] leading-snug text-blue-500 md:text-left md:text-[16px]"
+    >
         Процедура выявления существенных тем и определение существенности воздействия:
     </h3>
 
-    <div x-data="revealOnScroll()" class="grid grid-cols-[1fr_1.7fr_1fr_1.15fr_0.9fr] gap-x-2 lg:grid-cols-1 lg:gap-3">
+    <div
+        x-data="revealOnScroll()"
+        class="grid grid-cols-[1fr_1.7fr_1fr_1.15fr_0.9fr] gap-x-2 lg:grid-cols-1 lg:gap-3"
+    >
         @foreach($columns as $column)
-            <div class="grid grid-rows-[auto_136px_auto] gap-y-2 lg:flex lg:flex-col">
-                @php
-                    $blocks = collect($column['blocks']);
-                    $topBlue = $blocks->firstWhere('arrow_down', true);
-                    $centerWhite = $blocks->firstWhere('type', 'white');
-                    $bottomBlue = $blocks->firstWhere('arrow_up', true);
-                @endphp
+            <div class="grid grid-rows-[68px_136px_68px] gap-y-2 lg:flex lg:flex-col">
+                @foreach($rows as $row)
+                    @php
+                        $block = collect($column['blocks'])->firstWhere('row', $row);
+                    @endphp
 
-                {{-- Верх --}}
-                <div class="h-[68px] relative">
-                    @if($topBlue)
-                        <div
-                            class="rounded-[10px] text-nowrap bg-blue-400 px-5 py-3 text-center text-lg leading-[1.25] text-white">
-                            {!! $topBlue['text'] !!}
-                        </div>
-                    @endif
-                        @if($topBlue['arrow_down'] ?? false)
+                    <div class="{{ $rowClasses[$row] }} relative lg:h-auto">
+                        @if($block)
                             <div
-                                class="absolute bottom-[-14px] left-1/2 z-10 -translate-x-1/2 p-2 rounded-full @if($topBlue['arrow_color'] ?? null) bg-black-600 @else bg-white @endif lg:hidden">
-                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_462_471)">
-                                        <path d="M0.157283 1.02854C0.0571998 0.928417 0.000974477 0.792627 0.000976563 0.651038C0.000978648 0.50945 0.0572079 0.373662 0.157295 0.273546C0.257381 0.173429 0.393127 0.117185 0.534669 0.117188C0.67621 0.11719 0.811954 0.173437 0.912038 0.273557L5.69355 5.05663L10.4751 0.273557C10.5751 0.173437 10.7109 0.11719 10.8524 0.117188C10.994 0.117185 11.1297 0.173429 11.2298 0.273546C11.3299 0.373662 11.3861 0.50945 11.3861 0.651038C11.3861 0.792627 11.3299 0.928417 11.2298 1.02854L6.07093 6.18911C6.02137 6.23869 5.96254 6.27802 5.89779 6.30485C5.83304 6.33168 5.76364 6.34549 5.69355 6.34549C5.62347 6.34549 5.55407 6.33168 5.48932 6.30485C5.42456 6.27802 5.36573 6.23869 5.31617 6.18911L0.157283 1.02854ZM10.4751 5.18632L5.69355 9.96939L0.912038 5.18632C0.811954 5.0862 0.67621 5.02995 0.534669 5.02995C0.393127 5.02994 0.257381 5.08619 0.157295 5.18631C0.0572079 5.28642 0.000978659 5.42221 0.000976572 5.5638C0.000974485 5.70539 0.0571998 5.84118 0.157283 5.9413L5.31617 11.1019C5.36573 11.1514 5.42456 11.1908 5.48932 11.2176C5.55407 11.2444 5.62347 11.2582 5.69355 11.2582C5.76364 11.2582 5.83304 11.2444 5.89779 11.2176C5.96254 11.1908 6.02137 11.1514 6.07093 11.1019L11.2298 5.9413C11.3299 5.84118 11.3861 5.70539 11.3861 5.5638C11.3861 5.42221 11.3299 5.28642 11.2298 5.18631C11.1297 5.08619 10.994 5.02994 10.8524 5.02995C10.7109 5.02995 10.5751 5.0862 10.4751 5.18632Z" fill="#2196F3"/>
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_462_471">
-                                            <rect width="11.387" height="11.387" fill="white"/>
-                                        </clipPath>
-                                    </defs>
-                                </svg>
+                                class="{{ $blockBgClasses[$block['bg'] ?? 'grey'] }}
+                                    {{ $block['class'] ?? '' }}
+                                    relative flex h-full items-center justify-center rounded-[10px]
+                                    px-5 py-3 text-center text-[18px] leading-[1.25] lg:min-h-[90px]"
+                            >
+                                {!! $block['text'] !!}
+
+                                @foreach($block['arrows'] ?? [] as $arrow)
+                                    @php
+                                        $position = $arrow['position'] ?? 'right';
+                                        $arrowBg = $arrow['bg'] ?? 'white';
+                                        $arrowColor = $arrow['color'] ?? '#2196F3';
+                                    @endphp
+
+                                    <div
+                                        class="{{ $arrowPositionClasses[$position] }}
+                                            {{ $arrowBgClasses[$arrowBg] }}
+                                            absolute z-10 rounded-full p-2 lg:hidden"
+                                    >
+                                        <svg
+                                            class="{{ $arrowRotateClasses[$position] }}"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 12 12"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1.03605 11.2343C0.935964 11.3344 0.800218 11.3906 0.658676 11.3906C0.517134 11.3906 0.381391 11.3344 0.281307 11.2343C0.181223 11.1341 0.124998 10.9983 0.125 10.8568C0.125002 10.7152 0.181231 10.5794 0.281318 10.4793L5.06283 5.69619L0.281318 0.913108C0.181231 0.812991 0.125002 0.677203 0.125 0.535615C0.124997 0.394027 0.181223 0.258237 0.281306 0.158117C0.38139 0.0579977 0.517134 0.00175093 0.658676 0.00174902C0.800218 0.00174615 0.935963 0.0579891 1.03605 0.158106L6.19494 5.31868C6.2445 5.36826 6.28381 5.42711 6.31063 5.49188C6.33746 5.55665 6.35126 5.62608 6.35126 5.69619C6.35126 5.76629 6.33746 5.83572 6.31063 5.90049C6.28381 5.96526 6.2445 6.02411 6.19494 6.07369L1.03605 11.2343ZM5.19247 0.913108L9.97398 5.69619L5.19247 10.4793C5.09238 10.5794 5.03615 10.7152 5.03615 10.8568C5.03615 10.9983 5.09237 11.1341 5.19246 11.2343C5.29254 11.3344 5.42829 11.3906 5.56983 11.3906C5.71137 11.3906 5.84712 11.3344 5.9472 11.2343L11.1061 6.07369C11.1556 6.02411 11.195 5.96526 11.2218 5.90049C11.2486 5.83572 11.2624 5.76629 11.2624 5.69619C11.2624 5.62608 11.2486 5.55665 11.2218 5.49188C11.195 5.42711 11.1556 5.36826 11.1061 5.31868L5.9472 0.158106C5.84711 0.0579889 5.71137 0.00174593 5.56983 0.0017488C5.42829 0.00175071 5.29254 0.0579975 5.19246 0.158117C5.09237 0.258237 5.03615 0.394027 5.03615 0.535615C5.03615 0.677203 5.09238 0.812991 5.19247 0.913108Z"
+                                                fill="{{ $arrowColor }}"
+                                            />
+                                        </svg>
+                                    </div>
+                                @endforeach
                             </div>
                         @endif
-                </div>
-
-                {{-- Центр --}}
-                <div
-                    class="relative flex h-[136px] items-center justify-center rounded-[10px] bg-black-600 px-5 text-center text-[18px] leading-[1.35]">
-                    {!! $centerWhite['text'] !!}
-
-                    @if($centerWhite['arrow_right'] ?? false)
-                        <div
-                            class="absolute right-[-14px] top-1/2 z-10 -translate-y-1/2 p-2 rounded-full bg-white lg:hidden">
-                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <g clip-path="url(#clip0_462_475)">
-                                    <path
-                                        d="M1.03605 11.2343C0.935964 11.3344 0.800218 11.3906 0.658676 11.3906C0.517134 11.3906 0.381391 11.3344 0.281307 11.2343C0.181223 11.1341 0.124998 10.9983 0.125 10.8568C0.125002 10.7152 0.181231 10.5794 0.281318 10.4793L5.06283 5.69619L0.281318 0.913108C0.181231 0.812991 0.125002 0.677203 0.125 0.535615C0.124997 0.394027 0.181223 0.258237 0.281306 0.158117C0.38139 0.0579977 0.517134 0.00175093 0.658676 0.00174902C0.800218 0.00174615 0.935963 0.0579891 1.03605 0.158106L6.19494 5.31868C6.2445 5.36826 6.28381 5.42711 6.31063 5.49188C6.33746 5.55665 6.35126 5.62608 6.35126 5.69619C6.35126 5.76629 6.33746 5.83572 6.31063 5.90049C6.28381 5.96526 6.2445 6.02411 6.19494 6.07369L1.03605 11.2343ZM5.19247 0.913108L9.97398 5.69619L5.19247 10.4793C5.09238 10.5794 5.03615 10.7152 5.03615 10.8568C5.03615 10.9983 5.09237 11.1341 5.19246 11.2343C5.29254 11.3344 5.42829 11.3906 5.56983 11.3906C5.71137 11.3906 5.84712 11.3344 5.9472 11.2343L11.1061 6.07369C11.1556 6.02411 11.195 5.96526 11.2218 5.90049C11.2486 5.83572 11.2624 5.76629 11.2624 5.69619C11.2624 5.62608 11.2486 5.55665 11.2218 5.49188C11.195 5.42711 11.1556 5.36826 11.1061 5.31868L5.9472 0.158106C5.84711 0.0579889 5.71137 0.00174593 5.56983 0.0017488C5.42829 0.00175071 5.29254 0.0579975 5.19246 0.158117C5.09237 0.258237 5.03615 0.394027 5.03615 0.535615C5.03615 0.677203 5.09238 0.812991 5.19247 0.913108Z"
-                                        fill="#2196F3"/>
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_462_475">
-                                        <rect width="11.387" height="11.387" fill="white"
-                                              transform="translate(0 11.3906) rotate(-90)"/>
-                                    </clipPath>
-                                </defs>
-                            </svg>
-
-                        </div>
-                    @endif
-                </div>
-
-                {{-- Низ --}}
-                <div class="h-[68px]">
-                    @if($bottomBlue)
-                        <div
-                            class="rounded-[10px] bg-blue-400 px-5 py-3 text-center text-[18px] leading-[1.25] text-white">
-                            {!! $bottomBlue['text'] !!}
-                        </div>
-                    @endif
-                        @if($topBlue['arrow_down'] ?? false)
-                            <div
-                                class="absolute bottom-[-14px] left-1/2 z-10 -translate-x-1/2 p-2 rounded-full @if($topBlue['arrow_color'] ?? null) bg-green-50 @else bg-white @endif lg:hidden">
-                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_462_471)">
-                                        <path d="M0.157283 1.02854C0.0571998 0.928417 0.000974477 0.792627 0.000976563 0.651038C0.000978648 0.50945 0.0572079 0.373662 0.157295 0.273546C0.257381 0.173429 0.393127 0.117185 0.534669 0.117188C0.67621 0.11719 0.811954 0.173437 0.912038 0.273557L5.69355 5.05663L10.4751 0.273557C10.5751 0.173437 10.7109 0.11719 10.8524 0.117188C10.994 0.117185 11.1297 0.173429 11.2298 0.273546C11.3299 0.373662 11.3861 0.50945 11.3861 0.651038C11.3861 0.792627 11.3299 0.928417 11.2298 1.02854L6.07093 6.18911C6.02137 6.23869 5.96254 6.27802 5.89779 6.30485C5.83304 6.33168 5.76364 6.34549 5.69355 6.34549C5.62347 6.34549 5.55407 6.33168 5.48932 6.30485C5.42456 6.27802 5.36573 6.23869 5.31617 6.18911L0.157283 1.02854ZM10.4751 5.18632L5.69355 9.96939L0.912038 5.18632C0.811954 5.0862 0.67621 5.02995 0.534669 5.02995C0.393127 5.02994 0.257381 5.08619 0.157295 5.18631C0.0572079 5.28642 0.000978659 5.42221 0.000976572 5.5638C0.000974485 5.70539 0.0571998 5.84118 0.157283 5.9413L5.31617 11.1019C5.36573 11.1514 5.42456 11.1908 5.48932 11.2176C5.55407 11.2444 5.62347 11.2582 5.69355 11.2582C5.76364 11.2582 5.83304 11.2444 5.89779 11.2176C5.96254 11.1908 6.02137 11.1514 6.07093 11.1019L11.2298 5.9413C11.3299 5.84118 11.3861 5.70539 11.3861 5.5638C11.3861 5.42221 11.3299 5.28642 11.2298 5.18631C11.1297 5.08619 10.994 5.02994 10.8524 5.02995C10.7109 5.02995 10.5751 5.0862 10.4751 5.18632Z" fill="#2196F3"/>
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_462_471">
-                                            <rect width="11.387" height="11.387" fill="white"/>
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                            </div>
-                        @endif
-                </div>
+                    </div>
+                @endforeach
             </div>
         @endforeach
     </div>
