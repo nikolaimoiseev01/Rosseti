@@ -17,9 +17,14 @@
     <div class="border-l-4 border-[#2196F3] bg-[#F7F9FC] rounded-2xl p-8">
         <div class="text-[15px] leading-relaxed text-[#333]">{!! $data['content'] !!}</div>
     </div>
-
 @elseif($style === 'dark')
+
+    <style>
+        .dark-block p {
+            color: white !important;
+        }
+    </style>
     <div class="rounded-2xl bg-[#1B2733] p-8 text-white">
-        <div class="text-[15px] leading-relaxed [&_*]:text-white [&_p]:text-white [&_strong]:text-white [&_a]:text-white">{!! $data['content'] !!}</div>
+        <div  class="text-[15px]  dark-block text-white leading-relaxed [&_*]:text-white [&_p]:text-white! [&_strong]:text-white [&_a]:text-white">{!! $data['content'] !!}</div>
     </div>
 @endif

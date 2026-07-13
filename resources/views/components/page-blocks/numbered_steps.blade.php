@@ -23,7 +23,7 @@
     <p class="text-xl font-bold text-[#1A1A1A] mb-6">{{ $data['title'] }}</p>
 @endif
 
-<div class="space-y-0">
+<div class="space-y-6">
     @foreach($data['steps'] ?? [] as $index => $step)
         @php
             $isLast = $loop->last;
@@ -48,7 +48,7 @@
             </div>
 
             {{-- Content --}}
-            <div class="{{ $connected && !$isLast ? 'pb-6' : 'pb-4' }}">
+            <div>
                 <p class="{{ $styleClass($step['title_style'] ?? 'large_bold') }}"
                    @if($isTitleAccent) style="color: {{ $colorHex }}" @endif
                 >{{ $step['title'] }}</p>

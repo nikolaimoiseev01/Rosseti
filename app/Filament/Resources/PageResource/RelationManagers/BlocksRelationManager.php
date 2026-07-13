@@ -15,6 +15,8 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 
 class BlocksRelationManager extends RelationManager
 {
@@ -49,11 +51,43 @@ class BlocksRelationManager extends RelationManager
                         'icon_list' => 'Перечисление с иконками',
                     ])
                     ->live()
-                    ->afterStateUpdated(fn ($state, $set) => $set('data', []))
-                    ->disabled(fn ($context) => $context === 'edit'),
+                    ->afterStateUpdated(function (
+                        Select $component,
+                        Set $set,
+                        ?string $state,
+                    ): void {
+                        /*
+                         * Важно создать вложенные ключи до того,
+                         * как RichEditor выполнит entangle.
+                         */
+                        $set('data', match ($state) {
+                            'rich_text' => [
+                                'content' => '',
+                                'text_color' => 'default',
+                                'spacing' => 'normal',
+                            ],
+
+                            default => [],
+                        });
+
+                        /*
+                         * Инициализируем динамически появившиеся компоненты.
+                         */
+                        $component
+                            ->getContainer()
+                            ->getComponent('blockSettings')
+                            ->getChildSchema()
+                            ->fill();
+                    })
+                    ->disabled(fn (string $operation): bool => $operation === 'edit'),
 
                 Section::make('Настройки блока')
-                    ->schema(fn ($get) => $this->getBlockFormSchema($get('type')))
+                    ->schema(
+                        fn (Get $get): array => $this->getBlockFormSchema(
+                            $get('type'),
+                        ),
+                    )
+                    ->key('blockSettings')
                     ->columnSpanFull(),
 
                 TextInput::make('sort')
@@ -80,7 +114,9 @@ class BlocksRelationManager extends RelationManager
                 Forms\Components\RichEditor::make('data.content')
                     ->label('Содержимое')
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->default('')
+                    ->fileAttachmentsVisibility('public'),
                 Forms\Components\Select::make('data.text_color')
                     ->label('Цвет текста')
                     ->options([
@@ -196,6 +232,7 @@ class BlocksRelationManager extends RelationManager
                         Forms\Components\FileUpload::make('url')
                             ->label('Изображение')
                             ->image()
+                            ->disk('public')
                             ->directory('report-images')
                             ->required(),
                         Forms\Components\TextInput::make('alt')
