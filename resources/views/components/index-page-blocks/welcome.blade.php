@@ -1,60 +1,131 @@
 <section
     id="welcome"
-    class="relative h-screen w-full overflow-hidden rounded-b-[34px]"
-    x-data="{
-        mouseX: 0,
-        mouseY: 0,
-        handleMouseMove(e) {
-            const rect = $el.getBoundingClientRect();
-            this.mouseX = (e.clientX - rect.left - rect.width / 2) / rect.width;
-            this.mouseY = (e.clientY - rect.top - rect.height / 2) / rect.height;
-        }
-    }"
-    @mousemove="handleMouseMove($event)"
-    @mouseleave="mouseX = 0; mouseY = 0"
+    x-data="revealAfterPreloader(0)"
+    class="welcome-reveal relative h-screen w-full overflow-hidden rounded-b-[34px]"
 >
+    <style>
+        [data-welcome-scroll-layer] {
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .welcome-parallax-layer {
+            will-change: transform;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            transform-origin: center center;
+        }
+
+        .welcome-reveal-item {
+            opacity: 0;
+            filter: blur(8px);
+            transform: translate3d(0, 40px, 0);
+
+            transition:
+                opacity 1s ease,
+                filter 1s ease,
+                transform 1s cubic-bezier(.22, 1, .36, 1);
+
+            transition-delay:
+                var(--welcome-reveal-delay, 0ms);
+
+            will-change: opacity, filter, transform;
+        }
+
+        .welcome-reveal.is-visible
+        .welcome-reveal-item {
+            opacity: 1;
+            filter: blur(0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .welcome-reveal-item {
+                filter: none;
+                transform: none;
+                transition-duration: 0.25s;
+            }
+        }
+    </style>
+
     <div class="absolute inset-0 overflow-hidden">
-        <img
-            src="/fixed/welcome-1.png"
-            alt=""
-            class="absolute left-1/2 top-1/2 h-[calc(100%+120px)] w-[calc(100%+120px)] max-w-none -translate-x-1/2 -translate-y-1/2 object-cover transition-transform duration-300 ease-out"
-            :style="`transform: translate(-50%, -50%) translate(${mouseX * 20}px, ${mouseY * 20}px)`"
+        <div
+            data-welcome-scroll-layer
+            data-scroll-distance="-18"
+            class="absolute inset-0"
         >
+            <img
+                x-ref="parallaxFirst"
+                src="/fixed/welcome-1.png"
+                alt=""
+                class="welcome-parallax-layer absolute left-1/2 top-1/2 h-[calc(100%+120px)] w-[calc(100%+120px)] max-w-none object-cover"
+                style="transform: translate(-50%, -50%) translate3d(0, 0, 0);"
+            >
+        </div>
 
-        <img
-            src="/fixed/welcome-2.png"
-            alt=""
-            class="absolute bottom-[-60px] left-1/2 w-[calc(100%+120px)] max-w-none -translate-x-1/2 object-cover transition-transform duration-300 ease-out"
-            :style="`transform: translateX(-50%) translate(${mouseX * 40}px, ${mouseY * 40}px)`"
+        <div
+            data-welcome-scroll-layer
+            data-scroll-distance="-30"
+            class="absolute inset-0"
         >
+            <img
+                x-ref="parallaxSecond"
+                src="/fixed/welcome-2.png"
+                alt=""
+                class="welcome-parallax-layer absolute bottom-[-60px] left-1/2 w-[calc(100%+120px)] max-w-none object-cover"
+                style="transform: translateX(-50%) translate3d(0, 0, 0);"
+            >
+        </div>
 
-        <img
-            src="/fixed/welcome-3.png"
-            alt=""
-            class="absolute bottom-[-60px] left-1/2 w-[calc(100%+120px)] max-w-none -translate-x-1/2 object-cover transition-transform duration-300 ease-out"
-            :style="`transform: translateX(-50%) translate(${mouseX * 60}px, ${mouseY * 60}px)`"
+        <div
+            data-welcome-scroll-layer
+            data-scroll-distance="-42"
+            class="absolute inset-0"
         >
+            <img
+                x-ref="parallaxThird"
+                src="/fixed/welcome-3.png"
+                alt=""
+                class="welcome-parallax-layer absolute bottom-[-60px] left-1/2 w-[calc(100%+120px)] max-w-none object-cover"
+                style="transform: translateX(-50%) translate3d(0, 0, 0);"
+            >
+        </div>
     </div>
 
     <div
-        x-data="revealOnScroll()"
-        class="relative z-20 flex h-full flex-col items-center justify-center text-center"
+        class="pointer-events-none relative z-20 flex h-full flex-col items-center justify-center text-center"
     >
-        <x-logo color="white" class="mb-12 w-[186px]" />
+        <div
+            class="welcome-reveal-item mb-12"
+            style="--welcome-reveal-delay: 0ms"
+        >
+            <x-logo
+                color="white"
+                class="w-[186px]"
+            />
+        </div>
 
-        <h1 class="mb-4 uppercase text-white">
-            Создаем потенциал<br>развития страны
+        <h1
+            class="welcome-reveal-item mb-4 uppercase text-white"
+            style="--welcome-reveal-delay: 180ms"
+        >
+            Создаем потенциал<br>
+            развития страны
         </h1>
 
-        <h3 class="text-2xl font-normal text-white md:text-xl">
-            Отчет о социальной ответственности <br>
+        <h3
+            class="welcome-reveal-item text-2xl font-normal text-white md:!text-xl"
+            style="--welcome-reveal-delay: 360ms"
+        >
+            Отчет о социальной ответственности
+            <br>
             и корпоративном устойчивом развитии
         </h3>
     </div>
 
     <h3
-        x-data="revealOnScroll()"
-        class="absolute bottom-[104px] left-1/2 -translate-x-1/2 text-2xl text-white"
+        class="welcome-reveal-item pointer-events-none absolute bottom-[104px] left-1/2 z-20 -translate-x-1/2 text-2xl text-white"
+        style="--welcome-reveal-delay: 540ms"
     >
         2025
     </h3>
