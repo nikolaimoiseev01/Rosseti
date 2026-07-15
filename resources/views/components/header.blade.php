@@ -7,6 +7,7 @@
                 @foreach($navLinks as $link)
                     <a class="text-sm" href="{{ route('article.index', $link['slug'])}}">{{ $link['title'] }}</a>
                 @endforeach
+                    <a download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-sm" >Приложения</a>
             </nav>
 
             <div class="flex items-center gap-4">
