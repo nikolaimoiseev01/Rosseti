@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PageResource\RelationManagers;
 
+use App\Filament\RichContent\TooltipRichContentPlugin;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -107,12 +108,26 @@ class BlocksRelationManager extends RelationManager
                 Forms\Components\RichEditor::make('data.text')
                     ->label('Текст')
                     ->required()
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
+                    ])
+                    ->enableToolbarButtons([
+                        'tooltip',
+                        'removeTooltip',
+                    ])
                     ->columnSpanFull(),
             ],
 
             'rich_text' => [
                 Forms\Components\RichEditor::make('data.content')
                     ->label('Содержимое')
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
+                    ])
+                    ->enableToolbarButtons([
+                        'tooltip',
+                        'removeTooltip',
+                    ])
                     ->required()
                     ->columnSpanFull()
                     ->default('')
@@ -160,9 +175,23 @@ class BlocksRelationManager extends RelationManager
             'two_columns' => [
                 Forms\Components\RichEditor::make('data.left')
                     ->label('Левая колонка')
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
+                    ])
+                    ->enableToolbarButtons([
+                        'tooltip',
+                        'removeTooltip',
+                    ])
                     ->required(),
                 Forms\Components\RichEditor::make('data.right')
                     ->label('Правая колонка')
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
+                    ])
+                    ->enableToolbarButtons([
+                        'tooltip',
+                        'removeTooltip',
+                    ])
                     ->required(),
             ],
 
@@ -323,6 +352,13 @@ class BlocksRelationManager extends RelationManager
                     ->placeholder('инвестиции в модернизацию')
                     ->required(),
                 Forms\Components\RichEditor::make('data.context')
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
+                    ])
+                    ->enableToolbarButtons([
+                        'tooltip',
+                        'removeTooltip',
+                    ])
                     ->label('Контекст (необязательный текст рядом)')
                     ->columnSpanFull(),
                 Forms\Components\Select::make('data.style')
@@ -372,6 +408,13 @@ class BlocksRelationManager extends RelationManager
                 Forms\Components\RichEditor::make('data.text')
                     ->label('Текст / цитата')
                     ->required()
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
+                    ])
+                    ->enableToolbarButtons([
+                        'tooltip',
+                        'removeTooltip',
+                    ])
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('data.photo')
                     ->label('Фото')
@@ -396,6 +439,13 @@ class BlocksRelationManager extends RelationManager
             'info_block' => [
                 Forms\Components\RichEditor::make('data.content')
                     ->label('Текст')
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
+                    ])
+                    ->enableToolbarButtons([
+                        'tooltip',
+                        'removeTooltip',
+                    ])
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\Select::make('data.style')

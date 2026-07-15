@@ -64,3 +64,88 @@ h4 {
 section {
     position: relative;
 }
+
+.has-tooltip {
+    position: relative;
+    display: inline;
+    cursor: help;
+    border-bottom: 1px dashed currentColor;
+}
+
+.has-tooltip::after {
+    content: attr(data-tooltip);
+
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 10px);
+    z-index: 100;
+
+    width: max-content;
+    max-width: 280px;
+    padding: 10px 14px;
+
+    color: #ffffff;
+    background: #0e3a5c;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform:
+        translateX(-50%)
+        translateY(6px);
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease;
+}
+
+.has-tooltip::before {
+    content: '';
+
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 4px);
+    z-index: 101;
+
+    width: 10px;
+    height: 10px;
+
+    background: #0e3a5c;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+.has-tooltip:hover::after,
+.has-tooltip:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+.has-tooltip:hover::before,
+.has-tooltip:focus-visible::before {
+    opacity: 1;
+    visibility: visible;
+}
