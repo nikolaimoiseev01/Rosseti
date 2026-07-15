@@ -103,8 +103,7 @@ class BlocksRelationManager extends RelationManager
         return match($type) {
             'text-with-title' => [
                 TextInput::make('data.title')
-                    ->label('Заголовок')
-                    ->required(),
+                    ->label('Заголовок'),
                 Forms\Components\RichEditor::make('data.text')
                     ->label('Текст')
                     ->required()
