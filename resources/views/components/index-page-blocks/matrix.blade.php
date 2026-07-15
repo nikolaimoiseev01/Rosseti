@@ -64,7 +64,7 @@
     ];
 @endphp
 
-<section class="container py-10 text-[#4A4A4A] mb-28 md:mb-16">
+<section class="page-block page-block--matrix container py-10 text-[#4A4A4A] mb-28 md:mb-16">
     <div class="grid grid-cols-[1fr_0.95fr] gap-6 lg:grid-cols-1 lg:gap-32 md:!gap-48">
         <div>
             <h2 x-data="revealOnScroll()" class="mb-4 text-[34px] leading-none uppercase  lg:text-[28px] md:text-[24px]">

@@ -1,4 +1,4 @@
-<section x-data="revealOnScroll()" class="container bg-gradient-to-br from-[#5CACF0]/[0.13] to-[#0E3A5C]/[0.13] lg:pb-0 lg:items-center rounded-[32px] flex lg:flex-col px-14 lg:px-4 py-10 relative justify-between mb-14">
+<section x-data="revealOnScroll()" class="page-block page-block--director-speech container bg-gradient-to-br from-[#5CACF0]/[0.13] to-[#0E3A5C]/[0.13] lg:pb-0 lg:items-center rounded-[32px] flex lg:flex-col px-14 lg:px-4 py-10 relative justify-between mb-14">
     <img src="/fixed/director-photo.png"
          class="absolute
          left-1/2 -translate-x-1/2 bottom-0 min-w-[830px] w-[830px]

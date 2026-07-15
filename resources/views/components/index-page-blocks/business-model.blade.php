@@ -26,7 +26,7 @@
     ];
 @endphp
 
-<section class="container py-10 ">
+<section class="page-block page-block--business-model container py-10 ">
     <h2 x-data="revealOnScroll()" class="mb-4 text-5xl text-blue-900 uppercase leading-none md:text-[26px]">
         Бизнес-модель
     </h2>

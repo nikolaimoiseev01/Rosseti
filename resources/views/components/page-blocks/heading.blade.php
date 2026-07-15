@@ -35,4 +35,4 @@
         default => 'mb-12',
     };
 @endphp
-<{{ $level }} class="{{ $size }} {{ $color }} {{ $spacingTop }} {{ $spacingBottom }}">{{ $data['content'] }}</{{ $level }}>
+<{{ $level }} class="page-block page-block--heading {{ $size }} {{ $color }} {{ $spacingTop }} {{ $spacingBottom }}">{{ $data['content'] }}</{{ $level }}>

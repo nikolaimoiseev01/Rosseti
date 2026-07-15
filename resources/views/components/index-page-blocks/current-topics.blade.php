@@ -1,4 +1,4 @@
-<section class="container py-8 mb-20">
+<section class="page-block page-block--current-topics container py-8 mb-20">
     <h2 x-data="revealOnScroll()" class="mb-4 text-[34px] leading-none uppercase  lg:text-[28px] md:text-[24px]">
         Существенные темы отчета
     </h2>

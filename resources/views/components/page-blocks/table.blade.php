@@ -45,7 +45,7 @@
     <p class="text-sm font-bold text-[#00355A] mb-2">{{ $data['caption'] }}</p>
 @endif
 
-<div class="overflow-x-auto rounded-xl border border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
+<div class="page-block page-block--table overflow-x-auto rounded-xl border border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
     <table class="w-full text-sm">
         @if(!empty($data['headers']))
             <thead>

@@ -8,7 +8,7 @@
     ];
 @endphp
 
-<section class="container mb-16">
+<section class="page-block page-block--aim container mb-16">
     <div
         class="mb-2 overflow-hidden rounded-[10px] bg-cover bg-center px-10 py-10 text-white md:px-5 md:py-7"
         style="background-image: url('/fixed/aim-bg.jpg');"

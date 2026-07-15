@@ -1,7 +1,7 @@
 <section
     id="welcome"
     x-data="revealAfterPreloader(0)"
-    class="welcome-reveal relative h-screen w-full overflow-hidden rounded-b-[34px]"
+    class="page-block page-block--welcome welcome-reveal relative h-screen w-full overflow-hidden rounded-b-[34px]"
 >
     <style>
         [data-welcome-scroll-layer] {

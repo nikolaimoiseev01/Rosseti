@@ -46,7 +46,7 @@
         $finalTextColor = $textColor ?? '#FFFFFF';
         $finalDescColor = $descColor ?? 'rgba(255,255,255,0.7)';
     @endphp
-    <div class="rounded-2xl p-8 flex flex-col justify-between items-stretch {{ $spacingTop }} {{ $spacingBottom }}" style="background-color: {{ $bgColor }}">
+    <div class="page-block page-block--key-figure rounded-2xl p-8 flex flex-col justify-between items-stretch {{ $spacingTop }} {{ $spacingBottom }}" style="background-color: {{ $bgColor }}">
         @if(trim(strip_tags($data['context'])) !== '')
             <div class="text-sm leading-relaxed mb-4" style="color: {{ $finalTextColor }}">{!! $data['context'] !!}</div>
         @endif
@@ -61,7 +61,7 @@
         $finalTextColor = $textColor ?? '#1A1A1A';
         $finalDescColor = $descColor ?? '#6B7785';
     @endphp
-    <div class="rounded-2xl bg-[#F7F9FC] border border-[#E1E7F0] p-8 flex flex-col justify-between items-stretch {{ $spacingTop }} {{ $spacingBottom }}">
+    <div class="page-block page-block--key-figure rounded-2xl bg-[#F7F9FC] border border-[#E1E7F0] p-8 flex flex-col justify-between items-stretch {{ $spacingTop }} {{ $spacingBottom }}">
         @if(trim(strip_tags($data['context'])) !== '')
             <div class="text-sm leading-relaxed mb-4" style="color: {{ $finalTextColor }}">{!! $data['context'] !!}</div>
         @endif
@@ -76,7 +76,7 @@
         $finalTextColor = $textColor ?? '#1A1A1A';
         $finalDescColor = $descColor ?? '#6B7785';
     @endphp
-    <div class="text-center py-8 flex flex-col items-center justify-center {{ $spacingTop }} {{ $spacingBottom }}">
+    <div class="page-block page-block--key-figure text-center py-8 flex flex-col items-center justify-center {{ $spacingTop }} {{ $spacingBottom }}">
         <p class="text-6xl font-bold mb-3" style="color: {{ $colorHex }}">{{ $data['value'] }}</p>
         <p class="text-lg" style="color: {{ $finalDescColor }}">{{ $data['description'] }}</p>
         @if(trim(strip_tags($data['context'])) !== '')
@@ -89,7 +89,7 @@
         $finalTextColor = $textColor ?? '#1A1A1A';
         $finalDescColor = $descColor ?? '#6B7785';
     @endphp
-    <div class="flex items-center gap-8 py-4 lg:flex-col lg:items-start min-h-[80px] {{ $spacingTop }} {{ $spacingBottom }}">
+    <div class="page-block page-block--key-figure flex items-center gap-8 py-4 lg:flex-col lg:items-start min-h-[80px] {{ $spacingTop }} {{ $spacingBottom }}">
         <p class="text-5xl font-bold shrink-0" style="color: {{ $colorHex }}">{{ $data['value'] }}</p>
         <div>
             <p class="font-bold mb-1" style="color: {{ $finalTextColor }}">{{ $data['description'] }}</p>
@@ -104,7 +104,7 @@
         $finalTextColor = $textColor ?? '#1A1A1A';
         $finalDescColor = $descColor ?? '#6B7785';
     @endphp
-    <div class="border-l-4 pl-6 py-4 flex flex-col justify-center {{ $spacingTop }} {{ $spacingBottom }}" style="border-color: {{ $colorHex }}">
+    <div class="page-block page-block--key-figure border-l-4 pl-6 py-4 flex flex-col justify-center {{ $spacingTop }} {{ $spacingBottom }}" style="border-color: {{ $colorHex }}">
         <p class="text-4xl font-bold mb-2" style="color: {{ $colorHex }}">{{ $data['value'] }}</p>
         <p class="font-bold" style="color: {{ $finalTextColor }}">{{ $data['description'] }}</p>
         @if(trim(strip_tags($data['context'])) !== '')

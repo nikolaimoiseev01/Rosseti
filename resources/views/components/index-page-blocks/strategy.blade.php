@@ -1,5 +1,5 @@
 <section x-data="revealOnScroll()"
-         class="container bg-gradient-to-br from-[#5CACF0]/[0.13] to-[#0E3A5C]/[0.13] rounded-[32px] flex lg:flex-col p-3 relative justify-between mb-14">
+         class="page-block page-block--strategy container bg-gradient-to-br from-[#5CACF0]/[0.13] to-[#0E3A5C]/[0.13] rounded-[32px] flex lg:flex-col p-3 relative justify-between mb-14">
     <div class="flex flex-col p-[36px] lg:p-0 lg:mb-8">
         <h3 class="leading-[120%]">Каковы стратегические цели и практическая значимость подготовки ПАО «Россети» Отчета о социальной
             ответственности и корпоративном устойчивом развитии?</h3>

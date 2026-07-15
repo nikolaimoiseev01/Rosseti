@@ -1,4 +1,4 @@
-<section class="container rounded-[10px] bg-blue-300 p-8 text-white mb-4">
+<section class="page-block page-block--regularity container rounded-[10px] bg-blue-300 p-8 text-white mb-4">
     <div class="grid grid-cols-2 gap-x-10 gap-y-8 md:grid-cols-1 md:gap-y-6">
         <div class="space-y-8">
             <x-general-text-with-title

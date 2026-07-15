@@ -19,7 +19,7 @@
     ];
 @endphp
 
-<section class="container py-8 text-[#0B4775]">
+<section class="page-block page-block--conclusions container py-8 text-[#0B4775]">
     <h2 x-data="revealOnScroll()" class="mb-5 text-5xl uppercase leading-none lg:text-4xl md:!text-3xl">
         Ключевые выводы
     </h2>

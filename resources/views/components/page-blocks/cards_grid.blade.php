@@ -41,7 +41,7 @@
         default => 'mb-12',
     };
 @endphp
-<div class="grid {{ $cols }} gap-5 {{ $spacingTop }} {{ $spacingBottom }}">
+<div class="page-block page-block--cards-grid grid {{ $cols }} gap-5 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['cards'] ?? [] as $card)
         <div class="bg-[#F7F9FC] rounded-2xl p-6 border border-[#E1E7F0]/60 hover:border-[#2196F3]/30 transition-colors">
             @if(!empty($card['icon']))

@@ -28,11 +28,11 @@
 @endphp
 
 @if($style === 'default')
-    <p class="text-lg {{ $spacingTop }} {{ $spacingBottom }}" style="color: #1A1A1A">{{ $data['text'] }}</p>
+    <p class="page-block page-block--subtitle text-lg {{ $spacingTop }} {{ $spacingBottom }}" style="color: #1A1A1A">{{ $data['text'] }}</p>
 
 @elseif($style === 'accent')
-    <p class="text-lg {{ $spacingTop }} {{ $spacingBottom }}" style="color: {{ $colorHex }}">{{ $data['text'] }}</p>
+    <p class="page-block page-block--subtitle text-lg {{ $spacingTop }} {{ $spacingBottom }}" style="color: {{ $colorHex }}">{{ $data['text'] }}</p>
 
 @elseif($style === 'uppercase')
-    <p class="text-sm uppercase tracking-[0.2em] font-bold {{ $spacingTop }} {{ $spacingBottom }}" style="color: {{ $colorHex }}">{{ $data['text'] }}</p>
+    <p class="page-block page-block--subtitle text-sm uppercase tracking-[0.2em] font-bold {{ $spacingTop }} {{ $spacingBottom }}" style="color: {{ $colorHex }}">{{ $data['text'] }}</p>
 @endif

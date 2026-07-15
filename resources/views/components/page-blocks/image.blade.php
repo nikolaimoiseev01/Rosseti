@@ -26,7 +26,7 @@
         default => 'mb-12',
     };
 @endphp
-<figure class="{{ $sizeClass }} {{ $spacingTop }} {{ $spacingBottom }}">
+<figure class="page-block page-block--image {{ $sizeClass }} {{ $spacingTop }} {{ $spacingBottom }}">
     @if($data['url'])
         <img
             src="{{ Storage::url($data['url']) }}"

@@ -22,7 +22,7 @@
     };
 @endphp
 
-<div class="grid grid-cols-4 gap-5 md:grid-cols-2 sm:grid-cols-1 {{ $spacingTop }} {{ $spacingBottom }}">
+<div class="page-block page-block--stats-grid grid grid-cols-4 gap-5 md:grid-cols-2 sm:grid-cols-1 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['items'] as $item)
         <div class="bg-[#F7F9FC] rounded-2xl p-6 border border-[#E1E7F0] text-center">
             <div class="text-4xl font-bold text-[#005B9C] mb-1">

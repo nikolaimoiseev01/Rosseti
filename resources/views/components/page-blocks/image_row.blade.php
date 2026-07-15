@@ -37,7 +37,7 @@
     };
 @endphp
 
-<div class="flex flex-wrap items-center {{ $gap }} {{ $spacingTop }} {{ $spacingBottom }}">
+<div class="page-block page-block--image-row flex flex-wrap items-center {{ $gap }} {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['images'] ?? [] as $img)
         <img src="{{ Storage::url($img['url']) }}" alt="{{ $img['alt'] ?? '' }}" class="{{ $size }} object-contain">
     @endforeach

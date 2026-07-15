@@ -25,7 +25,7 @@
         default => 'mb-12',
     };
 @endphp
-<div class="max-w-3xl {{ $spacingTop }} {{ $spacingBottom }}">
+<div class="page-block page-block--person-card max-w-3xl {{ $spacingTop }} {{ $spacingBottom }}">
     @if(!empty($data['heading']))
         <p class="text-lg leading-snug mb-6" style="color: {{ $colorHex }}">{{ $data['heading'] }}</p>
     @endif

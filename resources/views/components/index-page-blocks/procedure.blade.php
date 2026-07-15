@@ -141,7 +141,7 @@
     $rows = ['top', 'center', 'bottom'];
 @endphp
 
-<section class="container mb-16 text-[#4A4A4A]">
+<section class="page-block page-block--procedure container mb-16 text-[#4A4A4A]">
     <h3
         x-data="revealOnScroll()"
         class="mb-6 text-center text-[24px] leading-snug text-blue-500 md:text-left md:text-[16px]"

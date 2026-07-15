@@ -42,12 +42,17 @@
     };
 @endphp
 
-<div class="space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
+<style>
+    .page-block--icon-list img {
+        margin: 0 !important;
+    }
+</style>
+<div class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['items'] ?? [] as $item)
         @php
             $isTitleAccent = ($item['title_style'] ?? 'large_bold') === 'accent';
         @endphp
-        <div class="flex items-start gap-4">
+        <div class="flex items-center gap-4">
             @if(!empty($item['icon']))
                 <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0">
             @endif

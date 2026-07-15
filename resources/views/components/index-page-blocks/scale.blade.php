@@ -1,4 +1,4 @@
-<section class="container py-12">
+<section class="page-block page-block--scale container py-12">
     <div class="relative overflow-hidden rounded-[32px] min-h-[767px]">
         {{-- Background image --}}
         <img

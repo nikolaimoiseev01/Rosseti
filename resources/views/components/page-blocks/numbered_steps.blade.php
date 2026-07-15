@@ -51,7 +51,7 @@
     <p class="text-xl font-bold text-[#1A1A1A] mb-6">{{ $data['title'] }}</p>
 @endif
 
-<div class="space-y-6 {{ $alignClasses }} {{ $spacingTop }} {{ $spacingBottom }}">
+<div class="page-block page-block--numbered-steps space-y-6 {{ $alignClasses }} {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['steps'] ?? [] as $index => $step)
         @php
             $isLast = $loop->last;

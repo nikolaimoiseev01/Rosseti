@@ -1,4 +1,4 @@
-<section id="about" class="container mx-auto flex flex-col gap-16 py-24 xl:gap-10 md:grid-cols-1 md:py-16 sm:px-4 mb-14">
+<section id="about" class="page-block page-block--about container mx-auto flex flex-col gap-16 py-24 xl:gap-10 md:grid-cols-1 md:py-16 sm:px-4 mb-14">
     <div x-data="revealOnScroll()" class="will-change-transform flex w-full lg:flex-col">
         <h2 class="lg:mb-4">Мы — группа<br>компаний «Россети»</h2>
         <p class="max-w-[621px] ml-auto text-2xl">За каждым щелчком выключателя — линии электропередачи, подстанции, диспетчерские центры по всей стране. <br><br>Мы обслуживаем эту систему ежедневно и развиваем с расчетом на десятилетия. Модернизируем оборудование, подключаем новые объекты, создаем инфраструктуру и сервисы для следующих поколений — формируя потенциал развития страны.</p>

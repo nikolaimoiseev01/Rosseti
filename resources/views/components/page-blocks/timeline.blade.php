@@ -25,7 +25,7 @@
         default => 'mb-12',
     };
 @endphp
-<div class="{{ $spacingTop }} {{ $spacingBottom }}">
+<div class="page-block page-block--timeline {{ $spacingTop }} {{ $spacingBottom }}">
     @if(!empty($data['title']))
         <h3 class="text-2xl font-bold mb-8 leading-tight" style="color: {{ $colorHex }}">{{ $data['title'] }}</h3>
     @endif

@@ -1,4 +1,4 @@
-<section class="container flex md:flex-col gap-6 mb-12">
+<section class="page-block page-block--about-long-read container flex md:flex-col gap-6 mb-12">
     <div class="flex flex-col w-1/2 md:w-full">
         <h2  x-data="revealOnScroll()" class="uppercase">Уважаемые коллеги!</h2>
         <x-g-r-i gri="2-22" class="mt-2"/>
