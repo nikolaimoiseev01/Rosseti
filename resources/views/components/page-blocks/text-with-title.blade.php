@@ -8,6 +8,7 @@
         use App\Filament\RichContent\TooltipRichContentPlugin;
     @endphp
 
+    @if(!empty($block['data']['text']))
     <div class="text-lg text-black-400 md:text-base leading-[160%]">
         {!!
             RichContentRenderer::make($block['data']['text'])
@@ -17,4 +18,5 @@
                 ->toHtml()
         !!}
     </div>
+    @endif
 </div>
