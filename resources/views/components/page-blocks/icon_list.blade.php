@@ -9,6 +9,26 @@
         'large' => 'w-[60px] h-[60px]',
         default => 'w-10 h-10',
     };
+    $spacingTop = match($data['spacing_top'] ?? 'none') {
+        'none' => '',
+        'small' => 'mt-2',
+        'normal' => 'mt-4',
+        'large' => 'mt-8',
+        'xl' => 'mt-12',
+        '2xl' => 'mt-16',
+        '3xl' => 'mt-24',
+        default => '',
+    };
+    $spacingBottom = match($data['spacing_bottom'] ?? 'xl') {
+        'none' => '',
+        'small' => 'mb-2',
+        'normal' => 'mb-4',
+        'large' => 'mb-8',
+        'xl' => 'mb-12',
+        '2xl' => 'mb-16',
+        '3xl' => 'mb-24',
+        default => 'mb-12',
+    };
 
     $styleClass = function($style) {
         return match($style) {
@@ -22,7 +42,7 @@
     };
 @endphp
 
-<div class="space-y-4">
+<div class="space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['items'] ?? [] as $item)
         @php
             $isTitleAccent = ($item['title_style'] ?? 'large_bold') === 'accent';

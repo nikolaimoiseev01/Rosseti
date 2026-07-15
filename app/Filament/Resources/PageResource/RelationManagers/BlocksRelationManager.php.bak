@@ -540,7 +540,16 @@ class BlocksRelationManager extends RelationManager
                         'accent' => 'Голубой (#2196F3)',
                     ])
                     ->default('primary'),
-                ...$this->spacingSelectFields(),
+                Forms\Components\Select::make('data.spacing')
+                    ->label('Отступ снизу')
+                    ->options([
+                        'none' => 'Без отступа',
+                        'small' => 'Маленький (8px)',
+                        'normal' => 'Обычный (16px)',
+                        'large' => 'Большой (32px)',
+                        'xl' => 'Очень большой (48px)',
+                    ])
+                    ->default('normal'),
             ],
 
             'numbered_steps' => [

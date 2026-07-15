@@ -9,7 +9,34 @@
     $headerBg = match($headerStyle) {
         'blue' => 'bg-[#00355A] text-white',
         'light' => 'bg-[#F0F4F8] text-[#1A1A1A]',
+        'dark' => 'bg-[#1B2733] text-white',
         default => 'text-[#1A1A1A]',
+    };
+    $headerFontStyle = match($data['header_font_style'] ?? 'bold') {
+        'normal' => 'font-normal',
+        'medium' => 'font-medium',
+        'bold' => 'font-bold',
+        default => 'font-bold',
+    };
+    $spacingTop = match($data['spacing_top'] ?? 'none') {
+        'none' => '',
+        'small' => 'mt-2',
+        'normal' => 'mt-4',
+        'large' => 'mt-8',
+        'xl' => 'mt-12',
+        '2xl' => 'mt-16',
+        '3xl' => 'mt-24',
+        default => '',
+    };
+    $spacingBottom = match($data['spacing_bottom'] ?? 'xl') {
+        'none' => '',
+        'small' => 'mb-2',
+        'normal' => 'mb-4',
+        'large' => 'mb-8',
+        'xl' => 'mb-12',
+        '2xl' => 'mb-16',
+        '3xl' => 'mb-24',
+        default => 'mb-12',
     };
     $colCount = count($data['headers'] ?? []);
 @endphp
@@ -18,13 +45,13 @@
     <p class="text-sm font-bold text-[#00355A] mb-2">{{ $data['caption'] }}</p>
 @endif
 
-<div class="overflow-x-auto rounded-xl border border-[#E1E7F0]">
+<div class="overflow-x-auto rounded-xl border border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
     <table class="w-full text-sm">
         @if(!empty($data['headers']))
             <thead>
                 <tr class="{{ $headerBg }}">
                     @foreach($data['headers'] as $header)
-                        <th class="{{ $cellPadding }} text-left font-bold" @if($headerStyle === 'blue') style="color: #fff;" @endif>{{ $header['text'] }}</th>
+                        <th class="{{ $cellPadding }} {{ $headerFontStyle }} text-left" @if($headerStyle === 'blue' || $headerStyle === 'dark') style="color: #fff;" @endif>{{ $header['text'] }}</th>
                     @endforeach
                 </tr>
             </thead>

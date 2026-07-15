@@ -1,21 +1,42 @@
 {{-- Rich Text Block with color and spacing --}}
 @php
-    $textColor = match($data['text_color'] ?? 'default') {
-        'primary' => 'text-[#00355A]',
-        'accent' => 'text-[#2196F3]',
-        'muted' => 'text-[#6B7785]',
-        'white' => 'text-white',
-        default => 'text-[#1A1A1A]',
+    $colorHex = match($data['text_color'] ?? 'default') {
+        'primary' => '#00355A',
+        'accent' => '#2196F3',
+        'muted' => '#6B7785',
+        'white' => '#FFFFFF',
+        default => '#1A1A1A',
     };
-    $spacing = match($data['spacing'] ?? 'normal') {
-        'none' => 'mb-0',
+    $spacingTop = match($data['spacing_top'] ?? 'none') {
+        'none' => '',
+        'small' => 'mt-2',
+        'normal' => 'mt-4',
+        'large' => 'mt-8',
+        'xl' => 'mt-12',
+        '2xl' => 'mt-16',
+        '3xl' => 'mt-24',
+        default => '',
+    };
+    $spacingBottom = match($data['spacing_bottom'] ?? 'xl') {
+        'none' => '',
         'small' => 'mb-2',
+        'normal' => 'mb-4',
         'large' => 'mb-8',
         'xl' => 'mb-12',
-        default => 'mb-4',
+        '2xl' => 'mb-16',
+        '3xl' => 'mb-24',
+        default => 'mb-12',
     };
 @endphp
 
-<div class="prose max-w-none {{ $textColor }} {{ $spacing }} [&_a]:text-[#2196F3] [&_a]:font-normal [&_a]:underline">
+<style>
+    .rich-text-{{ $data['text_color'] ?? 'default' }} p,
+    .rich-text-{{ $data['text_color'] ?? 'default' }} span,
+    .rich-text-{{ $data['text_color'] ?? 'default' }} div {
+        color: {{ $colorHex }} !important;
+    }
+</style>
+
+<div class="max-w-none {{ $spacingTop }} {{ $spacingBottom }} rich-text-{{ $data['text_color'] ?? 'default' }} [&_a]:text-[#2196F3] [&_a]:font-normal [&_a]:underline">
     {!! $data['content'] !!}
 </div>

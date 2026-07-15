@@ -5,14 +5,34 @@
         'accent' => '#2196F3',
         default => '#00355A',
     };
+    $spacingTop = match($data['spacing_top'] ?? 'none') {
+        'none' => '',
+        'small' => 'mt-2',
+        'normal' => 'mt-4',
+        'large' => 'mt-8',
+        'xl' => 'mt-12',
+        '2xl' => 'mt-16',
+        '3xl' => 'mt-24',
+        default => '',
+    };
+    $spacingBottom = match($data['spacing_bottom'] ?? 'xl') {
+        'none' => '',
+        'small' => 'mb-2',
+        'normal' => 'mb-4',
+        'large' => 'mb-8',
+        'xl' => 'mb-12',
+        '2xl' => 'mb-16',
+        '3xl' => 'mb-24',
+        default => 'mb-12',
+    };
 @endphp
 
 @if($style === 'default')
-    <p class="text-lg mb-2" style="color: #1A1A1A">{{ $data['text'] }}</p>
+    <p class="text-lg {{ $spacingTop }} {{ $spacingBottom }}" style="color: #1A1A1A">{{ $data['text'] }}</p>
 
 @elseif($style === 'accent')
-    <p class="text-lg font-bold mb-2" style="color: {{ $colorHex }}">{{ $data['text'] }}</p>
+    <p class="text-lg {{ $spacingTop }} {{ $spacingBottom }}" style="color: {{ $colorHex }}">{{ $data['text'] }}</p>
 
 @elseif($style === 'uppercase')
-    <p class="text-sm uppercase tracking-[0.2em] font-bold mb-4" style="color: {{ $colorHex }}">{{ $data['text'] }}</p>
+    <p class="text-sm uppercase tracking-[0.2em] font-bold {{ $spacingTop }} {{ $spacingBottom }}" style="color: {{ $colorHex }}">{{ $data['text'] }}</p>
 @endif

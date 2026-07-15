@@ -15,7 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased flex flex-col min-h-screen">
-<x-preloader/>
+{{--<x-preloader/>--}}
 <x-header/>
 {{ $slot ?? '' }}
 @yield('content')

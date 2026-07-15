@@ -22,7 +22,7 @@
 
     <!-- Main Article -->
     <main class="flex-1 lg:w-full">
-        <article class="prose pr-6 space-y-12">
+        <article class="prose pr-6">
             @foreach($page->blocks as $block)
                 @include('components.page-blocks.' . $block->type, ['data' => $block->data])
             @endforeach
