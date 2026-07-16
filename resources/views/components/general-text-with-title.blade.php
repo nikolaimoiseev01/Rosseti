@@ -21,5 +21,5 @@
         <x-g-r-i :textColor="$textColor" gri="{{$gri}}"/>
     @endif
 
-    <p class="{{$textClass}}">{{ $text }}</p>
+    <p class="{{$textClass}}">{!! $text !!}</p>
 </div>

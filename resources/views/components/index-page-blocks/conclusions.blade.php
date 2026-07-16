@@ -10,7 +10,7 @@
         ],
         [
             'icon' => 'mail',
-            'text' => 'Большая важность повестки Компании для ее внутренних заинтересованных сторон',
+            'text' => 'Бо́льшая важность повестки Компании для ее внутренних заинтересованных сторон',
         ],
         [
             'icon' => 'people',
@@ -24,6 +24,9 @@
         Ключевые выводы
     </h2>
 
+    <p class="text-lg leading-[110%] mb-4">
+        Анализ ответов респондентов позволяет сделать ряд выводов о восприятии<br> заинтересованными сторонами воздействия деятельности Компании:
+    </p>
     <div class="grid grid-cols-4 gap-2 lg:grid-cols-2 md:!grid-cols-1">
         @foreach($items as $item)
             <div x-data="revealOnScroll()" class="flex min-h-[290px] max-h-[290px]  flex-col justify-between rounded-[10px] bg-[#F1F6FE] px-5 py-5">

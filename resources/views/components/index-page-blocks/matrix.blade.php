@@ -73,7 +73,7 @@
 
             <div x-data="revealOnScroll()" class="rounded-b-[14px] relative">
                 <div class="rounded-2xl bg-white px-6 pb-6 rounded-3xl">
-                    <img src="/fixed/matrix-chart.png" class="mb-3" alt="">
+                    <img src="/fixed/matrix-chart.png" class="mb-3" alt="" data-no-lightbox>
 
                     <div class="grid grid-cols-2 gap-x-8 gap-y-5 text-[12px] leading-[1.15] md:grid-cols-1">
                         @foreach($legendGroups as $group)

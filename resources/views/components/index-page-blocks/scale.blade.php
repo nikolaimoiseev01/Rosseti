@@ -5,6 +5,7 @@
             src="/fixed/change-topics-bg.jpg"
             alt=""
             class="absolute inset-0 h-full w-full object-cover"
+            data-no-lightbox
         >
         {{-- Dark overlay --}}
         <div class="absolute inset-0 bg-gradient-to-r bg-black-900/10"></div>

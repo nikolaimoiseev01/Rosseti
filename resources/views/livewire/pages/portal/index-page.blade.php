@@ -16,8 +16,8 @@
 
     <x-index-page-blocks.report-approval/>
 
-    <h2 x-data="revealOnScroll()" class="container text-center mx-auto my-12">Дальнейшее развитие корпоративной нефинансовой<br> отчетности — один
-        из долгосрочных приоритетов Группы «Россети». </h2>
+    <h2 x-data="revealOnScroll()" class="container text-center mx-auto my-12">Дальнейшее развитие корпоративной нефинансовой<br> отчетности — один
+        из долгосрочных приоритетов Группы «Россети». </h2>
 
     <x-index-page-blocks.regularity/>
 

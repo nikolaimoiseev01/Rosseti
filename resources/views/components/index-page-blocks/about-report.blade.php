@@ -29,7 +29,7 @@
         </div>
     </div>
     <div x-data="revealOnScroll()" class="flex flex-col">
-        <p class="text-2xl text-white mb-6">Стандарты и рекомендации, на которые мы опирались при подготовке Отчета</p>
+        <p class="text-2xl text-white mb-6">Стандарты и рекомендации, на которые мы опирались при подготовке Отчета</p>
         <div class="grid grid-cols-2 lg:grid-cols-1 gap-2">
             <div class="ml-auto flex flex-col rounded-[10px]
             bg-gradient-to-br from-white/25 to-white/[0.03]
@@ -50,9 +50,9 @@
             p-5 text-white">
                 <p class="text-white">Международные</p>
                 <ul class="list-disc list-outside pl-6">
-                    <li class="text-white text-lg">Стандарты Глобальной инициативы по отчетности в области устойчивого развития 2021 (Global Reporting Initiative (GRI) Standards, GRI) </li>
+                    <li class="text-white text-lg">Стандарты Глобальной инициативы по отчетности в области устойчивого развития 2021 (Global Reporting Initiative (GRI) Standards, GRI) </li>
                     <li class="text-white text-lg">Стандарт по взаимодействию со стейкхолдерами АА1000SES</li>
-                    <li class="text-white text-lg">Отраслевое приложение GRI для электроэнергетической отрасли, The Electric Utilities Sector Disclosures</li>
+                    <li class="text-white text-lg">Отраслевое приложение GRI для электроэнергетической отрасли, The Electric Utilities Sector Disclosures</li>
                 </ul>
             </div>
         </div>

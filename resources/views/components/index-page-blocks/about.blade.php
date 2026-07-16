@@ -4,7 +4,7 @@
         <p class="max-w-[621px] ml-auto text-2xl">За каждым щелчком выключателя — линии электропередачи, подстанции, диспетчерские центры по всей стране. <br><br>Мы обслуживаем эту систему ежедневно и развиваем с расчетом на десятилетия. Модернизируем оборудование, подключаем новые объекты, создаем инфраструктуру и сервисы для следующих поколений — формируя потенциал развития страны.</p>
     </div>
 
-    <img x-data="revealOnScroll()" src="/fixed/about.jpg" class="rounded-[32px] min-h-[400px] object-cover max-h-[400px] w-full object-[center_20%]" alt="">
+    <img x-data="revealOnScroll()" src="/fixed/about.jpg" class="rounded-[32px] min-h-[400px] object-cover max-h-[400px] w-full object-[center_20%]" alt="" data-no-lightbox>
 
     <div x-data="revealOnScroll()" x-data="revealOnScroll()" class="flex max-w-5xl mx-auto gap-16 lg:flex-col">
         <h2 class="uppercase leading-[100%]">Мы стремимся быть надежной<br>опорой, чтобы вы могли жить,<br> работать и развиваться.</h2>

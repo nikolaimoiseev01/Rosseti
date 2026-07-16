@@ -5,7 +5,7 @@
 
             <nav class="flex gap-3 text-base md:hidden text-black-400 text-nowrap">
                 @foreach($navLinks as $link)
-                    <a class="text-sm" href="{{ route('article.index', $link['slug'])}}">{{ $link['title'] }}</a>
+                    <a class="text-sm {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}" href="{{ route('article.index', $link['slug'])}}">{{ $link['title'] }}</a>
                 @endforeach
                     <a download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-sm" >Приложения</a>
             </nav>

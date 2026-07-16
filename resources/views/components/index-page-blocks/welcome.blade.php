@@ -60,6 +60,7 @@
                 alt=""
                 class="welcome-parallax-layer absolute left-1/2 top-1/2 h-[calc(100%+120px)] w-[calc(100%+120px)] max-w-none object-cover"
                 style="transform: translate(-50%, -50%) translate3d(0, 0, 0);"
+                data-no-lightbox
             >
         </div>
 
@@ -74,6 +75,7 @@
                 alt=""
                 class="welcome-parallax-layer absolute bottom-[-60px] left-1/2 w-[calc(100%+120px)] max-w-none object-cover"
                 style="transform: translateX(-50%) translate3d(0, 0, 0);"
+                data-no-lightbox
             >
         </div>
 
@@ -88,6 +90,7 @@
                 alt=""
                 class="welcome-parallax-layer absolute bottom-[-60px] left-1/2 w-[calc(100%+120px)] max-w-none object-cover"
                 style="transform: translateX(-50%) translate3d(0, 0, 0);"
+                data-no-lightbox
             >
         </div>
     </div>

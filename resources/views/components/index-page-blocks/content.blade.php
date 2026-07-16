@@ -10,6 +10,7 @@
                     <img
                         src="{{ $page->getFirstMediaUrl('cover') }}"
                         class="min-h-60 w-full object-cover transition duration-700 group-hover:scale-110"
+                        data-no-lightbox
                     >
                     <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                     <div class="absolute right-4 leading-[100%] top-4 text-[100px] bg-gradient-to-b from-white to-transparent
@@ -18,7 +19,7 @@
                 <div class="p-6 flex flex-col flex-1">
                     <h3 class="text-2xl mb-0">{{ $page->title }}</h3>
                     <div class="flex flex-col mt-auto">
-                        <p class="text-lg text-black-400">{{ $page->description }}</p>
+{{--                        <p class="text-lg text-black-400">{{ $page->description }}</p>--}}
                         <span class="text-blue-400 inline-block text-lg group-hover:translate-x-1 transition-transform">Подробнее →</span>
                     </div>
                 </div>
