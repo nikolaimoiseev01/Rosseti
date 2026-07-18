@@ -5,15 +5,15 @@
 
             <nav class="flex gap-3 text-base md:hidden text-black-400 text-nowrap">
                 @foreach($navLinks as $link)
-                    <a class="text-sm {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}" href="{{ route('article.index', $link['slug'])}}">{{ $link['title'] }}</a>
+                    <a wire:navigate class="text-sm {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}" href="{{ route('article.index', $link['slug'])}}">{{ $link['title'] }}</a>
                 @endforeach
                     <a download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-sm" >Приложения</a>
             </nav>
 
             <div class="flex items-center gap-4">
                 <div x-data="{ lang: 'ru' }" class="flex items-center gap-1 p-1 bg-black-100 rounded-lg min-h-10">
-                    <button @click="lang = 'ru'" :class="lang === 'ru' ? 'bg-white text-blue-500' : 'text-blue-900/50'" class="px-2 py-1 rounded">RU</button>
-                    <button @click="lang = 'en'" :class="lang === 'en' ? 'bg-white text-blue-500' : 'text-blue-900/50'" class="px-2 py-1 rounded">EN</button>
+                    <button @click="lang = 'ru'" :class="lang === 'ru' ? 'bg-white leading-3 text-blue-500' : 'text-blue-900/50'" class="p-2 rounded">RU</button>
+                    <button @click="lang = 'en'" :class="lang === 'en' ? 'bg-white !leading-[11px] text-blue-500' : 'text-blue-900/50'" class="p-2 rounded">EN</button>
                 </div>
                 <a download="Отчет SR 2025.pdf" href="/fixed/rosseti_SR2025_ru_compressed.pdf" class="p-2 w-10 h-10 bg-black-100 rounded-lg flex items-center justify-center">
                     <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">

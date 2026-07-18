@@ -11,6 +11,7 @@ class Block extends Model
         'page_id',
         'type',
         'data',
+        'data_languages',
         'sort',
     ];
 
@@ -18,7 +19,38 @@ class Block extends Model
     {
         return [
             'data' => 'array',
+            'data_languages' => 'array',
         ];
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($block) {
+            if ($block->sort === null) {
+                // If no sort specified, append to end
+                $maxSort = static::where('page_id', $block->page_id)
+                    ->max('sort');
+                $block->sort = $maxSort !== null ? $maxSort + 1 : 0;
+                return;
+            }
+
+            // Check if sort number already exists for this page
+            $existingBlock = static::where('page_id', $block->page_id)
+                ->where('sort', $block->sort)
+                ->first();
+
+            if ($existingBlock) {
+                // Set new block's sort to existing sort + 1
+                $block->sort = $block->sort + 1;
+
+                // Shift all blocks with sort > original sort by +1
+                static::where('page_id', $block->page_id)
+                    ->where('sort', '>', $block->sort - 1)
+                    ->increment('sort');
+            }
+        });
     }
 
     public function page(): BelongsTo

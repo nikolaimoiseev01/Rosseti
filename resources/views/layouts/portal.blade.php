@@ -169,7 +169,7 @@
 <!-- Lightbox Modal -->
 <div class="lightbox-modal" id="lightbox">
     <span class="lightbox-close" id="lightbox-close">&times;</span>
-    <img src="" alt="" id="lightbox-image">
+    <img src="" alt="" class="bg-white p-2" id="lightbox-image">
     <div class="lightbox-zoom-controls">
         <button class="lightbox-zoom-btn" id="zoom-out">−</button>
         <input type="range" class="lightbox-zoom-slider" id="zoom-slider" min="1" max="5" step="0.1" value="1">

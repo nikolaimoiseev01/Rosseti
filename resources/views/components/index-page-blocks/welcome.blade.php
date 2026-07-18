@@ -117,19 +117,20 @@
         </h1>
 
         <h3
-            class="welcome-reveal-item text-2xl font-normal text-white md:!text-xl"
+            class="welcome-reveal-item text-2xl font-normal text-white md:!text-xl mb-20"
             style="--welcome-reveal-delay: 360ms"
         >
             Отчет о социальной ответственности
             <br>
             и корпоративном устойчивом развитии
         </h3>
+
+        <h3
+            class="welcome-reveal-item pointer-events-none z-20 text-2xl text-white"
+            style="--welcome-reveal-delay: 540ms"
+        >
+            2025
+        </h3>
     </div>
 
-    <h3
-        class="welcome-reveal-item pointer-events-none absolute bottom-[104px] left-1/2 z-20 -translate-x-1/2 text-2xl text-white"
-        style="--welcome-reveal-delay: 540ms"
-    >
-        2025
-    </h3>
 </section>

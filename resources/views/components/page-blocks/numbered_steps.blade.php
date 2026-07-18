@@ -58,7 +58,7 @@
             $isTitleAccent = ($step['title_style'] ?? 'large_bold') === 'accent';
             $isDescAccent = ($step['desc_style'] ?? 'normal') === 'accent';
         @endphp
-        <div class="flex gap-5 {{ $align === 'center' ? 'justify-center' : '' }} {{ !$isLast ? 'mb-0' : '' }}">
+        <div class="flex gap-5 items-center {{ $align === 'center' ? 'justify-center' : '' }} {{ !$isLast ? 'mb-0' : '' }}">
             @if(!$hideIcons)
                 {{-- Circle + connecting line --}}
                 <div class="relative flex flex-col items-center shrink-0" style="width: 44px;">
@@ -83,7 +83,7 @@
                    @if($isTitleAccent) style="color: {{ $colorHex }}" @endif
                 >{{ $step['title'] }}</p>
                 @if(!empty($step['description']))
-                    <p class="{{ $styleClass($step['desc_style'] ?? 'normal') }} mt-1"
+                    <p class="{{ $styleClass($step['desc_style'] ?? 'normal') }}"
                        @if($isDescAccent) style="color: {{ $colorHex }}" @endif
                     >{{ $step['description'] }}</p>
                 @endif

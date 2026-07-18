@@ -14,15 +14,15 @@
     ];
 
     $rowClasses = [
-        'top' => 'h-[68px]',
+        'top' => 'h-[100px]',
         'center' => 'h-[136px]',
-        'bottom' => 'h-[68px]',
+        'bottom' => 'h-[100px]',
     ];
 
     $arrowPositionClasses = [
         'top' => 'top-[-14px] left-1/2 -translate-x-1/2',
         'right' => 'right-[-14px] top-1/2 -translate-y-1/2',
-        'bottom' => 'bottom-[-14px] left-1/2 -translate-x-1/2',
+        'bottom' => 'bottom-[-20px] left-1/2 -translate-x-1/2',
         'left' => 'left-[-14px] top-1/2 -translate-y-1/2',
     ];
 
@@ -154,7 +154,7 @@
         class="grid grid-cols-[1fr_1.7fr_1fr_1.15fr_0.9fr] gap-x-2 lg:grid-cols-1 lg:gap-3"
     >
         @foreach($columns as $column)
-            <div class="grid grid-rows-[68px_136px_68px] gap-y-2 lg:flex lg:flex-col">
+            <div class="grid grid-rows-[100px_136px_68px] gap-y-2 lg:flex lg:flex-col">
                 @foreach($rows as $row)
                     @php
                         $block = collect($column['blocks'])->firstWhere('row', $row);

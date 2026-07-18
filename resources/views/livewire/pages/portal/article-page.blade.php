@@ -26,4 +26,30 @@
     </div>
     <x-article-content :page="$page"/>
 
+    <!-- Navigation Buttons -->
+    <div class="container mx-auto max-w-7xl flex flex-col items-center py-8 gap-4">
+        @php
+            $previousPage = \App\Models\Page::where('id', $page->id + 1)->first();
+            $nextPage = \App\Models\Page::where('id', '>', $page->id + 1)->first();
+        @endphp
+
+        @if($nextPage)
+            <a href="{{ route('article.index', $nextPage->slug) }}" wire:navigate
+               class="flex w-full bg-blue-400 items-center gap-2 justify-center px-6 py-3 rounded-lg shadow hover:shadow-md transition-shadow">
+                <span class="text-lg text-white font-medium">Следующий раздел</span>
+            </a>
+        @else
+            <div></div>
+        @endif
+
+        @if($previousPage)
+            <a href="{{ route('article.index', $previousPage->slug) }}" wire:navigate
+               class="w-full flex justify-center items-center text-center gap-2 px-6 py-3 text-white text-lg rounded-lg">
+                <span class="text-lg font-medium">Предыдущий раздел</span>
+            </a>
+        @else
+            <div></div>
+        @endif
+    </div>
+
 </section>
