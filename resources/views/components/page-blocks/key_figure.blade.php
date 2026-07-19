@@ -62,8 +62,8 @@
         $finalDescColor = $descColor ?? '#6B7785';
     @endphp
     <div class="page-block page-block--key-figure rounded-2xl bg-[#F7F9FC] border border-[#E1E7F0] p-8 flex flex-col justify-between items-stretch {{ $spacingTop }} {{ $spacingBottom }}">
-        @if(trim(strip_tags($data['context'])) !== '')
-            <div class="text-sm leading-relaxed mb-4" style="color: {{ $finalTextColor }}">{!! $data['context'] !!}</div>
+        @if(trim(strip_tags($data['context'] ?? '')) !== '')
+            <div class="text-sm leading-relaxed mb-4" style="color: {{ $finalTextColor }}">{!! $data['context'] ?? '' !!}</div>
         @endif
         <div class="flex flex-col justify-center">
             <p class="text-5xl font-bold mb-2" style="color: {{ $colorHex }}">{{ $data['value'] }}</p>
@@ -79,8 +79,8 @@
     <div class="page-block page-block--key-figure text-center py-8 flex flex-col items-center justify-center {{ $spacingTop }} {{ $spacingBottom }}">
         <p class="text-6xl font-bold mb-3" style="color: {{ $colorHex }}">{{ $data['value'] }}</p>
         <p class="text-lg" style="color: {{ $finalDescColor }}">{{ $data['description'] }}</p>
-        @if(trim(strip_tags($data['context'])) !== '')
-            <div class="text-sm leading-relaxed mt-4 max-w-xl mx-auto" style="color: {{ $finalTextColor }}">{!! $data['context'] !!}</div>
+        @if(trim(strip_tags($data['context'] ?? '')) !== '')
+            <div class="text-sm leading-relaxed mt-4 max-w-xl mx-auto" style="color: {{ $finalTextColor }}">{!! $data['context'] ?? '' !!}</div>
         @endif
     </div>
 
@@ -93,8 +93,8 @@
         <p class="text-5xl font-bold shrink-0" style="color: {{ $colorHex }}">{{ $data['value'] }}</p>
         <div>
             <p class="font-bold mb-1" style="color: {{ $finalTextColor }}">{{ $data['description'] }}</p>
-            @if(!empty($data['context']))
-                <div class="text-sm leading-relaxed" style="color: {{ $finalDescColor }}">{!! $data['context'] !!}</div>
+            @if(!empty($data['context'] ?? ''))
+                <div class="text-sm leading-relaxed" style="color: {{ $finalDescColor }}">{!! $data['context'] ?? '' !!}</div>
             @endif
         </div>
     </div>
@@ -107,8 +107,8 @@
     <div class="page-block page-block--key-figure border-l-4 pl-6 py-4 flex flex-col justify-center {{ $spacingTop }} {{ $spacingBottom }}" style="border-color: {{ $colorHex }}">
         <p class="text-4xl font-bold mb-2" style="color: {{ $colorHex }}">{{ $data['value'] }}</p>
         <p class="font-bold" style="color: {{ $finalTextColor }}">{{ $data['description'] }}</p>
-        @if(trim(strip_tags($data['context'])) !== '')
-            <div class="text-sm leading-relaxed mt-2" style="color: {{ $finalDescColor }}">{!! $data['context'] !!}</div>
+        @if(trim(strip_tags($data['context'] ?? '')) !== '')
+            <div class="text-sm leading-relaxed mt-2" style="color: {{ $finalDescColor }}">{!! $data['context'] ?? '' !!}</div>
         @endif
     </div>
 @endif
