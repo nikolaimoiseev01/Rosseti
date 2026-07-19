@@ -220,20 +220,45 @@ class BlocksRelationManager extends RelationManager
             ],
 
             'stats_grid' => [
-                Forms\Components\Repeater::make('data_languages.items')
-                    ->label('Показатели')
-                    ->schema([
-                        Forms\Components\TextInput::make('value')
-                            ->label('Значение')
-                            ->required(),
-                        Forms\Components\TextInput::make('unit')
-                            ->label('Единица измерения'),
-                        Forms\Components\TextInput::make('description')
-                            ->label('Описание')
-                            ->required(),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\Repeater::make('data_languages.ru.items')
+                                    ->label('Показатели')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('value')
+                                            ->label('Значение')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('unit')
+                                            ->label('Единица измерения'),
+                                        Forms\Components\TextInput::make('description')
+                                            ->label('Описание')
+                                            ->required(),
+                                    ])
+                                    ->columns(3)
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\Repeater::make('data_languages.en.items')
+                                    ->label('Items')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('value')
+                                            ->label('Value')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('unit')
+                                            ->label('Unit'),
+                                        Forms\Components\TextInput::make('description')
+                                            ->label('Description')
+                                            ->required(),
+                                    ])
+                                    ->columns(3)
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
                     ])
-                    ->columns(3)
-                    ->defaultItems(3)
                     ->columnSpanFull(),
             ],
 
@@ -694,8 +719,80 @@ class BlocksRelationManager extends RelationManager
             ],
 
             'numbered_steps' => [
-                Forms\Components\TextInput::make('data_languages.title')
-                    ->label('Заголовок'),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\TextInput::make('data_languages.ru.title')
+                                    ->label('Заголовок'),
+                                Forms\Components\Repeater::make('data_languages.ru.steps')
+                                    ->label('Шаги')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('title')
+                                            ->label('Заголовок шага'),
+                                        Forms\Components\Select::make('title_style')
+                                            ->label('Стиль заголовка')
+                                            ->options([
+                                                'large_bold' => 'Крупный жирный',
+                                                'normal' => 'Обычный',
+                                                'small' => 'Мелкий',
+                                                'accent' => 'Акцентный цветной',
+                                                'muted' => 'Серый приглушённый',
+                                            ])
+                                            ->default('large_bold'),
+                                        Forms\Components\Textarea::make('description')
+                                            ->label('Описание'),
+                                        Forms\Components\Select::make('desc_style')
+                                            ->label('Стиль описания')
+                                            ->options([
+                                                'large_bold' => 'Крупный жирный',
+                                                'normal' => 'Обычный',
+                                                'small' => 'Мелкий',
+                                                'accent' => 'Акцентный цветной',
+                                                'muted' => 'Серый приглушённый',
+                                            ])
+                                            ->default('normal'),
+                                    ])
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\TextInput::make('data_languages.en.title')
+                                    ->label('Title'),
+                                Forms\Components\Repeater::make('data_languages.en.steps')
+                                    ->label('Steps')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('title')
+                                            ->label('Step title'),
+                                        Forms\Components\Select::make('title_style')
+                                            ->label('Title style')
+                                            ->options([
+                                                'large_bold' => 'Large bold',
+                                                'normal' => 'Normal',
+                                                'small' => 'Small',
+                                                'accent' => 'Accent colored',
+                                                'muted' => 'Muted gray',
+                                            ])
+                                            ->default('large_bold'),
+                                        Forms\Components\Textarea::make('description')
+                                            ->label('Description'),
+                                        Forms\Components\Select::make('desc_style')
+                                            ->label('Description style')
+                                            ->options([
+                                                'large_bold' => 'Large bold',
+                                                'normal' => 'Normal',
+                                                'small' => 'Small',
+                                                'accent' => 'Accent colored',
+                                                'muted' => 'Muted gray',
+                                            ])
+                                            ->default('normal'),
+                                    ])
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
+                    ])
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('data_languages.icon_style')
                     ->label('Стиль иконки')
                     ->options([
@@ -715,36 +812,6 @@ class BlocksRelationManager extends RelationManager
                 Forms\Components\Toggle::make('data_languages.connected')
                     ->label('Соединять линией')
                     ->default(false),
-                Forms\Components\Repeater::make('data_languages.steps')
-                    ->label('Шаги')
-                    ->schema([
-                        Forms\Components\TextInput::make('title')
-                            ->label('Заголовок шага'),
-                        Forms\Components\Select::make('title_style')
-                            ->label('Стиль заголовка')
-                            ->options([
-                                'large_bold' => 'Крупный жирный',
-                                'normal' => 'Обычный',
-                                'small' => 'Мелкий',
-                                'accent' => 'Акцентный цветной',
-                                'muted' => 'Серый приглушённый',
-                            ])
-                            ->default('large_bold'),
-                        Forms\Components\Textarea::make('description')
-                            ->label('Описание'),
-                        Forms\Components\Select::make('desc_style')
-                            ->label('Стиль описания')
-                            ->options([
-                                'large_bold' => 'Крупный жирный',
-                                'normal' => 'Обычный',
-                                'small' => 'Мелкий',
-                                'accent' => 'Акцентный цветной',
-                                'muted' => 'Серый приглушённый',
-                            ])
-                            ->default('normal'),
-                    ])
-                    ->defaultItems(3)
-                    ->columnSpanFull(),
                 Forms\Components\Select::make('data_languages.color')
                     ->label('Акцентный цвет')
                     ->options([
