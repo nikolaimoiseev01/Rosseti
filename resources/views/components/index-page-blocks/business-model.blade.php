@@ -131,27 +131,42 @@ HTML
                     ['value' => '2 880', 'unit' => 'МВт•ч I-ens', 'text' => ''],
                 ],
             ],
-                    [
-                'title' => 'Потребители',
+                        [
+                'title' => 'Работники',
                 'stats' => [
-                    ['value' => '837', 'diff' => [['value' => '-0,7%', 'class' => '-top-2 left-[50px]']], 'unit' => 'млрд кВт•ч', 'text' => 'объем переданной электроэнергии'],
-                    ['value' => '14,7', 'diff' => [['value' => '-6,9%', 'class' => '-top-2 left-[50px]']], 'unit' => 'ГВт', 'text' => 'объем присоединенной мощности'],
-                    ['value' => '2,4 SAIDI<br>1,2 SAIFI', 'diff' => [['value' => '-11%', 'class' => 'top-2 right-[30px]'], ['value' => '-7%', 'class' => 'top-10 right-[30px]']], 'unit' => '', 'text' => ''],
-                    ['value' => '35', 'unit' => 'тыс. км', 'diff' => [['value' => '+200%', 'class' => '-top-2 left-[50px]']], 'text' => 'увеличение протяженности ЛЭП'],
-                    ['value' => '15', 'unit' => 'тыс. МВА', 'diff' => [['value' => '+55%', 'class' => '-top-2 left-[50px]']], 'text' => 'ввод новых мощностей подстанций'],
-                    ['value' => '2 880', 'unit' => 'МВт•ч I-ens', 'text' => ''],
+                    ['value' => '371,6', 'diff' => [['value' => '+15%', 'class' => '-top-2 left-[50px]']], 'unit' => 'млрд руб.', 'text' => 'совокупный объем расходов на вознаграждение  работников Группы'],
+                    ['value' => '14,7', 'diff' => [['value' => '-6,9%', 'class' => '-top-2 left-[50px]']], 'unit' => 'ГВт', 'text' => 'объем расходов  на охрану труда'],
+                   ['value' => '1,36', 'diff' => [['value' => '-6,9%', 'class' => '-top-2 left-[50px]']], 'unit' => 'млрд руб.', 'text' => 'затраты на обучение  персонала'],
+                    ['title' => 'Акционеры и инвесторы'],
+                    ['value' => '1 834', 'unit' => 'млрд  руб.', 'text' => 'выручка'],
+                    ['value' => '203', 'unit' => 'млрд руб.', 'text' => 'чистая прибыль'],
                 ],
             ],
-                            [
-                'title' => 'Потребители',
+                        [
+                'title' => 'Партнеры',
                 'stats' => [
-                    ['value' => '837', 'diff' => [['value' => '-0,7%', 'class' => '-top-2 left-[50px]']], 'unit' => 'млрд кВт•ч', 'text' => 'объем переданной электроэнергии'],
-                    ['value' => '14,7', 'diff' => [['value' => '-6,9%', 'class' => '-top-2 left-[50px]']], 'unit' => 'ГВт', 'text' => 'объем присоединенной мощности'],
-                    ['value' => '2,4 SAIDI<br>1,2 SAIFI', 'diff' => [['value' => '-11%', 'class' => 'top-2 right-[30px]'], ['value' => '-7%', 'class' => 'top-10 right-[30px]']], 'unit' => '', 'text' => ''],
-                    ['value' => '35', 'unit' => 'тыс. км', 'diff' => [['value' => '+200%', 'class' => '-top-2 left-[50px]']], 'text' => 'увеличение протяженности ЛЭП'],
-                    ['value' => '15', 'unit' => 'тыс. МВА', 'diff' => [['value' => '+55%', 'class' => '-top-2 left-[50px]']], 'text' => 'ввод новых мощностей подстанций'],
-                    ['value' => '2 880', 'unit' => 'МВт•ч I-ens', 'text' => ''],
+                    ['value' => '472', 'diff' => [['value' => '-12%', 'class' => '-top-2 left-[50px]']], 'unit' => 'млрд руб.', 'text' => 'объем закупок у субъектов МСП'],
+                    ['value' => '1,7', 'unit' => 'трлн руб. с НДС ', 'text' => 'общая сумма закупок'],
+                   ['skip_block' => true],
+                    ['title' => 'Акционеры и инвесторы'],
+                    ['value' => '270', 'unit' => 'млрд руб.',  'diff' => [['value' => '-4%', 'class' => '-top-2 left-[50px]']], 'text' => 'налоговые и социальные отчисления'],
+                    ['value' => '725', 'unit' => 'млрд руб.', 'text' => 'инвестиции в электросетевые активы'],
                 ],
+                ],
+                [
+                'title' => 'Вклад в реализацию национальных проектов',
+                'class' => 'grid-cols-6 grid-rows-2',
+                'slide_number' => 3,
+                'img_class' => '',
+                'imgs' => 12,
+            ],
+                            [
+                'title' => 'Вклад в достижение ЦУР ООН',
+                'subtitle' => 'Компания разделяет все ЦУР ООН и вносит посильный вклад в их достижение',
+                'class' => 'grid-cols-8 grid-rows-2',
+                'slide_number' => 4,
+                'img_class' => 'w-[60px] min-w-[60px]',
+                'imgs' => 10,
             ],
         ];
 @endphp
@@ -320,7 +335,15 @@ HTML
                         class="business-stack-prev flex h-12 w-12 items-center justify-center
                    rounded-full border border-[#D8ECFF]
                    text-[28px] text-[#2497E8]
-                   transition-opacity disabled:opacity-40"
+                   disabled:opacity-40
+                                                 transition-all duration-300 ease-out
+           hover:border-[#2497E8]
+           hover:bg-[#2497E8]
+           hover:text-white
+           hover:shadow-[0_10px_30px_rgba(36,151,232,0.25)]
+           hover:scale-105
+           active:scale-95
+                   "
                     >
                         ←
                     </button>
@@ -330,7 +353,15 @@ HTML
                         class="business-stack-next flex h-12 w-12 items-center justify-center
                    rounded-full border border-[#D8ECFF]
                    text-[28px] text-[#2497E8]
-                   transition-opacity disabled:opacity-40"
+                  disabled:opacity-40
+                                                 transition-all duration-300 ease-out
+           hover:border-[#2497E8]
+           hover:bg-[#2497E8]
+           hover:text-white
+           hover:shadow-[0_10px_30px_rgba(36,151,232,0.25)]
+           hover:scale-105
+           active:scale-95
+                   "
                     >
                         →
                     </button>
@@ -358,6 +389,28 @@ HTML
                             <div class="swiper-slide">
                                 @if(isset($slide['content']))
                                     {!! $slide['content'] !!}
+                                @elseif(isset($slide['imgs']))
+                                    <div class="h-[260px] rounded-[16px] bg-[#F1F6FE]
+                                   px-8 py-8
+                                   shadow-[0_12px_25px_rgba(33,74,104,0.08)]
+                                   md:h-auto md:min-h-[500px]">
+                                        <h4 class="@if($slide['subtitle'] ?? null) mb-1 @endif text-lg text-blue-900">
+                                            {{ $slide['title'] }}
+                                        </h4>
+                                        @if($slide['subtitle'] ?? null)
+                                            <p class="mb-2 text-sm ">
+                                                {{ $slide['subtitle'] }}
+                                            </p>
+                                            @endif
+                                        <div class="grid gap-4 {{$slide['class']}}">
+                                            @for ($i = 1; $i <= 12; $i++)
+                                                <img
+                                                    class="{{$slide['img_class'] ?? ''}}"
+                                                    src="/fixed/slider-card-2.{{ $slide['slide_number'] }}.{{ $i }}.png"
+                                                    alt="">
+                                            @endfor
+                                        </div>
+                                    </div>
                                 @else
                                     <div
                                         class="h-[260px] rounded-[16px] bg-[#F1F6FE]
@@ -371,37 +424,43 @@ HTML
 
                                         <div class="grid grid-cols-3 gap-x-8 gap-y-5 lg:grid-cols-2 md:!grid-cols-1">
                                             @foreach($slide['stats'] as $stat)
-                                                <div>
-                                                    <div class="relative flex items-baseline gap-2">
-                                                        @if($stat['diff'] ?? null)
-                                                            @foreach($stat['diff'] as $diff)
-                                                                <span
-                                                                    class="absolute rounded-full bg-white px-2
+                                                @if($stat['skip_block'] ?? null)
+                                                    <div></div>
+                                                @elseif($stat['title'] ?? null)
+                                                    <p class="text-blue-900 text-nowrap">{{$stat['title']}}</p>
+                                                @else
+                                                    <div>
+                                                        <div class="relative flex items-baseline gap-2">
+                                                            @if($stat['diff'] ?? null)
+                                                                @foreach($stat['diff'] as $diff)
+                                                                    <span
+                                                                        class="absolute rounded-full bg-white px-2
                                                                text-[10px] text-green-300
                                                                {{ $diff['class'] }}"
-                                                                >
+                                                                    >
                                                         {{ $diff['value'] }}
                                                     </span>
-                                                            @endforeach
-                                                        @endif
+                                                                @endforeach
+                                                            @endif
 
-                                                        <div class="text-3xl text-blue-400">
-                                                            {!! $stat['value'] !!}
+                                                            <div class="text-3xl text-blue-400">
+                                                                {!! $stat['value'] !!}
+                                                            </div>
+
+                                                            @if($stat['unit'])
+                                                                <div class="mt-1 text-lg text-blue-400">
+                                                                    {{ $stat['unit'] }}
+                                                                </div>
+                                                            @endif
                                                         </div>
 
-                                                        @if($stat['unit'])
-                                                            <div class="mt-1 text-lg text-blue-400">
-                                                                {{ $stat['unit'] }}
-                                                            </div>
+                                                        @if($stat['text'])
+                                                            <p class="mt-1 text-sm leading-[14px]">
+                                                                {{ $stat['text'] }}
+                                                            </p>
                                                         @endif
                                                     </div>
-
-                                                    @if($stat['text'])
-                                                        <p class="mt-1 text-sm leading-[14px]">
-                                                            {{ $stat['text'] }}
-                                                        </p>
-                                                    @endif
-                                                </div>
+                                                @endif
                                             @endforeach
                                         </div>
                                     </div>
@@ -416,7 +475,15 @@ HTML
                         type="button"
                         class="business-stack-prev flex h-12 w-12 items-center justify-center
                    rounded-full border border-[#D8ECFF]
-                   text-[28px] text-[#2497E8]"
+                   text-[28px] text-[#2497E8]  disabled:opacity-40
+                                                 transition-all duration-300 ease-out
+           hover:border-[#2497E8]
+           hover:bg-[#2497E8]
+           hover:text-white
+           hover:shadow-[0_10px_30px_rgba(36,151,232,0.25)]
+           hover:scale-105
+           active:scale-95
+                   "
                     >
                         ←
                     </button>
@@ -425,7 +492,15 @@ HTML
                         type="button"
                         class="business-stack-next flex h-12 w-12 items-center justify-center
                    rounded-full border border-[#D8ECFF]
-                   text-[28px] text-[#2497E8]"
+                   text-[28px] text-[#2497E8]  disabled:opacity-40
+                              transition-all duration-300 ease-out
+           hover:border-[#2497E8]
+           hover:bg-[#2497E8]
+           hover:text-white
+           hover:shadow-[0_10px_30px_rgba(36,151,232,0.25)]
+           hover:scale-105
+           active:scale-95
+                   "
                     >
                         →
                     </button>

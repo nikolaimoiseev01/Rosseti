@@ -9,7 +9,7 @@
         default => 'text-[#00355A]',
     };
     $size = match($level) {
-        'h1' => 'text-5xl font-bold',
+        'h1' => 'text-5xl font-bold uppercase',
         'h2' => 'text-3xl font-bold',
         'h3' => 'text-2xl font-bold',
         'h4' => 'text-xl font-bold',

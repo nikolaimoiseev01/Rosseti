@@ -13,7 +13,7 @@
     <aside class="max-w-[263px] lg:hidden">
         <div class="sticky top-20">
             <h3 class="mb-4 text-[28px] uppercase ">Навигация</h3>
-            <nav class="space-y-2 mb-10 text-lg !uppercase" id="toc-nav">
+            <nav class="space-y-2 mb-10 text-lg" id="toc-nav">
                 <!-- TOC will be populated by JavaScript -->
             </nav>
         </div>

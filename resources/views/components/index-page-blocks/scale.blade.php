@@ -36,7 +36,7 @@
 
                 {{-- Right: large percentage --}}
                 <div class="text-right lg:text-left">
-                    <div class="text-white text-[320px] font-normal leading-[200px] lg:text-[100px] md:!text-[80px] md:!leading-[60px]">~80%</div>
+                    <div class="text-white text-[320px] font-normal leading-[300px] lg:text-[100px] md:!text-[80px] md:!leading-[60px]">~80%</div>
                     <p class="text-white/80 text-2xl max-w-[350px] ml-auto lg:ml-0">вырабатываемой электроэнергии<br> передается по сетям Группы</p>
                 </div>
             </div>
