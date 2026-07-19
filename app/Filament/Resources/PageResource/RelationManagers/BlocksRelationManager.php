@@ -30,6 +30,11 @@ class BlocksRelationManager extends RelationManager
     {
         return $schema
             ->components([
+                TextInput::make('id')
+                    ->label('ID')
+                    ->disabled()
+                    ->hidden(fn ($context) => $context === 'create'),
+
                 Select::make('type')
                     ->label('Тип блока')
                     ->required()
