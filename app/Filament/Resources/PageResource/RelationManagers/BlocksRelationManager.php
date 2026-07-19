@@ -837,20 +837,45 @@ class BlocksRelationManager extends RelationManager
             ],
 
             'cards_grid' => [
-                Forms\Components\Repeater::make('data_languages.cards')
-                    ->label('Карточки')
-                    ->schema([
-                        Forms\Components\FileUpload::make('icon')
-                            ->label('Иконка / изображение')
-                            ->image()
-                            ->directory('report-images'),
-                        Forms\Components\TextInput::make('title')
-                            ->label('Заголовок')
-                            ->required(),
-                        Forms\Components\Textarea::make('text')
-                            ->label('Текст'),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\Repeater::make('data_languages.ru.cards')
+                                    ->label('Карточки')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('icon')
+                                            ->label('Иконка / изображение')
+                                            ->image()
+                                            ->directory('report-images'),
+                                        Forms\Components\TextInput::make('title')
+                                            ->label('Заголовок')
+                                            ->required(),
+                                        Forms\Components\Textarea::make('text')
+                                            ->label('Текст'),
+                                    ])
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\Repeater::make('data_languages.en.cards')
+                                    ->label('Cards')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('icon')
+                                            ->label('Icon / Image')
+                                            ->image()
+                                            ->directory('report-images'),
+                                        Forms\Components\TextInput::make('title')
+                                            ->label('Title')
+                                            ->required(),
+                                        Forms\Components\Textarea::make('text')
+                                            ->label('Text'),
+                                    ])
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
                     ])
-                    ->defaultItems(3)
                     ->columnSpanFull(),
                 Forms\Components\Select::make('data_languages.columns')
                     ->label('Колонок в ряду')
