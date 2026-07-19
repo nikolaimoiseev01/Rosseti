@@ -40,7 +40,7 @@ class FixCardsGridFormat extends Command
             $dataLanguages = $block->data_languages;
 
             // Check if this block has the malformed structure
-            // Structure: {"en": {"cards": []}, "ru": [], "cards": [...]}
+            // Production format: {"en": {"cards": []}, "ru": {"columns": 3}, "cards": [...], "color": "accent"}
             if (!isset($dataLanguages['cards'])) {
                 $skipped++;
                 continue;
@@ -51,15 +51,16 @@ class FixCardsGridFormat extends Command
                 continue;
             }
 
-            // Check if ru is empty array and cards exists at top level
-            if (is_array($dataLanguages['ru']) && count($dataLanguages['ru']) === 0 && isset($dataLanguages['cards'])) {
+            // Check if ru exists but doesn't have cards, and cards exists at top level
+            if (isset($dataLanguages['ru']) && !isset($dataLanguages['ru']['cards']) && isset($dataLanguages['cards'])) {
                 // Fix the structure
                 $fixedDataLanguages = [
                     'en' => $dataLanguages['en'] ?? ['cards' => []],
-                    'ru' => [
-                        'cards' => $dataLanguages['cards'],
-                    ],
+                    'ru' => $dataLanguages['ru'],
                 ];
+
+                // Move top-level cards to ru.cards
+                $fixedDataLanguages['ru']['cards'] = $dataLanguages['cards'];
 
                 // Keep top-level settings (columns, color, title_size, logo_size, spacing)
                 $settingsKeys = ['columns', 'color', 'title_size', 'logo_size', 'spacing'];
