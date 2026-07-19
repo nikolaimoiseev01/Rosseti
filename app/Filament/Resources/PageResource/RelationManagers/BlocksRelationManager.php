@@ -1040,7 +1040,29 @@ class BlocksRelationManager extends RelationManager
             ->defaultSort('sort')
             ->reorderable('sort')
             ->filters([
-                //
+                \Filament\Tables\Filters\SelectFilter::make('type')
+                    ->label('Тип блока')
+                    ->options([
+                        'heading' => 'Заголовок',
+                        'image' => 'Изображение',
+                        'subtitle' => 'Подзаголовок',
+                        'divider' => 'Разделитель',
+                        'text-with-title' => 'Текст с заголовком',
+                        'rich_text' => 'Текстовый блок',
+                        'two_columns' => 'Текст в две колонки',
+                        'table' => 'Таблица',
+                        'timeline' => 'Таймлайн',
+                        'stats_grid' => 'Сетка показателей',
+                        'quote' => 'Цитата',
+                        'gri_reference' => 'GRI ссылка',
+                        'image_row' => 'Изображения в ряд',
+                        'key_figure' => 'Ключевая цифра',
+                        'person_card' => 'Карточка сотрудника',
+                        'info_block' => 'Информационный блок',
+                        'numbered_steps' => 'Нумерованные шаги',
+                        'cards_grid' => 'Сетка карточек',
+                        'icon_list' => 'Перечисление с иконками',
+                    ]),
             ])
             ->headerActions([
                 CreateAction::make(),
