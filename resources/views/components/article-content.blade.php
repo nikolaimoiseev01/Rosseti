@@ -25,19 +25,27 @@
         <article class="prose pr-6">
             @foreach($page->blocks as $block)
                 @php
-                    // Use data_languages if available, otherwise fall back to data
                     $data = !empty($block->data_languages) ? $block->data_languages : $block->data;
-                    $lang = 'ru'; // Default to Russian
-
-                    // Merge localized text data with non-text fields (url, size, style, etc.)
-                    if (isset($data[$lang])) {
-                        $localizedData = array_merge($data[$lang], $data);
-                        unset($localizedData['ru'], $localizedData['en']);
-                    } else {
-                        $localizedData = $data;
-                    }
+                    $currentLang = session('locale', 'ru');
                 @endphp
-                @include('components.page-blocks.' . $block->type, ['data' => $localizedData])
+
+                @if(!empty($data['ru']) && !empty($data['en']))
+                    @php
+                        $localizedData = array_merge($data[$currentLang], $data);
+                        unset($localizedData['ru'], $localizedData['en']);
+                    @endphp
+                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData])
+                @else
+                    @php
+                        if (isset($data[$currentLang])) {
+                            $localizedData = array_merge($data[$currentLang], $data);
+                            unset($localizedData['ru'], $localizedData['en']);
+                        } else {
+                            $localizedData = $data;
+                        }
+                    @endphp
+                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData])
+                @endif
             @endforeach
         </article>
     </main>

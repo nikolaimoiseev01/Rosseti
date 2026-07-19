@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\LanguageController;
 use App\Livewire\Pages\Account\SettingsPage;
 use App\Livewire\Pages\Auth\ConfirmPasswordPage;
 use App\Livewire\Pages\Auth\ForgotPasswordPage;
@@ -57,5 +58,10 @@ Route::middleware('auth')->prefix('account')->group(function () {
     Route::get('settings', SettingsPage::class)->middleware(['auth', 'verified'])->name('account.settings');
 });
 
+Route::middleware('auth')->get('/language/{language}', [LanguageController::class, 'switch'])
+    ->where('language', 'ru|en')
+    ->name('language.switch');
+
 Route::get('/{slug}', ArticlePage::class)
+    ->where('slug', '^(?!language$).*$')
     ->name('article.index');
