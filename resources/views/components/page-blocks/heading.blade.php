@@ -1,24 +1,25 @@
 {{-- Heading Block --}}
 @php
     $level = $data['level'] ?? 'h2';
-    $color = match($data['color'] ?? 'primary') {
-        'primary' => 'text-[#00355A]',
-        'accent' => 'text-[#2196F3]',
-        'dark' => 'text-[#1A1A1A]',
-        'white' => 'text-white',
-        default => 'text-[#00355A]',
-    };
     $size = match($level) {
-        'h1' => 'text-5xl font-bold uppercase',
-        'h2' => 'text-3xl font-bold',
-        'h3' => 'text-2xl font-bold',
-        'h4' => 'text-xl font-bold',
-        default => 'text-3xl font-bold',
+        'h1' => 'text-[64px] uppercase',
+        'h2' => 'text-4xl uppercase',
+        'h3' => 'text-2xl',
+        'h4' => 'text-xl',
+        default => 'text-3xl',
+    };
+    $fontWeight = match($data['font_weight'] ?? 'bold') {
+        'normal' => 'font-normal',
+        'medium' => 'font-medium',
+        'semibold' => 'font-semibold',
+        'bold' => 'font-bold',
+        'extrabold' => 'font-extrabold',
+        default => 'font-bold',
     };
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
         'small' => 'mt-2',
-        'normal' => 'mt-4',
+        'normal' => 'mt-4', 'medium' => 'mt-6',
         'large' => 'mt-8',
         'xl' => 'mt-12',
         '2xl' => 'mt-16',
@@ -28,7 +29,7 @@
     $spacingBottom = match($data['spacing_bottom'] ?? 'xl') {
         'none' => '',
         'small' => 'mb-2',
-        'normal' => 'mb-4',
+        'normal' => 'mb-4', 'medium' => 'mb-6',
         'large' => 'mb-8',
         'xl' => 'mb-12',
         '2xl' => 'mb-16',
@@ -36,4 +37,4 @@
         default => 'mb-12',
     };
 @endphp
-<{{ $level }} class="page-block page-block--heading {{ $size }} {{ $color }} {{ $spacingTop }} {{ $spacingBottom }}">{{ $data['content'] }}</{{ $level }}>
+<{{ $level }} class="page-block page-block--heading {{$data['color'] ?? ''}} {{ $size }} {{ $fontWeight }} {{ $spacingTop }} {{ $spacingBottom }}">{{ $data['content'] }}</{{ $level }}>

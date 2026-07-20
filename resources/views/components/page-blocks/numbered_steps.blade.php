@@ -11,7 +11,7 @@
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
         'small' => 'mt-2',
-        'normal' => 'mt-4',
+        'normal' => 'mt-4', 'medium' => 'mt-6',
         'large' => 'mt-8',
         'xl' => 'mt-12',
         '2xl' => 'mt-16',
@@ -21,7 +21,7 @@
     $spacingBottom = match($data['spacing_bottom'] ?? 'xl') {
         'none' => '',
         'small' => 'mb-2',
-        'normal' => 'mb-4',
+        'normal' => 'mb-4', 'medium' => 'mb-6',
         'large' => 'mb-8',
         'xl' => 'mb-12',
         '2xl' => 'mb-16',

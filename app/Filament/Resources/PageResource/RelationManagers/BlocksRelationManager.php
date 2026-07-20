@@ -59,7 +59,14 @@ class BlocksRelationManager extends RelationManager
                         'cards_grid' => 'Сетка карточек',
                         'icon_list' => 'Перечисление с иконками',
                     ])
-                    ->live(),
+                    ->live()
+                    ->afterStateUpdated(function (Select $component): void {
+                        $component
+                            ->getContainer()
+                            ->getComponent('blockSettings')
+                            ?->getChildSchema()
+                            ->fill();
+                    }),
 
                 Section::make('Настройки блока')
                     ->schema(
@@ -90,6 +97,7 @@ class BlocksRelationManager extends RelationManager
                                 Forms\Components\RichEditor::make('data_languages.ru.text')
                                     ->label('Текст')
                                     ->required()
+                                    ->live()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
                                     ])
@@ -105,6 +113,7 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Title'),
                                 Forms\Components\RichEditor::make('data_languages.en.text')
                                     ->label('Text')
+                                    ->live()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
                                     ])
@@ -125,6 +134,7 @@ class BlocksRelationManager extends RelationManager
                             ->schema([
                                 Forms\Components\RichEditor::make('data_languages.ru.content')
                                     ->label('Содержимое')
+                                    ->live()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
                                     ])
@@ -141,6 +151,7 @@ class BlocksRelationManager extends RelationManager
                             ->schema([
                                 Forms\Components\RichEditor::make('data_languages.en.content')
                                     ->label('Content')
+                                    ->live()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
                                     ])
@@ -154,16 +165,26 @@ class BlocksRelationManager extends RelationManager
                             ]),
                     ])
                     ->columnSpanFull(),
-                Forms\Components\Select::make('data_languages.text_color')
-                    ->label('Цвет текста')
+                Forms\Components\Select::make('data_languages.color')
+                    ->label('Цвет')
                     ->options([
-                        'default' => 'Чёрный (по умолчанию)',
-                        'primary' => 'Тёмно-синий (#00355A)',
-                        'accent' => 'Голубой (#2196F3)',
-                        'muted' => 'Серый',
-                        'white' => 'Белый (для тёмных фонов)',
+                        'text-blue-900' => 'Тёмно-синий',
+                        'text-blue-500' => 'Синий',
+                        'text-blue-400' => 'Голубой',
+                        'text-black' => 'Чёрный',
+                        'text-white' => 'Белый',
                     ])
-                    ->default('default'),
+                    ->default('text-blue-900'),
+                Forms\Components\Select::make('data_languages.font_weight')
+                    ->label('Толщина шрифта')
+                    ->options([
+                        'normal' => 'Обычный (normal)',
+                        'medium' => 'Средний (medium)',
+                        'semibold' => 'Полужирный (semibold)',
+                        'bold' => 'Жирный (bold)',
+                        'extrabold' => 'Очень жирный (extrabold)',
+                    ])
+                    ->default('bold'),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -629,6 +650,7 @@ class BlocksRelationManager extends RelationManager
                             ->schema([
                                 Forms\Components\RichEditor::make('data_languages.ru.content')
                                     ->label('Текст')
+                                    ->required()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
                                     ])
