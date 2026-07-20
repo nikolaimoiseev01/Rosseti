@@ -1072,11 +1072,11 @@ class BlocksRelationManager extends RelationManager
                         // Для изображений добавляем HTML превью
                         if ($record->type === 'image' && !empty($data_languages['url'])) {
                             $url = str_starts_with($data_languages['url'], 'http') ? $data_languages['url'] : asset('storage/' . $data_languages['url']);
-                            $content = '<img src="' . $url . '" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">';
+                            return '<img src="' . $url . '" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">';
                         }
                         if ($record->type === 'image_row' && !empty($data_languages['images'][0]['url'])) {
                             $url = str_starts_with($data_languages['images'][0]['url'], 'http') ? $data_languages['images'][0]['url'] : asset('storage/' . $data_languages['images'][0]['url']);
-                            $content = '<img src="' . $url . '" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">';
+                            return '<img src="' . $url . '" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">';
                         }
 
                         return e(Str::limit(trim($content), 50));

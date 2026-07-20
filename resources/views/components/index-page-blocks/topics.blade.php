@@ -35,7 +35,9 @@
                     <th class="w-[36px] px-3 py-1.5 font-normal text-white"></th>
                     <th class="px-3 py-1.5 font-normal text-white">Тема</th>
                     <th class="w-[140px] px-3 py-1.5 font-normal text-white">Аспект</th>
-                    <th class="w-[120px] px-3 py-1.5 font-normal text-white">Приоритет1</th>
+                    <th class="w-[120px] px-3 py-1.5 font-normal text-white">
+                        <span class="has-tooltip !text-white" data-tooltip="На основе средней оценки по трем критериям, где < 3 — низкий приоритет, 3-4 — средний приоритет,  4 -5 —высокий приоритет" aria-label="На основе средней оценки по трем критериям, где < 3 — низкий приоритет, 3-4 — средний приоритет,  4 -5 —высокий приоритет" data-alpine-devtools-right-click="">Приоритет</span>
+                    </th>
                 </tr>
                 </thead>
 
@@ -48,7 +50,7 @@
                             {{ $row['theme'] }}
                         </td>
 
-                        <td class="px-3 py-3 pt-1.5  text-lg align-top {{ $row['aspect'] === 'Экологический' ? 'text-[#008DFF]' : '' }}">
+                        <td class="px-3 py-3 pt-1.5  text-lg align-top {{ $row['aspect'] === 'Экологический' ? 'text-[#008DFF]' : '' }} {{ $row['aspect'] === 'Социальный' ? 'text-blue-900' : '' }}">
                             {{ $row['aspect'] }}
                         </td>
 

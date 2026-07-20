@@ -36,5 +36,12 @@
         '3xl' => 'mb-24',
         default => 'mb-12',
     };
+    $defaultColor = match($level) {
+        'h1' => 'text-blue-900',
+        'h2' => 'text-blue-500',
+        'h3' => 'text-blue-500',
+        'h4' => 'text-blue-500',
+        default => 'text-blue-900',
+    };
 @endphp
-<{{ $level }} class="page-block page-block--heading {{$data['color'] ?? ''}} {{ $size }} {{ $fontWeight }} {{ $spacingTop }} {{ $spacingBottom }}">{{ $data['content'] }}</{{ $level }}>
+<{{ $level }} class="page-block page-block--heading {{$data['color'] ?? $defaultColor}} {{ $size }} {{ $fontWeight }} {{ $spacingTop }} {{ $spacingBottom }}">{{ $data['content'] }}</{{ $level }}>

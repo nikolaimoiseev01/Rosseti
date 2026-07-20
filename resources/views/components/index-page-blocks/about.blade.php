@@ -9,6 +9,7 @@
     <div x-data="revealOnScroll()" x-data="revealOnScroll()" class="flex max-w-5xl mx-auto gap-16 lg:flex-col">
         <h2 class="uppercase leading-[100%]">Мы стремимся быть надежной<br>опорой, чтобы вы могли жить,<br> работать и развиваться.</h2>
         <div class="flex flex-col">
+            <p class="text-2xl ml-auto">МЫ -</p>
             <h2 class="text-blue-400 text-[100px] lg:text-7xl md:text-3xl"> >235 000 </h2>
             <p class="text-2xl ml-auto">лучших энергетиков России</p>
         </div>
