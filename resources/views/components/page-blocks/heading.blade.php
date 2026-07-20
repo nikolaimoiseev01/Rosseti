@@ -8,7 +8,7 @@
         'h4' => 'text-xl',
         default => 'text-3xl',
     };
-    $fontWeight = match($data['font_weight'] ?? 'bold') {
+    $fontWeight = match($data['font_weight'] ?? 'normal') {
         'normal' => 'font-normal',
         'medium' => 'font-medium',
         'semibold' => 'font-semibold',
