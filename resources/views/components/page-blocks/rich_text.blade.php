@@ -1,5 +1,13 @@
 {{-- Rich Text Block with color and spacing --}}
 @php
+    $content = preg_replace(
+        '/<p(?:\s[^>]*)?>\s*<\/p>/i',
+        '<p><br></p>',
+        $data['content'] ?? '',
+    );
+@endphp
+
+@php
     $colorHex = match($data['text_color'] ?? 'default') {
         'primary' => '#00355A',
         'accent' => '#2196F3',
@@ -38,5 +46,5 @@
 </style>
 
 <div class="page-block page-block--rich-text max-w-none {{ $spacingTop }} {{ $spacingBottom }} rich-text-{{ $data['text_color'] ?? 'default' }} [&_a]:text-[#2196F3] [&_a]:font-normal [&_a]:underline">
-    {!! $data['content'] !!}
+    {!! $content !!}
 </div>
