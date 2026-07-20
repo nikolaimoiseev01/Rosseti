@@ -175,16 +175,6 @@ class BlocksRelationManager extends RelationManager
                         'text-white' => 'Белый',
                     ])
                     ->default('text-blue-900'),
-                Forms\Components\Select::make('data_languages.font_weight')
-                    ->label('Толщина шрифта')
-                    ->options([
-                        'normal' => 'Обычный (normal)',
-                        'medium' => 'Средний (medium)',
-                        'semibold' => 'Полужирный (semibold)',
-                        'bold' => 'Жирный (bold)',
-                        'extrabold' => 'Очень жирный (extrabold)',
-                    ])
-                    ->default('bold'),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -350,6 +340,16 @@ class BlocksRelationManager extends RelationManager
                         'white' => 'Белый (для тёмных фонов)',
                     ])
                     ->default('primary'),
+                Forms\Components\Select::make('data_languages.font_weight')
+                    ->label('Толщина шрифта')
+                    ->options([
+                        'normal' => 'Обычный (normal)',
+                        'medium' => 'Средний (medium)',
+                        'semibold' => 'Полужирный (semibold)',
+                        'bold' => 'Жирный (bold)',
+                        'extrabold' => 'Очень жирный (extrabold)',
+                    ])
+                    ->default('bold'),
                 ...$this->spacingSelectFields(),
             ],
 
