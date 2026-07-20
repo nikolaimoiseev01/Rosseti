@@ -277,6 +277,22 @@ class BlocksRelationManager extends RelationManager
                             ]),
                     ])
                     ->columnSpanFull(),
+                Forms\Components\Select::make('data_languages.color')
+                    ->label('Акцентный цвет')
+                    ->options([
+                        'primary' => 'Тёмно-синий (#00355A)',
+                        'accent' => 'Голубой (#2196F3)',
+                    ])
+                    ->default('primary'),
+                Forms\Components\Select::make('data_languages.text_color')
+                    ->label('Цвет текста')
+                    ->options([
+                        'auto' => 'Авто (белый для тёмного фона)',
+                        'white' => 'Белый',
+                        'dark' => 'Тёмный',
+                    ])
+                    ->default('auto'),
+                ...$this->spacingSelectFields(),
             ],
 
             'quote' => [
