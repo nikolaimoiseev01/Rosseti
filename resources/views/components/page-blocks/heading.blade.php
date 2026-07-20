@@ -14,7 +14,7 @@
         'semibold' => 'font-semibold',
         'bold' => 'font-bold',
         'extrabold' => 'font-extrabold',
-        default => 'font-bold',
+        default => 'font-normal',
     };
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
