@@ -21,6 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
+use Illuminate\Support\Str;
 
 class BlocksRelationManager extends RelationManager
 {
@@ -1062,7 +1063,7 @@ class BlocksRelationManager extends RelationManager
                             $content = '<img src="' . $url . '" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">';
                         }
 
-                        return $content;
+                        return e(Str::limit(trim($content), 50));
                     })
                     ->html()
                     ->limit(50),
