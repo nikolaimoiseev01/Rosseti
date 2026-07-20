@@ -44,4 +44,4 @@
         default => 'text-blue-900',
     };
 @endphp
-<{{ $level }} class="page-block page-block--heading {{$data['color'] ?? $defaultColor}} {{ $size }} {{ $fontWeight }} {{ $spacingTop }} {{ $spacingBottom }}">{{ $data['content'] }}</{{ $level }}>
+<{{ $level }} class="page-block page-block--heading {{$data['color'] ?? $defaultColor}} {{ $size }} {{ $fontWeight ?? '!font-normal' }} {{ $spacingTop }} {{ $spacingBottom }}">{{ $data['content'] }}</{{ $level }}>
