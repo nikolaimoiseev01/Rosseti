@@ -27,7 +27,7 @@
 @endphp
 <div class="page-block page-block--person-card max-w-3xl {{ $spacingTop }} {{ $spacingBottom }}">
     @if(!empty($data['heading']))
-        <p class="text-lg leading-snug mb-6" style="color: {{ $colorHex }}">{{ $data['heading'] }}</p>
+        <h3 class="text-blue-500 text-2xl inline-block mb-6" style="color: {{ $colorHex }}">{{ $data['heading'] }}</h3>
     @endif
 
     <div class="text-[15px] leading-relaxed text-[#333] space-y-4 mb-8">
