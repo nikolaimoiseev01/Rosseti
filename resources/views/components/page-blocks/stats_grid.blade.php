@@ -1,21 +1,26 @@
 {{-- Stats Grid Block --}}
 @php
-    $color = $data['color'] ?? 'primary';
-    $colorHex = match($color) {
-        'accent' => '#2196F3',
-        default => '#00355A',
+    $bgColor = match($data['background_color'] ?? 'transparent') {
+        'transparent' => 'bg-transparent',
+        'white' => 'bg-white',
+        'gray-50' => 'bg-gray-50',
+        'gray-100' => 'bg-gray-100',
+        'gray-200' => 'bg-gray-200',
+        'blue-50' => 'bg-blue-50',
+        'blue-100' => 'bg-blue-100',
+        'blue-900' => 'bg-blue-900',
+        default => 'bg-[#F7F9FC]',
     };
-    $textColor = match($data['text_color'] ?? 'auto') {
-        'white' => '#FFFFFF',
-        'dark' => '#1A1A1A',
-        'auto' => null,
-        default => null,
-    };
-    $descColor = match($data['text_color'] ?? 'auto') {
-        'white' => 'rgba(255,255,255,0.7)',
-        'dark' => '#6B7785',
-        'auto' => null,
-        default => null,
+    $borderColor = match($data['background_color'] ?? 'transparent') {
+        'transparent' => 'border-transparent',
+        'white' => 'border-gray-200',
+        'gray-50' => 'border-gray-200',
+        'gray-100' => 'border-gray-300',
+        'gray-200' => 'border-gray-400',
+        'blue-50' => 'border-blue-200',
+        'blue-100' => 'border-blue-300',
+        'blue-900' => 'border-blue-800',
+        default => 'border-[#E1E7F0]',
     };
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
@@ -41,14 +46,14 @@
 
 <div class="page-block page-block--stats-grid grid grid-cols-4 gap-5 md:grid-cols-2 sm:grid-cols-1 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['items'] as $item)
-        <div class="bg-[#F7F9FC] rounded-2xl p-6 border border-[#E1E7F0] text-center">
-            <div class="text-4xl font-bold mb-1" style="color: {{ $colorHex }}">
+        <div class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center">
+            <div class="text-[80px] font-normal mb-1 {{colorHelper('main_color', $data)}}">
                 {{ $item['value'] }}
                 @if(!empty($item['unit']))
-                    <span class="text-xl font-normal" style="color: {{ $descColor ?? '#6B7785' }}">{{ $item['unit'] }}</span>
+                    <h3 class="font-light inline-block {{colorHelper('unit_color', $data)}}">{{ $item['unit'] }}</h3>
                 @endif
             </div>
-            <p class="text-sm leading-snug mt-2" style="color: {{ $descColor ?? '#6B7785' }}">{{ $item['description'] }}</p>
+            <p class="mt-2 {{colorHelper('text_color', $data)}}">{{ $item['description'] }}</p>
         </div>
     @endforeach
 </div>

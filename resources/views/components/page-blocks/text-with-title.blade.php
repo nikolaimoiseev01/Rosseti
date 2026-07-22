@@ -1,6 +1,10 @@
 @php
     use Filament\Forms\Components\RichEditor\RichContentRenderer;
     use App\Filament\RichContent\TooltipRichContentPlugin;
+
+    $titleColor = $data['color'] ?? 'text-blue-600';
+    $textColor = $data['color'] ?? 'text-black-500';
+
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
         'small' => 'mt-2',
@@ -25,10 +29,10 @@
 
 <div class="page-block page-block--text-with-title transition-all duration-700 ease-out {{ $spacingTop }} {{ $spacingBottom }}">
     <h2 id="{{Str::slug($data['title'] ?? '')}}"
-        class="text-blue-600 font-medium text-[40px] scroll-mt-12 mb-6 md:text-[16px]">{{$data['title'] ?? ''}}</h2>
+        class="{{ $titleColor }} font-medium text-[40px] scroll-mt-12 mb-6 md:text-[16px]">{{$data['title'] ?? ''}}</h2>
 
     @if(!empty($data['text']))
-    <div class="text-lg text-black-400 md:text-base leading-[160%]">
+    <div class="text-lg {{ $textColor }} md:text-base leading-[160%]">
         {!!$data['text']!!}
     </div>
     @endif

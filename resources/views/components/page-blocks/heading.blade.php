@@ -1,21 +1,7 @@
 {{-- Heading Block --}}
 @php
     $level = $data['level'] ?? 'h2';
-    $size = match($level) {
-        'h1' => 'text-[64px] uppercase',
-        'h2' => 'text-4xl uppercase',
-        'h3' => 'text-2xl',
-        'h4' => 'text-xl',
-        default => 'text-3xl',
-    };
-    $fontWeight = match($data['font_weight'] ?? 'normal') {
-        'normal' => 'font-normal',
-        'medium' => 'font-medium',
-        'semibold' => 'font-semibold',
-        'bold' => 'font-bold',
-        'extrabold' => 'font-extrabold',
-        default => 'font-normal',
-    };
+
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
         'small' => 'mt-2',
@@ -36,19 +22,15 @@
         '3xl' => 'mb-24',
         default => 'mb-12',
     };
-        $defaultColor = match($level) {
-        'h1' => 'text-blue-900',
-        'h2' => 'text-blue-500',
-        'h3' => 'text-blue-500',
-        'h4' => 'text-blue-500',
-        default => 'text-blue-900',
-    };
-
-    $color = $data['color'] ?? $defaultColor;
-
-    if (!str_starts_with($color, 'text-blue')) {
-        $color = 'text-blue-900';
-    }
 
 @endphp
-<{{ $level }} class="page-block page-block--heading {{$color ?? $defaultColor}} {{ $size }} {{ $fontWeight ?? '!font-normal' }} {{ $spacingTop }} {{ $spacingBottom }}">{{ $data['content'] }}</{{ $level }}>
+<{{ $level }} class="page-block page-block--heading {{colorHelper('color', $data)}} {{ $spacingTop }} {{ $spacingBottom }}">
+    @if(isset($data['tooltip']))
+        <span class="has-tooltip
+        {{colorHelper('color', $data)}}
+        {{colorHelper('font_weight', $data)}}
+        " data-tooltip="{{ $data['tooltip'] }}" aria-label="{{ $data['tooltip'] }}" data-alpine-devtools-right-click="">{!! $data['content'] !!}</span>
+    @else
+        {!! $data['content'] !!}
+    @endif
+</{{ $level }}>

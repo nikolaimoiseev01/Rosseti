@@ -27,9 +27,23 @@ h2 {
     @apply font-normal text-5xl text-blue-500 lg:text-4xl md:text-3xl;
 }
 
-
 h3 {
     @apply text-blue-500 text-5xl mb-8 lg:text-4xl md:!text-3xl;
+}
+
+.prose {
+    h1 {
+        @apply text-[56px] text-blue-600 font-normal uppercase;
+    }
+    h2 {
+        @apply text-4xl text-blue-500 font-medium uppercase;
+    }
+    h3 {
+        @apply mb-0 text-2xl text-blue-500 font-normal uppercase;
+    }
+    h4 {
+        @apply text-2xl text-blue-500 font-normal uppercase;
+    }
 }
 
 ul {

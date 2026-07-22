@@ -1,9 +1,5 @@
 {{-- Numbered Steps Block --}}
 @php
-    $colorHex = match($data['color'] ?? 'accent') {
-        'primary' => '#00355A',
-        default => '#2196F3',
-    };
     $iconStyle = $data['icon_style'] ?? 'numbers';
     $connected = $data['connected'] ?? false;
     $hideIcons = ($data['hide_icons'] ?? false) || $iconStyle === 'none';
@@ -35,7 +31,7 @@
         default => 'items-start text-left',
     };
 
-    $styleClass = function($style) use ($colorHex) {
+    $styleClass = function($style) {
         return match($style) {
             'large_bold' => 'text-lg font-bold text-[#1A1A1A]',
             'normal' => 'text-base text-[#333]',
@@ -63,9 +59,9 @@
                 {{-- Circle + connecting line --}}
                 <div class="relative flex flex-col items-center shrink-0" style="width: 44px;">
                     @if($connected && !$isLast)
-                        <div class="absolute top-[44px] w-[2px] h-full" style="background-color: {{ $colorHex }}20; left: 50%; transform: translateX(-50%);"></div>
+                        <div class="absolute top-[44px] w-[2px] h-full" style="background-color: {{ $data['bg_color'] }}/20; left: 50%; transform: translateX(-50%);"></div>
                     @endif
-                    <div class="w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0" style="background-color: {{ $colorHex }}">
+                    <div class="w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 {{colorHelper('bg_color', $data)}}" >
                         @if($iconStyle === 'checkmarks')
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                         @elseif($iconStyle === 'dots')
@@ -79,13 +75,9 @@
 
             {{-- Content --}}
             <div class="{{ $hideIcons ? '' : 'flex-1' }}">
-                <p class="{{ $styleClass($step['title_style'] ?? 'large_bold') }}"
-                   @if($isTitleAccent) style="color: {{ $colorHex }}" @endif
-                >{{ $step['title'] }}</p>
+                <h3 class="{{colorHelper('title_color', $data)}}">{{ $step['title'] }}</h3>
                 @if(!empty($step['description']))
-                    <p class="{{ $styleClass($step['desc_style'] ?? 'normal') }}"
-                       @if($isDescAccent) style="color: {{ $colorHex }}" @endif
-                    >{{ $step['description'] }}</p>
+                    <p class="{{colorHelper('text_color', $data)}}">{{ $step['description'] }}</p>
                 @endif
             </div>
         </div>

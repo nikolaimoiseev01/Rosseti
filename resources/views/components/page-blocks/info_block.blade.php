@@ -52,27 +52,27 @@
 </style>
 
 @if($style === 'blue')
-    <div class="page-block page-block--info-block rounded-2xl bg-[#00355A] p-8 {{ $spacingTop }} {{ $spacingBottom }}">
+    <div class="page-block page-block--info-block rounded-2xl bg-blue-400 p-6 {{ $spacingTop }} {{ $spacingBottom }}">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 
 @elseif($style === 'light')
-    <div class="page-block page-block--info-block rounded-2xl bg-[#F0F5FA] p-8 {{ $spacingTop }} {{ $spacingBottom }}">
+    <div class="page-block page-block--info-block rounded-2xl bg-[#F0F5FA] p-6 {{ $spacingTop }} {{ $spacingBottom }}">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 
 @elseif($style === 'accent')
-    <div class="page-block page-block--info-block border-l-4 border-[#2196F3] bg-[#F7F9FC] rounded-2xl p-8 {{ $spacingTop }} {{ $spacingBottom }}">
+    <div class="page-block page-block--info-block border-l-4 border-[#2196F3] bg-[#F7F9FC] rounded-2xl p-6 {{ $spacingTop }} {{ $spacingBottom }}">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 
 @elseif($style === 'dark')
-    <div class="page-block page-block--info-block rounded-2xl bg-[#1B2733] p-8 {{ $spacingTop }} {{ $spacingBottom }}">
+    <div class="page-block page-block--info-block rounded-2xl bg-[#1B2733] p-6 {{ $spacingTop }} {{ $spacingBottom }}">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 
 @elseif($style === 'bordered')
-    <div class="page-block page-block--info-block rounded-2xl bg-white border border-gray-200 p-8 {{ $spacingTop }} {{ $spacingBottom }}">
+    <div class="page-block page-block--info-block rounded-2xl bg-white border border-gray-200 p-6 {{ $spacingTop }} {{ $spacingBottom }}">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 @endif

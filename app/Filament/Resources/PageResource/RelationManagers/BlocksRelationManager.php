@@ -126,6 +126,8 @@ class BlocksRelationManager extends RelationManager
                             ]),
                     ])
                     ->columnSpanFull(),
+                ...$this->textColorSelectFields('data_languages.color'),
+                ...$this->spacingSelectFields(),
             ],
 
             'rich_text' => [
@@ -166,16 +168,7 @@ class BlocksRelationManager extends RelationManager
                             ]),
                     ])
                     ->columnSpanFull(),
-                Forms\Components\Select::make('data_languages.color')
-                    ->label('Цвет')
-                    ->options([
-                        'text-blue-900' => 'Тёмно-синий',
-                        'text-blue-500' => 'Синий',
-                        'text-blue-400' => 'Голубой',
-                        'text-black' => 'Чёрный',
-                        'text-white' => 'Белый',
-                    ])
-                    ->default('text-blue-900'),
+                ...$this->textColorSelectFields('data_languages.color'),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -187,6 +180,7 @@ class BlocksRelationManager extends RelationManager
                                 Forms\Components\FileUpload::make('data_languages.ru.url')
                                     ->label('Изображение')
                                     ->image()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
                                     ->directory('report-images')
                                     ->required(),
                                 Forms\Components\TextInput::make('data_languages.ru.caption')
@@ -197,6 +191,7 @@ class BlocksRelationManager extends RelationManager
                                 Forms\Components\FileUpload::make('data_languages.en.url')
                                     ->label('Image')
                                     ->image()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
                                     ->directory('report-images'),
                                 Forms\Components\TextInput::make('data_languages.en.caption')
                                     ->label('Image caption'),
@@ -277,21 +272,22 @@ class BlocksRelationManager extends RelationManager
                             ]),
                     ])
                     ->columnSpanFull(),
-                Forms\Components\Select::make('data_languages.color')
-                    ->label('Акцентный цвет')
+                ...$this->textColorSelectFields('data_languages.main_color', 'Цвет основной цифры'),
+                ...$this->textColorSelectFields('data_languages.unit_color', 'Цвет единиц измерения'),
+                ...$this->textColorSelectFields('data_languages.text_color', 'Цвет описания'),
+                Forms\Components\Select::make('data_languages.background_color')
+                    ->label('Цвет фона карточек')
                     ->options([
-                        'primary' => 'Тёмно-синий (#00355A)',
-                        'accent' => 'Голубой (#2196F3)',
-                    ])
-                    ->default('primary'),
-                Forms\Components\Select::make('data_languages.text_color')
-                    ->label('Цвет текста')
-                    ->options([
-                        'auto' => 'Авто (белый для тёмного фона)',
+                        'transparent' => 'Прозрачный',
                         'white' => 'Белый',
-                        'dark' => 'Тёмный',
+                        'gray-50' => 'Светло-серый',
+                        'gray-100' => 'Серый',
+                        'gray-200' => 'Тёмно-серый',
+                        'blue-50' => 'Светло-синий',
+                        'blue-100' => 'Синий',
+                        'blue-900' => 'Тёмно-синий',
                     ])
-                    ->default('auto'),
+                    ->default('transparent'),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -331,14 +327,31 @@ class BlocksRelationManager extends RelationManager
                                 Forms\Components\TextInput::make('data_languages.ru.content')
                                     ->label('Текст заголовка')
                                     ->required(),
+                                Forms\Components\TextInput::make('data_languages.ru.tooltip')
+                                    ->label('Текст подсказки (тултип)')
+                                    ->helperText('Появится при наведении на заголовок'),
                             ]),
                         Tab::make('English')
                             ->schema([
                                 Forms\Components\TextInput::make('data_languages.en.content')
                                     ->label('Heading text'),
+                                Forms\Components\TextInput::make('data_languages.en.tooltip')
+                                    ->label('Tooltip text')
+                                    ->helperText('Appears on hover'),
                             ]),
                     ])
                     ->columnSpanFull(),
+                Forms\Components\Select::make('data_languages.font_weight')
+                    ->label('Толщина шрифта')
+                    ->options([
+                        'font-light' => 'Тонкий (light)',
+                        'font-normal' => 'Обычный (normal)',
+                        'font-medium' => 'Средний (medium)',
+                        'font-semibold' => 'Полужирный (semibold)',
+                        'font-bold' => 'Жирный (bold)',
+                        'font-extrabold' => 'Очень жирный (extrabold)',
+                    ])
+                    ->default('bold'),
                 Forms\Components\Select::make('data_languages.level')
                     ->label('Уровень')
                     ->options([
@@ -348,25 +361,7 @@ class BlocksRelationManager extends RelationManager
                         'h4' => 'H4 — Маленький',
                     ])
                     ->default('h2'),
-                Forms\Components\Select::make('data_languages.color')
-                    ->label('Цвет')
-                    ->options([
-                        'primary' => 'Тёмно-синий (#00355A)',
-                        'accent' => 'Голубой (#2196F3)',
-                        'dark' => 'Чёрный',
-                        'white' => 'Белый (для тёмных фонов)',
-                    ])
-                    ->default('primary'),
-                Forms\Components\Select::make('data_languages.font_weight')
-                    ->label('Толщина шрифта')
-                    ->options([
-                        'normal' => 'Обычный (normal)',
-                        'medium' => 'Средний (medium)',
-                        'semibold' => 'Полужирный (semibold)',
-                        'bold' => 'Жирный (bold)',
-                        'extrabold' => 'Очень жирный (extrabold)',
-                    ])
-                    ->default('bold'),
+                ...$this->textColorSelectFields('data_languages.color'),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -530,21 +525,10 @@ class BlocksRelationManager extends RelationManager
                         'accent_border' => 'С акцентной полоской слева',
                     ])
                     ->default('card_blue'),
-                Forms\Components\Select::make('data_languages.color')
-                    ->label('Акцентный цвет')
-                    ->options([
-                        'primary' => 'Тёмно-синий (#00355A)',
-                        'accent' => 'Голубой (#2196F3)',
-                    ])
-                    ->default('primary'),
-                Forms\Components\Select::make('data_languages.text_color')
-                    ->label('Цвет текста')
-                    ->options([
-                        'auto' => 'Авто (белый для тёмного фона)',
-                        'white' => 'Белый',
-                        'dark' => 'Тёмный',
-                    ])
-                    ->default('auto'),
+                ...$this->textColorSelectFields('data_languages.main_color', 'Цвет цифры'),
+                ...$this->textColorSelectFields('data_languages.text_color', 'Цвет описания'),
+                ...$this->textColorSelectFields('data_languages.context_color', 'Цвет контекста'),
+                ...$this->textColorSelectFields('data_languages.bg_color', 'Цвет фона', true),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -752,13 +736,9 @@ class BlocksRelationManager extends RelationManager
                     ])
                     ->defaultItems(3)
                     ->columnSpanFull(),
-                Forms\Components\Select::make('data_languages.color')
-                    ->label('Акцентный цвет')
-                    ->options([
-                        'primary' => 'Тёмно-синий (#00355A)',
-                        'accent' => 'Голубой (#2196F3)',
-                    ])
-                    ->default('primary'),
+                ...$this->textColorSelectFields('data_languages.year_color', 'Цвет года'),
+                ...$this->textColorSelectFields('data_languages.title_color', 'Цвет заголовков'),
+                ...$this->textColorSelectFields('data_languages.text_color', 'Цвет текста'),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -774,28 +754,8 @@ class BlocksRelationManager extends RelationManager
                                     ->schema([
                                         Forms\Components\TextInput::make('title')
                                             ->label('Заголовок шага'),
-                                        Forms\Components\Select::make('title_style')
-                                            ->label('Стиль заголовка')
-                                            ->options([
-                                                'large_bold' => 'Крупный жирный',
-                                                'normal' => 'Обычный',
-                                                'small' => 'Мелкий',
-                                                'accent' => 'Акцентный цветной',
-                                                'muted' => 'Серый приглушённый',
-                                            ])
-                                            ->default('large_bold'),
                                         Forms\Components\Textarea::make('description')
                                             ->label('Описание'),
-                                        Forms\Components\Select::make('desc_style')
-                                            ->label('Стиль описания')
-                                            ->options([
-                                                'large_bold' => 'Крупный жирный',
-                                                'normal' => 'Обычный',
-                                                'small' => 'Мелкий',
-                                                'accent' => 'Акцентный цветной',
-                                                'muted' => 'Серый приглушённый',
-                                            ])
-                                            ->default('normal'),
                                     ])
                                     ->defaultItems(3)
                                     ->columnSpanFull(),
@@ -809,28 +769,8 @@ class BlocksRelationManager extends RelationManager
                                     ->schema([
                                         Forms\Components\TextInput::make('title')
                                             ->label('Step title'),
-                                        Forms\Components\Select::make('title_style')
-                                            ->label('Title style')
-                                            ->options([
-                                                'large_bold' => 'Large bold',
-                                                'normal' => 'Normal',
-                                                'small' => 'Small',
-                                                'accent' => 'Accent colored',
-                                                'muted' => 'Muted gray',
-                                            ])
-                                            ->default('large_bold'),
                                         Forms\Components\Textarea::make('description')
                                             ->label('Description'),
-                                        Forms\Components\Select::make('desc_style')
-                                            ->label('Description style')
-                                            ->options([
-                                                'large_bold' => 'Large bold',
-                                                'normal' => 'Normal',
-                                                'small' => 'Small',
-                                                'accent' => 'Accent colored',
-                                                'muted' => 'Muted gray',
-                                            ])
-                                            ->default('normal'),
                                     ])
                                     ->defaultItems(3)
                                     ->columnSpanFull(),
@@ -856,13 +796,9 @@ class BlocksRelationManager extends RelationManager
                 Forms\Components\Toggle::make('data_languages.connected')
                     ->label('Соединять линией')
                     ->default(false),
-                Forms\Components\Select::make('data_languages.color')
-                    ->label('Акцентный цвет')
-                    ->options([
-                        'primary' => 'Тёмно-синий (#00355A)',
-                        'accent' => 'Голубой (#2196F3)',
-                    ])
-                    ->default('accent'),
+                ...$this->textColorSelectFields('data_languages.title_color', 'Цвет заголовков'),
+                ...$this->textColorSelectFields('data_languages.text_color', 'Цвет текста'),
+                ...$this->textColorSelectFields('data_languages.bg_color', 'Цвет фона', true),
                 Forms\Components\Select::make('data_languages.spacing')
                     ->label('Отступ снизу')
                     ->options([
@@ -973,16 +909,6 @@ class BlocksRelationManager extends RelationManager
                             ->required(),
                         Forms\Components\Textarea::make('text')
                             ->label('Описание'),
-                        Forms\Components\Select::make('title_style')
-                            ->label('Стиль заголовка')
-                            ->options([
-                                'large_bold' => 'Крупный жирный',
-                                'normal' => 'Обычный',
-                                'small' => 'Мелкий',
-                                'accent' => 'Акцентный цветной',
-                                'muted' => 'Серый приглушённый',
-                            ])
-                            ->default('large_bold'),
                     ])
                     ->defaultItems(3)
                     ->columnSpanFull(),
@@ -994,13 +920,9 @@ class BlocksRelationManager extends RelationManager
                         'large' => 'Большой (60px)',
                     ])
                     ->default('medium'),
-                Forms\Components\Select::make('data_languages.color')
-                    ->label('Акцентный цвет')
-                    ->options([
-                        'primary' => 'Тёмно-синий (#00355A)',
-                        'accent' => 'Голубой (#2196F3)',
-                    ])
-                    ->default('primary'),
+                ...$this->textColorSelectFields('data_languages.title_color', 'Цвет заголовока'),
+                ...$this->textColorSelectFields('data_languages.desc_color', 'Цвет описания'),
+
             ],
 
             default => [
@@ -1140,6 +1062,26 @@ class BlocksRelationManager extends RelationManager
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    private function textColorSelectFields($column, $label='Цвет текста', $isBg=false): array
+    {
+        $prefix = $isBg ? 'bg-' : 'text-';
+        $textColorOptions = [
+            $prefix . 'blue-600' => 'Тёмно-синий',
+            $prefix . 'blue-500' => 'Синий',
+            $prefix . 'blue-400' => 'Голубой',
+            $prefix . 'black-500' => 'Чёрный',
+            $prefix . 'grey' => 'Серый',
+        ];
+
+        return [
+            Forms\Components\Select::make($column)
+                ->label($label)
+                ->required()
+                ->options($textColorOptions)
+                ->default('text-blue-600'),
+        ];
     }
 
     private function spacingSelectFields(): array

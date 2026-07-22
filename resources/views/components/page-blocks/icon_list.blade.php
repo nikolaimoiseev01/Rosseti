@@ -52,16 +52,14 @@
         @php
             $isTitleAccent = ($item['title_style'] ?? 'large_bold') === 'accent';
         @endphp
-        <div class="flex items-center gap-4">
+        <div class="flex items-start gap-4">
             @if(!empty($item['icon']))
                 <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0">
             @endif
             <div>
-                <p class="{{ $styleClass($item['title_style'] ?? 'large_bold') }}"
-                   @if($isTitleAccent) style="color: {{ $colorHex }}" @endif
-                >{{ $item['title'] }}</p>
+                <h3 class="{{colorHelper('title_color', $data)}}" @if($isTitleAccent) style="color: {{ $colorHex }}" @endif>{{ $item['title'] }}</h3>
                 @if(!empty($item['text']))
-                    <p class="text-sm text-[#6B7785] mt-1">{{ $item['text'] }}</p>
+                    <p class="{{colorHelper('desc_color', $data)}} mt-1">{{ $item['text'] }}</p>
                 @endif
             </div>
         </div>

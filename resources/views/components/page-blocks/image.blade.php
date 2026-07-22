@@ -31,7 +31,7 @@
         <img
             src="{{ Storage::url($data['url']) }}"
             alt="{{ $data['caption'] ?? '' }}"
-            class="w-full rounded-2xl shadow-md"
+            class="w-full rounded-2xl"
             loading="lazy"
         >
     @else
