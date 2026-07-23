@@ -26,11 +26,9 @@ export default {
         './resources/views/**/*.blade.php',
     ],
     safelist: [
-        'fill-white',
-        'fill-blue-500',
-        'fill-blue',
-        ...baseClasses,
-        ...baseClasses.map(cls => '!' + cls),
+        {
+            pattern: /.*/,
+        },
     ],
 
     theme: {
