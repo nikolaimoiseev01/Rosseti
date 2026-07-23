@@ -44,7 +44,7 @@ class BlocksRelationManager extends RelationManager
                         'image' => 'Изображение',
                         'subtitle' => 'Подзаголовок',
                         'divider' => 'Разделитель',
-                        'text-with-title' => 'Текст с заголовком',
+//                        'text-with-title' => 'Текст с заголовком',
                         'rich_text' => 'Текстовый блок',
                         'two_columns' => 'Текст в две колонки',
                         'table' => 'Таблица',
@@ -687,14 +687,7 @@ class BlocksRelationManager extends RelationManager
                         'bordered' => 'Белый фон с границей',
                     ])
                     ->default('light'),
-                Forms\Components\Select::make('data_languages.text_color')
-                    ->label('Цвет текста')
-                    ->options([
-                        'auto' => 'Авто (по стилю)',
-                        'white' => 'Белый',
-                        'dark' => 'Тёмный',
-                    ])
-                    ->default('auto'),
+                ...$this->textColorSelectFields('data_languages.text_color', 'Цвет текста'),
                 Forms\Components\Select::make('data_languages.text_size')
                     ->label('Размер текста')
                     ->options([
@@ -907,8 +900,16 @@ class BlocksRelationManager extends RelationManager
                         Forms\Components\TextInput::make('title')
                             ->label('Заголовок')
                             ->required(),
-                        Forms\Components\Textarea::make('text')
-                            ->label('Описание'),
+                        Forms\Components\RichEditor::make('text')
+                            ->label('Описание')
+                            ->toolbarButtons([
+                                'bold',
+                                'bulletList',
+                                'orderedList',
+                                'h2',
+                                'h3',
+                            ])
+                            ->columnSpanFull(),
                     ])
                     ->defaultItems(3)
                     ->columnSpanFull(),
@@ -942,7 +943,7 @@ class BlocksRelationManager extends RelationManager
                     ->label('Тип')
                     ->searchable()
                     ->formatStateUsing(fn (string $state): string => match($state) {
-                        'text-with-title' => 'Текст с заголовком',
+//                        'text-with-title' => 'Текст с заголовком',
                         'rich_text' => 'Текстовый блок',
                         'image' => 'Изображение',
                         'two_columns' => 'Текст в две колонки',
@@ -1033,7 +1034,7 @@ class BlocksRelationManager extends RelationManager
                         'image' => 'Изображение',
                         'subtitle' => 'Подзаголовок',
                         'divider' => 'Разделитель',
-                        'text-with-title' => 'Текст с заголовком',
+//                        'text-with-title' => 'Текст с заголовком',
                         'rich_text' => 'Текстовый блок',
                         'two_columns' => 'Текст в две колонки',
                         'table' => 'Таблица',

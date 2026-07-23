@@ -59,7 +59,7 @@
             <div>
                 <h3 class="{{colorHelper('title_color', $data)}}" @if($isTitleAccent) style="color: {{ $colorHex }}" @endif>{{ $item['title'] }}</h3>
                 @if(!empty($item['text']))
-                    <p class="{{colorHelper('desc_color', $data)}} mt-1">{{ $item['text'] }}</p>
+                    <div class="{{colorHelper('desc_color', $data)}} mt-1 prose prose-sm max-w-none">{!! $item['text'] !!}</div>
                 @endif
             </div>
         </div>

@@ -163,4 +163,17 @@ return [
     */
 
     'pagination_theme' => 'tailwind',
+
+    /*
+    |---------------------------------------------------------------------------
+    | Payload Configuration
+    |---------------------------------------------------------------------------
+    |
+    | Configure limits for Livewire's payload handling.
+    |
+    */
+
+    'payload' => [
+        'max_nesting_depth' => 30,
+    ],
 ];

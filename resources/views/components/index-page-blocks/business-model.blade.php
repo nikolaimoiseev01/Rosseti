@@ -15,7 +15,7 @@
             'image' => '/fixed/slider-card-1.2.jpg',
             'stats' => [
                 ['value' => '10,0', 'unit' => 'млн ГДж', 'text' => 'объем потребления топливных ресурсов'],
-                ['value' => '2 432', 'unit' => 'тыс. м3', 'text' => 'объем водопотребления'],
+                ['value' => '2 432', 'unit' => 'тыс. м³', 'text' => 'объем водопотребления', 'diff' => [['value' => '+1,7%', 'class' => '-top-[2px] right-[75px]']],],
             ],
         ],
         [
@@ -148,7 +148,7 @@ HTML
                     ['value' => '472', 'diff' => [['value' => '-12%', 'class' => '-top-2 left-[50px]']], 'unit' => 'млрд руб.', 'text' => 'объем закупок у субъектов МСП'],
                     ['value' => '1,7', 'unit' => 'трлн руб. с НДС ', 'text' => 'общая сумма закупок'],
                    ['skip_block' => true],
-                    ['title' => 'Акционеры и инвесторы'],
+                    ['title' => 'Государство'],
                     ['value' => '270', 'unit' => 'млрд руб.',  'diff' => [['value' => '-4%', 'class' => '-top-2 left-[50px]']], 'text' => 'налоговые и социальные отчисления'],
                     ['value' => '725', 'unit' => 'млрд руб.', 'text' => 'инвестиции в электросетевые активы'],
                 ],
@@ -311,6 +311,18 @@ HTML
                                                 {{ $stat['value'] }}
                                             </span>
 
+                                                        @if($stat['diff'] ?? null)
+                                                            @foreach($stat['diff'] as $diff)
+                                                                <span
+                                                                    class="absolute rounded-full bg-white px-2
+                                                               text-[10px] text-green-300
+                                                               {{ $diff['class'] }}"
+                                                                >
+                                                                {{ $diff['value'] }}
+                                                            </span>
+                                                            @endforeach
+                                                        @endif
+
                                                         <span class="text-white">
                                                 {{ $stat['unit'] }}
                                             </span>
@@ -401,7 +413,7 @@ HTML
                                             <p class="mb-2 text-sm ">
                                                 {{ $slide['subtitle'] }}
                                             </p>
-                                            @endif
+                                        @endif
                                         <div class="grid gap-4 {{$slide['class']}}">
                                             @for ($i = 1; $i <= 12; $i++)
                                                 <img
@@ -438,8 +450,8 @@ HTML
                                                                text-[10px] text-green-300
                                                                {{ $diff['class'] }}"
                                                                     >
-                                                        {{ $diff['value'] }}
-                                                    </span>
+                                                                {{ $diff['value'] }}
+                                                            </span>
                                                                 @endforeach
                                                             @endif
 

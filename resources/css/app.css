@@ -39,7 +39,7 @@ h3 {
         @apply text-4xl text-blue-500 font-medium uppercase;
     }
     h3 {
-        @apply mb-0 text-2xl text-blue-500 font-normal uppercase;
+        @apply mb-0 text-2xl text-blue-500 font-normal;
     }
     h4 {
         @apply text-2xl text-blue-500 font-normal uppercase;
