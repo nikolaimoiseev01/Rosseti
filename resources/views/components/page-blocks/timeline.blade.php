@@ -42,6 +42,7 @@
 
                 <div class="flex flex-col gap-1">
                     <h3 class="font-light {{colorHelper('year_color', $data)}}">{{ $event['year'] }}</h3>
+                    {{dd($event['title'],$event['description'])}}
                     @if($event['title'] || $event['description'])
                         <div>
                             @if($event['title'])
