@@ -38,7 +38,7 @@
     ];
 @endphp
 
-<section class="page-block page-block--values container py-8 text-[#0B4775]">
+<section x-data="revealOnScroll()" class="page-block page-block--values container py-8 text-[#0B4775]">
     <div class="grid grid-cols-2 gap-16 lg:grid-cols-1 lg:gap-10">
         <div>
             <h3 x-data="revealOnScroll()" class="mb-7 text-2xl">

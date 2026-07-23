@@ -1,4 +1,4 @@
-<section id="contents" class="page-block page-block--content container py-24 md:py-16">
+<section x-data="revealOnScroll()" id="contents" class="page-block page-block--content container py-24 md:py-16">
     <h2 x-data="revealOnScroll()" class="mb-4 text-5xl text-blue-900 uppercase leading-none md:text-[26px]">
         Содержание
     </h2>

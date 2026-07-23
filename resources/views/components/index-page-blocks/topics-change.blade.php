@@ -5,7 +5,7 @@
     ];
 @endphp
 
-<section class="page-block page-block--topics-change container py-8">
+<section x-data="revealOnScroll()" class="page-block page-block--topics-change container py-8">
     <div
         class="relative min-h-[427px] overflow-hidden rounded-[22px] bg-cover bg-center px-10 py-11 text-white md:px-5 md:py-8"
         style="background-image: url('/fixed/change-topics-bg.jpg');"

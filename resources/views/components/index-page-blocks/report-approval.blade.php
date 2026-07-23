@@ -1,4 +1,4 @@
-<section class="page-block page-block--report-approval container grid grid-cols-2 lg:grid-cols-1 auto-rows-min gap-8">
+<section x-data="revealOnScroll()" class="page-block page-block--report-approval container grid grid-cols-2 lg:grid-cols-1 auto-rows-min gap-8">
 
     <div x-data="revealOnScroll()" class="flex flex-col">
         <h3 class="text-2xl mb-2 text-blue-500">Информация об утверждении и заверении Отчета</h3>

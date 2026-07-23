@@ -1,4 +1,4 @@
-<section class="page-block page-block--new-in-report flex flex-col gap-4 p-8 bg-blue-400 container rounded-[10px] mb-24">
+<section x-data="revealOnScroll()" class="page-block page-block--new-in-report flex flex-col gap-4 p-8 bg-blue-400 container rounded-[10px] mb-24">
     <p x-data="revealOnScroll()" class="text-white text-2xl">Новое в Отчете</p>
     <div x-data="revealOnScroll()" class="flex gap-4 lg:flex-col">
         <p class="text-white">В этом году наш Отчет получил более выраженную стратегическую направленность за счет углубленного

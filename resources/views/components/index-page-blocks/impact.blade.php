@@ -53,7 +53,7 @@
     ];
 @endphp
 
-<section class="page-block page-block--impact container mb-24 text-[#0B4775]">
+<section x-data="revealOnScroll()" class="page-block page-block--impact container mb-24 text-[#0B4775]">
     @foreach($sections as $section)
         <div class="mb-9 last:mb-0">
             <h2 x-data="revealOnScroll()" class="mb-6 text-5xl uppercase leading-[1.25] text-[#0B4775] md:text-[26px]">

@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="/fonts/fonts.css" rel="stylesheet">
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -67,13 +68,19 @@
             opacity: 0.7;
         }
 
-        .lightbox-clickable {
+        /*
+         * Теперь класс lightbox-clickable добавлять JS-ом не нужно.
+         * Cursor можно назначить всем изображениям,
+         * кроме явно исключённых через data-no-lightbox.
+         */
+        img:not([data-no-lightbox]) {
             cursor: pointer;
-            transition: transform 0.2s ease;
         }
 
-        .lightbox-clickable:hover {
+        img:not([data-no-lightbox]):hover {
+            /* При необходимости можно вернуть:
             transform: scale(1.02);
+            */
         }
 
         .lightbox-zoom-controls {
@@ -157,6 +164,8 @@
             background: rgba(255, 255, 255, 0.3);
         }
     </style>
+
+
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -171,167 +180,691 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/110978392" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 </head>
+
 <body class="antialiased flex flex-col min-h-screen">
-{{--<x-preloader/>--}}
+
+{{-- <x-preloader/> --}}
+
 <x-header/>
+
 {{ $slot ?? '' }}
+
 @yield('content')
+
 <x-footer/>
+
 @stack('page-js')
 
-<!-- Lightbox Modal -->
-<div class="lightbox-modal" id="lightbox">
-    <span class="lightbox-close" id="lightbox-close">&times;</span>
-    <img src="" alt="" class="bg-white p-2" id="lightbox-image">
+
+{{-- ========================================================= --}}
+{{-- LIGHTBOX --}}
+{{-- ========================================================= --}}
+
+@persist('global-lightbox')
+<div
+    class="lightbox-modal"
+    id="lightbox"
+>
+    <span
+        class="lightbox-close"
+        id="lightbox-close"
+    >
+        &times;
+    </span>
+
+    <img
+        src=""
+        alt=""
+        class="bg-white p-2"
+        id="lightbox-image"
+        data-no-lightbox
+    >
+
     <div class="lightbox-zoom-controls">
-        <button class="lightbox-zoom-btn" id="zoom-out">−</button>
-        <input type="range" class="lightbox-zoom-slider" id="zoom-slider" min="1" max="5" step="0.1" value="1">
-        <span class="lightbox-zoom-level" id="zoom-level">100%</span>
-        <button class="lightbox-zoom-btn" id="zoom-in">+</button>
+
+        <button
+            type="button"
+            class="lightbox-zoom-btn"
+            id="zoom-out"
+        >
+            −
+        </button>
+
+        <input
+            type="range"
+            class="lightbox-zoom-slider"
+            id="zoom-slider"
+            min="1"
+            max="5"
+            step="0.1"
+            value="1"
+        >
+
+        <span
+            class="lightbox-zoom-level"
+            id="zoom-level"
+        >
+            100%
+        </span>
+
+        <button
+            type="button"
+            class="lightbox-zoom-btn"
+            id="zoom-in"
+        >
+            +
+        </button>
+
     </div>
 </div>
+@endpersist
+
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImage = document.getElementById('lightbox-image');
-        const lightboxClose = document.getElementById('lightbox-close');
-        const zoomSlider = document.getElementById('zoom-slider');
-        const zoomLevel = document.getElementById('zoom-level');
-        const zoomIn = document.getElementById('zoom-in');
-        const zoomOut = document.getElementById('zoom-out');
+    /**
+     * ============================================================
+     * LIGHTBOX
+     * ============================================================
+     *
+     * Здесь специально используется event delegation.
+     *
+     * Поэтому после:
+     *
+     * wire:navigate
+     * livewire:navigated
+     * Livewire update
+     *
+     * ничего повторно инициализировать не требуется.
+     */
+
+    (() => {
+
+        /*
+         * Защита от повторного подключения скрипта.
+         *
+         * При Livewire navigation layout обычно не выполняется
+         * повторно, но эта проверка делает код безопаснее.
+         */
+        if (window.__globalLightboxInitialized) {
+            return;
+        }
+
+        window.__globalLightboxInitialized = true;
+
 
         let currentZoom = 1;
-        let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
 
-        // Add click event to all images
-        function setupLightbox() {
-            const images = document.querySelectorAll('img:not(.lightbox-clickable):not([data-no-lightbox])');
-            images.forEach(img => {
-                img.classList.add('lightbox-clickable');
-                img.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    lightboxImage.src = this.src;
-                    lightbox.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    resetZoom();
-                });
-            });
+        let isDragging = false;
+
+        let startX = 0;
+        let startY = 0;
+
+        let translateX = 0;
+        let translateY = 0;
+
+
+        /**
+         * Каждый раз получаем актуальные элементы из DOM.
+         *
+         * Это важно для Livewire, потому что DOM страницы
+         * может изменяться после навигации.
+         */
+        function getLightboxElements() {
+            return {
+                lightbox: document.getElementById('lightbox'),
+                image: document.getElementById('lightbox-image'),
+                close: document.getElementById('lightbox-close'),
+                zoomSlider: document.getElementById('zoom-slider'),
+                zoomLevel: document.getElementById('zoom-level'),
+                zoomIn: document.getElementById('zoom-in'),
+                zoomOut: document.getElementById('zoom-out'),
+            };
         }
 
-        // Reset zoom
+
+        /**
+         * Обновление transform картинки.
+         */
+        function updateImageTransform() {
+            const { image } = getLightboxElements();
+
+            if (!image) {
+                return;
+            }
+
+            image.style.transform =
+                `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
+        }
+
+
+        /**
+         * Сброс zoom/pan.
+         */
         function resetZoom() {
+            const {
+                zoomSlider,
+                zoomLevel
+            } = getLightboxElements();
+
             currentZoom = 1;
+
             translateX = 0;
             translateY = 0;
-            zoomSlider.value = 1;
-            zoomLevel.textContent = '100%';
+
+            if (zoomSlider) {
+                zoomSlider.value = 1;
+            }
+
+            if (zoomLevel) {
+                zoomLevel.textContent = '100%';
+            }
+
             updateImageTransform();
         }
 
-        // Update image transform
-        function updateImageTransform() {
-            lightboxImage.style.transform = `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
-        }
 
-        // Zoom slider
-        zoomSlider.addEventListener('input', function() {
-            currentZoom = parseFloat(this.value);
-            zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
-            updateImageTransform();
-        });
+        /**
+         * Открытие lightbox.
+         */
+        function openLightbox(sourceImage) {
+            const {
+                lightbox,
+                image
+            } = getLightboxElements();
 
-        // Zoom buttons
-        zoomIn.addEventListener('click', function() {
-            if (currentZoom < 5) {
-                currentZoom = Math.min(5, currentZoom + 0.5);
-                zoomSlider.value = currentZoom;
-                zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
-                updateImageTransform();
+            if (!lightbox || !image) {
+                return;
             }
-        });
 
-        zoomOut.addEventListener('click', function() {
-            if (currentZoom > 1) {
-                currentZoom = Math.max(1, currentZoom - 0.5);
-                zoomSlider.value = currentZoom;
-                zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
-                updateImageTransform();
-            }
-        });
+            /*
+             * currentSrc правильнее src,
+             * если используется srcset / picture.
+             */
+            image.src =
+                sourceImage.currentSrc ||
+                sourceImage.src;
 
-        // Mouse wheel zoom
-        lightbox.addEventListener('wheel', function(e) {
-            if (lightbox.classList.contains('active')) {
-                e.preventDefault();
-                const delta = e.deltaY > 0 ? -0.1 : 0.1;
-                currentZoom = Math.max(1, Math.min(5, currentZoom + delta));
-                zoomSlider.value = currentZoom;
-                zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
-                updateImageTransform();
-            }
-        });
+            /*
+             * Можно перенести alt оригинальной картинки.
+             */
+            image.alt =
+                sourceImage.alt || '';
 
-        // Drag to pan
-        lightboxImage.addEventListener('mousedown', function(e) {
-            if (currentZoom > 1) {
-                isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-                lightboxImage.style.cursor = 'grabbing';
-                lightboxImage.style.transition = 'none';
-            }
-        });
-
-        document.addEventListener('mousemove', function(e) {
-            if (isDragging) {
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateImageTransform();
-            }
-        });
-
-        document.addEventListener('mouseup', function() {
-            if (isDragging) {
-                isDragging = false;
-                lightboxImage.style.cursor = 'grab';
-                lightboxImage.style.transition = 'transform 0.3s ease';
-            }
-        });
-
-        // Close lightbox
-        lightboxClose.addEventListener('click', function() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = '';
             resetZoom();
-        });
 
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox) {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = '';
-                resetZoom();
+            lightbox.classList.add('active');
+
+            document.body.style.overflow = 'hidden';
+        }
+
+
+        /**
+         * Закрытие lightbox.
+         */
+        function closeLightbox() {
+            const {
+                lightbox,
+                image
+            } = getLightboxElements();
+
+            if (!lightbox) {
+                return;
             }
-        });
 
-        // Close on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = '';
-                resetZoom();
+            lightbox.classList.remove('active');
+
+            document.body.style.overflow = '';
+
+            isDragging = false;
+
+            resetZoom();
+
+            /*
+             * Можно очистить src после закрытия.
+             */
+            if (image) {
+                image.style.cursor = 'grab';
+                image.style.transition = 'transform 0.3s ease';
             }
+        }
+
+
+        /**
+         * ========================================================
+         * CLICK
+         * ========================================================
+         *
+         * Один обработчик на document.
+         *
+         * Работает и для картинок, которые появились
+         * после Livewire navigation.
+         */
+        document.addEventListener('click', function (event) {
+
+            /*
+             * ----------------------------------------------------
+             * CLOSE
+             * ----------------------------------------------------
+             */
+
+            const closeButton =
+                event.target.closest('#lightbox-close');
+
+            if (closeButton) {
+                event.preventDefault();
+
+                closeLightbox();
+
+                return;
+            }
+
+
+            /*
+             * ----------------------------------------------------
+             * ZOOM IN
+             * ----------------------------------------------------
+             */
+
+            const zoomInButton =
+                event.target.closest('#zoom-in');
+
+            if (zoomInButton) {
+                event.preventDefault();
+
+                const {
+                    zoomSlider,
+                    zoomLevel
+                } = getLightboxElements();
+
+                currentZoom =
+                    Math.min(5, currentZoom + 0.5);
+
+                if (zoomSlider) {
+                    zoomSlider.value = currentZoom;
+                }
+
+                if (zoomLevel) {
+                    zoomLevel.textContent =
+                        Math.round(currentZoom * 100) + '%';
+                }
+
+                updateImageTransform();
+
+                return;
+            }
+
+
+            /*
+             * ----------------------------------------------------
+             * ZOOM OUT
+             * ----------------------------------------------------
+             */
+
+            const zoomOutButton =
+                event.target.closest('#zoom-out');
+
+            if (zoomOutButton) {
+                event.preventDefault();
+
+                const {
+                    zoomSlider,
+                    zoomLevel
+                } = getLightboxElements();
+
+                currentZoom =
+                    Math.max(1, currentZoom - 0.5);
+
+                if (zoomSlider) {
+                    zoomSlider.value = currentZoom;
+                }
+
+                if (zoomLevel) {
+                    zoomLevel.textContent =
+                        Math.round(currentZoom * 100) + '%';
+                }
+
+                updateImageTransform();
+
+                return;
+            }
+
+
+            /*
+             * ----------------------------------------------------
+             * CLICK OUTSIDE IMAGE
+             * ----------------------------------------------------
+             */
+
+            const {
+                lightbox
+            } = getLightboxElements();
+
+            if (
+                lightbox &&
+                event.target === lightbox
+            ) {
+                closeLightbox();
+
+                return;
+            }
+
+
+            /*
+             * ----------------------------------------------------
+             * OPEN IMAGE
+             * ----------------------------------------------------
+             */
+
+            const clickedImage =
+                event.target.closest(
+                    'img:not([data-no-lightbox])'
+                );
+
+            if (!clickedImage) {
+                return;
+            }
+
+            /*
+             * Дополнительная страховка.
+             */
+            if (
+                clickedImage.id === 'lightbox-image'
+            ) {
+                return;
+            }
+
+            event.preventDefault();
+
+            openLightbox(clickedImage);
         });
 
-        // Initial setup
-        setupLightbox();
 
-        // Re-setup after Livewire navigation
-        document.addEventListener('livewire:navigated', function() {
-            setTimeout(setupLightbox, 100);
+        /**
+         * ========================================================
+         * RANGE INPUT
+         * ========================================================
+         */
+        document.addEventListener('input', function (event) {
+
+            if (
+                event.target.id !== 'zoom-slider'
+            ) {
+                return;
+            }
+
+            const {
+                zoomLevel
+            } = getLightboxElements();
+
+            currentZoom =
+                parseFloat(event.target.value);
+
+            if (zoomLevel) {
+                zoomLevel.textContent =
+                    Math.round(currentZoom * 100) + '%';
+            }
+
+            updateImageTransform();
         });
-    });
+
+
+        /**
+         * ========================================================
+         * MOUSE WHEEL ZOOM
+         * ========================================================
+         */
+        document.addEventListener(
+            'wheel',
+            function (event) {
+
+                const {
+                    lightbox,
+                    zoomSlider,
+                    zoomLevel
+                } = getLightboxElements();
+
+                if (
+                    !lightbox ||
+                    !lightbox.classList.contains('active')
+                ) {
+                    return;
+                }
+
+                /*
+                 * Зумим только если курсор находится
+                 * внутри lightbox.
+                 */
+                if (
+                    !event.target.closest('#lightbox')
+                ) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                const delta =
+                    event.deltaY > 0
+                        ? -0.1
+                        : 0.1;
+
+                currentZoom =
+                    Math.max(
+                        1,
+                        Math.min(
+                            5,
+                            currentZoom + delta
+                        )
+                    );
+
+                /*
+                 * Убираем погрешности вроде:
+                 * 1.2000000000000002
+                 */
+                currentZoom =
+                    Math.round(currentZoom * 10) / 10;
+
+                if (zoomSlider) {
+                    zoomSlider.value = currentZoom;
+                }
+
+                if (zoomLevel) {
+                    zoomLevel.textContent =
+                        Math.round(
+                            currentZoom * 100
+                        ) + '%';
+                }
+
+                updateImageTransform();
+            },
+            {
+                passive: false
+            }
+        );
+
+
+        /**
+         * ========================================================
+         * DRAG START
+         * ========================================================
+         */
+        document.addEventListener(
+            'mousedown',
+            function (event) {
+
+                if (
+                    event.target.id !==
+                    'lightbox-image'
+                ) {
+                    return;
+                }
+
+                if (currentZoom <= 1) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                isDragging = true;
+
+                startX =
+                    event.clientX - translateX;
+
+                startY =
+                    event.clientY - translateY;
+
+                event.target.style.cursor =
+                    'grabbing';
+
+                event.target.style.transition =
+                    'none';
+            }
+        );
+
+
+        /**
+         * ========================================================
+         * DRAG MOVE
+         * ========================================================
+         */
+        document.addEventListener(
+            'mousemove',
+            function (event) {
+
+                if (!isDragging) {
+                    return;
+                }
+
+                translateX =
+                    event.clientX - startX;
+
+                translateY =
+                    event.clientY - startY;
+
+                updateImageTransform();
+            }
+        );
+
+
+        /**
+         * ========================================================
+         * DRAG END
+         * ========================================================
+         */
+        document.addEventListener(
+            'mouseup',
+            function () {
+
+                if (!isDragging) {
+                    return;
+                }
+
+                isDragging = false;
+
+                const {
+                    image
+                } = getLightboxElements();
+
+                if (!image) {
+                    return;
+                }
+
+                image.style.cursor =
+                    'grab';
+
+                image.style.transition =
+                    'transform 0.3s ease';
+            }
+        );
+
+
+        /**
+         * Когда курсор ушёл за пределы окна
+         * во время drag.
+         */
+        window.addEventListener(
+            'blur',
+            function () {
+
+                if (!isDragging) {
+                    return;
+                }
+
+                isDragging = false;
+
+                const {
+                    image
+                } = getLightboxElements();
+
+                if (image) {
+                    image.style.cursor =
+                        'grab';
+
+                    image.style.transition =
+                        'transform 0.3s ease';
+                }
+            }
+        );
+
+
+        /**
+         * ========================================================
+         * ESC
+         * ========================================================
+         */
+        document.addEventListener(
+            'keydown',
+            function (event) {
+
+                if (event.key !== 'Escape') {
+                    return;
+                }
+
+                const {
+                    lightbox
+                } = getLightboxElements();
+
+                if (
+                    !lightbox ||
+                    !lightbox.classList.contains('active')
+                ) {
+                    return;
+                }
+
+                closeLightbox();
+            }
+        );
+
+
+        /**
+         * ========================================================
+         * LIVEWIRE NAVIGATION
+         * ========================================================
+         *
+         * Переинициализация больше НЕ нужна.
+         *
+         * Но если пользователь перешёл на другую страницу,
+         * когда lightbox был открыт, гарантированно возвращаем
+         * body в нормальное состояние.
+         */
+        document.addEventListener(
+            'livewire:navigating',
+            function () {
+
+                const {
+                    lightbox
+                } = getLightboxElements();
+
+                if (
+                    lightbox &&
+                    lightbox.classList.contains('active')
+                ) {
+                    closeLightbox();
+                }
+            }
+        );
+
+    })();
 </script>
+
 </body>
 </html>

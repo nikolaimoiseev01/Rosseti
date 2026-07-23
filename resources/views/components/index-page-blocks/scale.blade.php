@@ -1,4 +1,4 @@
-<section class="page-block page-block--scale container py-12">
+<section x-data="revealOnScroll()" class="page-block page-block--scale container py-12">
     <div class="relative overflow-hidden rounded-[32px] min-h-[767px]">
         {{-- Background image --}}
         <img

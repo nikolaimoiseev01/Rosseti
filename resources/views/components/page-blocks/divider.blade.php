@@ -24,13 +24,13 @@
 @endphp
 
 @if($style === 'line')
-    <hr class="page-block page-block--divider border-t border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
+    <hr x-data="revealOnScroll()" class="page-block page-block--divider border-t border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
 @elseif($style === 'thick')
-    <hr class="page-block page-block--divider border-t-2 border-[#00355A]/20 {{ $spacingTop }} {{ $spacingBottom }}">
+    <hr x-data="revealOnScroll()" class="page-block page-block--divider border-t-2 border-[#00355A]/20 {{ $spacingTop }} {{ $spacingBottom }}">
 @elseif($style === 'space')
-    <div class="page-block page-block--divider {{ $spacingTop }} {{ $spacingBottom }}"></div>
+    <div x-data="revealOnScroll()" class="page-block page-block--divider {{ $spacingTop }} {{ $spacingBottom }}"></div>
 @elseif($style === 'dots')
-    <div class="page-block page-block--divider flex justify-center gap-2 {{ $spacingTop }} {{ $spacingBottom }}">
+    <div x-data="revealOnScroll()" class="page-block page-block--divider flex justify-center gap-2 {{ $spacingTop }} {{ $spacingBottom }}">
         <span class="w-1.5 h-1.5 rounded-full bg-[#C0CDDB]"></span>
         <span class="w-1.5 h-1.5 rounded-full bg-[#C0CDDB]"></span>
         <span class="w-1.5 h-1.5 rounded-full bg-[#C0CDDB]"></span>

@@ -41,20 +41,20 @@
         <div class='flex flex-col'>
             <span class='text-3xl text-white'>AAА (RU)</span>
             <p class="text-white">
-                кредитный рейтинг от РА АКРА
+                кредитный рейтинг от АКРА (АО)
             </p>
         </div>
 
         <div class='flex flex-col'>
             <span class='text-3xl text-white'>ruAAA </span>
             <p class="text-white">
-                кредитный рейтинг от «Эксперт РА»
+                кредитный рейтинг от АО «Эксперт РА»
             </p>
         </div>
                 <div class='flex flex-col'>
             <span class='text-3xl text-white'>ESG-2 (АА+)</span>
             <p class="text-white">
-                «Стабильный» ESG-рейтинг от РА АКРА
+                ESG-рейтинг  от АКРА (АО)
             </p>
         </div>
                 <div class='flex flex-col'>
@@ -105,7 +105,7 @@ HTML
         </p>
     </div>
 
-    <div class="absolute bottom-7 left-7 right-7 z-10 flex flex-col md:grid-cols-1 max-w-[330px] ml-auto">
+    <div class="absolute bottom-7 left-7 left-7 z-10 flex flex-col md:grid-cols-1 max-w-[330px] ml-auto">
         <div class='flex items-end gap-2'>
         <span class='text-lg !text-white'>более</span>
         <span class='text-7xl text-white'>235</span>
@@ -250,7 +250,7 @@ HTML
     }
 </style>
 
-<section class="page-block page-block--business-model container py-10 ">
+<section x-data="revealOnScroll()" class="page-block page-block--business-model container py-10 ">
     <h2 x-data="revealOnScroll()" class="mb-4 text-5xl text-blue-900 uppercase leading-none md:text-[26px]">
         Бизнес-модель
     </h2>

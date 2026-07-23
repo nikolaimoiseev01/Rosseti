@@ -22,7 +22,7 @@
     ];
 @endphp
 
-<section class="page-block page-block--topics container mb-24 text-[#4A4A4A]">
+<section x-data="revealOnScroll()" class="page-block page-block--topics container mb-24 text-[#4A4A4A]">
     <h3 x-data="revealOnScroll()" class="mb-6 text-center text-2xl text-[#0060A8] md:text-left md:text-lg">
         Перечень существенных тем
     </h3>

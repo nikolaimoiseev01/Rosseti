@@ -1,4 +1,4 @@
-<section class="page-block page-block--about-report mb-12 rounded-2xl overflow-hidden p-12 lg:p-4 flex flex-col gap-28 lg:gap-12 container relative bg-cover bg-center bg-no-repeat" style="background-image: url('/fixed/bg-nature.jpg')">
+<section x-data="revealOnScroll()" class="page-block page-block--about-report mb-12 rounded-2xl overflow-hidden p-12 lg:p-4 flex flex-col gap-28 lg:gap-12 container relative bg-cover bg-center bg-no-repeat" style="background-image: url('/fixed/bg-nature.jpg')">
     <div class="absolute inset-0 w-full h-full bg-black-900/10"></div>
     <div class="z-10 flex lg:flex-col justify-between w-full">
         <div class="flex flex-col lg:mb-8" x-data="revealOnScroll()">

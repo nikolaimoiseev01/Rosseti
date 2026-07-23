@@ -47,7 +47,7 @@
         margin: 0 !important;
     }
 </style>
-<div class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
+<div x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['items'] ?? [] as $item)
         @php
             $isTitleAccent = ($item['title_style'] ?? 'large_bold') === 'accent';

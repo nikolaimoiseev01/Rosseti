@@ -40,6 +40,7 @@ window.ScrollTrigger = ScrollTrigger;
 
 livewire_hot_reload();
 
+// Reveal on scroll function
 window.revealOnScroll = function revealOnScroll(delay = 0) {
     return {
         shown: false,
@@ -67,7 +68,16 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
             observer.observe(this.$el);
         },
     };
-}
+};
+
+// Register as Alpine component for Alpine.data() syntax
+document.addEventListener('alpine:init', () => {
+    console.log('Alpine initialized');
+    Alpine.data('revealOnScroll', (delay = 0) => {
+        console.log('Alpine.data revealOnScroll called with delay:', delay);
+        return window.revealOnScroll(delay);
+    });
+});
 
 window.revealAfterPreloader = function revealAfterPreloader(
     delay = 0
@@ -415,12 +425,12 @@ function scrollToTop() {
 }
 
 document.addEventListener('livewire:navigated', () => {
+    revealOnScroll()
     setTimeout(() => {
         if (window.location.hash) {
             scrollToHash(window.location.hash);
             return;
         }
-
         scrollToTop();
     }, 100);
 });

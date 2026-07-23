@@ -53,7 +53,7 @@
 </div>
 
 <script>
-    let tocObserver = null;
+    var tocObserver = null;
 
     function buildToc() {
         const $tocNav = document.getElementById('toc-nav');

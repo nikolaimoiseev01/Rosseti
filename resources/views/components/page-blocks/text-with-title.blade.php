@@ -27,7 +27,7 @@
     };
 @endphp
 
-<div class="page-block page-block--text-with-title transition-all duration-700 ease-out {{ $spacingTop }} {{ $spacingBottom }}">
+<div x-data="revealOnScroll()" class="page-block page-block--text-with-title transition-all duration-700 ease-out {{ $spacingTop }} {{ $spacingBottom }}">
     <h2 id="{{Str::slug($data['title'] ?? '')}}"
         class="{{ $titleColor }} font-medium text-[40px] scroll-mt-12 mb-6 md:text-[16px]">{{$data['title'] ?? ''}}</h2>
 

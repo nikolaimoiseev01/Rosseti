@@ -44,7 +44,7 @@
     };
 @endphp
 
-<div class="page-block page-block--stats-grid grid grid-cols-4 gap-5 md:grid-cols-2 sm:grid-cols-1 {{ $spacingTop }} {{ $spacingBottom }}">
+<div x-data="revealOnScroll()" class="page-block page-block--stats-grid grid grid-cols-4 gap-5 md:grid-cols-2 sm:grid-cols-1 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['items'] as $item)
         <div class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center">
             <div class="text-[80px] font-normal mb-1 {{colorHelper('main_color', $data)}}">
