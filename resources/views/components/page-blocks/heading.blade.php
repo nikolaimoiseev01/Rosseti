@@ -24,7 +24,7 @@
     };
 
 @endphp
-<{{ $level }} x-data="revealOnScroll()" class="page-block page-block--heading {{colorHelper('color', $data)}} {{ $spacingTop }} {{ $spacingBottom }}">
+<{{ $level }} x-data="revealOnScroll()" class="page-block page-block--heading {{colorHelper('color', $data)}} {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
     @if(isset($data['tooltip']))
         <span class="has-tooltip
         {{colorHelper('color', $data)}}
