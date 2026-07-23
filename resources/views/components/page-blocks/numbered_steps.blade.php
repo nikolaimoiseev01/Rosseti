@@ -59,7 +59,7 @@
                 {{-- Circle + connecting line --}}
                 <div class="relative flex flex-col items-center shrink-0" style="width: 44px;">
                     @if($connected && !$isLast)
-                        <div class="absolute top-[44px] w-[2px] h-full" style="background-color: {{ $data['bg_color'] }}/20; left: 50%; transform: translateX(-50%);"></div>
+                        <div class="absolute top-[44px] w-[2px] h-full" style="background-color: {{ colorHelper('bg_color', $data) }}/20; left: 50%; transform: translateX(-50%);"></div>
                     @endif
                     <div class="w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 {{colorHelper('bg_color', $data)}}" >
                         @if($iconStyle === 'checkmarks')
