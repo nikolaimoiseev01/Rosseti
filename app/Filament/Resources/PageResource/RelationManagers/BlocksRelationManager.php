@@ -1073,6 +1073,7 @@ class BlocksRelationManager extends RelationManager
             $prefix . 'blue-500' => 'Синий',
             $prefix . 'blue-400' => 'Голубой',
             $prefix . 'black-500' => 'Чёрный',
+            $prefix . 'white' => 'Белый',
             $prefix . 'grey' => 'Серый',
         ];
 
