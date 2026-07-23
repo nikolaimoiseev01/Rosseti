@@ -712,8 +712,8 @@ class BlocksRelationManager extends RelationManager
             ],
 
             'timeline' => [
-                Forms\Components\TextInput::make('data_languages.title')
-                    ->label('Заголовок таймлайна'),
+//                Forms\Components\TextInput::make('data_languages.title')
+//                    ->label('Заголовок таймлайна'),
                 Forms\Components\Repeater::make('data_languages.events')
                     ->label('События')
                     ->schema([
@@ -722,7 +722,6 @@ class BlocksRelationManager extends RelationManager
                             ->required(),
                         Forms\Components\Textarea::make('title')
                             ->label('Заголовок')
-                            ->required()
                             ->rows(2),
                         Forms\Components\Textarea::make('description')
                             ->label('Описание'),
