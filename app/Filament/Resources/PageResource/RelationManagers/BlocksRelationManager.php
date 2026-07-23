@@ -718,8 +718,7 @@ class BlocksRelationManager extends RelationManager
                     ->label('События')
                     ->schema([
                         Forms\Components\TextInput::make('year')
-                            ->label('Год / дата')
-                            ->required(),
+                            ->label('Год / дата'),
                         Forms\Components\Textarea::make('title')
                             ->label('Заголовок')
                             ->rows(2),

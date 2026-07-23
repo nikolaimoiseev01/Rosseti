@@ -41,14 +41,16 @@
                      style="border-color: {{ $colorHex }}"></div>
 
                 <div class="flex flex-col gap-1">
-                    <h3 class="font-light {{colorHelper('year_color', $data)}}">{{ $event['year'] }}</h3>
+                    @if($event['year'])
+                        <h3 class="font-light {{colorHelper('year_color', $data)}}">{{ $event['year'] }}</h3>
+                    @endif
                     @if($event['title'] || $event['description'])
                         <div>
                             @if($event['title'])
                                 <p class="{{colorHelper('title_color', $data)}} leading-tight whitespace-pre-line">{!! $event['title'] !!}</p>
                             @endif
                             @if(!empty($event['description']))
-                                <p class="{{colorHelper('text_color', $data)}} mt-1 leading-relaxed whitespace-pre-line">{{ $event['description'] }}</p>
+                                <p class="{{colorHelper('text_color', $data)}} leading-relaxed whitespace-pre-line">{{ $event['description'] }}</p>
                             @endif
                         </div>
                     @endif
