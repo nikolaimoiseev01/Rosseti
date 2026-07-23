@@ -37,12 +37,15 @@
         @foreach($data['events'] ?? [] as $i => $event)
             <div class="relative mb-8 last:mb-0">
                 {{-- Dot --}}
-                <div class="absolute -left-[100px] top-1.5 w-4 h-4 rounded-full border-[3px] bg-white" style="border-color: {{ $colorHex }}"></div>
+                <div class="absolute -left-[100px] top-1.5 w-4 h-4 rounded-full border-[3px] bg-white"
+                     style="border-color: {{ $colorHex }}"></div>
 
                 <div class="flex flex-col gap-1">
                     <h3 class="font-light {{colorHelper('year_color', $data)}}">{{ $event['year'] }}</h3>
                     <div>
-                        <p class="{{colorHelper('title_color', $data)}} leading-tight whitespace-pre-line">{!! $event['title'] !!}</p>
+                        @if(!empty($event['title']))
+                            <p class="{{colorHelper('title_color', $data)}} leading-tight whitespace-pre-line">{!! $event['title'] !!}</p>
+                        @endif
                         @if(!empty($event['description']))
                             <p class="{{colorHelper('text_color', $data)}} mt-1 leading-relaxed whitespace-pre-line">{{ $event['description'] }}</p>
                         @endif
