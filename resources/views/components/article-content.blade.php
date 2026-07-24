@@ -107,6 +107,7 @@
 
         const $tocLinks = document.querySelectorAll('#toc-nav a');
         const $tocLinksHorizontal = document.querySelectorAll('#toc-nav-horizontal a');
+        const $tocNavHorizontal = document.getElementById('toc-nav-horizontal');
 
         tocObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
@@ -124,6 +125,21 @@
                         const isActive = link.getAttribute('href') === `#${id}`;
                         link.classList.toggle('text-blue-500', isActive);
                         link.classList.toggle('text-black-400', !isActive);
+
+                        // Scroll to active link smoothly
+                        if (isActive && $tocNavHorizontal) {
+                            const navRect = $tocNavHorizontal.getBoundingClientRect();
+                            const linkRect = link.getBoundingClientRect();
+                            const scrollLeft = $tocNavHorizontal.scrollLeft;
+
+                            // Calculate position to scroll link to left edge
+                            const targetScrollLeft = scrollLeft + (linkRect.left - navRect.left);
+
+                            $tocNavHorizontal.scrollTo({
+                                left: targetScrollLeft,
+                                behavior: 'smooth'
+                            });
+                        }
                     });
                 }
             });
