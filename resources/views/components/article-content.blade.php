@@ -7,11 +7,11 @@
         margin: 34px 0;
     }
 </style>
-<div class="container mx-auto flex max-w-7xl pt-10 mb-[180px] gap-8 md:mb-[80px] justify-between">
+<div class="container mx-auto flex max-w-7xl pt-10 mb-[180px] gap-8 md:mb-[80px] justify-between items-start">
 
     <!-- Table of Contents (Desktop Sidebar) -->
-    <aside class="max-w-[263px] flex lg:hidden">
-        <div class="sticky top-20">
+    <aside class="max-w-[263px] flex lg:hidden self-start sticky top-20">
+        <div>
             <h3 class="mb-4 text-[28px] uppercase ">Навигация</h3>
             <nav class="space-y-2 mb-10 text-lg" id="toc-nav">
                 <!-- TOC will be populated by JavaScript -->
