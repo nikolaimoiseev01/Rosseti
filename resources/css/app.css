@@ -33,7 +33,7 @@ h3 {
 
 .prose {
     h1 {
-        @apply text-[56px] text-blue-600 font-normal uppercase;
+        @apply text-[56px] text-blue-600 font-normal uppercase md:!text-[50px];
     }
     h2 {
         @apply text-4xl text-blue-500 font-medium uppercase;

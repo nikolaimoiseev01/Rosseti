@@ -22,6 +22,9 @@
 
     <!-- Main Article -->
     <main class="flex-1 lg:w-full">
+        <div>
+
+        </div>
         <article class="prose pr-6">
             @foreach($page->blocks as $block)
                 @php

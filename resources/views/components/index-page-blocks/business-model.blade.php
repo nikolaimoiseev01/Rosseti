@@ -128,7 +128,7 @@ HTML
                     ['value' => '2,4 SAIDI<br>1,2 SAIFI', 'diff' => [['value' => '-11%', 'class' => 'top-2 right-[30px]'], ['value' => '-7%', 'class' => 'top-10 right-[30px]']], 'unit' => '', 'text' => ''],
                     ['value' => '35', 'unit' => 'тыс. км', 'diff' => [['value' => '+200%', 'class' => '-top-2 left-[50px]']], 'text' => 'увеличение протяженности ЛЭП'],
                     ['value' => '15', 'unit' => 'тыс. МВА', 'diff' => [['value' => '+55%', 'class' => '-top-2 left-[50px]']], 'text' => 'ввод новых мощностей подстанций'],
-                    ['value' => '2 880', 'unit' => 'МВт•ч I-ens', 'text' => ''],
+                    ['value' => '2 880', 'unit' => 'МВт•ч Пens', 'text' => ''],
                 ],
             ],
                         [
