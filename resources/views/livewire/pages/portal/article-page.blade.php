@@ -21,7 +21,7 @@
              class="absolute z-10  h-full transition-all duration-700 ease-out w-full rounded-2xl max-h-[642px] object-cover md:aspect-square" alt="">
         <span class="relative z-20 text-5xl bg-gradient-to-b from-white to-transparent
       bg-clip-text text-transparent">0{{$page->sort + 1}}</span>
-        <h1 class="relative z-20 text-white">{{$page->title}}</h1>
+        <h1 class="relative z-20 text-white">{{$page->title_page}}</h1>
 
     </div>
     <x-article-content :page="$page"/>

@@ -22,6 +22,10 @@ class PageForm
                             ->maxLength(255)
                             ->live(onBlur: true)
                             ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state))),
+                        Forms\Components\TextInput::make('title_page')
+                            ->label('Заголовок на странице')
+                            ->required()
+                            ->maxLength(255),
 
                         Forms\Components\TextInput::make('slug')
                             ->label('Slug')
