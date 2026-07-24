@@ -29,8 +29,8 @@
     <!-- Navigation Buttons -->
     <div class="container mx-auto max-w-7xl flex flex-col items-center py-8 gap-4">
         @php
-            $previousPage = \App\Models\Page::where('id', $page->id + 1)->first();
-            $nextPage = \App\Models\Page::where('id', '>', $page->id + 1)->first();
+            $previousPage = \App\Models\Page::where('id', $page->id - 1)->first();
+            $nextPage = \App\Models\Page::where('id', $page->id + 1)->first();
         @endphp
 
         @if($nextPage)
