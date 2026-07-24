@@ -183,7 +183,7 @@
 
 <body class="antialiased flex flex-col min-h-screen">
 
-{{-- <x-preloader/> --}}
+ <x-preloader/>
 
 <x-header/>
 

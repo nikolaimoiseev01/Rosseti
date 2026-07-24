@@ -900,12 +900,12 @@ class BlocksRelationManager extends RelationManager
                             ->required(),
                         Forms\Components\RichEditor::make('text')
                             ->label('Описание')
-                            ->toolbarButtons([
-                                'bold',
-                                'bulletList',
-                                'orderedList',
-                                'h2',
-                                'h3',
+                            ->plugins([
+                                TooltipRichContentPlugin::make(),
+                            ])
+                            ->enableToolbarButtons([
+                                'tooltip',
+                                'removeTooltip',
                             ])
                             ->columnSpanFull(),
                     ])

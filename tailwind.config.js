@@ -26,8 +26,21 @@ export default {
         './resources/views/**/*.blade.php',
     ],
     safelist: [
+        ...baseClasses,
         {
-            pattern: /.*/,
+            pattern: /^!(m|p)(t|b|r|l|x|y)?-/,
+        },
+        {
+            pattern: /^!text-/,
+        },
+        {
+            pattern: /^!bg-/,
+        },
+        {
+            pattern: /^!font-/,
+        },
+        {
+            pattern: /^fill-/,
         },
     ],
 

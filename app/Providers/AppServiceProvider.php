@@ -48,6 +48,12 @@ class AppServiceProvider extends ServiceProvider
                     'js/filament/rich-content-plugins/tooltip.js'
                 ),
             )->loadedOnRequest(),
+            Js::make(
+                'rich-content-plugins/text-color',
+                resource_path(
+                    'js/filament/rich-content-plugins/text-color.js'
+                ),
+            )->loadedOnRequest(),
         ]);
 
         RedirectIfAuthenticated::redirectUsing(function () {
