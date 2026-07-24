@@ -16,7 +16,7 @@
     @section('title')
         {{$page->title}}
     @endsection
-    <div x-data="revealOnScroll()" class="flex flex-col mb-14 container md:mb-12 relative py-12 px-2 text-center items-center justify-center">
+    <div x-data="revealOnScroll()" class="flex flex-col mb-14 container md:mb-12 relative py-12 px-2 text-center items-center justify-center lg:mb-6">
         <img src="{{$page->getFirstMediaUrl('cover')}}"
              class="absolute z-10  h-full transition-all duration-700 ease-out w-full rounded-2xl max-h-[642px] object-cover md:aspect-square" alt="">
         <span class="relative z-20 text-5xl bg-gradient-to-b from-white to-transparent

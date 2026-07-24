@@ -9,8 +9,8 @@
 </style>
 <div class="container mx-auto flex max-w-7xl pt-10 mb-[180px] gap-8 md:mb-[80px] justify-between">
 
-    <!-- Table of Contents -->
-    <aside class="max-w-[263px] lg:hidden">
+    <!-- Table of Contents (Desktop Sidebar) -->
+    <aside class="max-w-[263px] flex lg:hidden">
         <div class="sticky top-20">
             <h3 class="mb-4 text-[28px] uppercase ">Навигация</h3>
             <nav class="space-y-2 mb-10 text-lg" id="toc-nav">
@@ -22,9 +22,13 @@
 
     <!-- Main Article -->
     <main class="flex-1 lg:w-full">
-        <div>
-
+        <!-- Horizontal Navigation (Mobile/Tablet) -->
+        <div class="hidden lg:flex sticky top-16 z-30 bg-white border rounded-[10px] border-black-100 py-3 px-2 mb-6">
+            <nav class="flex gap-4 overflow-x-auto scrollbar-hide" id="toc-nav-horizontal">
+                <!-- TOC will be populated by JavaScript -->
+            </nav>
         </div>
+
         <article class="prose pr-6">
             @foreach($page->blocks as $block)
                 @php
@@ -60,10 +64,17 @@
 
     function buildToc() {
         const $tocNav = document.getElementById('toc-nav');
-        if (!$tocNav) return;
+        const $tocNavHorizontal = document.getElementById('toc-nav-horizontal');
+        if (!$tocNav && !$tocNavHorizontal) return;
 
         const $headings = document.querySelectorAll('main article h1');
-        $tocNav.innerHTML = '';
+
+        if ($tocNav) {
+            $tocNav.innerHTML = '';
+        }
+        if ($tocNavHorizontal) {
+            $tocNavHorizontal.innerHTML = '';
+        }
 
         $headings.forEach((heading, index) => {
             if (!heading.id) {
@@ -71,11 +82,23 @@
                 heading.id = 'heading-' + index + '-' + text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
             }
 
-            const link = document.createElement('a');
-            link.href = '#' + heading.id;
-            link.textContent = heading.textContent.trim();
-            link.className = 'block hover:underline text-black-400 leading-snug';
-            $tocNav.appendChild(link);
+            // Desktop sidebar navigation
+            if ($tocNav) {
+                const link = document.createElement('a');
+                link.href = '#' + heading.id;
+                link.textContent = heading.textContent.trim();
+                link.className = 'block hover:underline text-black-400 leading-snug';
+                $tocNav.appendChild(link);
+            }
+
+            // Horizontal navigation (mobile/tablet)
+            if ($tocNavHorizontal) {
+                const link = document.createElement('a');
+                link.href = '#' + heading.id;
+                link.textContent = heading.textContent.trim();
+                link.className = 'whitespace-nowrap text-lg text-black-400 hover:text-blue-500 transition-colors';
+                $tocNavHorizontal.appendChild(link);
+            }
         });
     }
 
@@ -83,15 +106,24 @@
         if (tocObserver) tocObserver.disconnect();
 
         const $tocLinks = document.querySelectorAll('#toc-nav a');
+        const $tocLinksHorizontal = document.querySelectorAll('#toc-nav-horizontal a');
 
         tocObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     const id = entry.target.id;
 
+                    // Update desktop navigation
                     $tocLinks.forEach(link => {
                         const isActive = link.getAttribute('href') === `#${id}`;
                         link.classList.toggle('text-blue-400', isActive);
+                    });
+
+                    // Update horizontal navigation
+                    $tocLinksHorizontal.forEach(link => {
+                        const isActive = link.getAttribute('href') === `#${id}`;
+                        link.classList.toggle('text-blue-500', isActive);
+                        link.classList.toggle('text-black-400', !isActive);
                     });
                 }
             });

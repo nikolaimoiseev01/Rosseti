@@ -9,6 +9,15 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 * {
     margin: 0;
     box-sizing: border-box;
@@ -33,7 +42,7 @@ h3 {
 
 .prose {
     h1 {
-        @apply text-[56px] text-blue-600 font-normal uppercase md:!text-[50px];
+        @apply text-[56px] text-blue-600 font-normal uppercase md:!text-[45px];
     }
     h2 {
         @apply text-4xl text-blue-500 font-medium uppercase;
