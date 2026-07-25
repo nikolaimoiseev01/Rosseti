@@ -4,7 +4,7 @@
     }
 
     .prose img {
-        margin: 34px 0;
+        /*margin: 34px 0;*/
     }
 </style>
 <div class="container mx-auto flex max-w-7xl pt-10 mb-[180px] gap-8 md:mb-[80px] justify-between items-start">
@@ -29,7 +29,7 @@
             </nav>
         </div>
 
-        <article class="prose pr-6">
+        <article class="prose pr-6 flex flex-col">
             @foreach($page->blocks as $block)
                 @php
                     $data = !empty($block->data_languages) ? $block->data_languages : $block->data;

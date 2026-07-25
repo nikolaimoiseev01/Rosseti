@@ -1,7 +1,7 @@
 {{-- Divider Block --}}
 @php
     $style = $data['style'] ?? 'line';
-    $spacingTop = match($data['spacing_top'] ?? 'none') {
+    "!" . $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
         'small' => 'mt-2',
         'normal' => 'mt-4', 'medium' => 'mt-6',
@@ -11,7 +11,7 @@
         '3xl' => 'mt-24',
         default => '',
     };
-    $spacingBottom = match($data['spacing_bottom'] ?? 'xl') {
+    "!" . $spacingBottom = match($data['spacing_bottom'] ?? 'xl') {
         'none' => '',
         'small' => 'mb-2',
         'normal' => 'mb-4', 'medium' => 'mb-6',
@@ -24,13 +24,13 @@
 @endphp
 
 @if($style === 'line')
-    <hr x-data="revealOnScroll()" class="page-block page-block--divider border-t border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
+    <hr x-data="revealOnScroll()" class="page-block page-block--divider border-t border-[#E1E7F0] {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
 @elseif($style === 'thick')
-    <hr x-data="revealOnScroll()" class="page-block page-block--divider border-t-2 border-[#00355A]/20 {{ $spacingTop }} {{ $spacingBottom }}">
+    <hr x-data="revealOnScroll()" class="page-block page-block--divider border-t-2 border-[#00355A]/20 {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
 @elseif($style === 'space')
-    <div x-data="revealOnScroll()" class="page-block page-block--divider {{ $spacingTop }} {{ $spacingBottom }}"></div>
+    <div x-data="revealOnScroll()" class="page-block page-block--divider {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}"></div>
 @elseif($style === 'dots')
-    <div x-data="revealOnScroll()" class="page-block page-block--divider flex justify-center gap-2 {{ $spacingTop }} {{ $spacingBottom }}">
+    <div x-data="revealOnScroll()" class="page-block page-block--divider flex justify-center gap-2 {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
         <span class="w-1.5 h-1.5 rounded-full bg-[#C0CDDB]"></span>
         <span class="w-1.5 h-1.5 rounded-full bg-[#C0CDDB]"></span>
         <span class="w-1.5 h-1.5 rounded-full bg-[#C0CDDB]"></span>

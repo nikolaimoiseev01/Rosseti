@@ -22,7 +22,6 @@
         '3xl' => 'mb-24',
         default => 'mb-12',
     };
-
 @endphp
 <{{ $level }} x-data="revealOnScroll()" class="page-block page-block--heading {{colorHelper('color', $data)}} {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
     @if(isset($data['tooltip']))
