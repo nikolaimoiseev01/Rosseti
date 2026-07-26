@@ -61,6 +61,12 @@ class PageForm
                             ->image()
                             ->maxFiles(1)
                             ->columnSpanFull(),
+                        SpatieMediaLibraryFileUpload::make('cover_mobile')
+                            ->label('Обложка мобильная версия')
+                            ->collection('cover_mobile')
+                            ->image()
+                            ->maxFiles(1)
+                            ->columnSpanFull(),
                         Forms\Components\Select::make('cover_height')
                             ->label('Высота обложки')
                             ->options([
@@ -70,6 +76,7 @@ class PageForm
                                 '642px' => 'Большая (642px)',
                                 '800px' => 'Очень большая (800px)',
                                 'full' => 'На всю высоту',
+                                'custom' => 'Кастомная',
                             ])
                             ->default('642px')
                             ->helperText('Выберите высоту обложки на странице'),
