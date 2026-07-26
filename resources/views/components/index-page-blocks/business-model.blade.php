@@ -134,12 +134,12 @@ HTML
                         [
                 'title' => 'Работники',
                 'stats' => [
-                    ['value' => '371,6', 'diff' => [['value' => '+15%', 'class' => '-top-2 left-[50px]']], 'unit' => 'млрд руб.', 'text' => 'совокупный объем расходов на вознаграждение  работников Группы'],
-                    ['value' => '14,7', 'diff' => [['value' => '-6,9%', 'class' => '-top-2 left-[50px]']], 'unit' => 'ГВт', 'text' => 'объем расходов  на охрану труда'],
-                   ['value' => '1,36', 'diff' => [['value' => '-6,9%', 'class' => '-top-2 left-[50px]']], 'unit' => 'млрд руб.', 'text' => 'затраты на обучение  персонала'],
+                    ['value' => '371,6', 'diff' => [['value' => '+15%', 'class' => '-top-2 left-[80px]']], 'unit' => 'млрд руб.', 'text' => 'совокупный объем расходов на вознаграждение  работников Группы'],
+                    ['value' => '10,8', 'unit' => 'млрд руб.', 'text' => 'объем расходов  на охрану труда'],
+                   ['value' => '1,36', 'unit' => 'млрд руб.', 'text' => 'затраты на обучение  персонала'],
                     ['title' => 'Акционеры и инвесторы'],
                     ['value' => '1 834', 'unit' => 'млрд  руб.', 'text' => 'выручка'],
-                    ['value' => '203', 'unit' => 'млрд руб.', 'text' => 'чистая прибыль'],
+                    ['prefix' => 'более', 'value' => '203', 'unit' => 'млрд руб.', 'text' => 'чистая прибыль'],
                 ],
             ],
                         [
@@ -225,6 +225,29 @@ HTML
     }
 
     .business-capitals-swiper .swiper-slide.is-active-card > div {
+        filter: none;
+        box-shadow: 0 12px 25px rgba(33, 74, 104, 0.08);
+    }
+
+    .business-results-swiper .swiper-slide > div {
+        transition: filter 0.5s ease,
+        opacity 0.5s ease,
+        box-shadow 0.5s ease;
+    }
+
+    .business-results-swiper .swiper-slide.is-stack-depth-1 > div {
+        filter: blur(4px);
+        opacity: 0.7;
+        box-shadow: 0 16px 28px rgba(33, 74, 104, 0.2);
+    }
+
+    .business-results-swiper .swiper-slide.is-stack-depth-2 > div {
+        filter: blur(8px);
+        opacity: 0.5;
+        box-shadow: 0 20px 36px rgba(33, 74, 104, 0.24);
+    }
+
+    .business-results-swiper .swiper-slide.is-active-card > div {
         filter: none;
         box-shadow: 0 12px 25px rgba(33, 74, 104, 0.08);
     }
@@ -406,7 +429,7 @@ HTML
                                    px-8 py-8
                                    shadow-[0_12px_25px_rgba(33,74,104,0.08)]
                                    md:h-auto md:min-h-[500px]">
-                                        <h4 class="@if($slide['subtitle'] ?? null) mb-1 @endif text-lg text-blue-900">
+                                        <h4 class="mb-2 text-lg text-blue-900">
                                             {{ $slide['title'] }}
                                         </h4>
                                         @if($slide['subtitle'] ?? null)
@@ -452,9 +475,17 @@ HTML
                                                                 @endforeach
                                                             @endif
 
-                                                            <div class="text-3xl text-blue-400">
-                                                                {!! $stat['value'] !!}
+                                                            <div class="flex gap-2 items-end">
+                                                                @if($stat['prefix'] ?? null)
+                                                                    <div class="mt-1 text-lg text-blue-400">
+                                                                        {{ $stat['prefix'] }}
+                                                                    </div>
+                                                                @endif
+                                                                    <div class="text-3xl text-blue-400">
+                                                                        {!! $stat['value'] !!}
+                                                                    </div>
                                                             </div>
+
 
                                                             @if($stat['unit'])
                                                                 <div class="mt-1 text-lg text-blue-400">
