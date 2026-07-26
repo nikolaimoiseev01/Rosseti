@@ -1,6 +1,6 @@
 <style>
     .prose p {
-        color: #6B7785;
+        color: #1A1A1A;
     }
 
     .prose img {
