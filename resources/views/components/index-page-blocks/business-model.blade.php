@@ -134,9 +134,9 @@ HTML
                         [
                 'title' => 'Работники',
                 'stats' => [
-                    ['value' => '371,6', 'diff' => [['value' => '+15%', 'class' => '-top-2 left-[80px]']], 'unit' => 'млрд руб.', 'text' => 'совокупный объем расходов на вознаграждение  работников Группы'],
-                    ['value' => '10,8', 'unit' => 'млрд руб.', 'text' => 'объем расходов  на охрану труда'],
-                   ['value' => '1,36', 'unit' => 'млрд руб.', 'text' => 'затраты на обучение  персонала'],
+                    ['value' => '371,6', 'diff' => [['value' => '+15%', 'class' => '-top-2 left-[80px]']], 'unit' => 'млрд руб.', 'text' => 'совокупный объем расходов<br>на вознаграждение<br>работников Группы'],
+                    ['value' => '10,8', 'unit' => 'млрд руб.', 'text' => 'объем расходов <br>на охрану труда'],
+                   ['value' => '1,36', 'unit' => 'млрд руб.', 'text' => 'затраты на обучение<br>персонала'],
                     ['title' => 'Акционеры и инвесторы'],
                     ['value' => '1 834', 'unit' => 'млрд  руб.', 'text' => 'выручка'],
                     ['prefix' => 'более', 'value' => '203', 'unit' => 'млрд руб.', 'text' => 'чистая прибыль'],
@@ -260,7 +260,7 @@ HTML
 
         .business-stack-swiper .swiper-wrapper {
             height: auto;
-            min-height: 500px;
+            min-height: 290px;
         }
 
         .business-stack-swiper .swiper-slide {
@@ -325,7 +325,7 @@ HTML
 
                                         <div
                                             class="absolute bottom-7 left-7 right-7 z-10
-                                       grid grid-cols-2 gap-8 md:grid-cols-1"
+                                       grid grid-cols-2 gap-8 md:grid-cols-1 lg:flex"
                                         >
                                             @foreach($slide['stats'] as $stat)
                                                 <div>
@@ -428,7 +428,7 @@ HTML
                                     <div class="h-[260px] rounded-[16px] bg-[#F1F6FE]
                                    px-8 py-8
                                    shadow-[0_12px_25px_rgba(33,74,104,0.08)]
-                                   md:h-auto md:min-h-[500px]">
+                                   md:h-auto ">
                                         <h4 class="mb-2 text-lg text-blue-900">
                                             {{ $slide['title'] }}
                                         </h4>
@@ -448,13 +448,13 @@ HTML
                                         class="h-[260px] rounded-[16px] bg-[#F1F6FE]
                                    px-8 py-8
                                    shadow-[0_12px_25px_rgba(33,74,104,0.08)]
-                                   md:h-auto md:min-h-[500px]"
+                                   md:h-auto "
                                     >
                                         <h4 class="mb-5 text-lg text-blue-900">
                                             {{ $slide['title'] }}
                                         </h4>
 
-                                        <div class="grid grid-cols-3 gap-x-8 gap-y-5 lg:grid-cols-2 md:!grid-cols-1">
+                                        <div class="grid grid-cols-3 gap-x-8 gap-y-5">
                                             @foreach($slide['stats'] as $stat)
                                                 @if($stat['skip_block'] ?? null)
                                                     <div></div>
@@ -496,7 +496,7 @@ HTML
 
                                                         @if($stat['text'])
                                                             <p class="mt-1 text-sm leading-[14px]">
-                                                                {{ $stat['text'] }}
+                                                                {!! $stat['text'] !!}
                                                             </p>
                                                         @endif
                                                     </div>
