@@ -18,6 +18,8 @@ class Page extends Model implements HasMedia
         'slug',
         'title',
         'title_page',
+        'title_languages',
+        'title_page_languages',
         'content',
         'is_active',
         'sort',
@@ -28,6 +30,8 @@ class Page extends Model implements HasMedia
     {
         return [
             'content' => 'array',
+            'title_languages' => 'array',
+            'title_page_languages' => 'array',
             'is_active' => 'boolean',
         ];
     }

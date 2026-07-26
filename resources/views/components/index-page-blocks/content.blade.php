@@ -17,7 +17,13 @@
       bg-clip-text text-transparent">0{{ $loop->index + 1 }}</div>
                 </div>
                 <div class="p-6 flex flex-col flex-1">
-                    <h3 class="text-2xl mb-0">{{ $page->title }}</h3>
+                    @php
+                        $currentLang = session('locale', 'ru');
+                        $pageTitle = !empty($page->title_languages) && isset($page->title_languages[$currentLang])
+                            ? $page->title_languages[$currentLang]
+                            : $page->title;
+                    @endphp
+                    <h3 class="text-2xl mb-0">{{ $pageTitle }}</h3>
                     <div class="flex flex-col mt-auto">
 {{--                        <p class="text-lg text-black-400">{{ $page->description }}</p>--}}
                         <span class="text-blue-400 inline-block text-lg group-hover:translate-x-1 transition-transform">Подробнее →</span>

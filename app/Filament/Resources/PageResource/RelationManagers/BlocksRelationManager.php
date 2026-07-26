@@ -292,13 +292,11 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Items')
                                     ->schema([
                                         Forms\Components\TextInput::make('value')
-                                            ->label('Value')
-                                            ->required(),
+                                            ->label('Value'),
                                         Forms\Components\TextInput::make('unit')
                                             ->label('Unit'),
                                         Forms\Components\TextInput::make('description')
-                                            ->label('Description')
-                                            ->required(),
+                                            ->label('Description'),
                                     ])
                                     ->columns(3)
                                     ->defaultItems(3)
@@ -539,8 +537,7 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Column headers')
                                     ->schema([
                                         Forms\Components\TextInput::make('text')
-                                            ->label('Column name')
-                                            ->required(),
+                                            ->label('Column name'),
                                     ])
                                     ->defaultItems(3)
                                     ->columnSpanFull(),
@@ -557,8 +554,7 @@ class BlocksRelationManager extends RelationManager
                                             ->label('Cells')
                                             ->schema([
                                                 Forms\Components\TextInput::make('text')
-                                                    ->label('Value')
-                                                    ->required(),
+                                                    ->label('Value'),
                                             ])
                                             ->defaultItems(3)
                                             ->visible(fn ($get) => !$get('is_accent')),

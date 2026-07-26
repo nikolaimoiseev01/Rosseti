@@ -5,10 +5,18 @@
 
             <!-- Desktop Navigation (hidden on mobile) -->
             <nav class="flex md:hidden gap-3 text-base text-black-400 text-nowrap">
+                @php
+                    $currentLang = session('locale', 'ru');
+                @endphp
                 @foreach($navLinks as $link)
-                    <a wire:navigate class="text-sm {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}" href="{{ route('article.index', $link['slug'])}}">{{ $link['title'] }}</a>
+                    @php
+                        $linkTitle = !empty($link->title_languages) && isset($link->title_languages[$currentLang])
+                            ? $link->title_languages[$currentLang]
+                            : $link->title;
+                    @endphp
+                    <a wire:navigate class="text-sm {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}" href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
                 @endforeach
-                    <a download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-sm" >Приложения</a>
+                    <a download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-sm" >{{ $currentLang === 'ru' ? 'Приложения' : 'Appendices' }}</a>
             </nav>
 
             <div class="flex items-center gap-4">
@@ -61,7 +69,7 @@
              style="display: none;">
             <div class="flex flex-col h-full p-6">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-bold text-black-500">Меню</h2>
+                    <h2 class="text-2xl font-bold text-black-500">{{ $currentLang === 'ru' ? 'Меню' : 'Menu' }}</h2>
                     <button @click="mobileMenuOpen = false" class="p-2 bg-black-100 rounded-lg">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 5L5 15" stroke="#0E3A5C" stroke-width="2" stroke-linecap="round"/>
@@ -71,9 +79,14 @@
                 </div>
                 <nav class="flex flex-col gap-6 text-lg text-black-400">
                     @foreach($navLinks as $link)
-                        <a wire:navigate @click="mobileMenuOpen = false" class="text-xl {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-bold' : 'hover:text-blue-500' }}" href="{{ route('article.index', $link['slug'])}}">{{ $link['title'] }}</a>
+                        @php
+                            $linkTitle = !empty($link->title_languages) && isset($link->title_languages[$currentLang])
+                                ? $link->title_languages[$currentLang]
+                                : $link->title;
+                        @endphp
+                        <a wire:navigate @click="mobileMenuOpen = false" class="text-xl {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-bold' : 'hover:text-blue-500' }}" href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
                     @endforeach
-                    <a @click="mobileMenuOpen = false" download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-xl hover:text-blue-500">Приложения</a>
+                    <a @click="mobileMenuOpen = false" download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-xl hover:text-blue-500">{{ $currentLang === 'ru' ? 'Приложения' : 'Appendices' }}</a>
                 </nav>
             </div>
         </div>

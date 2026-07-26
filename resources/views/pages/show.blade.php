@@ -1,14 +1,20 @@
 @extends('layouts.portal')
 
 @section('content')
+    @php
+        $currentLang = session('locale', 'ru');
+        $pageTitle = !empty($page->title_languages) && isset($page->title_languages[$currentLang])
+            ? $page->title_languages[$currentLang]
+            : $page->title;
+    @endphp
     <article class="container mx-auto py-16 md:py-10">
         @if ($page->getFirstMediaUrl('cover'))
             <div class="mb-10">
-                <img src="{{ $page->getFirstMediaUrl('cover') }}" alt="{{ $page->title }}" class="w-full rounded-2xl object-cover">
+                <img src="{{ $page->getFirstMediaUrl('cover') }}" alt="{{ $pageTitle }}" class="w-full rounded-2xl object-cover">
             </div>
         @endif
 
-        <h1 class="mb-8 text-4xl font-semibold">{{ $page->title }}</h1>
+        <h1 class="mb-8 text-4xl font-semibold">{{ $pageTitle }}</h1>
 
         @foreach ($page->blocks as $block)
             <section class="mb-12">

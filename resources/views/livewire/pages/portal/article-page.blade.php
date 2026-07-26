@@ -14,14 +14,27 @@
         }
     </style>
     @section('title')
-        {{$page->title}}
+        @php
+            $currentLang = session('locale', 'ru');
+            $pageTitle = !empty($page->title_languages) && isset($page->title_languages[$currentLang])
+                ? $page->title_languages[$currentLang]
+                : $page->title;
+        @endphp
+        {{$pageTitle}}
     @endsection
     <div x-data="revealOnScroll()" class="flex flex-col mb-14 container md:mb-12 relative py-12 px-2 text-center items-center justify-center lg:mb-6">
         <img src="{{$page->getFirstMediaUrl('cover')}}"
              class="absolute z-10  h-full transition-all duration-700 ease-out w-full rounded-2xl max-h-[642px] object-cover md:aspect-square" alt="">
         <span class="relative z-20 text-5xl bg-gradient-to-b from-white to-transparent
       bg-clip-text text-transparent">0{{$page->sort + 1}}</span>
-        <h1 class="relative z-20 text-white">{{$page->title_page}}</h1>
+        <h1 class="relative z-20 text-white">
+            @php
+                $titlePage = !empty($page->title_page_languages) && isset($page->title_page_languages[$currentLang])
+                    ? $page->title_page_languages[$currentLang]
+                    : $page->title_page;
+            @endphp
+            {{$titlePage}}
+        </h1>
 
     </div>
     <x-article-content :page="$page"/>

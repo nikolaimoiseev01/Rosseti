@@ -16,15 +16,21 @@ class PageForm
             ->components([
                 Section::make('Основное')
                     ->schema([
-                        Forms\Components\TextInput::make('title')
-                            ->label('Название')
+                        Forms\Components\TextInput::make('title_languages.ru')
+                            ->label('Название (RU)')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
                             ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state))),
-                        Forms\Components\TextInput::make('title_page')
-                            ->label('Заголовок на странице')
+                        Forms\Components\TextInput::make('title_languages.en')
+                            ->label('Название (EN)')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('title_page_languages.ru')
+                            ->label('Заголовок на странице (RU)')
                             ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('title_page_languages.en')
+                            ->label('Заголовок на странице (EN)')
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('slug')
