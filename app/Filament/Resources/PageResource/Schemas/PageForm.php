@@ -67,6 +67,12 @@ class PageForm
                             ->image()
                             ->maxFiles(1)
                             ->columnSpanFull(),
+                        SpatieMediaLibraryFileUpload::make('cover_card')
+                            ->label('Обложка в карточке страницы')
+                            ->collection('cover_card')
+                            ->image()
+                            ->maxFiles(1)
+                            ->columnSpanFull(),
                         Forms\Components\Select::make('cover_height')
                             ->label('Высота обложки')
                             ->options([

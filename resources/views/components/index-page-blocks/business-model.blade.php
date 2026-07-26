@@ -414,13 +414,10 @@ HTML
                                                 {{ $slide['subtitle'] }}
                                             </p>
                                         @endif
-                                        <div class="grid gap-4 {{$slide['class']}}">
-                                            @for ($i = 1; $i <= 12; $i++)
-                                                <img
-                                                    class="{{$slide['img_class'] ?? ''}}"
-                                                    src="/fixed/slider-card-2.{{ $slide['slide_number'] }}.{{ $i }}.png"
-                                                    alt="">
-                                            @endfor
+                                        <div class="grid gap-4">
+                                            <img
+                                                src="/fixed/slider-card-2.{{ $slide['slide_number'] }}.png"
+                                                alt="">
                                         </div>
                                     </div>
                                 @else
