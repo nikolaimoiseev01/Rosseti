@@ -41,7 +41,6 @@
     .page-block--cards-grid p {
         color: #1A1A1A !important;
     }
-
 </style>
 
 <div x-data="revealOnScroll()" class="page-block page-block--cards-grid grid {{ $cols }} gap-5 {{ $spacingTop }} {{ $spacingBottom }}">
@@ -52,7 +51,7 @@
             @endif
             <h3 class="{{ $titleSize }} mb-2 {{colorHelper('color_title', $data)}}">{{ $card['title'] }}</h3>
             @if(!empty($card['text']))
-                <p class="leading-relaxed">{{ $card['text'] }}</p>
+                <p class="@if(empty($card['title'])) mt-4 @endif leading-relaxed">{{ $card['text'] }}</p>
             @endif
         </div>
     @endforeach
