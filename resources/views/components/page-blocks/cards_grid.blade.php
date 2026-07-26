@@ -37,6 +37,13 @@
         default => 'mb-12',
     };
 @endphp
+<style>
+    .page-block--cards-grid p {
+        color: #1A1A1A !important;
+    }
+
+</style>
+
 <div x-data="revealOnScroll()" class="page-block page-block--cards-grid grid {{ $cols }} gap-5 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['cards'] ?? [] as $card)
         <div class="bg-[#F7F9FC] rounded-2xl p-6 border border-[#E1E7F0]/60 hover:border-[#2196F3]/30 transition-colors">
@@ -45,7 +52,7 @@
             @endif
             <h3 class="{{ $titleSize }} mb-2 {{colorHelper('color_title', $data)}}">{{ $card['title'] }}</h3>
             @if(!empty($card['text']))
-                <p class="text-sm text-[#6B7785] leading-relaxed">{{ $card['text'] }}</p>
+                <p class="leading-relaxed">{{ $card['text'] }}</p>
             @endif
         </div>
     @endforeach
