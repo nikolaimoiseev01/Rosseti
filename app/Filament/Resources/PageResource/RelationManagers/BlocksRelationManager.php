@@ -869,8 +869,7 @@ class BlocksRelationManager extends RelationManager
                                             ->image()
                                             ->directory('report-images'),
                                         Forms\Components\TextInput::make('title')
-                                            ->label('Заголовок')
-                                            ->required(),
+                                            ->label('Заголовок'),
                                         Forms\Components\Textarea::make('text')
                                             ->label('Текст'),
                                     ])
