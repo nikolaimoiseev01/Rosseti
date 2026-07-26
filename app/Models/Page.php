@@ -23,7 +23,8 @@ class Page extends Model implements HasMedia
         'content',
         'is_active',
         'sort',
-        'description'
+        'description',
+        'cover_height'
     ];
 
     protected function casts(): array

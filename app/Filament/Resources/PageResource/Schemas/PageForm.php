@@ -61,6 +61,18 @@ class PageForm
                             ->image()
                             ->maxFiles(1)
                             ->columnSpanFull(),
+                        Forms\Components\Select::make('cover_height')
+                            ->label('Высота обложки')
+                            ->options([
+                                '216px' => 'Стандартная (216px)',
+                                '400px' => 'Маленькая (400px)',
+                                '500px' => 'Средняя (500px)',
+                                '642px' => 'Большая (642px)',
+                                '800px' => 'Очень большая (800px)',
+                                'full' => 'На всю высоту',
+                            ])
+                            ->default('642px')
+                            ->helperText('Выберите высоту обложки на странице'),
                     ]),
             ]);
     }

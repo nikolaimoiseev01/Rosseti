@@ -22,9 +22,13 @@
         @endphp
         {{$pageTitle}}
     @endsection
-    <div x-data="revealOnScroll()" class="flex flex-col mb-14 container md:mb-12 relative py-12 px-2 text-center items-center justify-center lg:mb-6">
+    @php
+        $coverHeight = $page->cover_height ?? '216px';
+        $maxHeightClass = $coverHeight === 'full' ? 'h-full' : 'min-h-[' . $coverHeight . '] max-h-[' . $coverHeight . ']';
+    @endphp
+    <div x-data="revealOnScroll()" style="height: {{ $coverHeight }}" class="flex flex-col mb-14 container md:mb-12 relative py-12 px-2 text-center items-center justify-center lg:mb-6">
         <img src="{{$page->getFirstMediaUrl('cover')}}"
-             class="absolute z-10  h-full transition-all duration-700 ease-out w-full rounded-2xl max-h-[642px] object-cover md:aspect-square" alt="">
+             class="absolute z-10 h-full transition-all duration-700 ease-out w-full rounded-2xl {{ $maxHeightClass }} object-cover md:aspect-square" alt="">
         <span class="relative z-20 text-5xl bg-gradient-to-b from-white to-transparent
       bg-clip-text text-transparent">0{{$page->sort + 1}}</span>
         <h1 class="relative z-20 text-white">

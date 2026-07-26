@@ -1,5 +1,12 @@
 {{-- Icon List Block --}}
 @php
+    $currentLang = session('locale', 'ru');
+
+    // Get language-specific data, fallback to old format
+    $items = !empty($data[$currentLang]['items'])
+        ? $data[$currentLang]['items']
+        : ($data['items'] ?? []);
+
     $colorHex = match($data['color'] ?? 'primary') {
         'accent' => '#2196F3',
         default => '#00355A',
@@ -48,7 +55,7 @@
     }
 </style>
 <div x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
-    @foreach($data['items'] ?? [] as $item)
+    @foreach($items as $item)
         @php
             $isTitleAccent = ($item['title_style'] ?? 'large_bold') === 'accent';
         @endphp
@@ -57,9 +64,9 @@
                 <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0">
             @endif
             <div>
-                <h3 class="{{colorHelper('title_color', $data)}}" @if($isTitleAccent) style="color: {{ $colorHex }}" @endif>{{ $item['title'] }}</h3>
+                <h3 class="{{ $styleClass($data['title_style'] ?? 'large_bold') }}" @if($isTitleAccent) style="color: {{ $colorHex }}" @endif>{{ $item['title'] }}</h3>
                 @if(!empty($item['text']))
-                    <div class="{{colorHelper('desc_color', $data)}} mt-1 prose prose-sm max-w-none">{!! $item['text'] !!}</div>
+                    <div class="mt-1 prose prose-sm max-w-none text-[#333]">{!! $item['text'] !!}</div>
                 @endif
             </div>
         </div>

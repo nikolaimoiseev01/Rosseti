@@ -932,27 +932,59 @@ class BlocksRelationManager extends RelationManager
             ],
 
             'icon_list' => [
-                Forms\Components\Repeater::make('data_languages.items')
-                    ->label('Пункты')
-                    ->schema([
-                        Forms\Components\FileUpload::make('icon')
-                            ->label('Иконка (PNG/SVG)')
-                            ->image()
-                            ->directory('report-images'),
-                        Forms\Components\TextInput::make('title')
-                            ->label('Заголовок'),
-                        Forms\Components\RichEditor::make('text')
-                            ->label('Описание')
-                            ->plugins([
-                                TooltipRichContentPlugin::make(),
-                            ])
-                            ->enableToolbarButtons([
-                                'tooltip',
-                                'removeTooltip',
-                            ])
-                            ->columnSpanFull(),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\Repeater::make('data_languages.ru.items')
+                                    ->label('Пункты')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('icon')
+                                            ->label('Иконка (PNG/SVG)')
+                                            ->image()
+                                            ->directory('report-images'),
+                                        Forms\Components\TextInput::make('title')
+                                            ->label('Заголовок'),
+                                        Forms\Components\RichEditor::make('text')
+                                            ->label('Описание')
+                                            ->plugins([
+                                                TooltipRichContentPlugin::make(),
+                                            ])
+                                            ->enableToolbarButtons([
+                                                'tooltip',
+                                                'removeTooltip',
+                                            ])
+                                            ->columnSpanFull(),
+                                    ])
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\Repeater::make('data_languages.en.items')
+                                    ->label('Items')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('icon')
+                                            ->label('Icon (PNG/SVG)')
+                                            ->image()
+                                            ->directory('report-images'),
+                                        Forms\Components\TextInput::make('title')
+                                            ->label('Title'),
+                                        Forms\Components\RichEditor::make('text')
+                                            ->label('Description')
+                                            ->plugins([
+                                                TooltipRichContentPlugin::make(),
+                                            ])
+                                            ->enableToolbarButtons([
+                                                'tooltip',
+                                                'removeTooltip',
+                                            ])
+                                            ->columnSpanFull(),
+                                    ])
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
                     ])
-                    ->defaultItems(3)
                     ->columnSpanFull(),
                 Forms\Components\Select::make('data_languages.icon_size')
                     ->label('Размер иконок')
@@ -962,8 +994,23 @@ class BlocksRelationManager extends RelationManager
                         'large' => 'Большой (60px)',
                     ])
                     ->default('medium'),
-                ...$this->textColorSelectFields('data_languages.title_color', 'Цвет заголовока'),
-                ...$this->textColorSelectFields('data_languages.desc_color', 'Цвет описания'),
+                Forms\Components\Select::make('data_languages.color')
+                    ->label('Цвет')
+                    ->options([
+                        'primary' => 'Тёмно-синий (#00355A)',
+                        'accent' => 'Голубой (#2196F3)',
+                    ])
+                    ->default('primary'),
+                Forms\Components\Select::make('data_languages.title_style')
+                    ->label('Стиль заголовка')
+                    ->options([
+                        'large_bold' => 'Крупный жирный',
+                        'normal' => 'Обычный',
+                        'small' => 'Маленький',
+                        'accent' => 'Акцентный (цветной)',
+                        'muted' => 'Приглушённый',
+                    ])
+                    ->default('large_bold'),
                 ...$this->spacingSelectFields()
 
             ],
