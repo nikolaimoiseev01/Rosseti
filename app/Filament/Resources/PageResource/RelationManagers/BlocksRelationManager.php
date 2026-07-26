@@ -903,13 +903,7 @@ class BlocksRelationManager extends RelationManager
                         '4' => '4 колонки',
                     ])
                     ->default('3'),
-                Forms\Components\Select::make('data_languages.color')
-                    ->label('Акцентный цвет')
-                    ->options([
-                        'primary' => 'Тёмно-синий (#00355A)',
-                        'accent' => 'Голубой (#2196F3)',
-                    ])
-                    ->default('primary'),
+                ...$this->textColorSelectFields('data_languages.color_title', 'Цвет заголовка'),
                 Forms\Components\Select::make('data_languages.title_size')
                     ->label('Размер заголовка')
                     ->options([

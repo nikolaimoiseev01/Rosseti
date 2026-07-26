@@ -1,9 +1,5 @@
 {{-- Cards Grid Block --}}
 @php
-    $colorHex = match($data['color'] ?? 'primary') {
-        'accent' => '#2196F3',
-        default => '#00355A',
-    };
     $cols = match($data['columns'] ?? '3') {
         '2' => 'grid-cols-2 sm:grid-cols-1',
         '4' => 'grid-cols-4 lg:grid-cols-2 sm:grid-cols-1',
@@ -47,7 +43,7 @@
             @if(!empty($card['icon']))
                 <img src="{{ Storage::url($card['icon']) }}" alt="" class="{{ $logoSize }} object-contain mb-4">
             @endif
-            <h3 class="{{ $titleSize }} mb-2" style="color: {{ $colorHex }}">{{ $card['title'] }}</h3>
+            <h3 class="{{ $titleSize }} mb-2 {{colorHelper('color_title', $data)}}">{{ $card['title'] }}</h3>
             @if(!empty($card['text']))
                 <p class="text-sm text-[#6B7785] leading-relaxed">{{ $card['text'] }}</p>
             @endif
