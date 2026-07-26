@@ -53,6 +53,11 @@
     .page-block--icon-list img {
         margin: 0 !important;
     }
+
+    .page-block--icon-list p {
+        color: #1A1A1A !important;
+    }
+
 </style>
 <div x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($items as $item)
