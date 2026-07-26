@@ -30,9 +30,11 @@
         <img x-data="revealOnScroll()" src="{{$page->getFirstMediaUrl('cover')}}"
              class="container lg:hidden z-10 h-full transition-all duration-700 ease-out w-full rounded-2xl  object-cover md:aspect-square"
              alt="">
-        <img x-data="revealOnScroll()" src="{{$page->getFirstMediaUrl('cover_mobile')}}"
-             class="container lg:block hidden z-10 h-full transition-all duration-700 ease-out w-full rounded-2xl  object-cover md:aspect-square"
-             alt="">
+        @if($page->getFirstMediaUrl('cover_mobile'))
+            <img x-data="revealOnScroll()" src="{{$page->getFirstMediaUrl('cover_mobile')}}"
+                 class="container lg:block hidden z-10 h-full transition-all duration-700 ease-out w-full rounded-2xl  object-cover md:aspect-square"
+                 alt="">
+        @endif
     @else
         <div x-data="revealOnScroll()" style="height: {{ $coverHeight }}"
              class="flex flex-col mb-14 container md:mb-12 relative py-12 px-2 text-center items-center justify-center lg:mb-6">
