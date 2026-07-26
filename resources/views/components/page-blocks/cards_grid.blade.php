@@ -47,7 +47,7 @@
             @if(!empty($card['icon']))
                 <img src="{{ Storage::url($card['icon']) }}" alt="" class="{{ $logoSize }} object-contain mb-4">
             @endif
-            <h4 class="font-bold {{ $titleSize }} mb-2" style="color: {{ $colorHex }}">{{ $card['title'] }}</h4>
+            <h3 class="{{ $titleSize }} mb-2" style="color: {{ $colorHex }}">{{ $card['title'] }}</h3>
             @if(!empty($card['text']))
                 <p class="text-sm text-[#6B7785] leading-relaxed">{{ $card['text'] }}</p>
             @endif
