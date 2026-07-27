@@ -68,7 +68,7 @@
             @if(!empty($item['icon']))
                 <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0">
             @endif
-            <div style="color: #1A1A1A !important;">
+            <div style="color: #1A1A1A !important;" class="text-lg">
                 {!! $item['title'] !!}
                 @if(!empty($item['text']))
                     <div class="mt-1 prose prose-sm max-w-none text-[#333]">{!! $item['text'] !!}</div>
