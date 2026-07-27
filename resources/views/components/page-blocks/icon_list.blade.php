@@ -69,7 +69,7 @@
                 <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0">
             @endif
             <div>
-                <h3 class="{{ $styleClass($data['title_style'] ?? 'large_bold') }}" @if($isTitleAccent) style="color: {{ $colorHex }}" @endif>{{ $item['title'] }}</h3>
+                {!! $item['title'] !!}
                 @if(!empty($item['text']))
                     <div class="mt-1 prose prose-sm max-w-none text-[#333]">{!! $item['text'] !!}</div>
                 @endif

@@ -320,6 +320,15 @@ class BlocksRelationManager extends RelationManager
                         'blue-900' => 'Тёмно-синий',
                     ])
                     ->default('transparent'),
+                Forms\Components\Select::make('data_languages.columns')
+                    ->label('Количество колонок')
+                    ->options([
+                        'auto' => 'Авто (адаптивно)',
+                        '2' => '2 колонки',
+                        '3' => '3 колонки',
+                        '4' => '4 колонки',
+                    ])
+                    ->default('auto'),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -750,6 +759,7 @@ class BlocksRelationManager extends RelationManager
                     ])
                     ->default('light'),
                 ...$this->textColorSelectFields('data_languages.text_color', 'Цвет текста'),
+                ...$this->textColorSelectFields('data_languages.link_color', 'Цвет ссылок'),
                 Forms\Components\Select::make('data_languages.text_size')
                     ->label('Размер текста')
                     ->options([
@@ -936,8 +946,23 @@ class BlocksRelationManager extends RelationManager
                                             ->label('Иконка (PNG/SVG)')
                                             ->image()
                                             ->directory('report-images'),
-                                        Forms\Components\TextInput::make('title')
-                                            ->label('Заголовок'),
+                                        Forms\Components\RichEditor::make('title')
+                                            ->label('Заголовок')
+                                            ->formatStateUsing(function ($state) {
+                                                if (is_string($state) && ! str_contains($state, '<')) {
+                                                    return '<p>' . $state . '</p>';
+                                                }
+
+                                                return $state;
+                                            })
+                                            ->plugins([
+                                                TooltipRichContentPlugin::make(),
+                                            ])
+                                            ->enableToolbarButtons([
+                                                'tooltip',
+                                                'removeTooltip',
+                                            ])
+                                            ->columnSpanFull(),
                                         Forms\Components\RichEditor::make('text')
                                             ->label('Описание')
                                             ->plugins([
@@ -961,8 +986,23 @@ class BlocksRelationManager extends RelationManager
                                             ->label('Icon (PNG/SVG)')
                                             ->image()
                                             ->directory('report-images'),
-                                        Forms\Components\TextInput::make('title')
-                                            ->label('Title'),
+                                        Forms\Components\RichEditor::make('title')
+                                            ->label('Title')
+                                            ->plugins([
+                                                TooltipRichContentPlugin::make(),
+                                            ])
+                                            ->enableToolbarButtons([
+                                                'tooltip',
+                                                'removeTooltip',
+                                            ])
+                                            ->formatStateUsing(function ($state) {
+                                                if (is_string($state) && ! str_contains($state, '<')) {
+                                                    return '<p>' . $state . '</p>';
+                                                }
+
+                                                return $state;
+                                            })
+                                            ->columnSpanFull(),
                                         Forms\Components\RichEditor::make('text')
                                             ->label('Description')
                                             ->plugins([
@@ -994,16 +1034,16 @@ class BlocksRelationManager extends RelationManager
                         'accent' => 'Голубой (#2196F3)',
                     ])
                     ->default('primary'),
-                Forms\Components\Select::make('data_languages.title_style')
-                    ->label('Стиль заголовка')
-                    ->options([
-                        'large_bold' => 'Крупный жирный',
-                        'normal' => 'Обычный',
-                        'small' => 'Маленький',
-                        'accent' => 'Акцентный (цветной)',
-                        'muted' => 'Приглушённый',
-                    ])
-                    ->default('large_bold'),
+//                Forms\Components\Select::make('data_languages.title_style')
+//                    ->label('Стиль заголовка')
+//                    ->options([
+//                        'large_bold' => 'Крупный жирный',
+//                        'normal' => 'Обычный',
+//                        'small' => 'Маленький',
+//                        'accent' => 'Акцентный (цветной)',
+//                        'muted' => 'Приглушённый',
+//                    ])
+//                    ->default('large_bold'),
                 ...$this->spacingSelectFields()
 
             ],
@@ -1066,7 +1106,7 @@ class BlocksRelationManager extends RelationManager
                             'gri_reference' => $data_languages['codes'] ?? '',
                             'stats_grid' => ($data_languages['items'][0]['description'] ?? $data_languages['items'][0]['title'] ?? ''),
                             'cards_grid' => ($data_languages['cards'][0]['title'] ?? ''),
-                            'icon_list' => ($data_languages['items'][0]['title'] ?? ''),
+                            'icon_list' => (isset($data_languages['items'][0]) && is_array($data_languages['items'][0])) ? strip_tags($data_languages['items'][0]['title'] ?? '') : '',
                             'table' => ($data_languages['headers'][0]['text'] ?? ''),
                             'image' => '',
                             'image_row' => '',

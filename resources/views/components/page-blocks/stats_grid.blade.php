@@ -42,12 +42,19 @@
         '3xl' => 'mb-24',
         default => 'mb-12',
     };
+
+    $gridCols = match($data['columns'] ?? 'auto') {
+        2 => 'grid-cols-2 lg:grid-cols-1',
+        3 => 'grid-cols-3 lg:grid-cols-1',
+        4 => 'grid-cols-4 lg:grid-cols-1',
+        default => 'grid-cols-[repeat(auto-fit,minmax(200px,1fr))]',
+    };
 @endphp
 
 <div x-data="revealOnScroll()" class="    page-block
     page-block--stats-grid
     grid
-    grid-cols-[repeat(auto-fit,minmax(200px,1fr))]
+    {{ $gridCols }}
     gap-5
     reveal-on-scroll {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['items'] as $item)

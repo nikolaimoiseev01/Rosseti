@@ -49,6 +49,9 @@ h3 {
     }
     h3 {
         @apply mb-0 text-2xl text-blue-500 font-normal;
+        span {
+            @apply mb-0 text-2xl text-blue-500 font-normal;
+        }
     }
     h4 {
         @apply text-2xl text-blue-500 font-normal uppercase;
