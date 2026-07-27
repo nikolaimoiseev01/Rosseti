@@ -41,7 +41,7 @@
                         $localizedData = array_merge($data[$currentLang], $data);
                         unset($localizedData['ru'], $localizedData['en']);
                     @endphp
-                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData])
+                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData, 'pageId' => $page->id, 'blockId' => $block->id])
                 @else
                     @php
                         if (isset($data[$currentLang])) {
@@ -51,7 +51,7 @@
                             $localizedData = $data;
                         }
                     @endphp
-                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData])
+                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData, 'pageId' => $page->id, 'blockId' => $block->id])
                 @endif
             @endforeach
         </article>

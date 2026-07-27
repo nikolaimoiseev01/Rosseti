@@ -1,5 +1,6 @@
 {{-- Person Card Block --}}
 @php
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     $colorHex = match($data['color'] ?? 'primary') {
         'accent' => '#2196F3',
         default => '#00355A',
@@ -31,7 +32,7 @@
         margin: 0 !important;
     }
 </style>
-<div x-data="revealOnScroll()" class="bg-black-600 page-block p-6 rounded-lg page-block--person-card max-w-3xl {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="bg-black-600 page-block p-6 rounded-lg page-block--person-card max-w-3xl {{ $spacingTop }} {{ $spacingBottom }}">
     @if(!empty($data['heading']))
         <h3 class="text-blue-500 text-2xl inline-block mb-6" style="color: {{ $colorHex }}">{{ $data['heading'] }}</h3>
     @endif

@@ -1061,6 +1061,7 @@ class BlocksRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('type')
             ->columns([
+                TextColumn::make('id'),
                 TextColumn::make('type')
                     ->label('Тип')
                     ->searchable()

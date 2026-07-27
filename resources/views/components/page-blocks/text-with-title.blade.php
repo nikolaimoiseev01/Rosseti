@@ -1,4 +1,5 @@
 @php
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     use Filament\Forms\Components\RichEditor\RichContentRenderer;
     use App\Filament\RichContent\TooltipRichContentPlugin;
 
@@ -27,7 +28,7 @@
     };
 @endphp
 
-<div x-data="revealOnScroll()" class="page-block page-block--text-with-title transition-all duration-700 ease-out {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--text-with-title transition-all duration-700 ease-out {{ $spacingTop }} {{ $spacingBottom }}">
     <h2 id="{{Str::slug($data['title'] ?? '')}}"
         class="{{ $titleColor }} font-medium text-[40px] scroll-mt-12 mb-6 md:text-[16px]">{{$data['title'] ?? ''}}</h2>
 

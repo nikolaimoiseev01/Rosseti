@@ -1,6 +1,7 @@
 {{-- Heading Block --}}
 @php
     $level = $data['level'] ?? 'h2';
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
 
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
@@ -23,7 +24,7 @@
         default => 'mb-12',
     };
 @endphp
-<{{ $level }} x-data="revealOnScroll()" class="page-block page-block--heading {{colorHelper('color', $data)}} {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
+<{{ $level }} id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--heading {{colorHelper('color', $data)}} {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
     @if(isset($data['tooltip']))
         <span class="has-tooltip
         {{colorHelper('color', $data)}}

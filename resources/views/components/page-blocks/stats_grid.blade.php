@@ -1,5 +1,6 @@
 {{-- Stats Grid Block --}}
 @php
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     $bgColor = match($data['background_color'] ?? 'transparent') {
         'transparent' => 'bg-transparent',
         'white' => 'bg-white',
@@ -51,7 +52,7 @@
     };
 @endphp
 
-<div x-data="revealOnScroll()" class="    page-block
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="    page-block
     page-block--stats-grid
     grid
     {{ $gridCols }}

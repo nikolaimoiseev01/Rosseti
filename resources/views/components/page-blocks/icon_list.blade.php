@@ -1,5 +1,6 @@
 {{-- Icon List Block --}}
 @php
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     $currentLang = session('locale', 'ru');
 
     // Get language-specific data, fallback to old format
@@ -59,7 +60,7 @@
     }
 
 </style>
-<div x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($items as $item)
         @php
             $isTitleAccent = ($item['title_style'] ?? 'large_bold') === 'accent';

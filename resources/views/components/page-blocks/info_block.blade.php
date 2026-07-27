@@ -46,41 +46,41 @@
     $cssColor = $textColor === 'auto' ? 'inherit' : ($colorMap[$textColor] ?? 'inherit');
     $linkColor = $data['link_color'] ?? 'text-blue-400';
     $cssLinkColor = $colorMap[$linkColor] ?? '#2196F3';
-    $uniqueId = 'info-block-' . uniqid();
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
 @endphp
 
 <style>
-    [id^="info-block-"] * {
+    [id^="{{ $blockId }}"] * {
         color: var(--info-block-color) !important;
     }
-    [id^="info-block-"] a {
+    [id^="{{ $blockId }}"] a {
         color: var(--info-block-link-color) !important;
         text-decoration: underline;
     }
 </style>
 
 @if($style === 'blue')
-    <div id="{{ $uniqueId }}" class="page-block page-block--info-block rounded-2xl bg-blue-400 p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
+    <div id="{{ $blockId }}" class="page-block page-block--info-block rounded-2xl bg-blue-400 p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 
 @elseif($style === 'light')
-    <div id="{{ $uniqueId }}" class="page-block page-block--info-block rounded-2xl bg-[#F0F5FA] p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
+    <div id="{{ $blockId }}" class="page-block page-block--info-block rounded-2xl bg-[#F0F5FA] p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 
 @elseif($style === 'accent')
-    <div id="{{ $uniqueId }}" class="page-block page-block--info-block border-l-4 border-[#2196F3] bg-[#F7F9FC] rounded-2xl p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
+    <div id="{{ $blockId }}" class="page-block page-block--info-block border-l-4 border-[#2196F3] bg-[#F7F9FC] rounded-2xl p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 
 @elseif($style === 'dark')
-    <div id="{{ $uniqueId }}" class="page-block page-block--info-block rounded-2xl bg-[#1B2733] p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
+    <div id="{{ $blockId }}" class="page-block page-block--info-block rounded-2xl bg-[#1B2733] p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 
 @elseif($style === 'bordered')
-    <div id="{{ $uniqueId }}" class="page-block page-block--info-block rounded-2xl bg-white border border-gray-200 p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
+    <div id="{{ $blockId }}" class="page-block page-block--info-block rounded-2xl bg-white border border-gray-200 p-6 {{ $spacingTop }} {{ $spacingBottom }}" style="--info-block-color: {{ $cssColor }}; --info-block-link-color: {{ $cssLinkColor }};">
         <div class="text-[15px] leading-relaxed">{!! $data['content'] !!}</div>
     </div>
 @endif

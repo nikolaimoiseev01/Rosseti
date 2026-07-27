@@ -1,5 +1,6 @@
 {{-- Timeline Block --}}
 @php
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     $colorHex = match($data['color'] ?? 'primary') {
         'accent' => '#2196F3',
         default => '#00355A',
@@ -25,7 +26,7 @@
         default => 'mb-12',
     };
 @endphp
-<div x-data="revealOnScroll()" class="page-block page-block--timeline {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--timeline {{ $spacingTop }} {{ $spacingBottom }}">
     @if(!empty($data['title']))
         <h3 class="text-2xl font-bold mb-8 leading-tight" style="color: {{ $colorHex }}">{{ $data['title'] }}</h3>
     @endif

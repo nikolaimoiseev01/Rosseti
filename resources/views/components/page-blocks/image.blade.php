@@ -1,5 +1,6 @@
 {{-- Image Block --}}
 @php
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     $sizeClass = match($data['size'] ?? 'full') {
         'large' => 'max-w-[75%]',
         'medium' => 'max-w-[50%]',
@@ -26,7 +27,7 @@
         default => 'mb-12',
     };
 @endphp
-<figure x-data="revealOnScroll()" class="page-block page-block--image {{ $sizeClass }} {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
+<figure id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--image {{ $sizeClass }} {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
     @if($data['url'])
         <img
             src="{{ Storage::url($data['url']) }}"

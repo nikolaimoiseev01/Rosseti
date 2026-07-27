@@ -1,5 +1,6 @@
 {{-- Two Columns Text Block --}}
 @php
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
         'small' => 'mt-2',
@@ -22,7 +23,7 @@
     };
 @endphp
 
-<div x-data="revealOnScroll()" class="page-block page-block--two-columns grid grid-cols-2 gap-8 md:grid-cols-1 {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--two-columns grid grid-cols-2 gap-8 md:grid-cols-1 {{ $spacingTop }} {{ $spacingBottom }}">
     <div class="prose prose-lg max-w-none text-[#333] prose-p:leading-relaxed prose-a:text-[#005B9C]">
         {!! $data['left'] ?? '' !!}
     </div>

@@ -1,5 +1,6 @@
 {{-- Table Block --}}
 @php
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     $headerStyle = $data['header_style'] ?? 'blue';
     $cellPadding = match($data['cell_padding'] ?? 'normal') {
         'compact' => 'px-2 py-1',
@@ -45,7 +46,7 @@
     <p class="text-lg font-bold text-[#00355A] mb-2">{{ $data['caption'] }}</p>
 @endif
 
-<div x-data="revealOnScroll()" class="page-block page-block--table overflow-x-auto rounded-xl border border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--table overflow-x-auto rounded-xl border border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
     <table class="w-full text-lg">
         @if(!empty($data['headers']))
             <thead>

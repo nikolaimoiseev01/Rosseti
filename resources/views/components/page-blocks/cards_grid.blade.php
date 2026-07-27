@@ -1,5 +1,6 @@
 {{-- Cards Grid Block --}}
 @php
+    $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     $cols = match($data['columns'] ?? '3') {
         '2' => 'grid-cols-2 sm:grid-cols-1',
         '4' => 'grid-cols-4 lg:grid-cols-2 sm:grid-cols-1',
@@ -43,7 +44,7 @@
     }
 </style>
 
-<div x-data="revealOnScroll()" class="page-block page-block--cards-grid grid {{ $cols }} gap-5 {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--cards-grid grid {{ $cols }} gap-5 {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['cards'] ?? [] as $card)
         <div class="bg-[#F7F9FC] rounded-2xl p-6 border border-[#E1E7F0]/60 hover:border-[#2196F3]/30 transition-colors">
             @if(!empty($card['icon']))
