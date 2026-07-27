@@ -283,20 +283,33 @@ HTML
         строительству и реконструкции электросетевых объектов — основные виды экономической деятельности Компании.
     </p>
 
-    <div class="grid grid-cols-2 gap-8 lg:grid-cols-1">
-        <div>
-            <h3 x-data="revealOnScroll()" class="mb-2 text-2xl">
-                Капиталы (ресурсы)
-            </h3>
+    <div class="flex flex-col gap-8 lg:flex-col">
+        <div class="flex lg:flex-col gap-8 mb-4">
+            <div class=" w-1/2 lg:w-full">
+                <h3 x-data="revealOnScroll()" class="mb-2 text-2xl">
+                    Капиталы (ресурсы)
+                </h3>
 
-            <p x-data="revealOnScroll()" class="mb-8">
-                Ресурсы, используемые в цепочке создания стоимости, сгруппированы в шесть капиталов:
-                человеческий, производственный, финансовый, интеллектуальный, социально-репутационный и природный.
-            </p>
+                <p x-data="revealOnScroll()" class="">
+                    Ресурсы, используемые в цепочке создания стоимости, сгруппированы в шесть капиталов:
+                    человеческий, производственный, финансовый, интеллектуальный, социально-репутационный и природный.
+                </p>
+            </div>
+            <div class=" w-1/2 lg:w-full">
+                <h3 x-data="revealOnScroll()" class="mb-2 text-2xl">
+                    Результаты для заинтересованных сторон
+                </h3>
 
+                <p x-data="revealOnScroll()" class="">
+                    В результате деятельности Компании происходит трансформация капиталов и создание ценности для внешних и внутренних заинтересованных сторон.
+                </p>
+            </div>
+        </div>
+
+        <div class="flex lg:flex-col gap-8 mb-8">
             <div
                 x-data="revealOnScroll()"
-                class="business-stack-slider relative"
+                class="business-stack-slider relative  w-1/2 lg:w-full"
             >
                 <div class="swiper business-stack-swiper business-capitals-swiper">
                     <div class="swiper-wrapper">
@@ -402,20 +415,9 @@ HTML
                     </button>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <h3 x-data="revealOnScroll()" class="mb-2 text-2xl">
-                Результаты для заинтересованных сторон
-            </h3>
-
-            <p x-data="revealOnScroll()" class="mb-8">
-                В результате деятельности Компании происходит трансформация капиталов и создание ценности для внешних и внутренних заинтересованных сторон.
-            </p>
-
             <div
                 x-data="revealOnScroll()"
-                class="business-stack-slider relative"
+                class="business-stack-slider relative   w-1/2 lg:w-full"
             >
                 <div class="swiper business-stack-swiper business-results-swiper">
                     <div class="swiper-wrapper">
@@ -480,9 +482,9 @@ HTML
                                                                         {{ $stat['prefix'] }}
                                                                     </div>
                                                                 @endif
-                                                                    <div class="text-3xl text-blue-400">
-                                                                        {!! $stat['value'] !!}
-                                                                    </div>
+                                                                <div class="text-3xl text-blue-400">
+                                                                    {!! $stat['value'] !!}
+                                                                </div>
                                                             </div>
 
 
@@ -546,6 +548,7 @@ HTML
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 @push('page-js')
