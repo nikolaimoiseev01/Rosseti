@@ -12,7 +12,7 @@ class PagesTable
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                Tables\Columns\TextColumn::make('title_languages.ru')
                     ->label('Название')
                     ->searchable()
                     ->sortable(),
