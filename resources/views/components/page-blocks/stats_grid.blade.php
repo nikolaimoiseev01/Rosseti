@@ -61,11 +61,12 @@
     @foreach($data['items'] as $item)
         @php
             $valueText = $item['value'] ?? '0';
-            preg_match('/^([\d.,]+)(.*)$/s', $valueText, $matches);
-            $numericValue = isset($matches[1]) ? (float) str_replace(',', '.', $matches[1]) : 0;
-            $suffix = isset($matches[2]) ? $matches[2] : '';
+            preg_match('/^([><=]*)([\d.,]+)(.*)$/s', $valueText, $matches);
+            $prefix = isset($matches[1]) ? $matches[1] : '';
+            $numericValue = isset($matches[2]) ? (float) str_replace(',', '.', $matches[2]) : 0;
+            $suffix = isset($matches[3]) ? $matches[3] : '';
         @endphp
-        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center">
+        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $prefix }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center">
             <div class="text-[80px] font-normal mb-1 {{colorHelper('main_color', $data)}}">
                 <span class="{{colorHelper('main_color', $data)}}" x-text="displayValue"></span>
                 @if(!empty($item['unit']))

@@ -48,6 +48,7 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
         displayValue: '0',
         counterTarget: null,
         counterSuffix: '',
+        counterPrefix: '',
 
         init() {
             this.$el.classList.add('reveal-on-scroll');
@@ -59,7 +60,7 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
                             this.shown = true;
                             this.$el.classList.add('is-visible');
                             if (this.counterTarget !== null) {
-                                this.animateCounter(this.counterTarget, this.counterSuffix);
+                                this.animateCounter(this.counterTarget, this.counterSuffix, this.counterPrefix);
                             }
                         }, this.delay);
                         observer.unobserve(this.$el);
@@ -74,9 +75,10 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
             observer.observe(this.$el);
         },
 
-        animateCounter(targetValue, suffix = '') {
+        animateCounter(targetValue, suffix = '', prefix = '') {
             this.counterTarget = targetValue;
             this.counterSuffix = suffix;
+            this.counterPrefix = prefix;
 
             if (!this.shown) {
                 return;
@@ -103,7 +105,7 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
                     formattedValue = currentValue.toFixed(targetValue % 1 === 0 ? 0 : 1);
                 }
 
-                this.displayValue = formattedValue + suffix;
+                this.displayValue = prefix + formattedValue + suffix;
 
                 if (progress < 1) {
                     requestAnimationFrame(animate);
