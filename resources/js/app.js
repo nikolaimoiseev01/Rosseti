@@ -45,6 +45,9 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
     return {
         shown: false,
         delay,
+        displayValue: '0',
+        counterTarget: null,
+        counterSuffix: '',
 
         init() {
             this.$el.classList.add('reveal-on-scroll');
@@ -55,6 +58,9 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
                         setTimeout(() => {
                             this.shown = true;
                             this.$el.classList.add('is-visible');
+                            if (this.counterTarget !== null) {
+                                this.animateCounter(this.counterTarget, this.counterSuffix);
+                            }
                         }, this.delay);
                         observer.unobserve(this.$el);
                     }
@@ -66,6 +72,49 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
             );
 
             observer.observe(this.$el);
+        },
+
+        animateCounter(targetValue, suffix = '') {
+            this.counterTarget = targetValue;
+            this.counterSuffix = suffix;
+
+            if (!this.shown) {
+                return;
+            }
+
+            const duration = 2000;
+            const startValue = 0;
+            const startTime = performance.now();
+
+            const animate = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Ease out cubic
+                const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+                const currentValue = startValue + (targetValue - startValue) * easedProgress;
+
+                // Format the number
+                let formattedValue;
+                if (Number.isInteger(targetValue)) {
+                    formattedValue = Math.round(currentValue).toString();
+                } else {
+                    formattedValue = currentValue.toFixed(targetValue % 1 === 0 ? 0 : 1);
+                }
+
+                this.displayValue = formattedValue + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            };
+
+            requestAnimationFrame(animate);
+        },
+
+        get isVisible() {
+            return this.shown;
         },
     };
 };
