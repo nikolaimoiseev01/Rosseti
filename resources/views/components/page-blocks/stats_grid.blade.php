@@ -52,16 +52,22 @@
     };
 @endphp
 
-<div id="{{ $blockId }}" x-data="revealOnScroll()" class="    page-block
+<div id="{{ $blockId }}" class="    page-block
     page-block--stats-grid
     grid
     {{ $gridCols }}
     gap-5
-    reveal-on-scroll {{ $spacingTop }} {{ $spacingBottom }}">
+    {{ $spacingTop }} {{ $spacingBottom }}">
     @foreach($data['items'] as $item)
-        <div class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center">
+        @php
+            $valueText = $item['value'] ?? '0';
+            preg_match('/^([\d.,]+)(.*)$/s', $valueText, $matches);
+            $numericValue = isset($matches[1]) ? (float) str_replace(',', '.', $matches[1]) : 0;
+            $suffix = isset($matches[2]) ? $matches[2] : '';
+        @endphp
+        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center">
             <div class="text-[80px] font-normal mb-1 {{colorHelper('main_color', $data)}}">
-                {{ $item['value'] }}
+                <span class="{{colorHelper('main_color', $data)}}" x-text="displayValue"></span>
                 @if(!empty($item['unit']))
                     <h3 class="font-light inline-block {{colorHelper('unit_color', $data)}}">{{ $item['unit'] }}</h3>
                 @endif
