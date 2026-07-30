@@ -1056,6 +1056,7 @@ class BlocksRelationManager extends RelationManager
                     ->options([
                         'lollipop' => 'Палочки с точками (Lollipop)',
                         'bar' => 'Столбчатая диаграмма',
+                        'bar_horizontal' => 'Горизонтальная столбчатая',
                         'line' => 'Линейный график',
                     ])
                     ->default('lollipop')
@@ -1084,19 +1085,32 @@ class BlocksRelationManager extends RelationManager
                         'xl' => 'Очень большой (340px)',
                     ])
                     ->default('medium'),
+                Forms\Components\Select::make('data_languages.chart_width')
+                    ->label('Ширина блока')
+                    ->options([
+                        '100' => 'Полная ширина (100%)',
+                        '75' => 'Три четверти (75%)',
+                        '66' => 'Две трети (66%)',
+                        '50' => 'Половина (50%)',
+                        '33' => 'Треть (33%)',
+                    ])
+                    ->default('100'),
                 Tabs::make('language_tabs')
                     ->tabs([
                         Tab::make('Русский')
                             ->schema([
+                                Forms\Components\TextInput::make('data_languages.ru.title')
+                                    ->label('Заголовок')
+                                    ->placeholder('Консолидированные активы,'),
                                 Forms\Components\TextInput::make('data_languages.ru.unit')
-                                    ->label('Единица измерения')
-                                    ->placeholder('тыс. шт.'),
+                                    ->label('Подзаголовок / единицы')
+                                    ->placeholder('тыс. шт. / млрд руб. / чел.'),
                                 Forms\Components\Repeater::make('data_languages.ru.values')
                                     ->label('Значения')
                                     ->schema([
                                         Forms\Components\TextInput::make('label')
-                                            ->label('Период')
-                                            ->placeholder('2023')
+                                            ->label('Период / название')
+                                            ->placeholder('2023 / Экономика')
                                             ->required(),
                                         Forms\Components\TextInput::make('value')
                                             ->label('Значение 1')
@@ -1104,8 +1118,23 @@ class BlocksRelationManager extends RelationManager
                                             ->required(),
                                         Forms\Components\TextInput::make('value2')
                                             ->label('Значение 2 (необяз.)')
-                                            ->placeholder('250.3')
-                                            ->helperText('Второе значение для сравнения'),
+                                            ->placeholder('250.3'),
+                                        Forms\Components\TextInput::make('value3')
+                                            ->label('Значение 3 (необяз.)')
+                                            ->placeholder('180.0'),
+                                        Forms\Components\Select::make('accent_color')
+                                            ->label('Акцентный цвет')
+                                            ->options([
+                                                '' => 'По умолчанию',
+                                                'dark_blue' => 'Тёмно-синий (#00355A)',
+                                                'blue' => 'Синий (#005B9C)',
+                                                'cyan' => 'Бирюзовый (#00BCD4)',
+                                                'teal' => 'Зелёно-синий (#009688)',
+                                                'orange' => 'Оранжевый (#FF8F00)',
+                                                'green' => 'Зелёный (#43A047)',
+                                                'red' => 'Красный (#E53935)',
+                                            ])
+                                            ->default(''),
                                     ])
                                     ->columns(3)
                                     ->defaultItems(3)
@@ -1113,17 +1142,34 @@ class BlocksRelationManager extends RelationManager
                             ]),
                         Tab::make('English')
                             ->schema([
+                                Forms\Components\TextInput::make('data_languages.en.title')
+                                    ->label('Title'),
                                 Forms\Components\TextInput::make('data_languages.en.unit')
-                                    ->label('Unit'),
+                                    ->label('Subtitle / unit'),
                                 Forms\Components\Repeater::make('data_languages.en.values')
                                     ->label('Values')
                                     ->schema([
                                         Forms\Components\TextInput::make('label')
-                                            ->label('Period'),
+                                            ->label('Period / name'),
                                         Forms\Components\TextInput::make('value')
                                             ->label('Value 1'),
                                         Forms\Components\TextInput::make('value2')
                                             ->label('Value 2 (optional)'),
+                                        Forms\Components\TextInput::make('value3')
+                                            ->label('Value 3 (optional)'),
+                                        Forms\Components\Select::make('accent_color')
+                                            ->label('Accent color')
+                                            ->options([
+                                                '' => 'Default',
+                                                'dark_blue' => 'Dark blue',
+                                                'blue' => 'Blue',
+                                                'cyan' => 'Cyan',
+                                                'teal' => 'Teal',
+                                                'orange' => 'Orange',
+                                                'green' => 'Green',
+                                                'red' => 'Red',
+                                            ])
+                                            ->default(''),
                                     ])
                                     ->columns(3)
                                     ->defaultItems(3)
@@ -1157,6 +1203,22 @@ class BlocksRelationManager extends RelationManager
                         'xl' => 'Очень большой (250px)',
                     ])
                     ->default('md'),
+                Forms\Components\Select::make('data_languages.donut_width')
+                    ->label('Ширина блока')
+                    ->options([
+                        '100' => 'Полная ширина (100%)',
+                        '75' => 'Три четверти (75%)',
+                        '66' => 'Две трети (66%)',
+                        '50' => 'Половина (50%)',
+                        '33' => 'Треть (33%)',
+                    ])
+                    ->default('100'),
+                Forms\Components\TextInput::make('data_languages.title')
+                    ->label('Заголовок')
+                    ->placeholder('Консолидированные активы,'),
+                Forms\Components\TextInput::make('data_languages.unit')
+                    ->label('Подзаголовок / единицы')
+                    ->placeholder('млрд руб.'),
 
                 // --- Simple donut fields ---
                 Forms\Components\TextInput::make('data_languages.value')

@@ -1,4 +1,4 @@
-{{-- Chart Block (lollipop / bar / line) — styled to match charts-lollipop-demo.html --}}
+{{-- Chart Block (lollipop / bar / line) — with accent colors, 3 values, width, animation --}}
 @php
     $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
     $chartType = $data['chart_type'] ?? 'lollipop';
@@ -8,12 +8,18 @@
     $values = $data['values'] ?? [];
     $numValues = count($values);
 
-    // Parse numeric values (primary + optional secondary)
+    // Parse numeric values (primary + optional secondary + tertiary)
     $numericValues = array_map(fn($v) => (float) str_replace(',', '.', $v['value'] ?? '0'), $values);
     $numericValues2 = array_map(fn($v) => (float) str_replace(',', '.', $v['value2'] ?? '0'), $values);
+    $numericValues3 = array_map(fn($v) => (float) str_replace(',', '.', $v['value3'] ?? '0'), $values);
     $hasSecondValue = !empty(array_filter($numericValues2, fn($v) => $v > 0));
+    $hasThirdValue = !empty(array_filter($numericValues3, fn($v) => $v > 0));
 
-    $allValues = $hasSecondValue ? array_merge($numericValues, array_filter($numericValues2, fn($v) => $v > 0)) : $numericValues;
+    $allValues = array_merge(
+        $numericValues,
+        $hasSecondValue ? array_filter($numericValues2, fn($v) => $v > 0) : [],
+        $hasThirdValue ? array_filter($numericValues3, fn($v) => $v > 0) : []
+    );
     $maxValue = !empty($allValues) ? max($allValues) : 1;
     $minValue = !empty($allValues) ? min($allValues) : 0;
 
@@ -26,6 +32,16 @@
         'teal'       => ['main' => '#4DB6AC', 'dark' => '#009688', 'light' => '#B2DFDB', 'text' => '#009688', 'border' => '#4DB6AC'],
         'light_blue' => ['main' => '#4FC3F7', 'dark' => '#039BE5', 'light' => '#B3E5FC', 'text' => '#0277BD', 'border' => '#4FC3F7'],
         'grey'       => ['main' => '#90A4AE', 'dark' => '#6B7785', 'light' => '#CFD8DC', 'text' => '#546E7A', 'border' => '#90A4AE'],
+    ];
+    // Accent color map for per-item override
+    $accentColorMap = [
+        'dark_blue' => ['main' => '#005B9C', 'dark' => '#00355A', 'light' => '#A5CBE5', 'text' => '#00355A', 'border' => '#005B9C'],
+        'blue'      => ['main' => '#5BA4D9', 'dark' => '#005B9C', 'light' => '#B8D4EA', 'text' => '#005B9C', 'border' => '#5BA4D9'],
+        'cyan'      => ['main' => '#00BCD4', 'dark' => '#00838F', 'light' => '#B2EBF2', 'text' => '#00838F', 'border' => '#00BCD4'],
+        'teal'      => ['main' => '#4DB6AC', 'dark' => '#009688', 'light' => '#B2DFDB', 'text' => '#009688', 'border' => '#4DB6AC'],
+        'orange'    => ['main' => '#FFB300', 'dark' => '#FF8F00', 'light' => '#FFE082', 'text' => '#E65100', 'border' => '#FFB300'],
+        'green'     => ['main' => '#66BB6A', 'dark' => '#43A047', 'light' => '#A5D6A7', 'text' => '#2E7D32', 'border' => '#66BB6A'],
+        'red'       => ['main' => '#EF5350', 'dark' => '#E53935', 'light' => '#EF9A9A', 'text' => '#C62828', 'border' => '#EF5350'],
     ];
     $cc = $colorMap[$colorScheme] ?? $colorMap['blue'];
 
@@ -40,15 +56,12 @@
     };
 
     // Chart area height
-    $chartSizeKey = $data['chart_size'] ?? 'medium';
-    $chartHeight = match($chartSizeKey) {
-        'compact' => 140,
-        'small' => 180,
-        'medium' => 220,
-        'large' => 280,
-        'xl' => 340,
-        default => 220,
+    $chartHeight = match($data['chart_size'] ?? 'medium') {
+        'compact' => 140, 'small' => 180, 'medium' => 220, 'large' => 280, 'xl' => 340, default => 220,
     };
+
+    // Chart width
+    $chartWidth = ($data['chart_width'] ?? '100') . '%';
 
     // Format value for display
     if (!function_exists('formatChartValue')) {
@@ -61,13 +74,13 @@
         }
     }
 
-    // Unique scoped class
     $scopeClass = 'chart-' . md5($blockId);
 @endphp
 
 <div
     id="{{ $blockId }}"
     class="page-block page-block--chart {{ $spacingTop }} {{ $spacingBottom }}"
+    style="max-width: {{ $chartWidth }}"
 >
     {{-- Header --}}
     @if($title)
@@ -81,7 +94,8 @@
     @if($chartType === 'lollipop')
         <div
             class="{{ $scopeClass }}"
-            x-data="{ shown: false }"
+            x-data="{ shown: {{ $animate ? 'false' : 'true' }} }"
+            @if($animate)
             x-init="
                 const observer = new IntersectionObserver(([entry]) => {
                     if (!entry.isIntersecting) return;
@@ -90,23 +104,26 @@
                     const items = $el.querySelectorAll('.lolli-item');
                     const chartH = {{ $chartHeight }} - 40;
                     items.forEach((item, i) => {
-                        const pct = parseFloat(item.dataset.heightPct) / 100;
-                        const stem = item.querySelector('.lolli-stem');
-                        const stem2 = item.querySelector('.lolli-stem-2');
                         setTimeout(() => {
-                            if (stem) stem.style.height = (chartH * pct) + 'px';
-                            item.classList.add('animated');
+                            requestAnimationFrame(() => {
+                                requestAnimationFrame(() => {
+                                    ['lolli-stem', 'lolli-stem-2', 'lolli-stem-3'].forEach(cls => {
+                                        const stem = item.querySelector('.' + cls);
+                                        if (stem) {
+                                            const pctAttr = cls === 'lolli-stem' ? 'heightPct' : cls === 'lolli-stem-2' ? 'heightPct2' : 'heightPct3';
+                                            const pct = parseFloat(item.dataset[pctAttr]) / 100;
+                                            stem.style.height = (chartH * pct) + 'px';
+                                        }
+                                    });
+                                    item.classList.add('animated');
+                                });
+                            });
                         }, i * 200);
-                        if (stem2) {
-                            const pct2 = parseFloat(item.dataset.heightPct2) / 100;
-                            setTimeout(() => {
-                                stem2.style.height = (chartH * pct2) + 'px';
-                            }, i * 200 + 100);
-                        }
                     });
                 }, { threshold: 0.3 });
                 observer.observe($el);
             "
+            @endif
             style="display: flex; align-items: flex-end; justify-content: space-around; height: {{ $chartHeight }}px; position: relative; border-bottom: 2px solid #D6E4F0; padding: 0 20px"
         >
             @foreach($values as $i => $item)
@@ -116,27 +133,39 @@
                     $displayVal = formatChartValue($item['value'] ?? '0');
                     $val2 = $numericValues2[$i] ?? 0;
                     $heightPct2 = ($hasSecondValue && $maxValue > 0) ? round(($val2 / $maxValue) * 90, 1) : 0;
-                    $displayVal2 = $hasSecondValue ? formatChartValue($item['value2'] ?? '0') : '';
+                    $val3 = $numericValues3[$i] ?? 0;
+                    $heightPct3 = ($hasThirdValue && $maxValue > 0) ? round(($val3 / $maxValue) * 90, 1) : 0;
+                    // Per-item accent color
+                    $accent = (!empty($item['accent_color'])) ? ($accentColorMap[$item['accent_color']] ?? $cc) : $cc;
                 @endphp
                 <div
                     class="lolli-item"
                     data-height-pct="{{ $heightPct }}"
                     @if($hasSecondValue) data-height-pct2="{{ $heightPct2 }}" @endif
-                    style="display: flex; flex-direction: column; align-items: center; position: relative; flex: 1; max-width: 120px"
+                    @if($hasThirdValue) data-height-pct3="{{ $heightPct3 }}" @endif
+                    style="display: flex; flex-direction: column; align-items: center; position: relative; flex: 1; max-width: 140px"
                 >
-                    <div style="display: flex; align-items: flex-end; gap: {{ $hasSecondValue ? '8px' : '0' }}">
+                    <div style="display: flex; align-items: flex-end; gap: {{ ($hasSecondValue || $hasThirdValue) ? '6px' : '0' }}">
                         {{-- Primary --}}
                         <div style="display: flex; flex-direction: column; align-items: center">
-                            <div class="lolli-val" style="font-size: 18px; font-weight: 700; color: {{ $cc['text'] }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease">{{ $displayVal }}</div>
-                            <div class="lolli-dot" style="width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 3px solid {{ $cc['border'] }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); flex-shrink: 0"></div>
-                            <div class="lolli-stem" style="width: 3px; background: linear-gradient(to top, {{ $cc['light'] }}, {{ $cc['main'] }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
+                            <div class="lolli-val" style="font-size: 18px; font-weight: 700; color: {{ $accent['text'] }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease">{{ $displayVal }}</div>
+                            <div class="lolli-dot" style="width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 3px solid {{ $accent['border'] }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); flex-shrink: 0"></div>
+                            <div class="lolli-stem" style="width: 3px; background: linear-gradient(to top, {{ $accent['light'] }}, {{ $accent['main'] }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
                         </div>
                         {{-- Secondary --}}
                         @if($hasSecondValue && $val2 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="lolli-val" style="font-size: 16px; font-weight: 700; color: {{ $cc['light'] }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ $displayVal2 }}</div>
-                                <div class="lolli-dot" style="width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid {{ $cc['light'] }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s; flex-shrink: 0"></div>
-                                <div class="lolli-stem-2" style="width: 3px; background: linear-gradient(to top, #E8EEF4, {{ $cc['light'] }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
+                                <div class="lolli-val" style="font-size: 15px; font-weight: 700; color: {{ $accent['light'] }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                <div class="lolli-dot" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $accent['light'] }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s; flex-shrink: 0"></div>
+                                <div class="lolli-stem-2" style="width: 3px; background: linear-gradient(to top, #E8EEF4, {{ $accent['light'] }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
+                            </div>
+                        @endif
+                        {{-- Tertiary --}}
+                        @if($hasThirdValue && $val3 > 0)
+                            <div style="display: flex; flex-direction: column; align-items: center">
+                                <div class="lolli-val" style="font-size: 13px; font-weight: 600; color: #CDD6DE; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s">{{ formatChartValue($item['value3'] ?? '0') }}</div>
+                                <div class="lolli-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 2px solid #CDD6DE; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s; flex-shrink: 0"></div>
+                                <div class="lolli-stem-3" style="width: 2px; background: linear-gradient(to top, #F1F5FC, #CDD6DE); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
                             </div>
                         @endif
                     </div>
@@ -154,7 +183,8 @@
     @elseif($chartType === 'bar')
         <div
             class="{{ $scopeClass }}"
-            x-data="{ shown: false }"
+            x-data="{ shown: {{ $animate ? 'false' : 'true' }} }"
+            @if($animate)
             x-init="
                 const observer = new IntersectionObserver(([entry]) => {
                     if (!entry.isIntersecting) return;
@@ -163,23 +193,26 @@
                     const items = $el.querySelectorAll('.bar-item-el');
                     const chartH = {{ $chartHeight }} - 10;
                     items.forEach((item, i) => {
-                        const pct = parseFloat(item.dataset.heightPct) / 100;
-                        const col = item.querySelector('.bar-col');
-                        const col2 = item.querySelector('.bar-col-2');
                         setTimeout(() => {
-                            if (col) col.style.height = (chartH * pct) + 'px';
-                            item.classList.add('animated');
+                            requestAnimationFrame(() => {
+                                requestAnimationFrame(() => {
+                                    ['bar-col', 'bar-col-2', 'bar-col-3'].forEach(cls => {
+                                        const col = item.querySelector('.' + cls);
+                                        if (col) {
+                                            const pctAttr = cls === 'bar-col' ? 'heightPct' : cls === 'bar-col-2' ? 'heightPct2' : 'heightPct3';
+                                            const pct = parseFloat(item.dataset[pctAttr]) / 100;
+                                            col.style.height = (chartH * pct) + 'px';
+                                        }
+                                    });
+                                    item.classList.add('animated');
+                                });
+                            });
                         }, i * 200);
-                        if (col2) {
-                            const pct2 = parseFloat(item.dataset.heightPct2) / 100;
-                            setTimeout(() => {
-                                col2.style.height = (chartH * pct2) + 'px';
-                            }, i * 200 + 100);
-                        }
                     });
                 }, { threshold: 0.3 });
                 observer.observe($el);
             "
+            @endif
             style="display: flex; align-items: flex-end; justify-content: space-around; height: {{ $chartHeight }}px; position: relative; border-bottom: 2px solid #D6E4F0; padding: 0 10px"
         >
             @foreach($values as $i => $item)
@@ -189,26 +222,38 @@
                     $displayVal = formatChartValue($item['value'] ?? '0');
                     $val2 = $numericValues2[$i] ?? 0;
                     $heightPct2 = ($hasSecondValue && $maxValue > 0) ? round(($val2 / $maxValue) * 90, 1) : 0;
-                    $displayVal2 = $hasSecondValue ? formatChartValue($item['value2'] ?? '0') : '';
+                    $val3 = $numericValues3[$i] ?? 0;
+                    $heightPct3 = ($hasThirdValue && $maxValue > 0) ? round(($val3 / $maxValue) * 90, 1) : 0;
+                    $accent = (!empty($item['accent_color'])) ? ($accentColorMap[$item['accent_color']] ?? $cc) : $cc;
+                    $barW = ($hasSecondValue || $hasThirdValue) ? '28px' : '48px';
                 @endphp
                 <div
                     class="bar-item-el"
                     data-height-pct="{{ $heightPct }}"
                     @if($hasSecondValue) data-height-pct2="{{ $heightPct2 }}" @endif
-                    style="display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 100px"
+                    @if($hasThirdValue) data-height-pct3="{{ $heightPct3 }}" @endif
+                    style="display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 120px"
                 >
-                    <div style="display: flex; align-items: flex-end; gap: {{ $hasSecondValue ? '4px' : '0' }}">
+                    <div style="display: flex; align-items: flex-end; gap: {{ ($hasSecondValue || $hasThirdValue) ? '3px' : '0' }}">
                         {{-- Primary bar --}}
                         <div style="display: flex; flex-direction: column; align-items: center">
-                            <div class="bar-val" style="font-size: 16px; font-weight: 700; color: {{ $cc['text'] }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.8s, transform 0.5s ease 0.8s">{{ $displayVal }}</div>
-                            <div class="bar-col" style="width: {{ $hasSecondValue ? '32px' : '48px' }}; border-radius: 8px 8px 0 0; background: linear-gradient(to top, {{ $cc['light'] }}, {{ $cc['main'] }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); position: relative; cursor: pointer"
+                            <div class="bar-val" style="font-size: 16px; font-weight: 700; color: {{ $accent['text'] }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.8s, transform 0.5s ease 0.8s; white-space: nowrap">{{ $displayVal }}</div>
+                            <div class="bar-col" style="width: {{ $barW }}; border-radius: 8px 8px 0 0; background: linear-gradient(to top, {{ $accent['light'] }}, {{ $accent['main'] }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); position: relative; cursor: pointer"
                                  onmouseenter="this.style.filter='brightness(1.1)'" onmouseleave="this.style.filter='none'"></div>
                         </div>
                         {{-- Secondary bar --}}
                         @if($hasSecondValue && $val2 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="bar-val" style="font-size: 14px; font-weight: 700; color: {{ $cc['light'] }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.9s, transform 0.5s ease 0.9s">{{ $displayVal2 }}</div>
-                                <div class="bar-col-2" style="width: 32px; border-radius: 8px 8px 0 0; background: linear-gradient(to top, #E8EEF4, {{ $cc['light'] }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); position: relative; cursor: pointer"
+                                <div class="bar-val" style="font-size: 13px; font-weight: 700; color: {{ $accent['light'] }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.9s, transform 0.5s ease 0.9s; white-space: nowrap">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                <div class="bar-col-2" style="width: {{ $barW }}; border-radius: 8px 8px 0 0; background: linear-gradient(to top, #E8EEF4, {{ $accent['light'] }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer"
+                                     onmouseenter="this.style.filter='brightness(1.1)'" onmouseleave="this.style.filter='none'"></div>
+                            </div>
+                        @endif
+                        {{-- Tertiary bar --}}
+                        @if($hasThirdValue && $val3 > 0)
+                            <div style="display: flex; flex-direction: column; align-items: center">
+                                <div class="bar-val" style="font-size: 12px; font-weight: 600; color: #CDD6DE; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 1s, transform 0.5s ease 1s; white-space: nowrap">{{ formatChartValue($item['value3'] ?? '0') }}</div>
+                                <div class="bar-col-3" style="width: 24px; border-radius: 6px 6px 0 0; background: linear-gradient(to top, #F1F5FC, #CDD6DE); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer"
                                      onmouseenter="this.style.filter='brightness(1.1)'" onmouseleave="this.style.filter='none'"></div>
                             </div>
                         @endif
@@ -221,10 +266,62 @@
             .{{ $scopeClass }} .bar-item-el.animated .bar-val { opacity: 1 !important; transform: translateY(0) !important; }
         </style>
 
+    {{-- ============ HORIZONTAL BAR CHART ============ --}}
+    @elseif($chartType === 'bar_horizontal')
+        <div
+            class="{{ $scopeClass }}"
+            x-data="{ shown: {{ $animate ? 'false' : 'true' }} }"
+            @if($animate)
+            x-init="
+                const observer = new IntersectionObserver(([entry]) => {
+                    if (!entry.isIntersecting) return;
+                    shown = true;
+                    observer.unobserve($el);
+                    const items = $el.querySelectorAll('.hbar-row');
+                    items.forEach((item, i) => {
+                        setTimeout(() => {
+                            requestAnimationFrame(() => {
+                                requestAnimationFrame(() => {
+                                    const bar = item.querySelector('.hbar-fill');
+                                    if (bar) bar.style.width = bar.dataset.widthPct + '%';
+                                    item.classList.add('animated');
+                                });
+                            });
+                        }, i * 150);
+                    });
+                }, { threshold: 0.2 });
+                observer.observe($el);
+            "
+            @endif
+            style="display: flex; flex-direction: column; gap: 14px"
+        >
+            @foreach($values as $i => $item)
+                @php
+                    $val = $numericValues[$i];
+                    $widthPct = $maxValue > 0 ? round(($val / $maxValue) * 85, 1) : 0;
+                    $displayVal = formatChartValue($item['value'] ?? '0');
+                    $accent = (!empty($item['accent_color'])) ? ($accentColorMap[$item['accent_color']] ?? $cc) : $cc;
+                @endphp
+                <div class="hbar-row" style="display: flex; align-items: center; gap: 20px">
+                    <div class="hbar-label" style="min-width: 200px; font-size: 15px; font-weight: 500; color: #3D5066; text-align: left; line-height: 1.4; opacity: 0; transform: translateX(-10px); transition: opacity 0.5s ease, transform 0.5s ease">{{ $item['label'] ?? '' }}</div>
+                    <div style="flex: 1; position: relative; height: 38px; display: flex; align-items: center">
+                        <div class="hbar-fill" data-width-pct="{{ $widthPct }}"
+                             style="height: 100%; width: 0; border-radius: 0 10px 10px 0; background: linear-gradient(90deg, {{ $accent['light'] }}, {{ $accent['main'] }}); transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1); position: relative; cursor: pointer"
+                             onmouseenter="this.style.filter='brightness(1.08)'; this.style.boxShadow='0 4px 16px rgba(33,150,243,0.25)'" onmouseleave="this.style.filter='none'; this.style.boxShadow='none'">
+                        </div>
+                        <div class="hbar-val" style="margin-left: 14px; font-size: 20px; font-weight: 700; color: {{ $accent['text'] }}; white-space: nowrap; opacity: 0; transform: translateX(-10px); transition: opacity 0.5s ease 0.8s, transform 0.5s ease 0.8s">{{ $displayVal }}</div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <style>
+            .{{ $scopeClass }} .hbar-row.animated .hbar-val { opacity: 1 !important; transform: translateX(0) !important; }
+            .{{ $scopeClass }} .hbar-row.animated .hbar-label { opacity: 1 !important; transform: translateX(0) !important; }
+        </style>
+
     {{-- ============ LINE CHART ============ --}}
     @elseif($chartType === 'line' && $numValues >= 2)
         @php
-            // SVG dimensions — use viewBox with xMidYMid meet to prevent distortion
             $svgW = 500;
             $svgH = $chartHeight;
             $padX = 60;
@@ -235,7 +332,6 @@
             $range = $maxValue - $minValue;
             if ($range == 0) $range = 1;
 
-            // Primary series
             $points = [];
             foreach ($numericValues as $i => $val) {
                 $x = $padX + ($numValues > 1 ? $i * $plotW / ($numValues - 1) : $plotW / 2);
@@ -248,7 +344,6 @@
             foreach (array_slice($points, 1) as $p) $areaD .= " L{$p['x']},{$p['y']}";
             $areaD .= " L{$points[count($points)-1]['x']},{$bottomY} L{$points[0]['x']},{$bottomY}Z";
 
-            // Secondary series
             if ($hasSecondValue) {
                 $points2 = [];
                 foreach ($numericValues2 as $i => $val) {
@@ -266,7 +361,8 @@
 
         <div
             class="{{ $scopeClass }}"
-            x-data="{ shown: false }"
+            x-data="{ shown: {{ $animate ? 'false' : 'true' }} }"
+            @if($animate)
             x-init="
                 const observer = new IntersectionObserver(([entry]) => {
                     if (!entry.isIntersecting) return;
@@ -279,21 +375,19 @@
                 }, { threshold: 0.3 });
                 observer.observe($el);
             "
+            @endif
             style="position: relative; border-bottom: 2px solid #D6E4F0; padding: 0"
         >
             <svg viewBox="0 0 {{ $svgW }} {{ $svgH + 25 }}" preserveAspectRatio="xMidYMid meet" style="width: 100%; display: block">
-                {{-- Grid lines --}}
                 @for($g = 0; $g < 3; $g++)
                     <line x1="{{ $padX }}" y1="{{ $padTop + $g * $plotH / 2 }}"
                           x2="{{ $svgW - $padX }}" y2="{{ $padTop + $g * $plotH / 2 }}"
                           stroke="#E8EEF4" stroke-width="1" stroke-dasharray="4 4"/>
                 @endfor
 
-                {{-- === SECONDARY === --}}
                 @if($hasSecondValue)
                     <path class="lc-area" d="{{ $areaD2 }}" fill="url(#areaG2-{{ $blockId }})" style="opacity: 0; transition: opacity 1s ease 0.8s"/>
-                    <polyline class="lc-line lc-line-sec" points="{{ $polylineStr2 }}"
-                        fill="none" stroke="{{ $cc['light'] }}" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 4"/>
+                    <polyline class="lc-line lc-line-sec" points="{{ $polylineStr2 }}" fill="none" stroke="{{ $cc['light'] }}" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 4"/>
                     @foreach($points2 as $i => $pt)
                         <circle class="lc-dot" cx="{{ $pt['x'] }}" cy="{{ $pt['y'] }}" fill="#fff" stroke="{{ $cc['light'] }}" stroke-width="2.5" r="0"/>
                     @endforeach
@@ -304,10 +398,8 @@
                     @endforeach
                 @endif
 
-                {{-- === PRIMARY === --}}
                 <path class="lc-area" d="{{ $areaD }}" fill="url(#areaG1-{{ $blockId }})" style="opacity: 0; transition: opacity 1s ease 0.8s"/>
-                <polyline class="lc-line" points="{{ $polylineStr }}"
-                    fill="none" stroke="{{ $cc['main'] }}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline class="lc-line" points="{{ $polylineStr }}" fill="none" stroke="{{ $cc['main'] }}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                 @foreach($points as $i => $pt)
                     <circle class="lc-dot" cx="{{ $pt['x'] }}" cy="{{ $pt['y'] }}" fill="#fff" stroke="{{ $cc['main'] }}" stroke-width="3" r="0"/>
                 @endforeach
@@ -316,7 +408,6 @@
                         style="font-family: Inter, PFDinTextCondPro, sans-serif; font-size: 15px; font-weight: 700; fill: {{ $cc['text'] }}; opacity: 0; transition: opacity 0.5s ease">{{ formatChartValue($values[$i]['value'] ?? '0') }}</text>
                 @endforeach
 
-                {{-- Year labels --}}
                 @foreach($points as $i => $pt)
                     <text x="{{ $pt['x'] }}" y="{{ $svgH + 15 }}" text-anchor="middle"
                         style="font-family: Inter, PFDinTextCondPro, sans-serif; font-size: 13px; font-weight: 600; fill: #6B7785">{{ $values[$i]['label'] ?? '' }}</text>
@@ -338,14 +429,8 @@
         </div>
 
         <style>
-            .{{ $scopeClass }} .lc-line {
-                stroke-dasharray: 2000; stroke-dashoffset: 2000;
-                transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 1, 0.5, 1);
-            }
-            .{{ $scopeClass }} .lc-line-sec {
-                stroke-dasharray: 2000; stroke-dashoffset: 2000;
-                transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 1, 0.5, 1);
-            }
+            .{{ $scopeClass }} .lc-line { stroke-dasharray: 2000; stroke-dashoffset: 2000; transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
+            .{{ $scopeClass }} .lc-line-sec { stroke-dasharray: 2000; stroke-dashoffset: 2000; transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
             .{{ $scopeClass }} .lc-line.animated { stroke-dashoffset: 0 !important; }
             .{{ $scopeClass }} .lc-line-sec.animated { stroke-dasharray: 6 4 !important; stroke-dashoffset: 0 !important; }
             .{{ $scopeClass }} .lc-area.animated { opacity: 1 !important; }
