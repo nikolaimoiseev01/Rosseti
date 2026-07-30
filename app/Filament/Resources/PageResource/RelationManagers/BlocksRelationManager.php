@@ -1088,9 +1088,6 @@ class BlocksRelationManager extends RelationManager
                     ->tabs([
                         Tab::make('Русский')
                             ->schema([
-                                Forms\Components\TextInput::make('data_languages.ru.title')
-                                    ->label('Заголовок')
-                                    ->placeholder('Количество исполненных договоров,'),
                                 Forms\Components\TextInput::make('data_languages.ru.unit')
                                     ->label('Единица измерения')
                                     ->placeholder('тыс. шт.'),
@@ -1116,8 +1113,6 @@ class BlocksRelationManager extends RelationManager
                             ]),
                         Tab::make('English')
                             ->schema([
-                                Forms\Components\TextInput::make('data_languages.en.title')
-                                    ->label('Title'),
                                 Forms\Components\TextInput::make('data_languages.en.unit')
                                     ->label('Unit'),
                                 Forms\Components\Repeater::make('data_languages.en.values')
