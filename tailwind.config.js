@@ -71,7 +71,16 @@ export default {
                     900: '#000000'
                 },
                 grey: '#999999',
-                white: '#FFFFFF'
+                white: '#FFFFFF',
+                chart: {
+                    1: '#00355A',
+                    2: '#005A99',
+                    3: '#2196F3',
+                    4: '#4FC3F7',
+                    5: '#009688',
+                    6: '#80CBC4',
+                    7: '#CDD6DE',
+                }
             },
             screens: {
                 '2xl': {'max': '1535px'}, // => @media (max-width: 1535px) { ... }

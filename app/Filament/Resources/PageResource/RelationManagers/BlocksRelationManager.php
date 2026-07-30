@@ -59,6 +59,8 @@ class BlocksRelationManager extends RelationManager
                         'numbered_steps' => 'Нумерованные шаги',
                         'cards_grid' => 'Сетка карточек',
                         'icon_list' => 'Перечисление с иконками',
+                        'chart' => 'Диаграмма / График',
+                        'donut_chart' => 'Круговая диаграмма',
                     ])
                     ->live()
                     ->afterStateUpdated(function (Select $component): void {
@@ -1048,6 +1050,181 @@ class BlocksRelationManager extends RelationManager
 
             ],
 
+            'chart' => [
+                Forms\Components\Select::make('data_languages.chart_type')
+                    ->label('Тип графика')
+                    ->options([
+                        'lollipop' => 'Палочки с точками (Lollipop)',
+                        'bar' => 'Столбчатая диаграмма',
+                        'line' => 'Линейный график',
+                    ])
+                    ->default('lollipop')
+                    ->required(),
+                Forms\Components\Toggle::make('data_languages.animate')
+                    ->label('Анимация при скролле')
+                    ->default(true),
+                Forms\Components\Select::make('data_languages.color_scheme')
+                    ->label('Цвет линий / столбцов / точек')
+                    ->options([
+                        'blue' => 'Синий (#005B9C → #5BA4D9)',
+                        'dark_blue' => 'Тёмно-синий (#00355A → #005B9C)',
+                        'cyan' => 'Бирюзовый (#00838F → #00BCD4)',
+                        'teal' => 'Зелёно-синий (#009688 → #4DB6AC)',
+                        'light_blue' => 'Голубой (#4FC3F7 → #B3E5FC)',
+                        'grey' => 'Серый (#6B7785 → #CDD6DE)',
+                    ])
+                    ->default('blue'),
+                Forms\Components\Select::make('data_languages.chart_size')
+                    ->label('Масштаб (высота графика)')
+                    ->options([
+                        'compact' => 'Компактный (140px)',
+                        'small' => 'Маленький (180px)',
+                        'medium' => 'Средний (220px)',
+                        'large' => 'Большой (280px)',
+                        'xl' => 'Очень большой (340px)',
+                    ])
+                    ->default('medium'),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\TextInput::make('data_languages.ru.title')
+                                    ->label('Заголовок')
+                                    ->placeholder('Количество исполненных договоров,'),
+                                Forms\Components\TextInput::make('data_languages.ru.unit')
+                                    ->label('Единица измерения')
+                                    ->placeholder('тыс. шт.'),
+                                Forms\Components\Repeater::make('data_languages.ru.values')
+                                    ->label('Значения')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('label')
+                                            ->label('Период')
+                                            ->placeholder('2023')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('value')
+                                            ->label('Значение 1')
+                                            ->placeholder('406.1')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('value2')
+                                            ->label('Значение 2 (необяз.)')
+                                            ->placeholder('250.3')
+                                            ->helperText('Второе значение для сравнения'),
+                                    ])
+                                    ->columns(3)
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\TextInput::make('data_languages.en.title')
+                                    ->label('Title'),
+                                Forms\Components\TextInput::make('data_languages.en.unit')
+                                    ->label('Unit'),
+                                Forms\Components\Repeater::make('data_languages.en.values')
+                                    ->label('Values')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('label')
+                                            ->label('Period'),
+                                        Forms\Components\TextInput::make('value')
+                                            ->label('Value 1'),
+                                        Forms\Components\TextInput::make('value2')
+                                            ->label('Value 2 (optional)'),
+                                    ])
+                                    ->columns(3)
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
+                    ])
+                    ->columnSpanFull(),
+                ...$this->spacingSelectFields(),
+            ],
+
+            'donut_chart' => [
+                Forms\Components\Select::make('data_languages.donut_style')
+                    ->label('Стиль диаграммы')
+                    ->options([
+                        'simple' => 'Простая (одно значение)',
+                        'multi' => 'Многосегментная',
+                    ])
+                    ->default('simple')
+                    ->required()
+                    ->live(),
+                Forms\Components\Toggle::make('data_languages.animate')
+                    ->label('Анимация при скролле')
+                    ->default(true),
+                Forms\Components\Select::make('data_languages.donut_size')
+                    ->label('Размер круга')
+                    ->options([
+                        'xs' => 'Очень маленький (80px)',
+                        'sm' => 'Маленький (120px)',
+                        'md' => 'Средний (160px)',
+                        'lg' => 'Большой (200px)',
+                        'xl' => 'Очень большой (250px)',
+                    ])
+                    ->default('md'),
+
+                // --- Simple donut fields ---
+                Forms\Components\TextInput::make('data_languages.value')
+                    ->label('Значение (%)')
+                    ->placeholder('80')
+                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                Forms\Components\TextInput::make('data_languages.prefix')
+                    ->label('Префикс (перед числом)')
+                    ->placeholder('~')
+                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                Forms\Components\TextInput::make('data_languages.suffix')
+                    ->label('Суффикс (после числа)')
+                    ->placeholder('%')
+                    ->default('%')
+                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                Forms\Components\TextInput::make('data_languages.description')
+                    ->label('Описание')
+                    ->placeholder('электроэнергии передаётся по сетям Группы')
+                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                ...$this->textColorSelectFields('data_languages.ring_color', 'Цвет кольца'),
+
+                // --- Multi donut fields ---
+                Forms\Components\TextInput::make('data_languages.center_value')
+                    ->label('Центральное значение')
+                    ->placeholder('725')
+                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+                Forms\Components\TextInput::make('data_languages.center_label')
+                    ->label('Подпись центра')
+                    ->placeholder('млрд руб.')
+                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+                Forms\Components\Repeater::make('data_languages.segments')
+                    ->label('Сегменты')
+                    ->schema([
+                        Forms\Components\TextInput::make('label')
+                            ->label('Название')
+                            ->required(),
+                        Forms\Components\TextInput::make('value')
+                            ->label('Значение')
+                            ->required(),
+                        Forms\Components\Select::make('color')
+                            ->label('Цвет')
+                            ->options([
+                                '#00355A' => 'Тёмно-синий (#00355A)',
+                                '#005B9C' => 'Синий (#005B9C)',
+                                '#2196F3' => 'Голубой (#2196F3)',
+                                '#4FC3F7' => 'Светло-голубой (#4FC3F7)',
+                                '#B3E5FC' => 'Очень светлый (#B3E5FC)',
+                                '#00BCD4' => 'Бирюзовый (#00BCD4)',
+                                '#009688' => 'Зелёно-синий (#009688)',
+                                '#80CBC4' => 'Мятный (#80CBC4)',
+                                '#CDD6DE' => 'Серый (#CDD6DE)',
+                                '#6B7785' => 'Тёмно-серый (#6B7785)',
+                            ])
+                            ->default('#2196F3'),
+                    ])
+                    ->columns(3)
+                    ->defaultItems(3)
+                    ->columnSpanFull()
+                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+
+                ...$this->spacingSelectFields(),
+            ],
+
             default => [
                 Forms\Components\Placeholder::make('info')
                     ->label('Выберите тип блока')
@@ -1085,6 +1262,8 @@ class BlocksRelationManager extends RelationManager
                         'numbered_steps' => 'Нумерованные шаги',
                         'cards_grid' => 'Сетка карточек',
                         'icon_list' => 'Перечисление с иконками',
+                        'chart' => 'Диаграмма / График',
+                        'donut_chart' => 'Круговая диаграмма',
                         default => $state,
                     }),
                 TextColumn::make('preview')
@@ -1112,6 +1291,8 @@ class BlocksRelationManager extends RelationManager
                             'image' => '',
                             'image_row' => '',
                             'two_columns' => strip_tags($data_languages['left'] ?? ''),
+                            'chart' => ($data_languages['title'] ?? '') . ' (' . ($record->data_languages['chart_type'] ?? 'lollipop') . ')',
+                            'donut_chart' => ($record->data_languages['donut_style'] ?? 'simple') === 'multi' ? ($record->data_languages['center_value'] ?? '') : ($record->data_languages['value'] ?? '') . ($record->data_languages['suffix'] ?? '%'),
                             default => '',
                         };
 
@@ -1140,9 +1321,11 @@ class BlocksRelationManager extends RelationManager
                         if (isset($data_languages['images']) && is_array($data_languages['images'])) return count($data_languages['images']);
                         if (isset($data_languages['headers']) && is_array($data_languages['headers'])) return count($data_languages['headers']);
                         if (isset($data_languages['rows']) && is_array($data_languages['rows'])) return count($data_languages['rows']);
+                        if (isset($data_languages['values']) && is_array($data_languages['values'])) return count($data_languages['values']);
+                        if (isset($data_languages['segments']) && is_array($data_languages['segments'])) return count($data_languages['segments']);
                         return '';
                     })
-                    ->visible(fn ($record): bool => $record ? in_array($record->type, ['stats_grid', 'timeline', 'numbered_steps', 'cards_grid', 'image_row', 'table', 'icon_list']) : false),
+                    ->visible(fn ($record): bool => $record ? in_array($record->type, ['stats_grid', 'timeline', 'numbered_steps', 'cards_grid', 'image_row', 'table', 'icon_list', 'chart', 'donut_chart']) : false),
                 TextColumn::make('sort')
                     ->label('Сортировка')
                     ->sortable(),
@@ -1172,6 +1355,8 @@ class BlocksRelationManager extends RelationManager
                         'numbered_steps' => 'Нумерованные шаги',
                         'cards_grid' => 'Сетка карточек',
                         'icon_list' => 'Перечисление с иконками',
+                        'chart' => 'Диаграмма / График',
+                        'donut_chart' => 'Круговая диаграмма',
                     ]),
             ])
             ->headerActions([
