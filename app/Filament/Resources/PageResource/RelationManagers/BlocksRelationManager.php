@@ -180,7 +180,7 @@ class BlocksRelationManager extends RelationManager
                                 Forms\Components\FileUpload::make('data_languages.ru.url')
                                     ->label('Изображение')
                                     ->image()
-                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'])
                                     ->directory('report-images')
                                     ->required(),
                                 Forms\Components\TextInput::make('data_languages.ru.caption')
@@ -191,7 +191,7 @@ class BlocksRelationManager extends RelationManager
                                 Forms\Components\FileUpload::make('data_languages.en.url')
                                     ->label('Image')
                                     ->image()
-                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'])
                                     ->directory('report-images'),
                                 Forms\Components\TextInput::make('data_languages.en.caption')
                                     ->label('Image caption'),
