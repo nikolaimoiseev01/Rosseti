@@ -37,19 +37,41 @@
 @endphp
 
 @if(!empty($htmlContent))
-    @if(!empty($cssContent))
-        <style>
-            .{{ $scopeClass }} {
-                {!! $cssContent !!}
-            }
-        </style>
-    @endif
-
     <div id="{{ $blockId }}"
          x-data="revealOnScroll()"
-         class="page-block page-block--custom-html {{ $scopeClass }} {{ $spacingTop }} {{ $spacingBottom }}"
+         class="page-block page-block--custom-html {{ $spacingTop }} {{ $spacingBottom }}"
          style="{{ $widthStyle }}"
     >
-        {!! $htmlContent !!}
+        <template id="tpl-{{ $blockId }}">
+            @if(!empty($cssContent))
+                <style>
+                    {!! $cssContent !!}
+                </style>
+            @endif
+            {!! $htmlContent !!}
+        </template>
+        
+        <script>
+            (function() {
+                var container = document.getElementById('{{ $blockId }}');
+                var template = document.getElementById('tpl-{{ $blockId }}');
+                
+                if (container && template && !container.shadowRoot) {
+                    // Создаем Shadow DOM (полная изоляция)
+                    var shadow = container.attachShadow({ mode: 'open' });
+                    
+                    // Копируем глобальные стили (чтобы работал Tailwind и базовые шрифты)
+                    document.querySelectorAll('head link[rel="stylesheet"]').forEach(function(link) {
+                        shadow.appendChild(link.cloneNode());
+                    });
+                    document.querySelectorAll('head style').forEach(function(style) {
+                        shadow.appendChild(style.cloneNode(true));
+                    });
+                    
+                    // Вставляем HTML и CSS пользователя
+                    shadow.appendChild(template.content.cloneNode(true));
+                }
+            })();
+        </script>
     </div>
 @endif
