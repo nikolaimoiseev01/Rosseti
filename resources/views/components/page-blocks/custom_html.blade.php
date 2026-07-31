@@ -39,14 +39,9 @@
 @if(!empty($htmlContent))
     @if(!empty($cssContent))
         <style>
-            .{{ $scopeClass }} {{ '{' }}
-                /* scoped container */
-            {{ '}' }}
-            {!! preg_replace(
-                '/([^\r\n,{}]+)(\s*\{)/m',
-                '.'. $scopeClass . ' $1$2',
-                $cssContent
-            ) !!}
+            .{{ $scopeClass }} {
+                {!! $cssContent !!}
+            }
         </style>
     @endif
 
