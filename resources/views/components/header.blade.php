@@ -16,7 +16,7 @@
                     @endphp
                     <a wire:navigate class="text-sm {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}" href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
                 @endforeach
-                    <a download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-sm" >{{ $currentLang === 'ru' ? 'Приложения' : 'Appendices' }}</a>
+{{--                    <a download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-sm" >{{ $currentLang === 'ru' ? 'Приложения' : 'Appendices' }}</a>--}}
             </nav>
 
             <div class="flex items-center gap-4">
@@ -86,7 +86,7 @@
                         @endphp
                         <a wire:navigate @click="mobileMenuOpen = false" class="text-xl {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-bold' : 'hover:text-blue-500' }}" href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
                     @endforeach
-                    <a @click="mobileMenuOpen = false" download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-xl hover:text-blue-500">{{ $currentLang === 'ru' ? 'Приложения' : 'Appendices' }}</a>
+{{--                    <a @click="mobileMenuOpen = false" download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-xl hover:text-blue-500">{{ $currentLang === 'ru' ? 'Приложения' : 'Appendices' }}</a>--}}
                 </nav>
             </div>
         </div>
