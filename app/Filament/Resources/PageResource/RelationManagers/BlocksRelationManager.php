@@ -200,14 +200,20 @@ class BlocksRelationManager extends RelationManager
                             ]),
                     ])
                     ->columnSpanFull(),
-                Forms\Components\Select::make('data_languages.size')
-                    ->label('Размер')
+                Forms\Components\Select::make('data_languages.image_width')
+                    ->label('Ширина блока')
                     ->options([
-                        'full' => 'На всю ширину',
-                        'large' => 'Большое (75%)',
-                        'medium' => 'Среднее (50%)',
+                        '100' => 'Полная ширина (100%)',
+                        '75' => 'Три четверти (75%)',
+                        '66' => 'Две трети (66%)',
+                        '50' => 'Половина (50%)',
+                        '33' => 'Треть (33%)',
                     ])
-                    ->default('full'),
+                    ->default('100'),
+                Forms\Components\Toggle::make('data_languages.prevent_merge')
+                    ->label('Начинать с новой строки')
+                    ->helperText('Не объединять с соседними блоками')
+                    ->default(false),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -1184,6 +1190,10 @@ class BlocksRelationManager extends RelationManager
                         '33' => 'Треть (33%)',
                     ])
                     ->default('100'),
+                Forms\Components\Toggle::make('data_languages.prevent_merge')
+                    ->label('Начинать с новой строки')
+                    ->helperText('Не объединять с соседними блоками')
+                    ->default(false),
                 Tabs::make('language_tabs')
                     ->tabs([
                         Tab::make('Русский')
@@ -1338,6 +1348,10 @@ class BlocksRelationManager extends RelationManager
                         '33' => 'Треть (33%)',
                     ])
                     ->default('100'),
+                Forms\Components\Toggle::make('data_languages.prevent_merge')
+                    ->label('Начинать с новой строки')
+                    ->helperText('Не объединять с соседними блоками')
+                    ->default(false),
                 Forms\Components\TextInput::make('data_languages.title')
                     ->label('Заголовок')
                     ->placeholder('Консолидированные активы,'),

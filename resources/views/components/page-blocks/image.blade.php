@@ -1,11 +1,19 @@
 {{-- Image Block --}}
 @php
     $blockId = ($pageId ?? '') . '-' . ($blockId ?? '');
-    $sizeClass = match($data['size'] ?? 'full') {
-        'large' => 'max-w-[75%]',
-        'medium' => 'max-w-[50%]',
-        default => 'w-full',
-    };
+    $inGroup = $inGroup ?? false;
+    if ($inGroup) {
+        $sizeClass = 'w-full';
+    } else {
+        $imgW = $data['image_width'] ?? $data['size'] ?? '100';
+        $sizeClass = match($imgW) {
+            '33' => 'max-w-[33%]',
+            '50', 'medium' => 'max-w-[50%]',
+            '66' => 'max-w-[66%]',
+            '75', 'large' => 'max-w-[75%]',
+            default => 'w-full',
+        };
+    }
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '',
         'small' => 'mt-2',

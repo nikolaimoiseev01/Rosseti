@@ -5,7 +5,8 @@
     $animate = $data['animate'] ?? true;
     $title = $data['title'] ?? '';
     $unit = $data['unit'] ?? '';
-    $donutWidth = ($data['donut_width'] ?? '100') . '%';
+    $inGroup = $inGroup ?? false;
+    $donutWidth = $inGroup ? '100%' : (($data['donut_width'] ?? '100') . '%');
 
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '', 'small' => 'mt-2', 'normal' => 'mt-4', 'medium' => 'mt-6',

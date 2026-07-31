@@ -61,7 +61,8 @@
     };
 
     // Chart width
-    $chartWidth = ($data['chart_width'] ?? '100') . '%';
+    $inGroup = $inGroup ?? false;
+    $chartWidth = $inGroup ? '100%' : (($data['chart_width'] ?? '100') . '%');
 
     // Format value for display
     if (!function_exists('formatChartValue')) {

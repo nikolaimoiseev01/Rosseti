@@ -30,32 +30,124 @@
         </div>
 
         <article class="prose pr-6 flex flex-col">
-            @foreach($page->blocks as $block)
-                @php
-                    $data = !empty($block->data_languages) ? $block->data_languages : $block->data;
-                    $currentLang = session('locale', 'ru');
-                @endphp
+            @php
+                $currentLang = session('locale', 'ru');
+                $groupableTypes = ['chart', 'donut_chart', 'image'];
 
-                @if(!empty($data['ru']) && !empty($data['en']))
-                    @php
-                        $localizedData = array_merge($data[$currentLang], $data);
-                        unset($localizedData['ru'], $localizedData['en']);
-                    @endphp
-                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData, 'pageId' => $page->id, 'blockId' => $block->id])
-                @else
-                    @php
-                        if (isset($data[$currentLang])) {
-                            $localizedData = array_merge($data[$currentLang], $data);
-                            unset($localizedData['ru'], $localizedData['en']);
-                        } else {
-                            $localizedData = $data;
+                // --- Process all blocks: localize data + compute layout ---
+                $processed = [];
+                foreach ($page->blocks as $block) {
+                    $rawData = !empty($block->data_languages) ? $block->data_languages : $block->data;
+                    if (!empty($rawData['ru']) && !empty($rawData['en'])) {
+                        $ld = array_merge($rawData[$currentLang], $rawData);
+                        unset($ld['ru'], $ld['en']);
+                    } elseif (isset($rawData[$currentLang])) {
+                        $ld = array_merge($rawData[$currentLang], $rawData);
+                        unset($ld['ru'], $ld['en']);
+                    } else {
+                        $ld = $rawData;
+                    }
+
+                    // Determine block width %
+                    $w = match($block->type) {
+                        'chart' => (int)($ld['chart_width'] ?? 100),
+                        'donut_chart' => (int)($ld['donut_width'] ?? 100),
+                        'image' => match($ld['image_width'] ?? $ld['size'] ?? '100') {
+                            'full' => 100, 'large' => 75, 'medium' => 50,
+                            default => (int)($ld['image_width'] ?? 100),
+                        },
+                        default => 100,
+                    };
+
+                    // Map width to 12-column grid span
+                    $span = match($w) {
+                        33 => 4, 50 => 6, 66 => 8, 75 => 9,
+                        default => 12,
+                    };
+
+                    $processed[] = [
+                        'type' => $block->type,
+                        'id' => $block->id,
+                        'data' => $ld,
+                        'width' => $w,
+                        'span' => $span,
+                        'preventMerge' => !empty($ld['prevent_merge']),
+                        'groupable' => in_array($block->type, $groupableTypes) && $w < 100,
+                    ];
+                }
+
+                // --- Group adjacent blocks into rows (sum of widths <= 100%) ---
+                $groups = [];
+                $curGroup = [];
+                $curCols = 0;
+
+                foreach ($processed as $pb) {
+                    $canGroup = $pb['groupable'] && !$pb['preventMerge'];
+
+                    if ($canGroup && ($curCols + $pb['span'] <= 12)) {
+                        $curGroup[] = $pb;
+                        $curCols += $pb['span'];
+                    } else {
+                        if (!empty($curGroup)) {
+                            $groups[] = $curGroup;
                         }
-                    @endphp
-                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData, 'pageId' => $page->id, 'blockId' => $block->id])
+                        if ($canGroup) {
+                            $curGroup = [$pb];
+                            $curCols = $pb['span'];
+                        } else {
+                            $groups[] = [$pb];
+                            $curGroup = [];
+                            $curCols = 0;
+                        }
+                    }
+                }
+                if (!empty($curGroup)) {
+                    $groups[] = $curGroup;
+                }
+            @endphp
+
+            @foreach($groups as $group)
+                @if(count($group) === 1 && ($group[0]['span'] === 12 || !$group[0]['groupable']))
+                    {{-- Single full-width block: render as before --}}
+                    @include('components.page-blocks.' . $group[0]['type'], [
+                        'data' => $group[0]['data'],
+                        'pageId' => $page->id,
+                        'blockId' => $group[0]['id'],
+                        'inGroup' => false,
+                    ])
+                @else
+                    {{-- Grouped blocks: CSS grid row --}}
+                    <div class="block-row-grid">
+                        @foreach($group as $item)
+                            <div style="grid-column: span {{ $item['span'] }}">
+                                @include('components.page-blocks.' . $item['type'], [
+                                    'data' => $item['data'],
+                                    'pageId' => $page->id,
+                                    'blockId' => $item['id'],
+                                    'inGroup' => true,
+                                ])
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
             @endforeach
         </article>
     </main>
+
+    <style>
+        .block-row-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+            .block-row-grid > * {
+                grid-column: span 12 !important;
+            }
+        }
+    </style>
 
 </div>
 
