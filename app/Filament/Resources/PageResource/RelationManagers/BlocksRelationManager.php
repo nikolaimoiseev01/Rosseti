@@ -61,6 +61,7 @@ class BlocksRelationManager extends RelationManager
                         'icon_list' => 'Перечисление с иконками',
                         'chart' => 'Диаграмма / График',
                         'donut_chart' => 'Круговая диаграмма',
+                        'custom_html' => 'Custom HTML',
                     ])
                     ->live()
                     ->afterStateUpdated(function (Select $component): void {
@@ -200,14 +201,20 @@ class BlocksRelationManager extends RelationManager
                             ]),
                     ])
                     ->columnSpanFull(),
-                Forms\Components\Select::make('data_languages.size')
-                    ->label('Размер')
+                Forms\Components\Select::make('data_languages.image_width')
+                    ->label('Ширина блока')
                     ->options([
-                        'full' => 'На всю ширину',
-                        'large' => 'Большое (75%)',
-                        'medium' => 'Среднее (50%)',
+                        '100' => 'Полная ширина (100%)',
+                        '75' => 'Три четверти (75%)',
+                        '66' => 'Две трети (66%)',
+                        '50' => 'Половина (50%)',
+                        '33' => 'Треть (33%)',
                     ])
-                    ->default('full'),
+                    ->default('100'),
+                Forms\Components\Toggle::make('data_languages.prevent_merge')
+                    ->label('Начинать с новой строки')
+                    ->helperText('Не объединять с соседними блоками')
+                    ->default(false),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -483,14 +490,25 @@ class BlocksRelationManager extends RelationManager
 
             'table' => [
                 Forms\Components\Select::make('data_languages.header_style')
-                    ->label('Стиль заголовков')
+                    ->label('Цвет фона заголовков')
                     ->options([
-                        'blue' => 'Синий фон, белый текст',
-                        'light' => 'Светлый фон',
-                        'dark' => 'Тёмный фон, белый текст',
+                        'blue' => 'Тёмно-синий (#00355A)',
+                        'medium_blue' => 'Синий (#005B9C)',
+                        'dark' => 'Тёмный (#1B2733)',
+                        'light' => 'Светло-серый (#F0F4F8)',
+                        'grey' => 'Серый (#E8EEF4)',
+                        'light_blue' => 'Светло-голубой (#EBF4FF)',
                         'none' => 'Без фона',
                     ])
                     ->default('blue'),
+                Forms\Components\Select::make('data_languages.header_text_color')
+                    ->label('Цвет текста заголовков')
+                    ->options([
+                        'white' => 'Белый',
+                        'dark' => 'Тёмный (#1A1A1A)',
+                        'blue' => 'Синий (#00355A)',
+                    ])
+                    ->default('white'),
                 Forms\Components\Select::make('data_languages.header_font_style')
                     ->label('Шрифт заголовков')
                     ->options([
@@ -514,9 +532,12 @@ class BlocksRelationManager extends RelationManager
                                 Forms\Components\Repeater::make('data_languages.ru.headers')
                                     ->label('Заголовки столбцов')
                                     ->schema([
-                                        Forms\Components\TextInput::make('text')
+                                        Forms\Components\RichEditor::make('text')
                                             ->label('Название столбца')
-                                            ->required(),
+                                            ->plugins([TooltipRichContentPlugin::make()])
+                                            ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                            ->fileAttachmentsVisibility('public')
+                                            ->columnSpanFull(),
                                     ])
                                     ->defaultItems(3)
                                     ->columnSpanFull(),
@@ -526,17 +547,52 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\Toggle::make('is_accent')
                                             ->label('Акцентная строка (на всю ширину)')
                                             ->default(false),
-                                        Forms\Components\TextInput::make('accent_text')
+                                        Forms\Components\Select::make('row_color')
+                                            ->label('Цвет строки')
+                                            ->options([
+                                                '' => 'По умолчанию (чередование)',
+                                                '#F0F4F8' => 'Светло-серый (итоги)',
+                                                '#E8EEF4' => 'Серый',
+                                                '#EBF4FF' => 'Светло-голубой',
+                                                '#DBEAFE' => 'Голубой',
+                                                '#E0F2FE' => 'Небесный',
+                                                '#F0FFF4' => 'Светло-зелёный',
+                                                '#FFFBEB' => 'Светло-жёлтый',
+                                                '#00355A' => 'Тёмно-синий (белый текст)',
+                                                '#005B9C' => 'Синий (белый текст)',
+                                            ])
+                                            ->default('')
+                                            ->visible(fn ($get) => !$get('is_accent')),
+                                        Forms\Components\RichEditor::make('accent_text')
                                             ->label('Текст акцентной строки')
+                                            ->plugins([TooltipRichContentPlugin::make()])
+                                            ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                            ->fileAttachmentsVisibility('public')
+                                            ->columnSpanFull()
                                             ->visible(fn ($get) => $get('is_accent')),
                                         Forms\Components\Repeater::make('cells')
                                             ->label('Ячейки')
                                             ->schema([
-                                                Forms\Components\TextInput::make('text')
+                                                Forms\Components\RichEditor::make('text')
                                                     ->label('Значение')
-                                                    ->required(),
+                                                    ->plugins([TooltipRichContentPlugin::make()])
+                                                    ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                                    ->fileAttachmentsVisibility('public')
+                                                    ->columnSpanFull(),
+                                                Forms\Components\Select::make('colspan')
+                                                    ->label('Объединение столбцов')
+                                                    ->options([
+                                                        '1' => '1 (без объединения)',
+                                                        '2' => '2 столбца',
+                                                        '3' => '3 столбца',
+                                                        '4' => '4 столбца',
+                                                        '5' => '5 столбцов',
+                                                        '6' => '6 столбцов',
+                                                    ])
+                                                    ->default('1'),
                                             ])
                                             ->defaultItems(3)
+                                            ->columnSpanFull()
                                             ->visible(fn ($get) => !$get('is_accent')),
                                     ])
                                     ->defaultItems(3)
@@ -547,8 +603,12 @@ class BlocksRelationManager extends RelationManager
                                 Forms\Components\Repeater::make('data_languages.en.headers')
                                     ->label('Column headers')
                                     ->schema([
-                                        Forms\Components\TextInput::make('text')
-                                            ->label('Column name'),
+                                        Forms\Components\RichEditor::make('text')
+                                            ->label('Column name')
+                                            ->plugins([TooltipRichContentPlugin::make()])
+                                            ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                            ->fileAttachmentsVisibility('public')
+                                            ->columnSpanFull(),
                                     ])
                                     ->defaultItems(3)
                                     ->columnSpanFull(),
@@ -558,16 +618,52 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\Toggle::make('is_accent')
                                             ->label('Accent row (full width)')
                                             ->default(false),
-                                        Forms\Components\TextInput::make('accent_text')
+                                        Forms\Components\Select::make('row_color')
+                                            ->label('Row color')
+                                            ->options([
+                                                '' => 'Default (alternating)',
+                                                '#F0F4F8' => 'Light grey (totals)',
+                                                '#E8EEF4' => 'Grey',
+                                                '#EBF4FF' => 'Light blue',
+                                                '#DBEAFE' => 'Blue',
+                                                '#E0F2FE' => 'Sky',
+                                                '#F0FFF4' => 'Light green',
+                                                '#FFFBEB' => 'Light yellow',
+                                                '#00355A' => 'Dark blue (white text)',
+                                                '#005B9C' => 'Blue (white text)',
+                                            ])
+                                            ->default('')
+                                            ->visible(fn ($get) => !$get('is_accent')),
+                                        Forms\Components\RichEditor::make('accent_text')
                                             ->label('Accent row text')
+                                            ->plugins([TooltipRichContentPlugin::make()])
+                                            ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                            ->fileAttachmentsVisibility('public')
+                                            ->columnSpanFull()
                                             ->visible(fn ($get) => $get('is_accent')),
                                         Forms\Components\Repeater::make('cells')
                                             ->label('Cells')
                                             ->schema([
-                                                Forms\Components\TextInput::make('text')
-                                                    ->label('Value'),
+                                                Forms\Components\RichEditor::make('text')
+                                                    ->label('Value')
+                                                    ->plugins([TooltipRichContentPlugin::make()])
+                                                    ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                                    ->fileAttachmentsVisibility('public')
+                                                    ->columnSpanFull(),
+                                                Forms\Components\Select::make('colspan')
+                                                    ->label('Colspan')
+                                                    ->options([
+                                                        '1' => '1 (no merge)',
+                                                        '2' => '2 columns',
+                                                        '3' => '3 columns',
+                                                        '4' => '4 columns',
+                                                        '5' => '5 columns',
+                                                        '6' => '6 columns',
+                                                    ])
+                                                    ->default('1'),
                                             ])
                                             ->defaultItems(3)
+                                            ->columnSpanFull()
                                             ->visible(fn ($get) => !$get('is_accent')),
                                     ])
                                     ->defaultItems(3)
@@ -1095,6 +1191,10 @@ class BlocksRelationManager extends RelationManager
                         '33' => 'Треть (33%)',
                     ])
                     ->default('100'),
+                Forms\Components\Toggle::make('data_languages.prevent_merge')
+                    ->label('Начинать с новой строки')
+                    ->helperText('Не объединять с соседними блоками')
+                    ->default(false),
                 Tabs::make('language_tabs')
                     ->tabs([
                         Tab::make('Русский')
@@ -1177,6 +1277,42 @@ class BlocksRelationManager extends RelationManager
                             ]),
                     ])
                     ->columnSpanFull(),
+                Forms\Components\Repeater::make('data_languages.legend')
+                    ->label('Легенда (необязательно)')
+                    ->helperText('Каждый пункт привязан к серии данных (Значение 1/2/3). Цвет пункта = цвет столбцов/точек этой серии.')
+                    ->schema([
+                        Forms\Components\TextInput::make('label')
+                            ->label('Название серии')
+                            ->placeholder('Охрана водных ресурсов')
+                            ->required(),
+                        Forms\Components\Select::make('series')
+                            ->label('Привязка к значению')
+                            ->options([
+                                'value' => 'Значение 1 (основное)',
+                                'value2' => 'Значение 2',
+                                'value3' => 'Значение 3',
+                            ])
+                            ->default('value')
+                            ->required(),
+                        Forms\Components\Select::make('color')
+                            ->label('Цвет серии')
+                            ->options([
+                                '#005B9C' => 'Синий (#005B9C)',
+                                '#5BA4D9' => 'Голубой (#5BA4D9)',
+                                '#B8D4EA' => 'Светло-голубой (#B8D4EA)',
+                                '#00355A' => 'Тёмно-синий (#00355A)',
+                                '#4FC3F7' => 'Светло-синий (#4FC3F7)',
+                                '#00BCD4' => 'Бирюзовый (#00BCD4)',
+                                '#4DB6AC' => 'Зелёно-синий (#4DB6AC)',
+                                '#CDD6DE' => 'Серый (#CDD6DE)',
+                                '#6B7785' => 'Тёмно-серый (#6B7785)',
+                            ])
+                            ->default('#005B9C'),
+                    ])
+                    ->columns(3)
+                    ->defaultItems(0)
+                    ->columnSpanFull()
+                    ->collapsible(),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -1213,6 +1349,10 @@ class BlocksRelationManager extends RelationManager
                         '33' => 'Треть (33%)',
                     ])
                     ->default('100'),
+                Forms\Components\Toggle::make('data_languages.prevent_merge')
+                    ->label('Начинать с новой строки')
+                    ->helperText('Не объединять с соседними блоками')
+                    ->default(false),
                 Forms\Components\TextInput::make('data_languages.title')
                     ->label('Заголовок')
                     ->placeholder('Консолидированные активы,'),
@@ -1249,6 +1389,13 @@ class BlocksRelationManager extends RelationManager
                     ->label('Подпись центра')
                     ->placeholder('млрд руб.')
                     ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+                Forms\Components\FileUpload::make('data_languages.center_image')
+                    ->label('Иконка в центре (вместо текста)')
+                    ->helperText('Если загружена — при наведении на сегмент скрывается, показывая значение')
+                    ->image()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'])
+                    ->directory('donut-icons')
+                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
                 Forms\Components\Repeater::make('data_languages.segments')
                     ->label('Сегменты')
                     ->schema([
@@ -1279,6 +1426,54 @@ class BlocksRelationManager extends RelationManager
                     ->columnSpanFull()
                     ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
 
+                ...$this->spacingSelectFields(),
+            ],
+
+            'custom_html' => [
+                Forms\Components\Select::make('data_languages.html_width')
+                    ->label('Ширина блока')
+                    ->options([
+                        '100' => 'Полная ширина (100%)',
+                        '75' => 'Три четверти (75%)',
+                        '66' => 'Две трети (66%)',
+                        '50' => 'Половина (50%)',
+                        '33' => 'Треть (33%)',
+                    ])
+                    ->default('100'),
+                Forms\Components\Toggle::make('data_languages.prevent_merge')
+                    ->label('Начинать с новой строки')
+                    ->helperText('Не объединять с соседними блоками')
+                    ->default(false),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\Textarea::make('data_languages.ru.html_content')
+                                    ->label('HTML-код')
+                                    ->rows(15)
+                                    ->columnSpanFull()
+                                    ->placeholder('<div class="my-block">...</div>'),
+                                Forms\Components\Textarea::make('data_languages.ru.css_content')
+                                    ->label('CSS-стили (опционально)')
+                                    ->rows(8)
+                                    ->columnSpanFull()
+                                    ->placeholder('.my-block { display: flex; ... }'),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\Textarea::make('data_languages.en.html_content')
+                                    ->label('HTML code')
+                                    ->rows(15)
+                                    ->columnSpanFull()
+                                    ->placeholder('<div class="my-block">...</div>'),
+                                Forms\Components\Textarea::make('data_languages.en.css_content')
+                                    ->label('CSS styles (optional)')
+                                    ->rows(8)
+                                    ->columnSpanFull()
+                                    ->placeholder('.my-block { display: flex; ... }'),
+                            ]),
+                    ])
+                    ->columnSpanFull(),
                 ...$this->spacingSelectFields(),
             ],
 
@@ -1321,6 +1516,7 @@ class BlocksRelationManager extends RelationManager
                         'icon_list' => 'Перечисление с иконками',
                         'chart' => 'Диаграмма / График',
                         'donut_chart' => 'Круговая диаграмма',
+                        'custom_html' => 'Custom HTML',
                         default => $state,
                     }),
                 TextColumn::make('preview')

@@ -30,32 +30,50 @@
         </div>
 
         <article class="prose pr-6 flex flex-col">
-            @foreach($page->blocks as $block)
-                @php
-                    $data = !empty($block->data_languages) ? $block->data_languages : $block->data;
-                    $currentLang = session('locale', 'ru');
-                @endphp
+            @php
+                $groups = \App\Helpers\BlockGrouper::group($page->blocks, session('locale', 'ru'));
+            @endphp
 
-                @if(!empty($data['ru']) && !empty($data['en']))
-                    @php
-                        $localizedData = array_merge($data[$currentLang], $data);
-                        unset($localizedData['ru'], $localizedData['en']);
-                    @endphp
-                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData, 'pageId' => $page->id, 'blockId' => $block->id])
+            @foreach($groups as $group)
+                @if(count($group) === 1 && ($group[0]['span'] === 12 || !$group[0]['groupable']))
+                    @include('components.page-blocks.' . $group[0]['type'], [
+                        'data' => $group[0]['data'],
+                        'pageId' => $page->id,
+                        'blockId' => $group[0]['id'],
+                        'inGroup' => false,
+                    ])
                 @else
-                    @php
-                        if (isset($data[$currentLang])) {
-                            $localizedData = array_merge($data[$currentLang], $data);
-                            unset($localizedData['ru'], $localizedData['en']);
-                        } else {
-                            $localizedData = $data;
-                        }
-                    @endphp
-                    @include('components.page-blocks.' . $block->type, ['data' => $localizedData, 'pageId' => $page->id, 'blockId' => $block->id])
+                    <div class="block-row-grid">
+                        @foreach($group as $item)
+                            <div style="grid-column: span {{ $item['span'] }}">
+                                @include('components.page-blocks.' . $item['type'], [
+                                    'data' => $item['data'],
+                                    'pageId' => $page->id,
+                                    'blockId' => $item['id'],
+                                    'inGroup' => true,
+                                ])
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
             @endforeach
         </article>
     </main>
+
+    <style>
+        .block-row-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+            .block-row-grid > * {
+                grid-column: span 12 !important;
+            }
+        }
+    </style>
 
 </div>
 

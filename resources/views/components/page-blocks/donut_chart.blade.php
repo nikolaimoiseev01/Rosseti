@@ -5,7 +5,8 @@
     $animate = $data['animate'] ?? true;
     $title = $data['title'] ?? '';
     $unit = $data['unit'] ?? '';
-    $donutWidth = ($data['donut_width'] ?? '100') . '%';
+    $inGroup = $inGroup ?? false;
+    $donutWidth = $inGroup ? '100%' : (($data['donut_width'] ?? '100') . '%');
 
     $spacingTop = match($data['spacing_top'] ?? 'none') {
         'none' => '', 'small' => 'mt-2', 'normal' => 'mt-4', 'medium' => 'mt-6',
@@ -89,10 +90,10 @@
         "
     >
         @if($title)
-            <div style="font-size: 13px; font-weight: 700; color: #00355A; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 4px; text-align: center">{{ $title }}</div>
+            <h3 class="text-2xl text-blue-500 font-normal mb-2" style="text-align: center">{{ $title }}</h3>
         @endif
         @if($unit)
-            <div style="font-size: 12px; color: #6B7785; margin-bottom: 16px; text-align: center">{{ $unit }}</div>
+            <p class="text-lg leading-6 text-black-500 mb-4" style="text-align: center">{{ $unit }}</p>
         @endif
 
         <div class="relative" style="width: {{ $svgSize }}px; height: {{ $svgSize }}px">
@@ -125,6 +126,11 @@
         $segments = $data['segments'] ?? [];
         $centerValue = $data['center_value'] ?? '';
         $centerLabel = $data['center_label'] ?? '';
+        $centerImageRaw = $data['center_image'] ?? $data['center_image_url'] ?? '';
+        $centerImageUrl = '';
+        if ($centerImageRaw) {
+            $centerImageUrl = str_starts_with($centerImageRaw, 'http') ? $centerImageRaw : Storage::url($centerImageRaw);
+        }
 
         $total = 0;
         foreach ($segments as $seg) { $total += (float) str_replace(',', '.', $seg['value'] ?? '0'); }
@@ -149,7 +155,7 @@
         id="{{ $blockId }}"
         class="page-block page-block--donut-chart {{ $spacingTop }} {{ $spacingBottom }}"
         style="max-width: {{ $donutWidth }}"
-        x-data="{ shown: false, centerVal: '', centerLbl: '' }"
+        x-data="{ shown: false, hovered: false, centerVal: '', centerLbl: '' }"
         x-init="
             centerVal = '{{ str_replace("'", "\\'", $centerValue) }}';
             centerLbl = '{{ str_replace("'", "\\'", $centerLabel) }}';
@@ -175,10 +181,10 @@
         "
     >
         @if($title)
-            <div style="font-size: 13px; font-weight: 700; color: #00355A; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 4px">{{ $title }}</div>
+            <h3 class="text-2xl text-blue-500 font-normal mb-2">{{ $title }}</h3>
         @endif
         @if($unit)
-            <div style="font-size: 12px; color: #6B7785; margin-bottom: 20px">{{ $unit }}</div>
+            <p class="text-lg leading-6 text-black-500 mb-5">{{ $unit }}</p>
         @endif
 
         <div class="flex items-center gap-[60px] md:flex-col">
@@ -210,21 +216,44 @@
                     @endforeach
                 </svg>
 
-                <div class="absolute inset-0 flex flex-col items-center justify-center">
-                    <span class="font-extrabold text-[#00355A] leading-none transition-all duration-300"
-                        :class="shown ? 'opacity-100' : 'opacity-0'"
-                        style="transition-delay: 0.6s; font-size: {{ $svgSize >= 280 ? '32px' : ($svgSize >= 200 ? '24px' : '18px') }}"
-                        x-text="centerVal"></span>
-                    <span class="text-[#6B7785] mt-1 transition-all duration-300"
-                        :class="shown ? 'opacity-100' : 'opacity-0'"
-                        style="transition-delay: 0.8s; font-size: {{ $svgSize >= 280 ? '13px' : '11px' }}; max-width: {{ $radius }}px; text-align: center; line-height: 1.3"
-                        x-text="centerLbl"></span>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" style="padding: {{ round($radius * 0.25) }}px">
+                    @if($centerImageUrl)
+                        {{-- Icon: shown by default, hidden on hover --}}
+                        <img x-show="!hovered"
+                             x-transition:enter="transition-opacity duration-300"
+                             x-transition:leave="transition-opacity duration-200"
+                             src="{{ $centerImageUrl }}"
+                             alt="" class="transition-opacity duration-300"
+                             :class="shown ? 'opacity-100' : 'opacity-0'"
+                             style="transition-delay: 0.6s; max-width: {{ round(0.55 * ($radius - $strokeWidth / 2)) }}px; max-height: {{ round(0.55 * ($radius - $strokeWidth / 2)) }}px; object-fit: contain"
+                        />
+                        {{-- Text: hidden by default, shown on hover --}}
+                        <template x-if="hovered">
+                            <div class="flex flex-col items-center">
+                                <span class="font-extrabold text-[#00355A] break-words leading-tight"
+                                    style="font-size: {{ $svgSize >= 280 ? '14px' : ($svgSize >= 200 ? '13px' : '11px') }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px"
+                                    x-text="centerVal"></span>
+                                <span x-show="centerLbl" class="text-[#6B7785] mt-1 font-medium break-words"
+                                    style="font-size: {{ $svgSize >= 280 ? '12px' : '11px' }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px; line-height: 1.2"
+                                    x-text="centerLbl"></span>
+                            </div>
+                        </template>
+                    @else
+                        <span class="font-extrabold text-[#00355A] transition-opacity duration-300 break-words leading-tight"
+                            :class="shown ? 'opacity-100' : 'opacity-0'"
+                            style="transition-delay: 0.6s; font-size: {{ $svgSize >= 280 ? '14px' : ($svgSize >= 200 ? '13px' : '11px') }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px"
+                            x-text="centerVal"></span>
+                        <span x-show="centerLbl" class="text-[#6B7785] mt-1 transition-opacity duration-300 font-medium break-words"
+                            :class="shown ? 'opacity-100' : 'opacity-0'"
+                            style="transition-delay: 0.8s; font-size: {{ $svgSize >= 280 ? '12px' : '11px' }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px; line-height: 1.2"
+                            x-text="centerLbl"></span>
+                    @endif
                 </div>
             </div>
 
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-2.5 w-full max-w-[450px]">
                 @foreach($segmentData as $i => $seg)
-                    <div class="{{ $uid }}-leg flex items-center gap-3 py-[10px] px-4 rounded-[10px] transition-all duration-300 cursor-pointer"
+                    <div class="{{ $uid }}-leg flex items-center gap-3 py-2 px-3.5 rounded-[10px] transition-all duration-300 cursor-pointer"
                         style="border: 1px solid transparent"
                         :class="shown ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'"
                         :style="'transition-delay: {{ 0.3 + $i * 0.1 }}s'"
@@ -232,9 +261,9 @@
                         data-val="{{ str_replace('.', ',', $seg['value']) }}"
                         data-lbl="{{ $seg['label'] }}"
                     >
-                        <div class="w-[14px] h-[14px] rounded-[4px] shrink-0" style="background-color: {{ $seg['color'] }}"></div>
-                        <span class="text-sm text-[#2D3E50]">{{ $seg['label'] }}</span>
-                        <span class="text-sm font-bold text-[#00355A] ml-auto pl-4">{{ str_replace('.', ',', $seg['value']) }}</span>
+                        <div class="w-3.5 h-3.5 rounded-[4px] shrink-0 shadow-sm" style="background-color: {{ $seg['color'] }}"></div>
+                        <span class="text-sm text-[#2D3E50] leading-snug">{{ $seg['label'] }}</span>
+                        <span class="text-sm font-bold ml-auto pl-4 shrink-0" style="color: {{ $seg['color'] }}">{{ str_replace('.', ',', $seg['value']) }}</span>
                     </div>
                 @endforeach
             </div>
@@ -259,6 +288,7 @@
             var swH = {{ $strokeWidth + 8 }};
 
             function hi(idx) {
+                data.hovered = true;
                 segs.forEach(function(s) {
                     if (s.dataset.index === idx) {
                         s.setAttribute('stroke-width', swH);
@@ -281,6 +311,7 @@
                 legs.forEach(function(l) { l.style.background = ''; l.style.borderColor = 'transparent'; l.style.boxShadow = ''; });
                 data.centerVal = origV;
                 data.centerLbl = origL;
+                data.hovered = false;
             }
 
             segs.forEach(function(s) { s.addEventListener('mouseenter', function() { hi(s.dataset.index); }); s.addEventListener('mouseleave', lo); });
