@@ -33,7 +33,6 @@
         default => 'mb-12',
     };
 
-    $scopeClass = 'custom-html-' . substr(md5($blockId), 0, 8);
 @endphp
 
 @if(!empty($htmlContent))
@@ -53,24 +52,26 @@
         
         <script>
             (function() {
-                var container = document.getElementById('{{ $blockId }}');
-                var template = document.getElementById('tpl-{{ $blockId }}');
-                
-                if (container && template && !container.shadowRoot) {
-                    // Создаем Shadow DOM (полная изоляция)
-                    var shadow = container.attachShadow({ mode: 'open' });
-                    
-                    // Копируем глобальные стили (чтобы работал Tailwind и базовые шрифты)
-                    document.querySelectorAll('head link[rel="stylesheet"]').forEach(function(link) {
-                        shadow.appendChild(link.cloneNode());
-                    });
-                    document.querySelectorAll('head style').forEach(function(style) {
-                        shadow.appendChild(style.cloneNode(true));
-                    });
-                    
-                    // Вставляем HTML и CSS пользователя
-                    shadow.appendChild(template.content.cloneNode(true));
+                function initShadow() {
+                    var container = document.getElementById('{{ $blockId }}');
+                    var template = document.getElementById('tpl-{{ $blockId }}');
+
+                    if (container && template && !container.shadowRoot) {
+                        var shadow = container.attachShadow({ mode: 'open' });
+
+                        document.querySelectorAll('head link[rel="stylesheet"]').forEach(function(link) {
+                            shadow.appendChild(link.cloneNode());
+                        });
+                        document.querySelectorAll('head style').forEach(function(style) {
+                            shadow.appendChild(style.cloneNode(true));
+                        });
+
+                        shadow.appendChild(template.content.cloneNode(true));
+                    }
                 }
+
+                initShadow();
+                document.addEventListener('livewire:navigated', initShadow);
             })();
         </script>
     </div>

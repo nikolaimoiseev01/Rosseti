@@ -31,85 +31,11 @@
 
         <article class="prose pr-6 flex flex-col">
             @php
-                $currentLang = session('locale', 'ru');
-                $groupableTypes = ['chart', 'donut_chart', 'image', 'custom_html'];
-
-                // --- Process all blocks: localize data + compute layout ---
-                $processed = [];
-                foreach ($page->blocks as $block) {
-                    $rawData = !empty($block->data_languages) ? $block->data_languages : $block->data;
-                    if (!empty($rawData['ru']) && !empty($rawData['en'])) {
-                        $ld = array_merge($rawData[$currentLang], $rawData);
-                        unset($ld['ru'], $ld['en']);
-                    } elseif (isset($rawData[$currentLang])) {
-                        $ld = array_merge($rawData[$currentLang], $rawData);
-                        unset($ld['ru'], $ld['en']);
-                    } else {
-                        $ld = $rawData;
-                    }
-
-                    // Determine block width %
-                    $w = match($block->type) {
-                        'chart' => (int)($ld['chart_width'] ?? 100),
-                        'donut_chart' => (int)($ld['donut_width'] ?? 100),
-                        'image' => match($ld['image_width'] ?? $ld['size'] ?? '100') {
-                            'full' => 100, 'large' => 75, 'medium' => 50,
-                            default => (int)($ld['image_width'] ?? 100),
-                        },
-                        'custom_html' => (int)($ld['html_width'] ?? 100),
-                        default => 100,
-                    };
-
-                    // Map width to 12-column grid span
-                    $span = match($w) {
-                        33 => 4, 50 => 6, 66 => 8, 75 => 9,
-                        default => 12,
-                    };
-
-                    $processed[] = [
-                        'type' => $block->type,
-                        'id' => $block->id,
-                        'data' => $ld,
-                        'width' => $w,
-                        'span' => $span,
-                        'preventMerge' => !empty($ld['prevent_merge']),
-                        'groupable' => in_array($block->type, $groupableTypes) && $w < 100,
-                    ];
-                }
-
-                // --- Group adjacent blocks into rows (sum of widths <= 100%) ---
-                $groups = [];
-                $curGroup = [];
-                $curCols = 0;
-
-                foreach ($processed as $pb) {
-                    $canGroup = $pb['groupable'] && !$pb['preventMerge'];
-
-                    if ($canGroup && ($curCols + $pb['span'] <= 12)) {
-                        $curGroup[] = $pb;
-                        $curCols += $pb['span'];
-                    } else {
-                        if (!empty($curGroup)) {
-                            $groups[] = $curGroup;
-                        }
-                        if ($canGroup) {
-                            $curGroup = [$pb];
-                            $curCols = $pb['span'];
-                        } else {
-                            $groups[] = [$pb];
-                            $curGroup = [];
-                            $curCols = 0;
-                        }
-                    }
-                }
-                if (!empty($curGroup)) {
-                    $groups[] = $curGroup;
-                }
+                $groups = \App\Helpers\BlockGrouper::group($page->blocks, session('locale', 'ru'));
             @endphp
 
             @foreach($groups as $group)
                 @if(count($group) === 1 && ($group[0]['span'] === 12 || !$group[0]['groupable']))
-                    {{-- Single full-width block: render as before --}}
                     @include('components.page-blocks.' . $group[0]['type'], [
                         'data' => $group[0]['data'],
                         'pageId' => $page->id,
@@ -117,7 +43,6 @@
                         'inGroup' => false,
                     ])
                 @else
-                    {{-- Grouped blocks: CSS grid row --}}
                     <div class="block-row-grid">
                         @foreach($group as $item)
                             <div style="grid-column: span {{ $item['span'] }}">
