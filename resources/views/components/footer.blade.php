@@ -8,8 +8,9 @@
             <p class="mt-14 text-white/75">© 2025 ПАО «Россети»</p>
         </div>
         <div class="flex flex-col ml-auto mr-10 md:mx-auto md:text-center md:items-center">
-            <p class="text-white border-b border-white w-fit mb-4">+7 (495) 995-53-33 (доб. 35-29)</p>
-            <p class="text-white border-b border-white w-fit mb-4">info@rosseti.ru</p>
+{{--            <p class="text-white border-b border-white w-fit mb-4">+7 (495) 995-53-33 (доб. 35-29)</p>--}}
+{{--            <p class="text-white border-b border-white w-fit mb-4">info@rosseti.ru</p>--}}
+            <a href="https://ch35708.tw1.ru/prilozeniia#8-1461" class="text-white border-b border-white w-fit mb-4">Контакты</a>
             <!-- Yandex.Metrika informer -->
             <a href="https://metrika.yandex.ru/stat/?id=110978392&amp;from=informer" target="_blank" rel="nofollow">
                 <img src="https://informer.yandex.ru/informer/110978392/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
