@@ -32,7 +32,7 @@
         <article class="prose pr-6 flex flex-col">
             @php
                 $currentLang = session('locale', 'ru');
-                $groupableTypes = ['chart', 'donut_chart', 'image'];
+                $groupableTypes = ['chart', 'donut_chart', 'image', 'custom_html'];
 
                 // --- Process all blocks: localize data + compute layout ---
                 $processed = [];
@@ -56,6 +56,7 @@
                             'full' => 100, 'large' => 75, 'medium' => 50,
                             default => (int)($ld['image_width'] ?? 100),
                         },
+                        'custom_html' => (int)($ld['html_width'] ?? 100),
                         default => 100,
                     };
 
