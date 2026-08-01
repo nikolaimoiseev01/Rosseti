@@ -94,11 +94,26 @@
         'value3' => $seriesColors['value3'] ?? '#CDD6DE',
     ];
     $scopeId = 'sc-' . substr(md5($blockId), 0, 6);
+    
+    $lollipopLineOverlay = $data['lollipop_line_overlay'] ?? false;
+    $polylinePoints = '';
+    if ($chartType === 'lollipop' && $lollipopLineOverlay && $hasSecondValue) {
+        $pts = [];
+        foreach ($values as $i => $item) {
+            $v2 = $numericValues2[$i] ?? 0;
+            $hp2 = ($maxValue > 0) ? round(($v2 / $maxValue) * 90, 1) : 0;
+            $stemH = ($chartHeight - 40) * ($hp2 / 100);
+            $y = 1000 * (1 - ($stemH / $chartHeight));
+            $x = (($i + 0.5) / $numValues) * 1000;
+            $pts[] = round($x,1) . ',' . round($y,1);
+        }
+        $polylinePoints = implode(' ', $pts);
+    }
 @endphp
 
 <div
     id="{{ $blockId }}"
-    class="page-block page-block--chart {{ $spacingTop }} {{ $spacingBottom }}"
+    class="page-block page-block--chart flex flex-col h-full justify-between {{ $spacingTop }} {{ $spacingBottom }}"
     style="max-width: {{ $chartWidth }}"
 >
     {{-- Header --}}
@@ -112,7 +127,7 @@
     {{-- ============ LOLLIPOP CHART ============ --}}
     @if($chartType === 'lollipop')
         <div
-            class="{{ $scopeClass }}"
+            class="{{ $scopeClass }} mt-auto"
             x-data="{ shown: {{ $animate ? 'false' : 'true' }} }"
             @if($animate)
             x-init="
@@ -127,24 +142,37 @@
                             requestAnimationFrame(() => {
                                 requestAnimationFrame(() => {
                                     ['lolli-stem', 'lolli-stem-2', 'lolli-stem-3'].forEach(cls => {
-                                        const stem = item.querySelector('.' + cls);
-                                        if (stem) {
+                                        const stems = item.querySelectorAll('.' + cls);
+                                        stems.forEach(stem => {
                                             const pctAttr = cls === 'lolli-stem' ? 'heightPct' : cls === 'lolli-stem-2' ? 'heightPct2' : 'heightPct3';
                                             const pct = parseFloat(item.dataset[pctAttr]) / 100;
                                             stem.style.height = (chartH * pct) + 'px';
-                                        }
+                                        });
                                     });
                                     item.classList.add('animated');
                                 });
                             });
                         }, i * 200);
                     });
+                    const overlayLine = $el.querySelector('.lolli-overlay-line');
+                    if(overlayLine) {
+                        setTimeout(() => overlayLine.classList.add('animated'), 200);
+                    }
                 }, { threshold: 0.3 });
                 observer.observe($el);
             "
             @endif
             style="display: flex; align-items: flex-end; justify-content: space-around; height: {{ $chartHeight }}px; position: relative; border-bottom: 2px solid #D6E4F0; padding: 0 20px"
         >
+            @if($lollipopLineOverlay && $hasSecondValue && $polylinePoints)
+                <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" style="position: absolute; left: 20px; right: 20px; top: 0; bottom: 0; width: calc(100% - 40px); height: 100%; pointer-events: none; z-index: 1;">
+                    <polyline points="{{ $polylinePoints }}" fill="none" stroke="{{ $seriesColorMap['value2'] }}" stroke-width="2" vector-effect="non-scaling-stroke"
+                        class="lolli-overlay-line {{ $scopeId }}-s-value2"
+                        style="stroke-dasharray: 2000; stroke-dashoffset: 2000; transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0.5s;"
+                    />
+                </svg>
+            @endif
+            
             @foreach($values as $i => $item)
                 @php
                     $val = $numericValues[$i];
@@ -154,8 +182,15 @@
                     $heightPct2 = ($hasSecondValue && $maxValue > 0) ? round(($val2 / $maxValue) * 90, 1) : 0;
                     $val3 = $numericValues3[$i] ?? 0;
                     $heightPct3 = ($hasThirdValue && $maxValue > 0) ? round(($val3 / $maxValue) * 90, 1) : 0;
-                    // Per-item accent color
+                    // Per-item accent color palette
                     $accent = (!empty($item['accent_color'])) ? ($accentColorMap[$item['accent_color']] ?? $cc) : $cc;
+                    // === 3-tier color hierarchy: color_scheme < accent_color < legend ===
+                    $eff1 = $accent['main'];
+                    if (!empty($seriesColors['value'])) $eff1 = $seriesColors['value'];
+                    $eff2 = $accent['light'];
+                    if (!empty($seriesColors['value2'])) $eff2 = $seriesColors['value2'];
+                    $eff3 = (!empty($item['accent_color'])) ? ($accent['light'] ?? '#CDD6DE') : '#CDD6DE';
+                    if (!empty($seriesColors['value3'])) $eff3 = $seriesColors['value3'];
                 @endphp
                 <div
                     class="lolli-item"
@@ -167,24 +202,35 @@
                     <div style="display: flex; align-items: flex-end; gap: {{ ($hasSecondValue || $hasThirdValue) ? '6px' : '0' }}">
                         {{-- Primary --}}
                         <div style="display: flex; flex-direction: column; align-items: center">
-                            <div class="lolli-val {{ $scopeId }}-s-value" style="font-size: 18px; font-weight: 700; color: {{ $seriesColorMap['value'] }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease">{{ $displayVal }}</div>
-                            <div class="lolli-dot {{ $scopeId }}-s-value" style="width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 3px solid {{ $seriesColorMap['value'] }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); flex-shrink: 0"></div>
-                            <div class="lolli-stem {{ $scopeId }}-s-value" style="width: 3px; background: linear-gradient(to top, {{ $seriesColorMap['value'] }}40, {{ $seriesColorMap['value'] }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
+                            <div class="lolli-val {{ $scopeId }}-s-value" style="font-size: 18px; font-weight: 700; color: {{ $eff1 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease">{{ $displayVal }}</div>
+                            <div class="lolli-dot {{ $scopeId }}-s-value" style="width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff1 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); flex-shrink: 0"></div>
+                            <div class="lolli-stem {{ $scopeId }}-s-value" style="width: 3px; background: linear-gradient(to top, {{ $eff1 }}40, {{ $eff1 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
                         </div>
                         {{-- Secondary --}}
                         @if($hasSecondValue && $val2 > 0)
-                            <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 15px; font-weight: 700; color: {{ $seriesColorMap['value2'] }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
-                                <div class="lolli-dot {{ $scopeId }}-s-value2" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $seriesColorMap['value2'] }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s; flex-shrink: 0"></div>
-                                <div class="lolli-stem-2 {{ $scopeId }}-s-value2" style="width: 3px; background: linear-gradient(to top, #E8EEF4, {{ $seriesColorMap['value2'] }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
-                            </div>
+                            @if($lollipopLineOverlay)
+                                <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; pointer-events: none; z-index: 5;">
+                                    <div class="lolli-stem-2" style="height: 0; width: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1); position: relative;">
+                                        <div style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; margin-bottom: -7px;">
+                                            <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 15px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                            <div class="lolli-dot {{ $scopeId }}-s-value2" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff2 }}; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div style="display: flex; flex-direction: column; align-items: center">
+                                    <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 15px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                    <div class="lolli-dot {{ $scopeId }}-s-value2" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff2 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s; flex-shrink: 0"></div>
+                                    <div class="lolli-stem-2 {{ $scopeId }}-s-value2" style="width: 3px; background: linear-gradient(to top, #E8EEF4, {{ $eff2 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
+                                </div>
+                            @endif
                         @endif
                         {{-- Tertiary --}}
                         @if($hasThirdValue && $val3 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="lolli-val {{ $scopeId }}-s-value3" style="font-size: 13px; font-weight: 600; color: {{ $seriesColorMap['value3'] }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s">{{ formatChartValue($item['value3'] ?? '0') }}</div>
-                                <div class="lolli-dot {{ $scopeId }}-s-value3" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 2px solid {{ $seriesColorMap['value3'] }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s; flex-shrink: 0"></div>
-                                <div class="lolli-stem-3 {{ $scopeId }}-s-value3" style="width: 2px; background: linear-gradient(to top, #F1F5FC, {{ $seriesColorMap['value3'] }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
+                                <div class="lolli-val {{ $scopeId }}-s-value3" style="font-size: 13px; font-weight: 600; color: {{ $eff3 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s">{{ formatChartValue($item['value3'] ?? '0') }}</div>
+                                <div class="lolli-dot {{ $scopeId }}-s-value3" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 2px solid {{ $eff3 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s; flex-shrink: 0"></div>
+                                <div class="lolli-stem-3 {{ $scopeId }}-s-value3" style="width: 2px; background: linear-gradient(to top, #F1F5FC, {{ $eff3 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
                             </div>
                         @endif
                     </div>
@@ -196,12 +242,13 @@
         <style>
             .{{ $scopeClass }} .lolli-item.animated .lolli-val { opacity: 1 !important; transform: translateY(0) !important; }
             .{{ $scopeClass }} .lolli-item.animated .lolli-dot { transform: scale(1) !important; }
+            .{{ $scopeClass }} .lolli-overlay-line.animated { stroke-dashoffset: 0 !important; }
         </style>
 
     {{-- ============ BAR CHART ============ --}}
     @elseif($chartType === 'bar')
         <div
-            class="{{ $scopeClass }}"
+            class="{{ $scopeClass }} mt-auto"
             x-data="{ shown: {{ $animate ? 'false' : 'true' }} }"
             @if($animate)
             x-init="
@@ -245,6 +292,13 @@
                     $heightPct3 = ($hasThirdValue && $maxValue > 0) ? round(($val3 / $maxValue) * 90, 1) : 0;
                     $accent = (!empty($item['accent_color'])) ? ($accentColorMap[$item['accent_color']] ?? $cc) : $cc;
                     $barW = ($hasSecondValue || $hasThirdValue) ? '28px' : '48px';
+                    // === 3-tier color hierarchy: color_scheme < accent_color < legend ===
+                    $eff1 = $accent['main'];
+                    if (!empty($seriesColors['value'])) $eff1 = $seriesColors['value'];
+                    $eff2 = $accent['light'];
+                    if (!empty($seriesColors['value2'])) $eff2 = $seriesColors['value2'];
+                    $eff3 = (!empty($item['accent_color'])) ? ($accent['light'] ?? '#CDD6DE') : '#CDD6DE';
+                    if (!empty($seriesColors['value3'])) $eff3 = $seriesColors['value3'];
                 @endphp
                 <div
                     class="bar-item-el"
@@ -256,23 +310,23 @@
                     <div style="display: flex; align-items: flex-end; gap: {{ ($hasSecondValue || $hasThirdValue) ? '3px' : '0' }}">
                         {{-- Primary bar --}}
                         <div style="display: flex; flex-direction: column; align-items: center">
-                            <div class="bar-val {{ $scopeId }}-s-value" style="font-size: 16px; font-weight: 700; color: {{ $seriesColorMap['value'] }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.8s, transform 0.5s ease 0.8s; white-space: nowrap">{{ $displayVal }}</div>
-                            <div class="bar-col {{ $scopeId }}-s-value" style="width: {{ $barW }}; border-radius: 8px 8px 0 0; background: linear-gradient(to top, {{ $seriesColorMap['value'] }}40, {{ $seriesColorMap['value'] }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); position: relative; cursor: pointer"
+                            <div class="bar-val {{ $scopeId }}-s-value" style="font-size: 16px; font-weight: 700; color: {{ $eff1 }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.8s, transform 0.5s ease 0.8s; white-space: nowrap">{{ $displayVal }}</div>
+                            <div class="bar-col {{ $scopeId }}-s-value" style="width: {{ $barW }}; border-radius: 8px 8px 0 0; background: linear-gradient(to top, {{ $eff1 }}40, {{ $eff1 }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); position: relative; cursor: pointer"
                                  onmouseenter="this.style.filter='brightness(1.1)'" onmouseleave="this.style.filter='none'"></div>
                         </div>
                         {{-- Secondary bar --}}
                         @if($hasSecondValue && $val2 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="bar-val {{ $scopeId }}-s-value2" style="font-size: 13px; font-weight: 700; color: {{ $seriesColorMap['value2'] }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.9s, transform 0.5s ease 0.9s; white-space: nowrap">{{ formatChartValue($item['value2'] ?? '0') }}</div>
-                                <div class="bar-col-2 {{ $scopeId }}-s-value2" style="width: {{ $barW }}; border-radius: 8px 8px 0 0; background: linear-gradient(to top, #E8EEF4, {{ $seriesColorMap['value2'] }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer"
+                                <div class="bar-val {{ $scopeId }}-s-value2" style="font-size: 13px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.9s, transform 0.5s ease 0.9s; white-space: nowrap">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                <div class="bar-col-2 {{ $scopeId }}-s-value2" style="width: {{ $barW }}; border-radius: 8px 8px 0 0; background: linear-gradient(to top, #E8EEF4, {{ $eff2 }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer"
                                      onmouseenter="this.style.filter='brightness(1.1)'" onmouseleave="this.style.filter='none'"></div>
                             </div>
                         @endif
                         {{-- Tertiary bar --}}
                         @if($hasThirdValue && $val3 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="bar-val {{ $scopeId }}-s-value3" style="font-size: 12px; font-weight: 600; color: {{ $seriesColorMap['value3'] }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 1s, transform 0.5s ease 1s; white-space: nowrap">{{ formatChartValue($item['value3'] ?? '0') }}</div>
-                                <div class="bar-col-3 {{ $scopeId }}-s-value3" style="width: 24px; border-radius: 6px 6px 0 0; background: linear-gradient(to top, #F1F5FC, {{ $seriesColorMap['value3'] }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer"
+                                <div class="bar-val {{ $scopeId }}-s-value3" style="font-size: 12px; font-weight: 600; color: {{ $eff3 }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 1s, transform 0.5s ease 1s; white-space: nowrap">{{ formatChartValue($item['value3'] ?? '0') }}</div>
+                                <div class="bar-col-3 {{ $scopeId }}-s-value3" style="width: 24px; border-radius: 6px 6px 0 0; background: linear-gradient(to top, #F1F5FC, {{ $eff3 }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer"
                                      onmouseenter="this.style.filter='brightness(1.1)'" onmouseleave="this.style.filter='none'"></div>
                             </div>
                         @endif
@@ -288,7 +342,7 @@
     {{-- ============ HORIZONTAL BAR CHART ============ --}}
     @elseif($chartType === 'bar_horizontal')
         <div
-            class="{{ $scopeClass }}"
+            class="{{ $scopeClass }} mt-auto"
             x-data="{ shown: {{ $animate ? 'false' : 'true' }} }"
             @if($animate)
             x-init="
@@ -379,7 +433,7 @@
         @endphp
 
         <div
-            class="{{ $scopeClass }}"
+            class="{{ $scopeClass }} mt-auto"
             x-data="{ shown: {{ $animate ? 'false' : 'true' }} }"
             @if($animate)
             x-init="
@@ -467,7 +521,7 @@
                 <div class="{{ $scopeId }}-legend flex items-center gap-2.5 cursor-pointer transition-opacity duration-300 py-1 px-2 rounded-lg hover:bg-gray-50"
                      data-series="{{ $lSeries }}"
                 >
-                    <div class="w-3.5 h-3.5 rounded-full shrink-0" style="background-color: {{ $legendItem['color'] ?? $seriesColorMap[$lSeries] }}"></div>
+                    <div class="w-3.5 h-3.5 rounded-full shrink-0" style="background-color: {{ !empty($legendItem['color']) ? $legendItem['color'] : $seriesColorMap[$lSeries] }}"></div>
                     <span class="text-sm text-[#4A5568] leading-snug">{{ $legendItem['label'] ?? '' }}</span>
                 </div>
             @endforeach

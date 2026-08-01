@@ -1156,7 +1156,12 @@ class BlocksRelationManager extends RelationManager
                         'line' => 'Линейный график',
                     ])
                     ->default('lollipop')
+                    ->live()
                     ->required(),
+                Forms\Components\Toggle::make('data_languages.lollipop_line_overlay')
+                    ->label('Отображать "Значение 2" как линию (поверх столбцов)')
+                    ->visible(fn ($get) => $get('data_languages.chart_type') === 'lollipop')
+                    ->default(false),
                 Forms\Components\Toggle::make('data_languages.animate')
                     ->label('Анимация при скролле')
                     ->default(true),
