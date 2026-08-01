@@ -45,7 +45,7 @@
                 @else
                     <div class="block-row-grid">
                         @foreach($group as $item)
-                            <div style="grid-column: span {{ $item['span'] }}">
+                            <div style="grid-column: span {{ $item['span'] }}; display: flex; flex-direction: column;">
                                 @include('components.page-blocks.' . $item['type'], [
                                     'data' => $item['data'],
                                     'pageId' => $page->id,

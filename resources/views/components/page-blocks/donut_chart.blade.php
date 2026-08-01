@@ -218,26 +218,23 @@
 
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" style="padding: {{ round($radius * 0.25) }}px">
                     @if($centerImageUrl)
-                        {{-- Icon: shown by default, hidden on hover --}}
-                        <img x-show="!hovered"
-                             x-transition:enter="transition-opacity duration-300"
-                             x-transition:leave="transition-opacity duration-200"
-                             src="{{ $centerImageUrl }}"
-                             alt="" class="transition-opacity duration-300"
-                             :class="shown ? 'opacity-100' : 'opacity-0'"
-                             style="transition-delay: 0.6s; max-width: {{ round(0.55 * ($radius - $strokeWidth / 2)) }}px; max-height: {{ round(0.55 * ($radius - $strokeWidth / 2)) }}px; object-fit: contain"
+                        {{-- Icon: visible by default, hidden on hover --}}
+                        <img src="{{ $centerImageUrl }}"
+                             alt="" class="transition-all duration-300"
+                             :class="shown && !hovered ? 'opacity-100 scale-100' : (hovered ? 'opacity-0 scale-90' : 'opacity-0 scale-90')"
+                             style="max-width: {{ round(0.55 * ($radius - $strokeWidth / 2)) }}px; max-height: {{ round(0.55 * ($radius - $strokeWidth / 2)) }}px; object-fit: contain; position: absolute;"
                         />
                         {{-- Text: hidden by default, shown on hover --}}
-                        <template x-if="hovered">
-                            <div class="flex flex-col items-center">
-                                <span class="font-extrabold text-[#00355A] break-words leading-tight"
-                                    style="font-size: {{ $svgSize >= 280 ? '14px' : ($svgSize >= 200 ? '13px' : '11px') }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px"
-                                    x-text="centerVal"></span>
-                                <span x-show="centerLbl" class="text-[#6B7785] mt-1 font-medium break-words"
-                                    style="font-size: {{ $svgSize >= 280 ? '12px' : '11px' }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px; line-height: 1.2"
-                                    x-text="centerLbl"></span>
-                            </div>
-                        </template>
+                        <div class="flex flex-col items-center transition-all duration-300"
+                             :class="hovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'"
+                        >
+                            <span class="font-extrabold text-[#00355A] break-words leading-tight"
+                                style="font-size: {{ $svgSize >= 280 ? '14px' : ($svgSize >= 200 ? '13px' : '11px') }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px"
+                                x-text="centerVal"></span>
+                            <span x-show="centerLbl" class="text-[#6B7785] mt-1 font-medium break-words"
+                                style="font-size: {{ $svgSize >= 280 ? '12px' : '11px' }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px; line-height: 1.2"
+                                x-text="centerLbl"></span>
+                        </div>
                     @else
                         <span class="font-extrabold text-[#00355A] transition-opacity duration-300 break-words leading-tight"
                             :class="shown ? 'opacity-100' : 'opacity-0'"
