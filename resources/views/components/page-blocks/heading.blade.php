@@ -23,14 +23,17 @@
         '3xl' => 'mb-24',
         default => 'mb-12',
     };
+
+    $subtitle = $data['subtitle'] ?? '';
+    $hasSubtitle = !empty(trim(strip_tags($subtitle)));
 @endphp
-<{{ $level }} id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--heading {{colorHelper('color', $data)}} {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
-    @if(isset($data['tooltip']))
-        <span class="has-tooltip
-        {{colorHelper('color', $data)}}
-        {{colorHelper('font_weight', $data)}}
-        " data-tooltip="{{ $data['tooltip'] }}" aria-label="{{ $data['tooltip'] }}" data-alpine-devtools-right-click="">{!! $data['content'] !!}</span>
-    @else
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--heading {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
+    <{{ $level }} class="{{colorHelper('color', $data)}} {{colorHelper('font_weight', $data)}} {{ $hasSubtitle ? '!mb-1' : '' }}">
         {!! $data['content'] !!}
+    </{{ $level }}>
+    @if($hasSubtitle)
+        <div class="text-base leading-snug text-black-500 font-normal">
+            {!! $subtitle !!}
+        </div>
     @endif
-</{{ $level }}>
+</div>

@@ -7,13 +7,14 @@
         'spacious' => 'px-6 py-4',
         default => 'px-4 py-3',
     };
-    $headerBg = match($headerStyle) {
-        'blue' => 'bg-[#00355A]',
-        'medium_blue' => 'bg-[#005B9C]',
-        'light' => 'bg-[#F0F4F8]',
-        'grey' => 'bg-[#E8EEF4]',
-        'light_blue' => 'bg-[#EBF4FF]',
-        'dark' => 'bg-[#1B2733]',
+    $headerBgColor = match($headerStyle) {
+        'blue' => '#00355A',
+        'medium_blue' => '#005B9C',
+        'brand_blue' => '#2196F3',
+        'light' => '#F0F4F8',
+        'grey' => '#E8EEF4',
+        'light_blue' => '#EBF4FF',
+        'dark' => '#1B2733',
         default => '',
     };
     $headerTextColor = match($data['header_text_color'] ?? 'white') {
@@ -60,9 +61,9 @@
     <table class="w-full text-lg {{ $tableUid }}">
         @if(!empty($data['headers']))
             <thead>
-                <tr class="{{ $headerBg }}">
+                <tr @if($headerBgColor) style="background-color: {{ $headerBgColor }}" @endif>
                     @foreach($data['headers'] as $hIdx => $header)
-                        <th class="{{ $cellPadding }} {{ $headerFontStyle }} text-left {{ !$loop->last ? 'border-r' : '' }}" style="color: {{ $headerTextColor }}; border-color: {{ in_array($headerStyle, ['blue', 'dark', 'medium_blue']) ? 'rgba(255,255,255,0.15)' : '#E1E7F0' }}">{!! $header['text'] !!}</th>
+                        <th class="{{ $cellPadding }} {{ $headerFontStyle }} text-left {{ !$loop->last ? 'border-r' : '' }}" style="color: {{ $headerTextColor }}; border-color: {{ in_array($headerStyle, ['blue', 'dark', 'medium_blue', 'brand_blue']) ? 'rgba(255,255,255,0.15)' : '#E1E7F0' }}">{!! $header['text'] !!}</th>
                     @endforeach
                 </tr>
             </thead>
