@@ -525,6 +525,7 @@ class BlocksRelationManager extends RelationManager
                     ->options([
                         'blue' => 'Тёмно-синий (#00355A)',
                         'medium_blue' => 'Синий (#005B9C)',
+                        'brand_blue' => 'Фирменный голубой (#2196F3)',
                         'dark' => 'Тёмный (#1B2733)',
                         'light' => 'Светло-серый (#F0F4F8)',
                         'grey' => 'Серый (#E8EEF4)',
