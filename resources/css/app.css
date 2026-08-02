@@ -195,3 +195,16 @@ section {
 .page-block--table .has-tooltip:focus-visible::after {
     transform: translateX(-50%) translateY(0);
 }
+
+/* Ensure headings keep their color even if they contain links */
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+.prose h1 a, .prose h2 a, .prose h3 a, .prose h4 a, .prose h5 a, .prose h6 a,
+h1 .has-tooltip, h2 .has-tooltip, h3 .has-tooltip, h4 .has-tooltip, h5 .has-tooltip, h6 .has-tooltip {
+    color: inherit !important;
+    text-decoration: inherit !important;
+}
+
+/* Fix tooltip text uppercase issue (caused by inheriting uppercase from headings) */
+.has-tooltip::after {
+    text-transform: none !important;
+}
