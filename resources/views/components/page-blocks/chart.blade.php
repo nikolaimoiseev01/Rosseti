@@ -113,7 +113,7 @@
 
 <div
     id="{{ $blockId }}"
-    class="page-block page-block--chart flex flex-col h-full justify-between {{ $spacingTop }} {{ $spacingBottom }}"
+    class="page-block page-block--chart flex flex-col h-full {{ $spacingTop }} {{ $spacingBottom }}"
     style="max-width: {{ $chartWidth }}"
 >
     {{-- Header --}}
@@ -211,15 +211,15 @@
                             @if($lollipopLineOverlay)
                                 <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; pointer-events: none; z-index: 5;">
                                     <div class="lolli-stem-2" style="height: 0; width: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1); position: relative;">
-                                        <div style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; margin-bottom: -7px;">
-                                            <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 15px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                        <div style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; margin-bottom: 8px;">
+                                            <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 18px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
                                             <div class="lolli-dot {{ $scopeId }}-s-value2" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff2 }}; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;"></div>
                                         </div>
                                     </div>
                                 </div>
                             @else
                                 <div style="display: flex; flex-direction: column; align-items: center">
-                                    <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 15px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                    <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 18px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
                                     <div class="lolli-dot {{ $scopeId }}-s-value2" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff2 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s; flex-shrink: 0"></div>
                                     <div class="lolli-stem-2 {{ $scopeId }}-s-value2" style="width: 3px; background: linear-gradient(to top, #E8EEF4, {{ $eff2 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
                                 </div>
@@ -521,7 +521,7 @@
                 <div class="{{ $scopeId }}-legend flex items-center gap-2.5 cursor-pointer transition-opacity duration-300 py-1 px-2 rounded-lg hover:bg-gray-50"
                      data-series="{{ $lSeries }}"
                 >
-                    <div class="w-3.5 h-3.5 rounded-full shrink-0" style="background-color: {{ !empty($legendItem['color']) ? $legendItem['color'] : $seriesColorMap[$lSeries] }}"></div>
+                    <div style="width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; background-color: {{ !empty($legendItem['color']) ? $legendItem['color'] : $seriesColorMap[$lSeries] }}"></div>
                     <span class="text-sm text-[#4A5568] leading-snug">{{ $legendItem['label'] ?? '' }}</span>
                 </div>
             @endforeach
