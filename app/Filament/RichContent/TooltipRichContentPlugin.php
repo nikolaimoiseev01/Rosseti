@@ -107,21 +107,25 @@ class TooltipRichContentPlugin implements RichContentPlugin
                         array $data,
                         RichEditor $component,
                     ): void {
+                        $tooltipText = trim($data['text'] ?? '');
+
+                        if (empty($tooltipText)) {
+                            return;
+                        }
+
                         $component->runCommands(
                             [
                                 EditorCommand::make(
                                     'setTooltip',
                                     arguments: [
                                         [
-                                            'text' => trim(
-                                                $data['text']
-                                            ),
+                                            'text' => $tooltipText,
                                         ],
                                     ],
                                 ),
                             ],
                             editorSelection:
-                            $arguments['editorSelection'],
+                            $arguments['editorSelection'] ?? null,
                         );
                     },
                 ),
