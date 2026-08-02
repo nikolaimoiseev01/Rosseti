@@ -178,3 +178,20 @@ section {
     opacity: 1;
     visibility: visible;
 }
+
+/* Fix for tooltips inside tables with overflow-x-auto */
+.page-block--table .has-tooltip::after {
+    bottom: auto;
+    top: calc(100% + 10px);
+    transform: translateX(-50%) translateY(-6px);
+}
+
+.page-block--table .has-tooltip::before {
+    bottom: auto;
+    top: calc(100% + 4px);
+}
+
+.page-block--table .has-tooltip:hover::after,
+.page-block--table .has-tooltip:focus-visible::after {
+    transform: translateX(-50%) translateY(0);
+}
