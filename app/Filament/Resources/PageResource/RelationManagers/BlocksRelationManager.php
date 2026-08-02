@@ -1383,6 +1383,18 @@ class BlocksRelationManager extends RelationManager
                     ->label('Описание')
                     ->placeholder('электроэнергии передаётся по сетям Группы')
                     ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                Forms\Components\Select::make('data_languages.center_text_size')
+                    ->label('Размер текста в центре')
+                    ->options([
+                        'auto' => 'Авто (по размеру круга)',
+                        'md' => 'Средний (24px)',
+                        'lg' => 'Большой (32px)',
+                        'xl' => 'Очень большой (40px)',
+                        '2xl' => 'Крупный (48px)',
+                        '3xl' => 'Максимальный (60px)',
+                    ])
+                    ->default('auto')
+                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
                 ...$this->textColorSelectFields('data_languages.ring_color', 'Цвет кольца'),
 
                 // --- Multi donut fields ---

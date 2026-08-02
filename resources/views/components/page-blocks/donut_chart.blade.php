@@ -56,6 +56,17 @@
         $prefix = $data['prefix'] ?? ''; $suffix = $data['suffix'] ?? '%';
         $description = $data['description'] ?? '';
         $numericValue = (float) str_replace(',', '.', $data['value'] ?? '0');
+
+        // Center text size override
+        $centerTextSize = $data['center_text_size'] ?? 'auto';
+        $centerFontSizeMap = [
+            'md' => '24px', 'lg' => '32px', 'xl' => '40px', '2xl' => '48px', '3xl' => '60px',
+        ];
+        $centerFontStyle = ($centerTextSize !== 'auto' && isset($centerFontSizeMap[$centerTextSize]))
+            ? 'font-size: ' . $centerFontSizeMap[$centerTextSize]
+            : '';
+        $centerValClass = ($centerTextSize !== 'auto' && isset($centerFontSizeMap[$centerTextSize]))
+            ? '' : $sc['valClass'];
     @endphp
 
     <div
@@ -106,7 +117,7 @@
                 />
             </svg>
             <div class="absolute inset-0 flex flex-col items-center justify-center" style="transform: none">
-                <div class="{{ $sc['valClass'] }} font-extrabold text-[#00355A] leading-none" x-text="displayValue"></div>
+                <div class="{{ $centerValClass }} font-extrabold text-[#00355A] leading-none" style="{{ $centerFontStyle }}" x-text="displayValue"></div>
             </div>
         </div>
 
