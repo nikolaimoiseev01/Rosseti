@@ -71,7 +71,10 @@
             if ($float == (int) $float) {
                 return number_format($float, 0, ',', ' ');
             }
-            return str_replace('.', ',', $val);
+            // Count decimal places from original value
+            $parts = preg_split('/[.,]/', $val);
+            $decimals = isset($parts[1]) ? strlen($parts[1]) : 1;
+            return number_format($float, $decimals, ',', ' ');
         }
     }
 
