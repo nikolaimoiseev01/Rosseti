@@ -37,8 +37,8 @@ class AppServiceProvider extends ServiceProvider
                     allowedElements: 'span',
                 )
                 ->allowAttribute(
-                    'style',
-                    allowedElements: 'span',
+                    'class',
+                    allowedElements: 'img',
                 )
                 ->allowAttribute(
                     'data-color',
