@@ -31,6 +31,18 @@ class AppServiceProvider extends ServiceProvider
                 ->allowAttribute(
                     'tabindex',
                     allowedElements: 'span',
+                )
+                ->allowAttribute(
+                    'class',
+                    allowedElements: 'span',
+                )
+                ->allowAttribute(
+                    'style',
+                    allowedElements: 'span',
+                )
+                ->allowAttribute(
+                    'data-color',
+                    allowedElements: 'span',
                 ),
         );
     }
@@ -46,12 +58,6 @@ class AppServiceProvider extends ServiceProvider
                 'rich-content-plugins/tooltip',
                 resource_path(
                     'js/filament/rich-content-plugins/tooltip.js'
-                ),
-            )->loadedOnRequest(),
-            Js::make(
-                'rich-content-plugins/text-color',
-                resource_path(
-                    'js/filament/rich-content-plugins/text-color.js'
                 ),
             )->loadedOnRequest(),
         ]);

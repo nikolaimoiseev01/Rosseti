@@ -147,8 +147,17 @@ class BlocksRelationManager extends RelationManager
                                     ->enableToolbarButtons([
                                         'tooltip',
                                         'removeTooltip',
+                                        'textColor',
                                     ])
                                     ->required()
+                                    ->textColors([
+                                        '#00355A' => 'Тёмно-синий',
+                                        '#005A99' => 'Синий',
+                                        '#2196F3' => 'Голубой',
+                                        '#595959' => 'Чёрный',
+                                        '#ffffff' => 'Белый',
+                                        'grey' => 'Серый',
+                                    ])
                                     ->columnSpanFull()
                                     ->default('')
                                     ->fileAttachmentsVisibility('public'),
@@ -164,6 +173,7 @@ class BlocksRelationManager extends RelationManager
                                     ->enableToolbarButtons([
                                         'tooltip',
                                         'removeTooltip',
+                                        'textColor',
                                     ])
                                     ->columnSpanFull()
                                     ->default('')

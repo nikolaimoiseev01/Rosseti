@@ -44,8 +44,14 @@
     .rich-text-{{ $data['text_color'] ?? 'default' }} div {
         color: {{ $colorHex }} !important;
     }
+
+    /* Override for inline text colors */
+    .rich-text-{{ $data['text_color'] ?? 'default' }} span[data-color],
+    .rich-text-{{ $data['text_color'] ?? 'default' }} span.color {
+        color: var(--color) !important;
+    }
 </style>
 
 <div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--rich-text max-w-none {{ $spacingTop }} {{ $spacingBottom }} rich-text-{{ $data['text_color'] ?? 'default' }} [&_a]:text-[#2196F3] [&_a]:font-normal [&_a]:underline">
-    {!! $content !!}
+    {!! str($data['content'])->sanitizeHtml() !!}
 </div>
