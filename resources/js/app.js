@@ -100,9 +100,9 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
                 // Format the number
                 let formattedValue;
                 if (Number.isInteger(targetValue)) {
-                    formattedValue = Math.round(currentValue).toString();
+                    formattedValue = Math.round(currentValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
                 } else {
-                    formattedValue = currentValue.toFixed(targetValue % 1 === 0 ? 0 : 1);
+                    formattedValue = currentValue.toFixed(targetValue % 1 === 0 ? 0 : 1).replace('.', ',');
                 }
 
                 this.displayValue = prefix + formattedValue + suffix;
