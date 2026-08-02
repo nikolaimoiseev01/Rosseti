@@ -26,10 +26,11 @@
 
     $subtitle = $data['subtitle'] ?? '';
     $hasSubtitle = !empty(trim(strip_tags($subtitle)));
+    $content = str_replace(['<p>', '</p>'], '', $data['content'] ?? '');
 @endphp
 <div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--heading {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
     <{{ $level }} class="{{colorHelper('color', $data)}} {{colorHelper('font_weight', $data)}} {{ $hasSubtitle ? '!mb-1' : '' }}">
-        {!! $data['content'] !!}
+        {!! $content !!}
     </{{ $level }}>
     @if($hasSubtitle)
         <div class="text-base leading-snug text-black-500 font-normal">
