@@ -375,20 +375,51 @@ class BlocksRelationManager extends RelationManager
                     ->tabs([
                         Tab::make('Русский')
                             ->schema([
-                                Forms\Components\TextInput::make('data_languages.ru.content')
+                                Forms\Components\RichEditor::make('data_languages.ru.content')
                                     ->label('Текст заголовка')
-                                    ->required(),
-                                Forms\Components\TextInput::make('data_languages.ru.tooltip')
-                                    ->label('Текст подсказки (тултип)')
-                                    ->helperText('Появится при наведении на заголовок'),
+                                    ->required()
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'tooltip',
+                                        'removeTooltip',
+                                    ])
+                                    ->columnSpanFull(),
+                                Forms\Components\RichEditor::make('data_languages.ru.subtitle')
+                                    ->label('Подзаголовок (маленький текст)')
+                                    ->helperText('Отображается под заголовком мелким шрифтом')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'tooltip',
+                                        'removeTooltip',
+                                    ])
+                                    ->columnSpanFull(),
                             ]),
                         Tab::make('English')
                             ->schema([
-                                Forms\Components\TextInput::make('data_languages.en.content')
-                                    ->label('Heading text'),
-                                Forms\Components\TextInput::make('data_languages.en.tooltip')
-                                    ->label('Tooltip text')
-                                    ->helperText('Appears on hover'),
+                                Forms\Components\RichEditor::make('data_languages.en.content')
+                                    ->label('Heading text')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'tooltip',
+                                        'removeTooltip',
+                                    ])
+                                    ->columnSpanFull(),
+                                Forms\Components\RichEditor::make('data_languages.en.subtitle')
+                                    ->label('Subtitle (small text)')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'tooltip',
+                                        'removeTooltip',
+                                    ])
+                                    ->columnSpanFull(),
                             ]),
                     ])
                     ->columnSpanFull(),
