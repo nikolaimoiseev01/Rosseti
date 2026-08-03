@@ -107,10 +107,9 @@
             $v2 = $numericValues2[$i] ?? 0;
             $hp2 = ($maxValue > 0) ? round(($v2 / $maxValue) * 90, 1) : 0;
             $stemH = $stemArea * ($hp2 / 100);
-            // The chart flex container is $chartHeight tall, items align to bottom.
-            // Dot center is at: bottom + stemH + 9px (half dot height).
-            // In SVG viewBox 0..1000, bottom = 1000, so Y = 1000 - ((stemH + 9) / $chartHeight) * 1000
-            $y = 1000 * (1 - (($stemH + 7) / $chartHeight));
+            // Overlay dot center is at: stemH + 8px (margin-bottom) + 7px (half of 14px dot) from chart bottom
+            // In SVG viewBox 0..1000, Y = 1000 - ((stemH + 15) / $chartHeight) * 1000
+            $y = 1000 * (1 - (($stemH + 15) / $chartHeight));
             $x = (($i + 0.5) / $numValues) * 1000;
             $pts[] = round($x,1) . ',' . round($y,1);
         }
@@ -121,7 +120,7 @@
 <div
     id="{{ $blockId }}"
     class="page-block page-block--chart flex flex-col h-full {{ $spacingTop }} {{ $spacingBottom }}"
-    style="max-width: {{ $chartWidth }}"
+    style="max-width: {{ $chartWidth }}{{ $inGroup ? '; position: relative; overflow: visible' : '' }}"
 >
     {{-- Header --}}
     @if($title)
@@ -521,7 +520,24 @@
     @endif
 
     {{-- ============ OPTIONAL LEGEND ============ --}}
-    @if(!empty($legendItems))
+    @if($inGroup)
+        {{-- In a group: legend is positioned outside flex flow so chart areas align --}}
+        @if(!empty($legendItems))
+            <div style="position: absolute; top: 100%; left: 0; right: 0; z-index: 5;">
+                <div class="flex flex-wrap items-center gap-x-8 gap-y-3 pt-4" style="border-top: 1px solid #E8EEF4">
+                    @foreach($legendItems as $lIdx => $legendItem)
+                        @php $lSeries = $legendItem['series'] ?? 'value'; @endphp
+                        <div class="{{ $scopeId }}-legend flex items-center gap-2.5 cursor-pointer transition-opacity duration-300 py-1 px-2 rounded-lg hover:bg-gray-50"
+                             data-series="{{ $lSeries }}"
+                        >
+                            <div style="width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; background-color: {{ !empty($legendItem['color']) ? $legendItem['color'] : $seriesColorMap[$lSeries] }}"></div>
+                            <span class="text-sm text-[#4A5568] leading-snug">{{ $legendItem['label'] ?? '' }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    @elseif(!empty($legendItems))
         <div class="flex flex-wrap items-center gap-x-8 gap-y-3 mt-6 pt-4" style="border-top: 1px solid #E8EEF4">
             @foreach($legendItems as $lIdx => $legendItem)
                 @php $lSeries = $legendItem['series'] ?? 'value'; @endphp
@@ -533,6 +549,8 @@
                 </div>
             @endforeach
         </div>
+    @endif
+    @if(!empty($legendItems))
 
         <script>
         (function() {

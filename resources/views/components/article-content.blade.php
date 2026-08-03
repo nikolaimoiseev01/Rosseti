@@ -72,6 +72,7 @@
         .block-row-grid > * {
             display: flex;
             flex-direction: column;
+            overflow: visible;
         }
         .block-row-grid > * > .page-block--chart {
             flex: 1;
