@@ -67,6 +67,15 @@
             gap: 1.5rem;
             width: 100%;
             margin-bottom: 1rem;
+            align-items: stretch;
+        }
+        .block-row-grid > * {
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+        }
+        .block-row-grid > * > .page-block--chart {
+            flex: 1;
         }
         @media (max-width: 768px) {
             .block-row-grid > * {

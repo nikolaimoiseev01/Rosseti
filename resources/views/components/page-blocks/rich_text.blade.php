@@ -50,8 +50,25 @@
     .rich-text-{{ $data['text_color'] ?? 'default' }} span.color {
         color: var(--color) !important;
     }
+
+    /* Restore paragraph spacing inside rich text blocks (overrides global * { margin: 0 }) */
+    .page-block--rich-text p {
+        margin-bottom: 0.75em;
+    }
+    .page-block--rich-text p:last-child {
+        margin-bottom: 0;
+    }
+    /* Empty paragraphs (spacers from editor) get smaller spacing */
+    .page-block--rich-text p:has(> br:only-child) {
+        margin-bottom: 0.5em;
+    }
+    /* List spacing */
+    .page-block--rich-text ul,
+    .page-block--rich-text ol {
+        margin-bottom: 0.75em;
+    }
 </style>
 
 <div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--rich-text max-w-none {{ $spacingTop }} {{ $spacingBottom }} rich-text-{{ $data['text_color'] ?? 'default' }} [&_a]:text-[#2196F3] [&_a]:font-normal [&_a]:underline">
-    {!! str($data['content'])->sanitizeHtml() !!}
+    {!! $data['content'] ?? '' !!}
 </div>

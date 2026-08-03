@@ -102,11 +102,14 @@
     $polylinePoints = '';
     if ($chartType === 'lollipop' && $lollipopLineOverlay && $hasSecondValue) {
         $pts = [];
+        $stemArea = $chartHeight - 40; // usable stem height (excluding label space)
         foreach ($values as $i => $item) {
             $v2 = $numericValues2[$i] ?? 0;
             $hp2 = ($maxValue > 0) ? round(($v2 / $maxValue) * 90, 1) : 0;
-            $stemH = ($chartHeight - 40) * ($hp2 / 100);
-            $y = 1000 * (1 - ($stemH / $chartHeight));
+            $stemH = $stemArea * ($hp2 / 100);
+            // Overlay dot center is at: stemH + 8px (margin-bottom) + 7px (half of 14px dot) from chart bottom
+            // In SVG viewBox 0..1000, Y = 1000 - ((stemH + 15) / $chartHeight) * 1000
+            $y = 1000 * (1 - (($stemH + 15) / $chartHeight));
             $x = (($i + 0.5) / $numValues) * 1000;
             $pts[] = round($x,1) . ',' . round($y,1);
         }
@@ -117,14 +120,14 @@
 <div
     id="{{ $blockId }}"
     class="page-block page-block--chart flex flex-col h-full {{ $spacingTop }} {{ $spacingBottom }}"
-    style="max-width: {{ $chartWidth }}"
+    style="max-width: {{ $chartWidth }}{{ $inGroup ? '; position: relative; overflow: visible' : '' }}"
 >
     {{-- Header --}}
     @if($title)
-        <h3 class="text-2xl text-blue-500 font-normal leading-tight mb-2">{{ $title }}</h3>
+        <h3 class="text-2xl text-blue-500 font-normal leading-tight mb-2">{!! $title !!}</h3>
     @endif
     @if($unit)
-        <p class="text-lg leading-tight text-black-500 mb-6">{{ $unit }}</p>
+        <p class="text-lg leading-tight text-black-500 mb-6">{!! $unit !!}</p>
     @endif
 
     {{-- ============ LOLLIPOP CHART ============ --}}
@@ -231,9 +234,9 @@
                         {{-- Tertiary --}}
                         @if($hasThirdValue && $val3 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="lolli-val {{ $scopeId }}-s-value3" style="font-size: 13px; font-weight: 600; color: {{ $eff3 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s">{{ formatChartValue($item['value3'] ?? '0') }}</div>
-                                <div class="lolli-dot {{ $scopeId }}-s-value3" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 2px solid {{ $eff3 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s; flex-shrink: 0"></div>
-                                <div class="lolli-stem-3 {{ $scopeId }}-s-value3" style="width: 2px; background: linear-gradient(to top, #F1F5FC, {{ $eff3 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
+                                <div class="lolli-val {{ $scopeId }}-s-value3" style="font-size: 18px; font-weight: 700; color: {{ $eff3 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s">{{ formatChartValue($item['value3'] ?? '0') }}</div>
+                                <div class="lolli-dot {{ $scopeId }}-s-value3" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff3 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s; flex-shrink: 0"></div>
+                                <div class="lolli-stem-3 {{ $scopeId }}-s-value3" style="width: 3px; background: linear-gradient(to top, #F1F5FC, {{ $eff3 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
                             </div>
                         @endif
                     </div>
@@ -517,7 +520,24 @@
     @endif
 
     {{-- ============ OPTIONAL LEGEND ============ --}}
-    @if(!empty($legendItems))
+    @if($inGroup)
+        {{-- In a group: legend is positioned outside flex flow so chart areas align --}}
+        @if(!empty($legendItems))
+            <div style="position: absolute; top: 100%; left: 0; right: 0; z-index: 5;">
+                <div class="flex flex-wrap items-center gap-x-8 gap-y-3 pt-4" style="border-top: 1px solid #E8EEF4">
+                    @foreach($legendItems as $lIdx => $legendItem)
+                        @php $lSeries = $legendItem['series'] ?? 'value'; @endphp
+                        <div class="{{ $scopeId }}-legend flex items-center gap-2.5 cursor-pointer transition-opacity duration-300 py-1 px-2 rounded-lg hover:bg-gray-50"
+                             data-series="{{ $lSeries }}"
+                        >
+                            <div style="width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; background-color: {{ !empty($legendItem['color']) ? $legendItem['color'] : $seriesColorMap[$lSeries] }}"></div>
+                            <span class="text-sm text-[#4A5568] leading-snug">{{ $legendItem['label'] ?? '' }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    @elseif(!empty($legendItems))
         <div class="flex flex-wrap items-center gap-x-8 gap-y-3 mt-6 pt-4" style="border-top: 1px solid #E8EEF4">
             @foreach($legendItems as $lIdx => $legendItem)
                 @php $lSeries = $legendItem['series'] ?? 'value'; @endphp
@@ -529,6 +549,8 @@
                 </div>
             @endforeach
         </div>
+    @endif
+    @if(!empty($legendItems))
 
         <script>
         (function() {
