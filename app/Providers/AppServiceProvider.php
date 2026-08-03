@@ -62,6 +62,35 @@ class AppServiceProvider extends ServiceProvider
             )->loadedOnRequest(),
         ]);
 
+        // Fix: body overflow:hidden sticking after modal close
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::BODY_END,
+            fn () => new \Illuminate\Support\HtmlString('
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const observer = new MutationObserver(function() {
+                            const openModals = document.querySelectorAll("[x-ref=\"modalContainer\"]:not([style*=\"display: none\"]), .fi-modal-open");
+                            if (openModals.length === 0) {
+                                document.body.style.removeProperty("overflow");
+                                document.documentElement.style.removeProperty("overflow");
+                            }
+                        });
+                        observer.observe(document.body, { attributes: true, attributeFilter: ["style", "class"], childList: true, subtree: true });
+
+                        // Also fix on Livewire events
+                        document.addEventListener("livewire:navigated", function() {
+                            document.body.style.removeProperty("overflow");
+                            document.documentElement.style.removeProperty("overflow");
+                        });
+                        document.addEventListener("modal-closed", function() {
+                            document.body.style.removeProperty("overflow");
+                            document.documentElement.style.removeProperty("overflow");
+                        });
+                    });
+                </script>
+            '),
+        );
+
         RedirectIfAuthenticated::redirectUsing(function () {
             return route('account.settings');
         });
