@@ -25,7 +25,7 @@
 
     // Extract numeric value and suffix
     $valueText = $data['value'] ?? '0';
-    preg_match('/^([><= ]*)([\d.,\s]+)(.*)$/s', $valueText, $matches);
+    preg_match('/^([><= ~+-]*)([\d.,\s]+)(.*)$/s', $valueText, $matches);
     $prefix = isset($matches[1]) ? $matches[1] : '';
     $rawNumeric = isset($matches[2]) ? trim($matches[2]) : '0';
     $numericValue = (float) str_replace([',', ' '], ['.', ''], $rawNumeric);
