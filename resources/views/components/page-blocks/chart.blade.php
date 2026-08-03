@@ -493,6 +493,9 @@
                         <stop offset="0%" stop-color="{{ $cc['main'] }}" stop-opacity="0.25"/>
                         <stop offset="100%" stop-color="{{ $cc['main'] }}" stop-opacity="0.02"/>
                     </linearGradient>
+                    @if($hasSecondValue)
+                    <linearGradient id="areaG2-{{ $blockId }}" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="{{ $cc['light'] }}" stop-opacity="0.2"/>
                         <stop offset="100%" stop-color="{{ $cc['light'] }}" stop-opacity="0.02"/>
                     </linearGradient>
                     @endif
