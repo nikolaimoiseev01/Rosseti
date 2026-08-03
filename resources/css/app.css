@@ -94,6 +94,11 @@ section {
     position: relative;
 }
 
+/* Fix for custom HTML SDG grid to prevent it from pushing the layout */
+.sdg-container {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+
 .has-tooltip {
     position: relative;
     display: inline;
