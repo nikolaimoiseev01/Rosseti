@@ -208,3 +208,9 @@ h1 .has-tooltip, h2 .has-tooltip, h3 .has-tooltip, h4 .has-tooltip, h5 .has-tool
 .has-tooltip::after {
     text-transform: none !important;
 }
+
+/* Global: activate Filament RichEditor inline text colors (uses CSS var --color) */
+span[data-color],
+span.color {
+    color: var(--color) !important;
+}
