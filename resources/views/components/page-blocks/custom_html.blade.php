@@ -39,7 +39,7 @@
     <div id="{{ $blockId }}"
          x-data="revealOnScroll()"
          class="page-block page-block--custom-html {{ $spacingTop }} {{ $spacingBottom }}"
-         style="{{ $widthStyle }}"
+         style="{{ $widthStyle }}; overflow: hidden"
     >
         <template id="tpl-{{ $blockId }}">
             @if(!empty($cssContent))
