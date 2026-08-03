@@ -147,4 +147,9 @@
     .{{ $tableUid }} .prose p + p {
         margin-top: 0.25em;
     }
+    /* --- Inline text colors from RichEditor (uses CSS var --color) --- */
+    .{{ $tableUid }} span[data-color],
+    .{{ $tableUid }} span.color {
+        color: var(--color) !important;
+    }
 </style>
