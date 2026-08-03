@@ -577,7 +577,15 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\RichEditor::make('text')
                                             ->label('Название столбца')
                                             ->plugins([TooltipRichContentPlugin::make()])
-                                            ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                            ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                            ->textColors([
+                                                '#00355A' => 'Тёмно-синий',
+                                                '#005A99' => 'Синий',
+                                                '#2196F3' => 'Голубой',
+                                                '#595959' => 'Чёрный',
+                                                '#ffffff' => 'Белый',
+                                                'grey' => 'Серый',
+                                            ])
                                             ->fileAttachmentsVisibility('public')
                                             ->columnSpanFull(),
                                     ])
@@ -608,7 +616,15 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\RichEditor::make('accent_text')
                                             ->label('Текст акцентной строки')
                                             ->plugins([TooltipRichContentPlugin::make()])
-                                            ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                            ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                            ->textColors([
+                                                '#00355A' => 'Тёмно-синий',
+                                                '#005A99' => 'Синий',
+                                                '#2196F3' => 'Голубой',
+                                                '#595959' => 'Чёрный',
+                                                '#ffffff' => 'Белый',
+                                                'grey' => 'Серый',
+                                            ])
                                             ->fileAttachmentsVisibility('public')
                                             ->columnSpanFull()
                                             ->visible(fn ($get) => $get('is_accent')),
@@ -618,7 +634,15 @@ class BlocksRelationManager extends RelationManager
                                                 Forms\Components\RichEditor::make('text')
                                                     ->label('Значение')
                                                     ->plugins([TooltipRichContentPlugin::make()])
-                                                    ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                                    ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                                    ->textColors([
+                                                        '#00355A' => 'Тёмно-синий',
+                                                        '#005A99' => 'Синий',
+                                                        '#2196F3' => 'Голубой',
+                                                        '#595959' => 'Чёрный',
+                                                        '#ffffff' => 'Белый',
+                                                        'grey' => 'Серый',
+                                                    ])
                                                     ->fileAttachmentsVisibility('public')
                                                     ->columnSpanFull(),
                                                 Forms\Components\Select::make('colspan')
@@ -648,7 +672,15 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\RichEditor::make('text')
                                             ->label('Column name')
                                             ->plugins([TooltipRichContentPlugin::make()])
-                                            ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                            ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                            ->textColors([
+                                                '#00355A' => 'Тёмно-синий',
+                                                '#005A99' => 'Синий',
+                                                '#2196F3' => 'Голубой',
+                                                '#595959' => 'Чёрный',
+                                                '#ffffff' => 'Белый',
+                                                'grey' => 'Серый',
+                                            ])
                                             ->fileAttachmentsVisibility('public')
                                             ->columnSpanFull(),
                                     ])
@@ -679,7 +711,15 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\RichEditor::make('accent_text')
                                             ->label('Accent row text')
                                             ->plugins([TooltipRichContentPlugin::make()])
-                                            ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                            ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                            ->textColors([
+                                                '#00355A' => 'Тёмно-синий',
+                                                '#005A99' => 'Синий',
+                                                '#2196F3' => 'Голубой',
+                                                '#595959' => 'Чёрный',
+                                                '#ffffff' => 'Белый',
+                                                'grey' => 'Серый',
+                                            ])
                                             ->fileAttachmentsVisibility('public')
                                             ->columnSpanFull()
                                             ->visible(fn ($get) => $get('is_accent')),
@@ -689,7 +729,15 @@ class BlocksRelationManager extends RelationManager
                                                 Forms\Components\RichEditor::make('text')
                                                     ->label('Value')
                                                     ->plugins([TooltipRichContentPlugin::make()])
-                                                    ->enableToolbarButtons(['tooltip', 'removeTooltip'])
+                                                    ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                                    ->textColors([
+                                                        '#00355A' => 'Тёмно-синий',
+                                                        '#005A99' => 'Синий',
+                                                        '#2196F3' => 'Голубой',
+                                                        '#595959' => 'Чёрный',
+                                                        '#ffffff' => 'Белый',
+                                                        'grey' => 'Серый',
+                                                    ])
                                                     ->fileAttachmentsVisibility('public')
                                                     ->columnSpanFull(),
                                                 Forms\Components\Select::make('colspan')
