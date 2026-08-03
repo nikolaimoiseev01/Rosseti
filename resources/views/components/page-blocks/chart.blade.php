@@ -102,11 +102,15 @@
     $polylinePoints = '';
     if ($chartType === 'lollipop' && $lollipopLineOverlay && $hasSecondValue) {
         $pts = [];
+        $stemArea = $chartHeight - 40; // usable stem height (excluding label space)
         foreach ($values as $i => $item) {
             $v2 = $numericValues2[$i] ?? 0;
             $hp2 = ($maxValue > 0) ? round(($v2 / $maxValue) * 90, 1) : 0;
-            $stemH = ($chartHeight - 40) * ($hp2 / 100);
-            $y = 1000 * (1 - ($stemH / $chartHeight));
+            $stemH = $stemArea * ($hp2 / 100);
+            // The chart flex container is $chartHeight tall, items align to bottom.
+            // Dot center is at: bottom + stemH + 9px (half dot height).
+            // In SVG viewBox 0..1000, bottom = 1000, so Y = 1000 - ((stemH + 9) / $chartHeight) * 1000
+            $y = 1000 * (1 - (($stemH + 7) / $chartHeight));
             $x = (($i + 0.5) / $numValues) * 1000;
             $pts[] = round($x,1) . ',' . round($y,1);
         }
