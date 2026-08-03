@@ -62,6 +62,7 @@ class BlocksRelationManager extends RelationManager
                         'chart' => 'Диаграмма / График',
                         'donut_chart' => 'Круговая диаграмма',
                         'custom_html' => 'Custom HTML',
+                        'custom_html_native' => 'Custom HTML (без Shadow DOM)',
                     ])
                     ->live()
                     ->afterStateUpdated(function (Select $component): void {
@@ -1588,6 +1589,54 @@ class BlocksRelationManager extends RelationManager
                 ...$this->spacingSelectFields(),
             ],
 
+            'custom_html_native' => [
+                Forms\Components\Select::make('data_languages.html_width')
+                    ->label('Ширина блока')
+                    ->options([
+                        '100' => 'Полная ширина (100%)',
+                        '75' => 'Три четверти (75%)',
+                        '66' => 'Две трети (66%)',
+                        '50' => 'Половина (50%)',
+                        '33' => 'Треть (33%)',
+                    ])
+                    ->default('100'),
+                Forms\Components\Toggle::make('data_languages.prevent_merge')
+                    ->label('Начинать с новой строки')
+                    ->helperText('Не объединять с соседними блоками')
+                    ->default(false),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\Textarea::make('data_languages.ru.html_content')
+                                    ->label('HTML-код (включая <script>)')
+                                    ->rows(15)
+                                    ->columnSpanFull()
+                                    ->placeholder('<div class="my-block">...</div>\n<script>...</script>'),
+                                Forms\Components\Textarea::make('data_languages.ru.css_content')
+                                    ->label('CSS-стили (опционально)')
+                                    ->rows(8)
+                                    ->columnSpanFull()
+                                    ->placeholder('.my-block { display: flex; ... }'),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\Textarea::make('data_languages.en.html_content')
+                                    ->label('HTML code (including <script>)')
+                                    ->rows(15)
+                                    ->columnSpanFull()
+                                    ->placeholder('<div class="my-block">...</div>\n<script>...</script>'),
+                                Forms\Components\Textarea::make('data_languages.en.css_content')
+                                    ->label('CSS styles (optional)')
+                                    ->rows(8)
+                                    ->columnSpanFull()
+                                    ->placeholder('.my-block { display: flex; ... }'),
+                            ]),
+                    ])
+                    ->columnSpanFull(),
+                ...$this->spacingSelectFields(),
+            ],
+
             default => [
                 Forms\Components\Placeholder::make('info')
                     ->label('Выберите тип блока')
@@ -1628,6 +1677,7 @@ class BlocksRelationManager extends RelationManager
                         'chart' => 'Диаграмма / График',
                         'donut_chart' => 'Круговая диаграмма',
                         'custom_html' => 'Custom HTML',
+                        'custom_html_native' => 'Custom HTML (native)',
                         default => $state,
                     }),
                 TextColumn::make('preview')

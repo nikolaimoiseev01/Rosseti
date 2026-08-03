@@ -15,7 +15,7 @@ class BlockGrouper
      */
     public static function group($blocks, string $locale = 'ru'): array
     {
-        $groupableTypes = ['chart', 'donut_chart', 'image', 'custom_html'];
+        $groupableTypes = ['chart', 'donut_chart', 'image', 'custom_html', 'custom_html_native'];
 
         // --- Шаг 1: Обработка каждого блока ---
         $processed = [];
@@ -42,6 +42,7 @@ class BlockGrouper
                     default => (int) ($ld['image_width'] ?? 100),
                 },
                 'custom_html' => (int) ($ld['html_width'] ?? 100),
+                'custom_html_native' => (int) ($ld['html_width'] ?? 100),
                 default       => 100,
             };
 
