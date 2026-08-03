@@ -10,7 +10,7 @@
 <div class="container mx-auto flex max-w-7xl pt-10 mb-[180px] gap-8 md:mb-[80px] justify-between items-start">
 
     <!-- Table of Contents (Desktop Sidebar) -->
-    <aside class="w-[263px] flex-shrink-0 flex lg:hidden self-start sticky top-20">
+    <aside class="max-w-[263px] flex lg:hidden self-start sticky top-20">
         <div>
             <h3 class="mb-4 text-[28px] uppercase ">Навигация</h3>
             <nav class="space-y-2 mb-10 text-lg" id="toc-nav">
@@ -21,7 +21,7 @@
 
 
     <!-- Main Article -->
-    <main class="flex-1 lg:w-full min-w-0">
+    <main class="flex-1 lg:w-full">
         <!-- Horizontal Navigation (Mobile/Tablet) -->
         <div class="hidden lg:flex sticky top-16 z-30 bg-white border rounded-[10px] border-black-100 py-3 px-2 mb-6">
             <nav class="flex gap-4 overflow-x-auto scrollbar-hide" id="toc-nav-horizontal">
