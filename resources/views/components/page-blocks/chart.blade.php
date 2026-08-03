@@ -240,11 +240,11 @@
                             </div>
                         @endif
                     </div>
-                    <div style="position: absolute; bottom: -28px; font-size: 13px; font-weight: 600; color: #6B7785">{{ $item['label'] ?? '' }}</div>
+                    <div style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 12px; width: 140%; text-align: center; font-size: 13px; font-weight: 600; color: #6B7785; line-height: 1.3">{{ $item['label'] ?? '' }}</div>
                 </div>
             @endforeach
         </div>
-        <div style="height: 32px"></div>
+        <div style="height: 60px"></div>
         <style>
             .{{ $scopeClass }} .lolli-item.animated .lolli-val { opacity: 1 !important; transform: translateY(0) !important; }
             .{{ $scopeClass }} .lolli-item.animated .lolli-dot { transform: scale(1) !important; }
@@ -311,7 +311,7 @@
                     data-height-pct="{{ $heightPct }}"
                     @if($hasSecondValue) data-height-pct2="{{ $heightPct2 }}" @endif
                     @if($hasThirdValue) data-height-pct3="{{ $heightPct3 }}" @endif
-                    style="display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 120px"
+                    style="display: flex; flex-direction: column; align-items: center; position: relative; flex: 1; max-width: 120px"
                 >
                     <div style="display: flex; align-items: flex-end; gap: {{ ($hasSecondValue || $hasThirdValue) ? '3px' : '0' }}">
                         {{-- Primary bar --}}
@@ -337,10 +337,11 @@
                             </div>
                         @endif
                     </div>
-                    <div style="margin-top: 10px; font-size: 13px; font-weight: 600; color: #6B7785">{{ $item['label'] ?? '' }}</div>
+                    <div style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 12px; width: 140%; text-align: center; font-size: 13px; font-weight: 600; color: #6B7785; line-height: 1.3">{{ $item['label'] ?? '' }}</div>
                 </div>
             @endforeach
         </div>
+        <div style="height: 60px"></div>
         <style>
             .{{ $scopeClass }} .bar-item-el.animated .bar-val { opacity: 1 !important; transform: translateY(0) !important; }
         </style>
@@ -457,7 +458,7 @@
             @endif
             style="position: relative; border-bottom: 2px solid #D6E4F0; padding: 0"
         >
-            <svg viewBox="0 0 {{ $svgW }} {{ $svgH + 25 }}" preserveAspectRatio="xMidYMid meet" style="width: 100%; display: block">
+            <svg viewBox="0 0 {{ $svgW }} {{ $svgH }}" preserveAspectRatio="xMidYMid meet" style="width: 100%; display: block; overflow: visible">
                 @for($g = 0; $g < 3; $g++)
                     <line x1="{{ $padX }}" y1="{{ $padTop + $g * $plotH / 2 }}"
                           x2="{{ $svgW - $padX }}" y2="{{ $padTop + $g * $plotH / 2 }}"
@@ -487,25 +488,21 @@
                         style="font-family: Inter, PFDinTextCondPro, sans-serif; font-size: 15px; font-weight: 700; fill: {{ $cc['text'] }}; opacity: 0; transition: opacity 0.5s ease">{{ formatChartValue($values[$i]['value'] ?? '0') }}</text>
                 @endforeach
 
-                @foreach($points as $i => $pt)
-                    <text x="{{ $pt['x'] }}" y="{{ $svgH + 15 }}" text-anchor="middle"
-                        style="font-family: Inter, PFDinTextCondPro, sans-serif; font-size: 13px; font-weight: 600; fill: #6B7785">{{ $values[$i]['label'] ?? '' }}</text>
-                @endforeach
-
                 <defs>
                     <linearGradient id="areaG1-{{ $blockId }}" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stop-color="{{ $cc['main'] }}" stop-opacity="0.25"/>
                         <stop offset="100%" stop-color="{{ $cc['main'] }}" stop-opacity="0.02"/>
                     </linearGradient>
-                    @if($hasSecondValue)
-                    <linearGradient id="areaG2-{{ $blockId }}" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="{{ $cc['light'] }}" stop-opacity="0.2"/>
                         <stop offset="100%" stop-color="{{ $cc['light'] }}" stop-opacity="0.02"/>
                     </linearGradient>
                     @endif
                 </defs>
             </svg>
+            @foreach($points as $i => $pt)
+                <div style="position: absolute; top: 100%; left: {{ ($pt['x'] / $svgW) * 100 }}%; transform: translateX(-50%); margin-top: 12px; width: 140px; text-align: center; font-size: 13px; font-weight: 600; color: #6B7785; line-height: 1.3">{{ $values[$i]['label'] ?? '' }}</div>
+            @endforeach
         </div>
+        <div style="height: 60px"></div>
 
         <style>
             .{{ $scopeClass }} .lc-line { stroke-dasharray: 2000; stroke-dashoffset: 2000; transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 1, 0.5, 1); }

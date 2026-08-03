@@ -240,20 +240,20 @@
                              :class="hovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'"
                         >
                             <span class="font-extrabold text-[#00355A] break-words leading-tight"
-                                style="font-size: {{ $svgSize >= 280 ? '14px' : ($svgSize >= 200 ? '13px' : '11px') }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px"
+                                style="font-size: {{ $svgSize >= 400 ? '32px' : ($svgSize >= 340 ? '26px' : ($svgSize >= 280 ? '20px' : ($svgSize >= 200 ? '15px' : '13px'))) }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px"
                                 x-text="centerVal"></span>
                             <span x-show="centerLbl" class="text-[#6B7785] mt-1 font-medium break-words"
-                                style="font-size: {{ $svgSize >= 280 ? '12px' : '11px' }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px; line-height: 1.2"
+                                style="font-size: {{ $svgSize >= 400 ? '16px' : ($svgSize >= 340 ? '14px' : ($svgSize >= 280 ? '13px' : ($svgSize >= 200 ? '12px' : '11px'))) }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px; line-height: 1.2"
                                 x-text="centerLbl"></span>
                         </div>
                     @else
                         <span class="font-extrabold text-[#00355A] transition-opacity duration-300 break-words leading-tight"
                             :class="shown ? 'opacity-100' : 'opacity-0'"
-                            style="transition-delay: 0.6s; font-size: {{ $svgSize >= 280 ? '14px' : ($svgSize >= 200 ? '13px' : '11px') }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px"
+                            style="transition-delay: 0.6s; font-size: {{ $svgSize >= 400 ? '36px' : ($svgSize >= 340 ? '28px' : ($svgSize >= 280 ? '24px' : ($svgSize >= 200 ? '18px' : '14px'))) }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px"
                             x-text="centerVal"></span>
                         <span x-show="centerLbl" class="text-[#6B7785] mt-1 transition-opacity duration-300 font-medium break-words"
                             :class="shown ? 'opacity-100' : 'opacity-0'"
-                            style="transition-delay: 0.8s; font-size: {{ $svgSize >= 280 ? '12px' : '11px' }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px; line-height: 1.2"
+                            style="transition-delay: 0.8s; font-size: {{ $svgSize >= 400 ? '16px' : ($svgSize >= 340 ? '15px' : ($svgSize >= 280 ? '14px' : ($svgSize >= 200 ? '12px' : '11px'))) }}; max-width: {{ round(1.3 * ($radius - $strokeWidth / 2)) }}px; line-height: 1.2"
                             x-text="centerLbl"></span>
                     @endif
                 </div>
