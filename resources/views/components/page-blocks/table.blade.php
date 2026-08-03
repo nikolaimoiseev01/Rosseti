@@ -87,7 +87,7 @@
                     >
                         @foreach($row['cells'] ?? [] as $cell)
                             @php $cs = (int)($cell['colspan'] ?? 1); @endphp
-                            <td class="{{ $cellPadding }} text-[#333] border-t border-[#E1E7F0] {{ !$loop->last ? 'border-r border-r-[#E1E7F0]' : '' }}" @if($cs > 1) colspan="{{ $cs }}" @endif>
+                            <td class="{{ $cellPadding }} border-t border-[#E1E7F0] {{ !$loop->last ? 'border-r border-r-[#E1E7F0]' : '' }}" @if($cs > 1) colspan="{{ $cs }}" @endif>
                                 <div class="prose prose-sm max-w-none">{!! $cell['text'] ?? '' !!}</div>
                             </td>
                         @endforeach
@@ -99,10 +99,14 @@
 </div>
 
 <style>
-    /* --- Header: force text color on all children --- */
+    /* --- Header: force text color on all children (except inline-colored spans) --- */
     .{{ $tableUid }} thead th,
-    .{{ $tableUid }} thead th * {
+    .{{ $tableUid }} thead th *:not([style*="color"]):not([data-color]) {
         color: {{ $headerTextColor }} !important;
+    }
+    /* --- Default cell text color --- */
+    .{{ $tableUid }} tbody td {
+        color: #333;
     }
     /* --- Row hover --- */
     .{{ $tableUid }}-row {
@@ -118,18 +122,18 @@
     }
     .{{ $tableUid }}-row:hover td,
     .{{ $tableUid }}-row:hover td .prose,
-    .{{ $tableUid }}-row:hover td .prose * {
+    .{{ $tableUid }}-row:hover td .prose *:not([style*="color"]):not([data-color]) {
         color: #1A365D;
     }
     /* --- Dark row: white text --- */
     .{{ $tableUid }}-dark-row td,
     .{{ $tableUid }}-dark-row td .prose,
-    .{{ $tableUid }}-dark-row td .prose * {
+    .{{ $tableUid }}-dark-row td .prose *:not([style*="color"]):not([data-color]) {
         color: #fff !important;
     }
     .{{ $tableUid }}-dark-row:hover td,
     .{{ $tableUid }}-dark-row:hover td .prose,
-    .{{ $tableUid }}-dark-row:hover td .prose * {
+    .{{ $tableUid }}-dark-row:hover td .prose *:not([style*="color"]):not([data-color]) {
         color: #E0E7EF !important;
     }
     .{{ $tableUid }}-dark-row:hover {
