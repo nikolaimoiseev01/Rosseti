@@ -66,13 +66,14 @@
             $numericValue = isset($matches[2]) ? (float) str_replace(',', '.', $matches[2]) : 0;
             $suffix = isset($matches[3]) ? $matches[3] : '';
         @endphp
-        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $prefix }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center">
-            <div class="text-[80px] font-normal mb-1 {{colorHelper('main_color', $data)}}">
+        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $prefix }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center flex flex-col">
+            <div class="text-[80px] font-normal leading-none mb-1 {{colorHelper('main_color', $data)}}">
                 <span class="{{colorHelper('main_color', $data)}}" x-text="displayValue"></span>
-                @if(!empty($item['unit']))
-                    <h3 class="font-light inline-block {{colorHelper('unit_color', $data)}}">{{ $item['unit'] }}</h3>
-                @endif
             </div>
+            @if(!empty($item['unit']))
+                <div class="text-xl font-light mb-1 {{colorHelper('unit_color', $data)}}">{{ $item['unit'] }}</div>
+            @endif
+            <div class="flex-1"></div>
             <p class="mt-2 {{colorHelper('text_color', $data)}}">{{ $item['description'] }}</p>
         </div>
     @endforeach
