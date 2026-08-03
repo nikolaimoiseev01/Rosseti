@@ -152,4 +152,15 @@
     .{{ $tableUid }} span.color {
         color: var(--color) !important;
     }
+    /* --- Links in table cells --- */
+    .{{ $tableUid }} a {
+        color: #2196F3 !important;
+        font-weight: normal;
+        text-decoration: underline;
+    }
+    .{{ $tableUid }}-row:hover td a,
+    .{{ $tableUid }}-dark-row td a,
+    .{{ $tableUid }}-dark-row:hover td a {
+        color: #2196F3 !important;
+    }
 </style>
