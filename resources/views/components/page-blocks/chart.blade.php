@@ -124,10 +124,10 @@
 >
     {{-- Header --}}
     @if($title)
-        <h3 class="text-2xl text-blue-500 font-normal leading-tight mb-2">{{ $title }}</h3>
+        <h3 class="text-2xl text-blue-500 font-normal leading-tight mb-2">{!! $title !!}</h3>
     @endif
     @if($unit)
-        <p class="text-lg leading-tight text-black-500 mb-6">{{ $unit }}</p>
+        <p class="text-lg leading-tight text-black-500 mb-6">{!! $unit !!}</p>
     @endif
 
     {{-- ============ LOLLIPOP CHART ============ --}}

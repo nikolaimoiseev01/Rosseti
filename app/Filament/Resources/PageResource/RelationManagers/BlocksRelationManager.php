@@ -1296,10 +1296,12 @@ class BlocksRelationManager extends RelationManager
                             ->schema([
                                 Forms\Components\TextInput::make('data_languages.ru.title')
                                     ->label('Заголовок')
-                                    ->placeholder('Консолидированные активы,'),
+                                    ->placeholder('Консолидированные активы,')
+                                    ->helperText('Для надстрочного текста: <sup>текст</sup>'),
                                 Forms\Components\TextInput::make('data_languages.ru.unit')
                                     ->label('Подзаголовок / единицы')
-                                    ->placeholder('тыс. шт. / млрд руб. / чел.'),
+                                    ->placeholder('тыс. шт. / млрд руб. / чел.')
+                                    ->helperText('Для надстрочного текста: <sup>текст</sup>'),
                                 Forms\Components\Repeater::make('data_languages.ru.values')
                                     ->label('Значения')
                                     ->schema([
@@ -1338,9 +1340,11 @@ class BlocksRelationManager extends RelationManager
                         Tab::make('English')
                             ->schema([
                                 Forms\Components\TextInput::make('data_languages.en.title')
-                                    ->label('Title'),
+                                    ->label('Title')
+                                    ->helperText('For superscript: <sup>text</sup>'),
                                 Forms\Components\TextInput::make('data_languages.en.unit')
-                                    ->label('Subtitle / unit'),
+                                    ->label('Subtitle / unit')
+                                    ->helperText('For superscript: <sup>text</sup>'),
                                 Forms\Components\Repeater::make('data_languages.en.values')
                                     ->label('Values')
                                     ->schema([
