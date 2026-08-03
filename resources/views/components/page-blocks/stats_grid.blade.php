@@ -61,7 +61,7 @@
     @foreach($data['items'] as $item)
         @php
             $valueText = $item['value'] ?? '0';
-            preg_match('/^([><=]*)([\d.,]+)(.*)$/s', $valueText, $matches);
+            preg_match('/^([><= ~]*)([\d.,]+)(.*)$/s', $valueText, $matches);
             $prefix = isset($matches[1]) ? $matches[1] : '';
             $numericValue = isset($matches[2]) ? (float) str_replace(',', '.', $matches[2]) : 0;
             $suffix = isset($matches[3]) ? $matches[3] : '';
