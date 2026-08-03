@@ -234,9 +234,9 @@
                         {{-- Tertiary --}}
                         @if($hasThirdValue && $val3 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="lolli-val {{ $scopeId }}-s-value3" style="font-size: 13px; font-weight: 600; color: {{ $eff3 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s">{{ formatChartValue($item['value3'] ?? '0') }}</div>
-                                <div class="lolli-dot {{ $scopeId }}-s-value3" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 2px solid {{ $eff3 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s; flex-shrink: 0"></div>
-                                <div class="lolli-stem-3 {{ $scopeId }}-s-value3" style="width: 2px; background: linear-gradient(to top, #F1F5FC, {{ $eff3 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
+                                <div class="lolli-val {{ $scopeId }}-s-value3" style="font-size: 18px; font-weight: 700; color: {{ $eff3 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s">{{ formatChartValue($item['value3'] ?? '0') }}</div>
+                                <div class="lolli-dot {{ $scopeId }}-s-value3" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff3 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s; flex-shrink: 0"></div>
+                                <div class="lolli-stem-3 {{ $scopeId }}-s-value3" style="width: 3px; background: linear-gradient(to top, #F1F5FC, {{ $eff3 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
                             </div>
                         @endif
                     </div>
