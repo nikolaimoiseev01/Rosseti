@@ -123,11 +123,11 @@
     style="max-width: {{ $chartWidth }}{{ $inGroup ? '; position: relative; overflow: visible' : '' }}"
 >
     {{-- Header --}}
-    @if($title)
-        <h3 class="text-2xl text-blue-500 font-normal leading-tight mb-2">{!! $title !!}</h3>
+    @if(trim(strip_tags($title)) !== '')
+        <h3 class="text-2xl text-blue-500 font-normal leading-tight mb-2">{!! str_replace(['<p>', '</p>'], '', $title) !!}</h3>
     @endif
-    @if($unit)
-        <p class="text-lg leading-tight text-black-500 mb-6">{!! $unit !!}</p>
+    @if(trim(strip_tags($unit)) !== '')
+        <p class="text-lg leading-tight text-black-500 mb-6">{!! str_replace(['<p>', '</p>'], '', $unit) !!}</p>
     @endif
 
     {{-- ============ LOLLIPOP CHART ============ --}}

@@ -1295,14 +1295,24 @@ class BlocksRelationManager extends RelationManager
                     ->tabs([
                         Tab::make('Русский')
                             ->schema([
-                                Forms\Components\TextInput::make('data_languages.ru.title')
+                                Forms\Components\RichEditor::make('data_languages.ru.title')
                                     ->label('Заголовок')
                                     ->placeholder('Консолидированные активы,')
-                                    ->helperText('Для надстрочного текста: <sup>текст</sup>'),
-                                Forms\Components\TextInput::make('data_languages.ru.unit')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                                    ]),
+                                Forms\Components\RichEditor::make('data_languages.ru.unit')
                                     ->label('Подзаголовок / единицы')
                                     ->placeholder('тыс. шт. / млрд руб. / чел.')
-                                    ->helperText('Для надстрочного текста: <sup>текст</sup>'),
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                                    ]),
                                 Forms\Components\Repeater::make('data_languages.ru.values')
                                     ->label('Значения')
                                     ->schema([
@@ -1340,12 +1350,22 @@ class BlocksRelationManager extends RelationManager
                             ]),
                         Tab::make('English')
                             ->schema([
-                                Forms\Components\TextInput::make('data_languages.en.title')
+                                Forms\Components\RichEditor::make('data_languages.en.title')
                                     ->label('Title')
-                                    ->helperText('For superscript: <sup>text</sup>'),
-                                Forms\Components\TextInput::make('data_languages.en.unit')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                                    ]),
+                                Forms\Components\RichEditor::make('data_languages.en.unit')
                                     ->label('Subtitle / unit')
-                                    ->helperText('For superscript: <sup>text</sup>'),
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                                    ]),
                                 Forms\Components\Repeater::make('data_languages.en.values')
                                     ->label('Values')
                                     ->schema([
@@ -1453,12 +1473,24 @@ class BlocksRelationManager extends RelationManager
                     ->label('Начинать с новой строки')
                     ->helperText('Не объединять с соседними блоками')
                     ->default(false),
-                Forms\Components\TextInput::make('data_languages.title')
+                Forms\Components\RichEditor::make('data_languages.title')
                     ->label('Заголовок')
-                    ->placeholder('Консолидированные активы,'),
-                Forms\Components\TextInput::make('data_languages.unit')
+                    ->placeholder('Консолидированные активы,')
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
+                    ])
+                    ->enableToolbarButtons([
+                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                    ]),
+                Forms\Components\RichEditor::make('data_languages.unit')
                     ->label('Подзаголовок / единицы')
-                    ->placeholder('млрд руб.'),
+                    ->placeholder('млрд руб.')
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
+                    ])
+                    ->enableToolbarButtons([
+                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                    ]),
 
                 // --- Simple donut fields ---
                 Forms\Components\TextInput::make('data_languages.value')

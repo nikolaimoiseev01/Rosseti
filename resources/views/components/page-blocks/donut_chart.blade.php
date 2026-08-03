@@ -100,11 +100,11 @@
             observer.observe($el);
         "
     >
-        @if($title)
-            <h3 class="text-2xl text-blue-500 font-normal mb-2" style="text-align: center">{{ $title }}</h3>
+        @if(trim(strip_tags($title)) !== '')
+            <h3 class="text-2xl text-blue-500 font-normal mb-2" style="text-align: center">{!! str_replace(['<p>', '</p>'], '', $title) !!}</h3>
         @endif
-        @if($unit)
-            <p class="text-lg leading-6 text-black-500 mb-4" style="text-align: center">{{ $unit }}</p>
+        @if(trim(strip_tags($unit)) !== '')
+            <p class="text-lg leading-6 text-black-500 mb-4" style="text-align: center">{!! str_replace(['<p>', '</p>'], '', $unit) !!}</p>
         @endif
 
         <div class="relative" style="width: {{ $svgSize }}px; height: {{ $svgSize }}px">
@@ -191,11 +191,11 @@
             observer.observe($el);
         "
     >
-        @if($title)
-            <h3 class="text-2xl text-blue-500 font-normal mb-2">{{ $title }}</h3>
+        @if(trim(strip_tags($title)) !== '')
+            <h3 class="text-2xl text-blue-500 font-normal mb-2">{!! str_replace(['<p>', '</p>'], '', $title) !!}</h3>
         @endif
-        @if($unit)
-            <p class="text-lg leading-6 text-black-500 mb-5">{{ $unit }}</p>
+        @if(trim(strip_tags($unit)) !== '')
+            <p class="text-lg leading-6 text-black-500 mb-5">{!! str_replace(['<p>', '</p>'], '', $unit) !!}</p>
         @endif
 
         <div class="flex items-center gap-[60px] md:flex-col">
