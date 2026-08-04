@@ -2,7 +2,7 @@
          class="page-block page-block--strategy container bg-[#F4F7FB] rounded-[32px] flex flex-row md:flex-col items-stretch md:items-center p-12 md:p-8 gap-12 md:gap-8 mb-14">
     
     <!-- Левая колонка: Фото и подпись -->
-    <div class="flex flex-col items-center shrink-0 w-[280px] md:w-full md:order-last">
+    <div class="flex flex-col justify-between items-center shrink-0 w-[280px] md:w-full md:order-last h-full">
         <div class="w-[260px] h-[260px] md:w-[200px] md:h-[200px] rounded-full overflow-hidden md:mt-8 bg-gray-200 shrink-0">
             <!-- object-top выравнивает фото по лицу, если оно прямоугольное -->
             <img src="/fixed/zam-director.png" class="w-full h-full object-cover object-top" alt="А. А. Полинов" data-no-lightbox>
