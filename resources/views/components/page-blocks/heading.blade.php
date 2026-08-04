@@ -27,6 +27,10 @@
     $subtitle = $data['subtitle'] ?? '';
     $hasSubtitle = !empty(trim(strip_tags($subtitle)));
     $content = str_replace(['<p>', '</p>'], '', $data['content'] ?? '');
+
+    // Fix СУРиВК abbreviation case and wrap in span to prevent uppercase
+    $content = preg_replace('/СУРИВК/ui', '<span class="preserve-case">СУРиВК</span>', $content);
+    $subtitle = preg_replace('/СУРИВК/ui', '<span class="preserve-case">СУРиВК</span>', $subtitle);
 @endphp
 <div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--heading {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
     <{{ $level }} class="{{colorHelper('color', $data)}} {{colorHelper('font_weight', $data)}} {{ $hasSubtitle ? '!mb-1' : '' }}">

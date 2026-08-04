@@ -12,6 +12,7 @@ import 'swiper/css/navigation';
 import {gsap} from "gsap";
 
 import $ from 'jquery';
+window.$ = $;
 
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {ScrollSmoother} from "gsap/ScrollSmoother";

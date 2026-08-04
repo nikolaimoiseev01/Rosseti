@@ -63,6 +63,7 @@ class BlocksRelationManager extends RelationManager
                         'donut_chart' => 'Круговая диаграмма',
                         'custom_html' => 'Custom HTML',
                         'custom_html_native' => 'Custom HTML (без Shadow DOM)',
+                        'custom_component' => 'Кастомный компонент',
                     ])
                     ->live()
                     ->afterStateUpdated(function (Select $component): void {
@@ -1669,6 +1670,35 @@ class BlocksRelationManager extends RelationManager
                 ...$this->spacingSelectFields(),
             ],
 
+            'custom_component' => [
+                Forms\Components\Select::make('data_languages.component_name')
+                    ->label('Компонент')
+                    ->required()
+                    ->options($this->getAvailableComponents())
+                    ->searchable()
+                    ->helperText('Создайте компонент через: php artisan make:component CustomPageBlocks/TestComponent'),
+                Forms\Components\Textarea::make('data_languages.component_data')
+                    ->label('Данные компонента (JSON)')
+                    ->rows(10)
+                    ->columnSpanFull()
+                    ->helperText('Передайте данные в компонент в формате JSON. Например: {"title": "Привет", "items": ["a", "b"]}'),
+                Forms\Components\Select::make('data_languages.html_width')
+                    ->label('Ширина блока')
+                    ->options([
+                        '100' => 'Полная ширина (100%)',
+                        '75' => 'Три четверти (75%)',
+                        '66' => 'Две трети (66%)',
+                        '50' => 'Половина (50%)',
+                        '33' => 'Треть (33%)',
+                    ])
+                    ->default('100'),
+                Forms\Components\Toggle::make('data_languages.prevent_merge')
+                    ->label('Начинать с новой строки')
+                    ->helperText('Не объединять с соседними блоками')
+                    ->default(false),
+                ...$this->spacingSelectFields(),
+            ],
+
             default => [
                 Forms\Components\Placeholder::make('info')
                     ->label('Выберите тип блока')
@@ -1710,6 +1740,7 @@ class BlocksRelationManager extends RelationManager
                         'donut_chart' => 'Круговая диаграмма',
                         'custom_html' => 'Custom HTML',
                         'custom_html_native' => 'Custom HTML (native)',
+                        'custom_component' => 'Кастомный компонент',
                         default => $state,
                     }),
                 TextColumn::make('preview')
@@ -1739,6 +1770,9 @@ class BlocksRelationManager extends RelationManager
                             'two_columns' => strip_tags($data_languages['left'] ?? ''),
                             'chart' => ($data_languages['title'] ?? '') . ' (' . ($record->data_languages['chart_type'] ?? 'lollipop') . ')',
                             'donut_chart' => ($record->data_languages['donut_style'] ?? 'simple') === 'multi' ? ($record->data_languages['center_value'] ?? '') : ($record->data_languages['value'] ?? '') . ($record->data_languages['suffix'] ?? '%'),
+                            'custom_component' => $data_languages['component_name'] ?? '',
+                            'custom_html' => strip_tags($data_languages['html_content'] ?? ''),
+                            'custom_html_native' => strip_tags($data_languages['html_content'] ?? ''),
                             default => '',
                         };
 
@@ -1803,6 +1837,9 @@ class BlocksRelationManager extends RelationManager
                         'icon_list' => 'Перечисление с иконками',
                         'chart' => 'Диаграмма / График',
                         'donut_chart' => 'Круговая диаграмма',
+                        'custom_html' => 'Custom HTML',
+                        'custom_html_native' => 'Custom HTML (native)',
+                        'custom_component' => 'Кастомный компонент',
                     ]),
             ])
             ->headerActions([
@@ -1862,5 +1899,25 @@ class BlocksRelationManager extends RelationManager
                 ->options($spacingOptions)
                 ->default('xl'),
         ];
+    }
+
+    private function getAvailableComponents(): array
+    {
+        $components = [];
+
+        // Сканируем только папку app/View/Components/CustomPageBlocks
+        $customPageBlocksPath = app_path('View/Components/CustomPageBlocks');
+        if (is_dir($customPageBlocksPath)) {
+            $files = scandir($customPageBlocksPath);
+            foreach ($files as $file) {
+                if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
+                    $className = pathinfo($file, PATHINFO_FILENAME);
+                    $kebabName = Str::kebab($className);
+                    $components[$kebabName] = $kebabName;
+                }
+            }
+        }
+
+        return $components;
     }
 }

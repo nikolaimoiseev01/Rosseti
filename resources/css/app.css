@@ -219,3 +219,9 @@ span[data-color],
 span.color {
     color: var(--color) !important;
 }
+
+/* Preserve case for specific abbreviations */
+.preserve-case {
+    text-transform: none !important;
+    color: inherit !important;
+}
