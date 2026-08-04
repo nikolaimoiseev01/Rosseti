@@ -91,6 +91,7 @@
                 @endforeach
             </div>
 
+        </div>
         <div>
             <h3 x-data="revealOnScroll()" class="mb-5  text-2xl">
                 Наши ценности
