@@ -3,7 +3,10 @@
     <div class="z-10 flex lg:flex-col justify-between w-full">
         <div class="flex flex-col lg:mb-8" x-data="revealOnScroll()">
             <h2 class="text-white">ОБ ОТЧЕТЕ</h2>
-            <p class="text-white text-[24px] max-w-[436px]">Наша цель: Максимально полно представлять информацию о деятельности Компании для широкого круга заинтересованных сторон.</p>
+            <div class="max-w-[436px]">
+                <p class="text-white font-bold text-[24px]">Наша цель</p>
+                <p class="text-white text-[16px] leading-relaxed mt-2">максимально полно представлять информацию о деятельности Компании для широкого круга заинтересованных сторон.</p>
+            </div>
         </div>
         <div x-data="revealOnScroll()" class="ml-auto flex flex-col rounded-[10px]
             bg-gradient-to-br from-white/25 to-white/[0.03]
