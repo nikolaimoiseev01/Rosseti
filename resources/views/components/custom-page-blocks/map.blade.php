@@ -803,8 +803,17 @@
 {{--    <livewire:components.right-card-district name="right-card-district"/>--}}
 </div>
 @push('page-js')
-    <script type="module">
-        document.addEventListener('livewire:navigated', () => {
+    <script>
+        (function () {
+            function initMap() {
+                const mapRoot = document.querySelector('.rf-map');
+
+                if (!mapRoot || mapRoot.dataset.mapInitialized) {
+                    return;
+                }
+
+                mapRoot.dataset.mapInitialized = '1';
+
                 console.log('INIT MAP');
 
                 const regions = document.querySelectorAll('.rf-map svg path');
@@ -1098,15 +1107,17 @@
                 }
 
                 function makeRegionsClick() {
-                    $('.rf-map svg path, .district-links').on('click', function () {
-                        slug = $(this).attr('data-district-slug');
-                        if(slug !== 'skfo') {
-                            Livewire.dispatch('updateRightCardDistrict', {slug: slug})
-                            window.dispatchEvent(new CustomEvent('open-right-card', {
-                                detail: 'right-card-district'
-                            }));
-                        }
-                    })
+                    document.querySelectorAll('.rf-map svg path, .district-links').forEach(el => {
+                        el.addEventListener('click', function () {
+                            const slug = this.getAttribute('data-district-slug');
+                            if (slug && slug !== 'skfo') {
+                                Livewire.dispatch('updateRightCardDistrict', {slug: slug})
+                                window.dispatchEvent(new CustomEvent('open-right-card', {
+                                    detail: 'right-card-district'
+                                }));
+                            }
+                        });
+                    });
                 }
 
                 makeRegionsClick();
@@ -1114,7 +1125,10 @@
                 makeDistrictLinksHover();
                 makeCitiesHover();
             }
-        );
+
+            initMap();
+            document.addEventListener('livewire:navigated', initMap);
+        })();
 
     </script>
 @endpush
