@@ -732,23 +732,23 @@
         ];
 
         $cities = $cities ?? [
-            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'x' => 28, 'y' => 125, 'logos' => [['url' => '/fixed/SZFO_Yantar.png', 'x' => 27, 'y' => 111]] ],
-            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom', 'logos' => [['url' => '/fixed/SZFO_SZ.png', 'x' => 84, 'y' => 110]] ],
+            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'x' => 28, 'y' => 125, 'logos' => [['url' => asset('fixed/SZFO_Yantar.png'), 'x' => 27, 'y' => 111]] ],
+            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom', 'logos' => [['url' => asset('fixed/SZFO_SZ.png'), 'x' => 84, 'y' => 110]] ],
             [ 'slug' => 'moscow', 'name' => 'Москва', 'x' => 85, 'y' => 175, 'logos' => [
-                ['url' => '/fixed/Centr_centr.png', 'x' => 84, 'y' => 161],
-                ['url' => '/fixed/Centr_mosreg.png', 'x' => 84, 'y' => 145]
+                ['url' => asset('fixed/Centr_centr.png'), 'x' => 84, 'y' => 161],
+                ['url' => asset('fixed/Centr_mosreg.png'), 'x' => 84, 'y' => 145]
             ] ],
-            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom', 'logos' => [['url' => '/fixed/Priv_centrpriv.png', 'x' => 113, 'y' => 188]] ],
-            [ 'slug' => 'saratov', 'name' => 'Саратов', 'x' => 101, 'y' => 240, 'logos' => [['url' => '/fixed/Priv_volga.png', 'x' => 103, 'y' => 268]] ],
-            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'x' => 53, 'y' => 242, 'logos' => [['url' => '/fixed/UFO_yug.png', 'x' => 52, 'y' => 229]] ],
-            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'x' => 43, 'y' => 268, 'logos' => [['url' => '/fixed/SKFO_SK.png', 'x' => 5, 'y' => 273]] ],
-            [ 'slug' => 'grozny', 'name' => 'Грозный', 'x' => 49, 'y' => 289, 'logos' => [['url' => '/fixed/SKFO_Chech.png', 'x' => 57, 'y' => 315]] ],
-            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'x' => 193, 'y' => 236, 'logos' => [['url' => '/fixed/URFO_ural.png', 'x' => 193, 'y' => 222]] ],
-            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'x' => 213, 'y' => 249, 'logos' => [['url' => '/fixed/URFO_Tymen.png', 'x' => 212, 'y' => 277]] ],
-            [ 'slug' => 'tomsk', 'name' => 'Томск', 'x' => 292, 'y' => 279, 'logos' => [['url' => '/fixed/SFO_Tomsk.png', 'x' => 292, 'y' => 263]] ],
-            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom', 'logos' => [['url' => '/fixed/SFo_novosib.png', 'x' => 278, 'y' => 324]] ],
-            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'x' => 329, 'y' => 297, 'logos' => [['url' => '/fixed/SFO_sibir.png', 'x' => 329, 'y' => 281]] ],
-            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'x' => 337, 'y' => 333, 'logos' => [['url' => '/fixed/SFO_Tyva.png', 'x' => 337, 'y' => 360]] ]
+            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom', 'logos' => [['url' => asset('fixed/Priv_centrpriv.png'), 'x' => 113, 'y' => 188]] ],
+            [ 'slug' => 'saratov', 'name' => 'Саратов', 'x' => 101, 'y' => 240, 'logos' => [['url' => asset('fixed/Priv_volga.png'), 'x' => 103, 'y' => 268]] ],
+            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'x' => 53, 'y' => 242, 'logos' => [['url' => asset('fixed/UFO_yug.png'), 'x' => 52, 'y' => 229]] ],
+            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'x' => 43, 'y' => 268, 'logos' => [['url' => asset('fixed/SKFO_SK.png'), 'x' => 5, 'y' => 273]] ],
+            [ 'slug' => 'grozny', 'name' => 'Грозный', 'x' => 49, 'y' => 289, 'logos' => [['url' => asset('fixed/SKFO_Chech.png'), 'x' => 57, 'y' => 315]] ],
+            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'x' => 193, 'y' => 236, 'logos' => [['url' => asset('fixed/URFO_ural.png'), 'x' => 193, 'y' => 222]] ],
+            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'x' => 213, 'y' => 249, 'logos' => [['url' => asset('fixed/URFO_Tymen.png'), 'x' => 212, 'y' => 277]] ],
+            [ 'slug' => 'tomsk', 'name' => 'Томск', 'x' => 292, 'y' => 279, 'logos' => [['url' => asset('fixed/SFO_Tomsk.png'), 'x' => 292, 'y' => 263]] ],
+            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom', 'logos' => [['url' => asset('fixed/SFo_novosib.png'), 'x' => 278, 'y' => 324]] ],
+            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'x' => 329, 'y' => 297, 'logos' => [['url' => asset('fixed/SFO_sibir.png'), 'x' => 329, 'y' => 281]] ],
+            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'x' => 337, 'y' => 333, 'logos' => [['url' => asset('fixed/SFO_Tyva.png'), 'x' => 337, 'y' => 360]] ]
         ];
     @endphp
     @php
@@ -1071,7 +1071,7 @@
                             city.logos.forEach(logoData => {
                                 const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
                                 logo.setAttribute('href', logoData.url);
-                                logo.setAttributeNS('http://www.w3.org/1999/xlink', 'href', logoData.url);
+                                logo.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', logoData.url);
                                 logo.setAttribute('width', logoWidth);
                                 logo.setAttribute('height', logoHeight);
                                 logo.setAttribute('preserveAspectRatio', 'xMidYMid meet');
