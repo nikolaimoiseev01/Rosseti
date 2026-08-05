@@ -1062,10 +1062,37 @@
                         group.appendChild(circle);
 
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        let textYOffset = 0;
                         
+                        if (city.logo) {
+                            const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+                            logo.setAttribute('href', city.logo);
+                            logo.setAttribute('width', '40');
+                            logo.setAttribute('height', '15');
+                            logo.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+                            
+                            // Adjust text and logo positions based on text_pos
+                            if (city.text_pos === 'bottom') {
+                                logo.setAttribute('x', cx - 20);
+                                logo.setAttribute('y', cy + 10);
+                                textYOffset = 18; 
+                            } else if (city.text_pos === 'left') {
+                                logo.setAttribute('x', cx - 55);
+                                logo.setAttribute('y', cy - 7);
+                            } else if (city.text_pos === 'right') {
+                                logo.setAttribute('x', cx + 15);
+                                logo.setAttribute('y', cy - 7);
+                            } else {
+                                logo.setAttribute('x', cx - 20);
+                                logo.setAttribute('y', cy - 25);
+                                textYOffset = -18;
+                            }
+                            group.appendChild(logo);
+                        }
+
                         if (city.text_pos === 'bottom') {
                             text.setAttribute('x', cx);
-                            text.setAttribute('y', cy + 16);
+                            text.setAttribute('y', cy + 16 + textYOffset);
                             text.setAttribute('text-anchor', 'middle');
                         } else if (city.text_pos === 'left') {
                             text.setAttribute('x', cx - 10);
@@ -1077,7 +1104,7 @@
                             text.setAttribute('text-anchor', 'start');
                         } else {
                             text.setAttribute('x', cx);
-                            text.setAttribute('y', cy - 8);
+                            text.setAttribute('y', cy - 8 + textYOffset);
                             text.setAttribute('text-anchor', 'middle');
                         }
 
