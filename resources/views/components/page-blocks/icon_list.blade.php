@@ -60,14 +60,14 @@
     }
 
 </style>
-<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }} [&_a]:text-[#2196F3] [&_a]:underline hover:[&_a]:text-[#005B9C]">
     @foreach($items as $item)
         @php
             $isTitleAccent = ($item['title_style'] ?? 'large_bold') === 'accent';
         @endphp
         <div class="flex items-center gap-4">
             @if(!empty($item['icon']))
-                <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0">
+                <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0 pointer-events-none">
             @endif
             <div style="color: #1A1A1A !important;" class="text-lg leading-6">
                 {!! str_replace(['<p>', '</p>'], '', $item['title'] ?? '') !!}

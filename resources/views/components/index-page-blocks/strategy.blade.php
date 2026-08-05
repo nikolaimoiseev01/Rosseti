@@ -1,26 +1,21 @@
 <section x-data="revealOnScroll()"
-         class="page-block page-block--strategy container bg-[#F4F7FB] rounded-[32px] flex flex-row md:flex-col items-stretch md:items-center p-12 md:p-8 gap-12 md:gap-8 mb-14">
-    
-    <!-- Левая колонка: Фото и подпись -->
-    <div class="flex flex-col justify-between items-center shrink-0 w-[280px] md:w-full md:order-last h-full">
-        <div class="w-[260px] h-[260px] md:w-[200px] md:h-[200px] rounded-full overflow-hidden md:mt-8 bg-gray-200 shrink-0">
-            <!-- object-top выравнивает фото по лицу, если оно прямоугольное -->
-            <img src="/fixed/zam-director.png" class="w-full h-full object-cover object-top" alt="А. А. Полинов" data-no-lightbox>
-        </div>
-        <div class="text-center text-[#585858] text-[15px] md:text-[14px] leading-[1.3] mt-auto md:mt-6 pt-6 md:pt-0">
-            Врио Заместителя Генерального директора<br>по стратегии, А. А. Полинов
-        </div>
-    </div>
-
-    <!-- Правая колонка: Текст -->
-    <div class="flex flex-col flex-1">
-        <h3 class="text-[24px] md:text-[20px] font-bold text-[#005B9C] leading-snug mb-6">
+         class="page-block page-block--strategy container mb-14">
+    <div class="page-block p-8 rounded-2xl max-w-4xl mx-auto bg-[#F4F7FB]">
+        <h3 class="text-blue-500 text-2xl inline-block" style="color: #00355A; line-height: 1.15; margin-bottom: 32px;">
             Каковы стратегические цели и практическая значимость подготовки ПАО «Россети» Отчета о социальной ответственности и корпоративном устойчивом развитии?
         </h3>
         
-        <div class="text-[#333] text-[16px] md:text-[15px] leading-relaxed space-y-5">
+        <div class="text-[15px] leading-relaxed text-[#333] space-y-4 mb-8">
             <p>ПАО «Россети» более 15 лет раскрывает нефинансовую информацию в формате отдельного отчета, рассматривая его в качестве важного управленческого инструмента. Подготовка документа позволяет проводить самооценку, актуализировать приоритетные темы устойчивого развития и учитывать ожидания заинтересованных сторон.</p>
             <p>Для Компании устойчивое развитие — не внешнее требование, а философия ответственного ведения бизнеса. За показателями стоят реальные результаты: надежное и доступное электроснабжение, повышение устойчивости энергосистемы, создание рабочих мест и вклад в развитие регионов и промышленности. Отчет отражает системную работу Группы «Россети» и ее долгосрочную ответственность перед обществом. Наша цель — развитие современной, технологичной и экологически ответственной инфраструктуры. Мы надеемся, что и Отчет за 2025 год станет не просто источником информации для заинтересованных сторон, а возможностью увидеть, как конкретные решения, люди и проекты складываются в единый процесс по развитию энергетики и будущего страны.</p>
+        </div>
+
+        <div class="flex items-center gap-5">
+            <img src="/fixed/zam-director.png" alt="А. А. Полинов" class="w-[100px] h-[100px] rounded-full object-cover shrink-0 object-top" data-no-lightbox>
+            <div>
+                <p class="font-bold text-[#1A1A1A]">А. А. Полинов</p>
+                <p class="text-sm text-[#6B7785]">Врио Заместителя Генерального директора по стратегии</p>
+            </div>
         </div>
     </div>
 </section>

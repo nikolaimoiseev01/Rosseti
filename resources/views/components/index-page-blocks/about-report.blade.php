@@ -2,8 +2,11 @@
     <div class="absolute inset-0 w-full h-full bg-black-900/10"></div>
     <div class="z-10 flex lg:flex-col justify-between w-full">
         <div class="flex flex-col lg:mb-8" x-data="revealOnScroll()">
-            <h2 class="text-white">ОБ ОТЧЕТЕ</h2>
-            <p class="text-white text-[24px] max-w-[436px]">Наша цель: Максимально полно представлять информацию о деятельности Компании для широкого круга заинтересованных сторон.</p>
+            <h2 class="text-white mb-2">ОБ ОТЧЕТЕ</h2>
+            <div class="max-w-[436px] mt-6">
+                <p class="text-white font-bold text-[24px]">Наша цель</p>
+                <p class="text-white text-lg leading-tight mt-2">максимально полно представлять информацию о деятельности Компании для широкого круга заинтересованных сторон.</p>
+            </div>
         </div>
         <div x-data="revealOnScroll()" class="ml-auto flex flex-col rounded-[10px]
             bg-gradient-to-br from-white/25 to-white/[0.03]
