@@ -895,14 +895,14 @@
                 function addDistrictNumbers() {
                     // Manual center positions for each district based on SVG viewBox coordinates (0 0 708.9 458.9)
                     const districtCentroids = {
-                        'szfo': { x: 170, y: 140, number: 1 },   // Северо-Западный
-                        'pfo': { x: 160, y: 210, number: 2 },   // Приволжский
-                        'urfo': { x: 270, y: 190, number: 3 },   // Уральский
-                        'ufo': { x: 60, y: 240, number: 4 },   // Южный
-                        'sbfo': { x: 340, y: 200, number: 5 },  // Сибирский
-                        'cfo': { x: 75, y: 180, number: 6 },   // Центральный
-                        'dfo': { x: 520, y: 200, number: 7 },    // Дальневосточный
-                        'skfo': { x: 50, y: 290, number: 8 }  // Северо-Кавказский
+                        'szfo': { x: 148, y: 148, number: 1 },
+                        'pfo': { x: 167, y: 204, number: 2 },
+                        'urfo': { x: 237, y: 219, number: 3 },
+                        'ufo': { x: 71, y: 249, number: 4 },
+                        'sbfo': { x: 342, y: 251, number: 5 },
+                        'cfo': { x: 65, y: 195, number: 6 },
+                        'dfo': { x: 491, y: 240, number: 7 },
+                        'skfo': { x: 32, y: 296, number: 8 }
                     };
 
                     // Add text elements to SVG
@@ -1161,7 +1161,6 @@
                             marker.querySelector('circle').setAttribute('fill', '#2196F3');
                             marker.querySelector('circle').setAttribute('r', '5');
                             marker.querySelector('text').setAttribute('fill', '#2196F3');
-                            marker.parentNode.appendChild(marker);
                         } else {
                             marker.querySelector('circle').setAttribute('fill', '#00355A');
                             marker.querySelector('circle').setAttribute('r', '4');
