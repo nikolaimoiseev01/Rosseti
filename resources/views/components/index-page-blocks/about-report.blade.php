@@ -5,7 +5,7 @@
             <h2 class="text-white mb-2">ОБ ОТЧЕТЕ</h2>
             <div class="max-w-[436px] mt-6">
                 <p class="text-white font-bold text-[24px]">Наша цель</p>
-                <p class="text-white text-[16px] leading-tight mt-2">максимально полно представлять информацию о деятельности Компании для широкого круга заинтересованных сторон.</p>
+                <p class="text-white text-lg leading-tight mt-2">максимально полно представлять информацию о деятельности Компании для широкого круга заинтересованных сторон.</p>
             </div>
         </div>
         <div x-data="revealOnScroll()" class="ml-auto flex flex-col rounded-[10px]
