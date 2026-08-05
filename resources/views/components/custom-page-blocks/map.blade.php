@@ -790,7 +790,7 @@
             <div data-city-slug="{{ $city['slug'] }}" class="city-link transition-all cursor-pointer w-fit">
                 <div class="flex items-center gap-3 w-fit">
                     @if(!empty($city['logo']))
-                        <img src="{{ $city['logo'] }}" alt="{{ $city['name'] }}" class="w-22 object-contain">
+                        <img src="{{ asset($city['logo']) }}" alt="{{ $city['name'] }}" class="w-20 h-auto object-contain">
                     @endif
                         <span class="text-sm font-medium text-blue-900">{{ $city['name'] }}</span>
                     <div class="relative flex items-center justify-center w-[18px] min-w-[18px] bg-white h-[18px] border rounded-full" style="border-color: #2497E8;">
