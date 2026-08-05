@@ -732,48 +732,24 @@
         ];
 
         $cities = $cities ?? [
-            [
-                'slug' => 'moscow',
-                'name' => 'Москва',
-                'logo' => '/fixed/logo-white.png',
-                'x' => 85,
-                'y' => 175,
-            ],
-            [
-                'slug' => 'spb',
-                'name' => 'Санкт-Петербург',
-                'logo' => '/fixed/logo-white.png',
-                'x' => 95,
-                'y' => 125,
-            ],
-            [
-                'slug' => 'kazan',
-                'name' => 'Казань',
-                'logo' => '/fixed/logo-white.png',
-                'x' => 145,
-                'y' => 200,
-            ],
-            [
-                'slug' => 'ekaterinburg',
-                'name' => 'Екатеринбург',
-                'logo' => '/fixed/logo-white.png',
-                'x' => 250,
-                'y' => 185,
-            ],
-            [
-                'slug' => 'novosibirsk',
-                'name' => 'Новосибирск',
-                'logo' => '/fixed/logo-white.png',
-                'x' => 380,
-                'y' => 215,
-            ],
-            [
-                'slug' => 'vladivostok',
-                'name' => 'Владивосток',
-                'logo' => '/fixed/logo-white.png',
-                'x' => 620,
-                'y' => 280,
-            ],
+            [ 'slug' => 'moscow', 'name' => 'Москва', 'logo' => '/fixed/logo-white.png', 'x' => 110, 'y' => 170 ],
+            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'logo' => '/fixed/logo-white.png', 'x' => 125, 'y' => 125 ],
+            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'logo' => '/fixed/logo-white.png', 'x' => 30, 'y' => 135 ],
+            [ 'slug' => 'krasnodar', 'name' => 'Краснодар', 'logo' => '/fixed/logo-white.png', 'x' => 60, 'y' => 260 ],
+            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'logo' => '/fixed/logo-white.png', 'x' => 70, 'y' => 240 ],
+            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'logo' => '/fixed/logo-white.png', 'x' => 80, 'y' => 280 ],
+            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'logo' => '/fixed/logo-white.png', 'x' => 140, 'y' => 180 ],
+            [ 'slug' => 'saratov', 'name' => 'Саратов', 'logo' => '/fixed/logo-white.png', 'x' => 125, 'y' => 220 ],
+            [ 'slug' => 'samara', 'name' => 'Самара', 'logo' => '/fixed/logo-white.png', 'x' => 160, 'y' => 230 ],
+            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'logo' => '/fixed/logo-white.png', 'x' => 240, 'y' => 205 ],
+            [ 'slug' => 'surgut', 'name' => 'Сургут', 'logo' => '/fixed/logo-white.png', 'x' => 270, 'y' => 175 ],
+            [ 'slug' => 'tomsk', 'name' => 'Томск', 'logo' => '/fixed/logo-white.png', 'x' => 330, 'y' => 240 ],
+            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'logo' => '/fixed/logo-white.png', 'x' => 320, 'y' => 260 ],
+            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'logo' => '/fixed/logo-white.png', 'x' => 380, 'y' => 250 ],
+            [ 'slug' => 'irkutsk', 'name' => 'Иркутск', 'logo' => '/fixed/logo-white.png', 'x' => 440, 'y' => 285 ],
+            [ 'slug' => 'chita', 'name' => 'Чита', 'logo' => '/fixed/logo-white.png', 'x' => 495, 'y' => 295 ],
+            [ 'slug' => 'khabarovsk', 'name' => 'Хабаровск', 'logo' => '/fixed/logo-white.png', 'x' => 590, 'y' => 310 ],
+            [ 'slug' => 'vladivostok', 'name' => 'Владивосток', 'logo' => '/fixed/logo-white.png', 'x' => 575, 'y' => 355 ],
         ];
     @endphp
     @php
