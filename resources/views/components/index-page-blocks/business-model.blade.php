@@ -171,108 +171,6 @@ HTML
         ];
 @endphp
 
-<style>
-    .business-stack-swiper {
-        position: relative;
-        height: 315px;
-        overflow: visible;
-    }
-
-    .business-stack-swiper .swiper-wrapper {
-        position: relative;
-        width: 100%;
-        height: 280px;
-        transform: none !important;
-    }
-
-    .business-stack-swiper .swiper-slide {
-        position: absolute;
-        top: 0;
-        left: 0;
-
-        width: 100%;
-        height: 260px;
-
-        opacity: 0;
-        pointer-events: none;
-        transform-origin: center top;
-
-        transition: transform 0.5s ease,
-        opacity 0.5s ease;
-    }
-
-    .business-stack-swiper .swiper-slide.is-stack-visible {
-        opacity: 1;
-    }
-
-    .business-stack-swiper .swiper-slide.is-active-card {
-        pointer-events: auto;
-    }
-
-    .business-capitals-swiper .swiper-slide > div {
-        transition: filter 0.5s ease,
-        box-shadow 0.5s ease;
-    }
-
-    .business-capitals-swiper .swiper-slide.is-stack-depth-1 > div {
-        filter: blur(1.5px) brightness(0.75);
-        box-shadow: 0 16px 28px rgba(33, 74, 104, 0.2);
-    }
-
-    .business-capitals-swiper .swiper-slide.is-stack-depth-2 > div {
-        filter: blur(3px) brightness(0.6);
-        box-shadow: 0 20px 36px rgba(33, 74, 104, 0.24);
-    }
-
-    .business-capitals-swiper .swiper-slide.is-active-card > div {
-        filter: none;
-        box-shadow: 0 12px 25px rgba(33, 74, 104, 0.08);
-    }
-
-    .business-results-swiper .swiper-slide > div {
-        transition: filter 0.5s ease,
-        opacity 0.5s ease,
-        box-shadow 0.5s ease;
-    }
-
-    .business-results-swiper .swiper-slide.is-stack-depth-1 > div {
-        filter: blur(4px);
-        opacity: 0.7;
-        box-shadow: 0 16px 28px rgba(33, 74, 104, 0.2);
-    }
-
-    .business-results-swiper .swiper-slide.is-stack-depth-2 > div {
-        filter: blur(8px);
-        opacity: 0.5;
-        box-shadow: 0 20px 36px rgba(33, 74, 104, 0.24);
-    }
-
-    .business-results-swiper .swiper-slide.is-active-card > div {
-        filter: none;
-        box-shadow: 0 12px 25px rgba(33, 74, 104, 0.08);
-    }
-
-    @media (max-width: 767px) {
-        .business-stack-swiper {
-            height: auto;
-            overflow: hidden;
-        }
-
-        .business-stack-swiper .swiper-wrapper {
-            height: auto;
-            min-height: 290px;
-        }
-
-        .business-stack-swiper .swiper-slide {
-            height: auto;
-        }
-
-        .business-capitals-swiper .swiper-wrapper {
-            min-height: 320px;
-        }
-    }
-</style>
-
 <section x-data="revealOnScroll()" class="page-block page-block--business-model container py-10 ">
     <h2 x-data="revealOnScroll()" class="mb-4 text-5xl text-blue-900 uppercase leading-none md:text-[26px]">
         Бизнес-модель
@@ -307,357 +205,95 @@ HTML
         </div>
 
         <div class="flex lg:flex-col gap-8 mb-8">
-            <div
-                x-data="revealOnScroll()"
-                class="business-stack-slider relative  w-1/2 lg:w-full"
-            >
-                <div class="swiper business-stack-swiper business-capitals-swiper">
-                    <div class="swiper-wrapper">
-                        @foreach($capitalSlides as $slide)
-                            <div class="swiper-slide">
-                                @if(isset($slide['content']))
-                                    {!! $slide['content'] !!}
-                                @else
-                                    <div
-                                        class="relative !h-[260px] !min-h-[260px] overflow-hidden rounded-[16px]
-                                   bg-cover bg-center px-7 py-6 text-white
-                                   shadow-[0_12px_25px_rgba(33,74,104,0.08)]"
-                                        style="background-image: url('{{ $slide['image'] }}');"
-                                    >
-                                        <div class="absolute inset-0 bg-black-900/10"></div>
-
-                                        <div class="relative z-10">
-                                            <p class="mb-1 text-white">
-                                                {{ $slide['title'] }}
-                                            </p>
-
-                                            <p class="text-white">
-                                                {{ $slide['subtitle'] }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="absolute bottom-7 left-7 right-7 z-10
-                                       grid grid-cols-2 gap-8 md:grid-cols-1 lg:flex"
-                                        >
-                                            @foreach($slide['stats'] as $stat)
-                                                <div>
-                                                    <div class="relative flex items-end gap-2">
-                                            <span class="text-7xl leading-[50px] text-white">
-                                                {{ $stat['value'] }}
-                                            </span>
-
-                                                        @if($stat['diff'] ?? null)
-                                                            @foreach($stat['diff'] as $diff)
-                                                                <span
-                                                                    class="absolute rounded-full bg-white px-2
-                                                               text-[10px] text-green-300
-                                                               {{ $diff['class'] }}"
-                                                                >
-                                                                {{ $diff['value'] }}
-                                                            </span>
-                                                            @endforeach
-                                                        @endif
-
-                                                        <span class="text-white">
-                                                {{ $stat['unit'] }}
-                                            </span>
-                                                    </div>
-
-                                                    <p class="text-white">
-                                                        {{ $stat['text'] }}
-                                                    </p>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="mt-4 flex justify-center gap-4">
-                    <button
-                        type="button"
-                        class="business-stack-prev flex h-12 w-12 items-center justify-center
-                   rounded-full border border-[#D8ECFF]
-                   text-[28px] text-[#2497E8]
-                   disabled:opacity-40
-                                                 transition-all duration-300 ease-out
-           hover:border-[#2497E8]
-           hover:bg-[#2497E8]
-           hover:text-white
-           hover:shadow-[0_10px_30px_rgba(36,151,232,0.25)]
-           hover:scale-105
-           active:scale-95
-                   "
-                    >
-                        ←
-                    </button>
-
-                    <button
-                        type="button"
-                        class="business-stack-next flex h-12 w-12 items-center justify-center
-                   rounded-full border border-[#D8ECFF]
-                   text-[28px] text-[#2497E8]
-                  disabled:opacity-40
-                                                 transition-all duration-300 ease-out
-           hover:border-[#2497E8]
-           hover:bg-[#2497E8]
-           hover:text-white
-           hover:shadow-[0_10px_30px_rgba(36,151,232,0.25)]
-           hover:scale-105
-           active:scale-95
-                   "
-                    >
-                        →
-                    </button>
-                </div>
-            </div>
-            <div
-                x-data="revealOnScroll()"
-                class="business-stack-slider relative   w-1/2 lg:w-full"
-            >
-                <div class="swiper business-stack-swiper business-results-swiper">
-                    <div class="swiper-wrapper">
-                        @foreach($resultSlides as $slide)
-                            <div class="swiper-slide">
-                                @if(isset($slide['content']))
-                                    {!! $slide['content'] !!}
-                                @elseif(isset($slide['imgs']))
-                                    <div class="h-[260px] rounded-[16px] bg-[#F1F6FE]
-                                   px-8 py-8
-                                   shadow-[0_12px_25px_rgba(33,74,104,0.08)]
-                                   md:h-auto ">
-                                        <h4 class="mb-2 text-lg text-blue-900">
-                                            {{ $slide['title'] }}
-                                        </h4>
-                                        @if($slide['subtitle'] ?? null)
-                                            <p class="mb-2 text-sm ">
-                                                {{ $slide['subtitle'] }}
-                                            </p>
-                                        @endif
-                                        <div class="grid gap-4">
-                                            <img
-                                                src="/fixed/slider-card-2.{{ $slide['slide_number'] }}.png"
-                                                alt="">
-                                        </div>
-                                    </div>
-                                @else
-                                    <div
-                                        class="h-[260px] rounded-[16px] bg-[#F1F6FE]
-                                   px-8 py-8
-                                   shadow-[0_12px_25px_rgba(33,74,104,0.08)]
-                                   md:h-auto "
-                                    >
-                                        <h4 class="mb-5 text-lg text-blue-900">
-                                            {{ $slide['title'] }}
-                                        </h4>
-
-                                        <div class="grid grid-cols-3 gap-x-8 gap-y-5">
-                                            @foreach($slide['stats'] as $stat)
-                                                @if($stat['skip_block'] ?? null)
-                                                    <div></div>
-                                                @elseif($stat['title'] ?? null)
-                                                    <p class="text-blue-900 text-nowrap">{{$stat['title']}}</p>
-                                                @else
-                                                    <div>
-                                                        <div class="relative flex items-baseline gap-2">
-                                                            @if($stat['diff'] ?? null)
-                                                                @foreach($stat['diff'] as $diff)
-                                                                    <span
-                                                                        class="absolute rounded-full bg-white px-2
-                                                               text-[10px] text-green-300
-                                                               {{ $diff['class'] }}"
-                                                                    >
-                                                                {{ $diff['value'] }}
-                                                            </span>
-                                                                @endforeach
-                                                            @endif
-
-                                                            <div class="flex gap-2 items-end">
-                                                                @if($stat['prefix'] ?? null)
-                                                                    <div class="mt-1 text-lg text-blue-400">
-                                                                        {{ $stat['prefix'] }}
-                                                                    </div>
-                                                                @endif
-                                                                <div class="text-3xl text-blue-400">
-                                                                    {!! $stat['value'] !!}
-                                                                </div>
-                                                            </div>
-
-
-                                                            @if($stat['unit'])
-                                                                <div class="mt-1 text-lg text-blue-400">
-                                                                    {{ $stat['unit'] }}
-                                                                </div>
-                                                            @endif
-                                                        </div>
-
-                                                        @if($stat['text'])
-                                                            <p class="mt-1 text-sm leading-[14px]">
-                                                                {!! $stat['text'] !!}
-                                                            </p>
-                                                        @endif
-                                                    </div>
+            <div class="flex flex-col gap-6 w-1/2 lg:w-full">
+                @foreach($capitalSlides as $slide)
+                    <div x-data="revealOnScroll()">
+                        @if(isset($slide['content']))
+                            {!! $slide['content'] !!}
+                        @else
+                            <div class="relative !h-[260px] !min-h-[260px] overflow-hidden rounded-[16px] bg-cover bg-center px-7 py-6 text-white shadow-[0_12px_25px_rgba(33,74,104,0.08)]"
+                                 style="background-image: url('{{ $slide['image'] }}');">
+                                <div class="absolute inset-0 bg-black-900/10"></div>
+                                <div class="relative z-10">
+                                    <p class="mb-1 text-white">{{ $slide['title'] }}</p>
+                                    <p class="text-white">{{ $slide['subtitle'] }}</p>
+                                </div>
+                                <div class="absolute bottom-7 left-7 right-7 z-10 grid grid-cols-2 gap-8 md:grid-cols-1 lg:flex">
+                                    @foreach($slide['stats'] as $stat)
+                                        <div>
+                                            <div class="relative flex items-end gap-2">
+                                                <span class="text-7xl leading-[50px] text-white">{{ $stat['value'] }}</span>
+                                                @if($stat['diff'] ?? null)
+                                                    @foreach($stat['diff'] as $diff)
+                                                        <span class="absolute rounded-full bg-white px-2 text-[10px] text-green-300 {{ $diff['class'] }}">{{ $diff['value'] }}</span>
+                                                    @endforeach
                                                 @endif
-                                            @endforeach
+                                                <span class="text-white">{{ $stat['unit'] }}</span>
+                                            </div>
+                                            <p class="text-white">{{ $stat['text'] }}</p>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endforeach
+                                </div>
                             </div>
-                        @endforeach
+                        @endif
                     </div>
-                </div>
+                @endforeach
+            </div>
 
-                <div class="mt-4 flex justify-center gap-4">
-                    <button
-                        type="button"
-                        class="business-stack-prev flex h-12 w-12 items-center justify-center
-                   rounded-full border border-[#D8ECFF]
-                   text-[28px] text-[#2497E8]  disabled:opacity-40
-                                                 transition-all duration-300 ease-out
-           hover:border-[#2497E8]
-           hover:bg-[#2497E8]
-           hover:text-white
-           hover:shadow-[0_10px_30px_rgba(36,151,232,0.25)]
-           hover:scale-105
-           active:scale-95
-                   "
-                    >
-                        ←
-                    </button>
-
-                    <button
-                        type="button"
-                        class="business-stack-next flex h-12 w-12 items-center justify-center
-                   rounded-full border border-[#D8ECFF]
-                   text-[28px] text-[#2497E8]  disabled:opacity-40
-                              transition-all duration-300 ease-out
-           hover:border-[#2497E8]
-           hover:bg-[#2497E8]
-           hover:text-white
-           hover:shadow-[0_10px_30px_rgba(36,151,232,0.25)]
-           hover:scale-105
-           active:scale-95
-                   "
-                    >
-                        →
-                    </button>
-                </div>
+            <div class="flex flex-col gap-6 w-1/2 lg:w-full">
+                @foreach($resultSlides as $slide)
+                    <div x-data="revealOnScroll()">
+                        @if(isset($slide['content']))
+                            {!! $slide['content'] !!}
+                        @elseif(isset($slide['imgs']))
+                            <div class="h-[260px] rounded-[16px] bg-[#F1F6FE] px-8 py-8 shadow-[0_12px_25px_rgba(33,74,104,0.08)] md:h-auto">
+                                <h4 class="mb-2 text-lg text-blue-900">{{ $slide['title'] }}</h4>
+                                @if($slide['subtitle'] ?? null)
+                                    <p class="mb-2 text-sm ">{{ $slide['subtitle'] }}</p>
+                                @endif
+                                <div class="grid gap-4">
+                                    <img src="/fixed/slider-card-2.{{ $slide['slide_number'] }}.png" alt="">
+                                </div>
+                            </div>
+                        @else
+                            <div class="h-[260px] rounded-[16px] bg-[#F1F6FE] px-8 py-8 shadow-[0_12px_25px_rgba(33,74,104,0.08)] md:h-auto">
+                                <h4 class="mb-5 text-lg text-blue-900">{{ $slide['title'] }}</h4>
+                                <div class="grid grid-cols-3 gap-x-8 gap-y-5">
+                                    @foreach($slide['stats'] as $stat)
+                                        @if($stat['skip_block'] ?? null)
+                                            <div></div>
+                                        @elseif($stat['title'] ?? null)
+                                            <p class="text-blue-900 text-nowrap">{{$stat['title']}}</p>
+                                        @else
+                                            <div>
+                                                <div class="relative flex items-baseline gap-2">
+                                                    @if($stat['diff'] ?? null)
+                                                        @foreach($stat['diff'] as $diff)
+                                                            <span class="absolute rounded-full bg-white px-2 text-[10px] text-green-300 {{ $diff['class'] }}">{{ $diff['value'] }}</span>
+                                                        @endforeach
+                                                    @endif
+                                                    <div class="flex gap-2 items-end">
+                                                        @if($stat['prefix'] ?? null)
+                                                            <div class="mt-1 text-lg text-blue-400">{{ $stat['prefix'] }}</div>
+                                                        @endif
+                                                        <div class="text-3xl text-blue-400">{!! $stat['value'] !!}</div>
+                                                    </div>
+                                                    @if($stat['unit'])
+                                                        <div class="mt-1 text-lg text-blue-400">{{ $stat['unit'] }}</div>
+                                                    @endif
+                                                </div>
+                                                @if($stat['text'])
+                                                    <p class="mt-1 text-sm leading-[14px]">{!! $stat['text'] !!}</p>
+                                                @endif
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
             </div>
         </div>
-
     </div>
 </section>
-@push('page-js')
-    <script type="module">
-        document.querySelectorAll('.business-stack-slider').forEach((sliderBlock) => {
-            const swiperElement = sliderBlock.querySelector(
-                '.business-stack-swiper'
-            );
-
-            const prevButton = sliderBlock.querySelector(
-                '.business-stack-prev'
-            );
-
-            const nextButton = sliderBlock.querySelector(
-                '.business-stack-next'
-            );
-
-            if (!swiperElement) {
-                return;
-            }
-
-            const updateCards = (swiperInstance) => {
-                const slides = Array.from(swiperInstance.slides);
-                const activeIndex = swiperInstance.activeIndex;
-                const isMobile = window.innerWidth <= 767;
-
-                slides.forEach((slide, index) => {
-                    slide.classList.remove(
-                        'is-stack-visible',
-                        'is-active-card',
-                        'is-stack-depth-1',
-                        'is-stack-depth-2'
-                    );
-
-                    if (isMobile) {
-                        const isActive = index === activeIndex;
-
-                        if (isActive) {
-                            slide.classList.add(
-                                'is-stack-visible',
-                                'is-active-card'
-                            );
-                        }
-
-                        slide.style.transform = 'translateY(0) scale(1)';
-                        slide.style.zIndex = isActive ? '10' : '0';
-
-                        return;
-                    }
-
-                    const depth = index - activeIndex;
-
-                    if (depth >= 0 && depth <= 2) {
-                        const translateY = depth * 20;
-                        const scale = 1 - depth * 0.04;
-
-                        slide.classList.add('is-stack-visible');
-
-                        if (depth === 0) {
-                            slide.classList.add('is-active-card');
-                        }
-
-                        if (depth === 1) {
-                            slide.classList.add('is-stack-depth-1');
-                        }
-
-                        if (depth === 2) {
-                            slide.classList.add('is-stack-depth-2');
-                        }
-
-                        slide.style.transform =
-                            `translateY(${translateY}px) scale(${scale})`;
-
-                        slide.style.zIndex = String(10 - depth);
-                    } else {
-                        slide.style.transform =
-                            'translateY(50px) scale(0.9)';
-
-                        slide.style.zIndex = '0';
-                    }
-                });
-            };
-
-            const swiper = new Swiper(swiperElement, {
-                slidesPerView: 1,
-                speed: 500,
-                virtualTranslate: true,
-                loop: false,
-                allowTouchMove: true,
-
-                navigation: {
-                    prevEl: prevButton,
-                    nextEl: nextButton,
-                },
-
-                on: {
-                    init(swiperInstance) {
-                        updateCards(swiperInstance);
-                    },
-
-                    slideChange(swiperInstance) {
-                        updateCards(swiperInstance);
-                    },
-
-                    resize(swiperInstance) {
-                        updateCards(swiperInstance);
-                    },
-                },
-            });
-        });
-    </script>
-@endpush
