@@ -732,20 +732,20 @@
         ];
 
         $cities = $cities ?? [
-            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'logo' => '/fixed/SZFO_Yantar.png', 'x' => 28, 'y' => 125 ],
-            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'logo' => '/fixed/SZFO_SZ.png', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom' ],
-            [ 'slug' => 'moscow', 'name' => 'Москва', 'logo' => '/fixed/Centr_centr.png', 'x' => 85, 'y' => 175 ],
-            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'logo' => '/fixed/Priv_centrpriv.png', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom' ],
-            [ 'slug' => 'saratov', 'name' => 'Саратов', 'logo' => '/fixed/Priv_volga.png', 'x' => 101, 'y' => 240 ],
-            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'logo' => '/fixed/UFO_yug.png', 'x' => 53, 'y' => 242 ],
-            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'logo' => '/fixed/SKFO_SK.png', 'x' => 43, 'y' => 268 ],
-            [ 'slug' => 'grozny', 'name' => 'Грозный', 'logo' => '/fixed/SKFO_Chech.png', 'x' => 49, 'y' => 289 ],
-            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'logo' => '/fixed/URFO_ural.png', 'x' => 193, 'y' => 236 ],
-            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'logo' => '/fixed/URFO_Tymen.png', 'x' => 213, 'y' => 249 ],
-            [ 'slug' => 'tomsk', 'name' => 'Томск', 'logo' => '/fixed/SFO_Tomsk.png', 'x' => 292, 'y' => 279 ],
-            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'logo' => '/fixed/SFo_novosib.png', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom' ],
-            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'logo' => '/fixed/SFO_sibir.png', 'x' => 329, 'y' => 297 ],
-            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'logo' => '/fixed/SFO_Tyva.png', 'x' => 337, 'y' => 333 ]
+            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'logo' => 'fixed/SZFO_Yantar.png', 'x' => 28, 'y' => 125 ],
+            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'logo' => 'fixed/SZFO_SZ.png', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom' ],
+            [ 'slug' => 'moscow', 'name' => 'Москва', 'logo' => 'fixed/Centr_centr.png', 'x' => 85, 'y' => 175 ],
+            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'logo' => 'fixed/Priv_centrpriv.png', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom' ],
+            [ 'slug' => 'saratov', 'name' => 'Саратов', 'logo' => 'fixed/Priv_volga.png', 'x' => 101, 'y' => 240 ],
+            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'logo' => 'fixed/UFO_yug.png', 'x' => 53, 'y' => 242 ],
+            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'logo' => 'fixed/SKFO_SK.png', 'x' => 43, 'y' => 268 ],
+            [ 'slug' => 'grozny', 'name' => 'Грозный', 'logo' => 'fixed/SKFO_Chech.png', 'x' => 49, 'y' => 289 ],
+            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'logo' => 'fixed/URFO_ural.png', 'x' => 193, 'y' => 236 ],
+            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'logo' => 'fixed/URFO_Tymen.png', 'x' => 213, 'y' => 249 ],
+            [ 'slug' => 'tomsk', 'name' => 'Томск', 'logo' => 'fixed/SFO_Tomsk.png', 'x' => 292, 'y' => 279 ],
+            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'logo' => 'fixed/SFo_novosib.png', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom' ],
+            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'logo' => 'fixed/SFO_sibir.png', 'x' => 329, 'y' => 297 ],
+            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'logo' => 'fixed/SFO_Tyva.png', 'x' => 337, 'y' => 333 ]
         ];
     @endphp
     @php
@@ -1062,37 +1062,10 @@
                         group.appendChild(circle);
 
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                        let textYOffset = 0;
                         
-                        if (city.logo) {
-                            const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-                            logo.setAttribute('href', city.logo);
-                            logo.setAttribute('width', '40');
-                            logo.setAttribute('height', '15');
-                            logo.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-                            
-                            // Adjust text and logo positions based on text_pos
-                            if (city.text_pos === 'bottom') {
-                                logo.setAttribute('x', cx - 20);
-                                logo.setAttribute('y', cy + 10);
-                                textYOffset = 18; 
-                            } else if (city.text_pos === 'left') {
-                                logo.setAttribute('x', cx - 55);
-                                logo.setAttribute('y', cy - 7);
-                            } else if (city.text_pos === 'right') {
-                                logo.setAttribute('x', cx + 15);
-                                logo.setAttribute('y', cy - 7);
-                            } else {
-                                logo.setAttribute('x', cx - 20);
-                                logo.setAttribute('y', cy - 25);
-                                textYOffset = -18;
-                            }
-                            group.appendChild(logo);
-                        }
-
                         if (city.text_pos === 'bottom') {
                             text.setAttribute('x', cx);
-                            text.setAttribute('y', cy + 16 + textYOffset);
+                            text.setAttribute('y', cy + 16);
                             text.setAttribute('text-anchor', 'middle');
                         } else if (city.text_pos === 'left') {
                             text.setAttribute('x', cx - 10);
@@ -1104,7 +1077,7 @@
                             text.setAttribute('text-anchor', 'start');
                         } else {
                             text.setAttribute('x', cx);
-                            text.setAttribute('y', cy - 8 + textYOffset);
+                            text.setAttribute('y', cy - 8);
                             text.setAttribute('text-anchor', 'middle');
                         }
 
