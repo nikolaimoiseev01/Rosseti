@@ -161,6 +161,19 @@
         opacity: 0.3;
     }
 
+    .cities-links .city-link {
+        transition: all 0.3s ease;
+        padding: 8px 0;
+    }
+
+    .cities-links .city-link:hover {
+        background-color: rgba(36, 151, 232, 0.05);
+    }
+
+    .cities-links .city-link.dimmed {
+        opacity: 0.3;
+    }
+
 
     .rf-map .district-text {
         display: none;
@@ -701,9 +714,55 @@
                 ],
             ],
         ];
+
+        $cities = $cities ?? [
+            [
+                'slug' => 'moscow',
+                'name' => 'Москва',
+                'logo' => '/fixed/logo-white.png',
+                'x' => 85,
+                'y' => 175,
+            ],
+            [
+                'slug' => 'spb',
+                'name' => 'Санкт-Петербург',
+                'logo' => '/fixed/logo-white.png',
+                'x' => 95,
+                'y' => 125,
+            ],
+            [
+                'slug' => 'kazan',
+                'name' => 'Казань',
+                'logo' => '/fixed/logo-white.png',
+                'x' => 145,
+                'y' => 200,
+            ],
+            [
+                'slug' => 'ekaterinburg',
+                'name' => 'Екатеринбург',
+                'logo' => '/fixed/logo-white.png',
+                'x' => 250,
+                'y' => 185,
+            ],
+            [
+                'slug' => 'novosibirsk',
+                'name' => 'Новосибирск',
+                'logo' => '/fixed/logo-white.png',
+                'x' => 380,
+                'y' => 215,
+            ],
+            [
+                'slug' => 'vladivostok',
+                'name' => 'Владивосток',
+                'logo' => '/fixed/logo-white.png',
+                'x' => 620,
+                'y' => 280,
+            ],
+        ];
     @endphp
     <script>
         window.districtsData = @json($districts);
+        window.citiesData = @json($cities);
     </script>
     <div class="district-links flex gap-y-2 mt-8">
         @foreach($districts as $key => $district)
@@ -721,6 +780,22 @@
                             <span class="text-sm leading-[16px]">{!! $item !!}</span>
                         </div>
                     @endforeach
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="cities-links flex flex-col gap-y-3 mt-8">
+        @foreach($cities as $city)
+            <div data-city-slug="{{ $city['slug'] }}" class="city-link transition-all cursor-pointer w-fit">
+                <div class="flex items-center gap-3 w-fit">
+                    @if($city['logo'])
+                        <img src="{{ $city['logo'] }}" alt="{{ $city['name'] }}" class="w-22 object-contain">
+                    @endif
+                        <span class="text-sm font-medium text-blue-900">{{ $city['name'] }}</span>
+                    <div class="relative flex items-center justify-center w-[18px] min-w-[18px] bg-white h-[18px] border rounded-full" style="border-color: #2497E8;">
+                        <div class="w-1 h-1 bg-blue-400 rounded-full"></div>
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -788,6 +863,7 @@
 
                 // Call after a short delay to ensure SVG is ready
                 setTimeout(addDistrictNumbers, 100);
+                setTimeout(addCities, 100);
 
                 function highlightDistrict(districtSlug) {
                     // Подсветка регионов на карте
@@ -888,6 +964,57 @@
                     });
                 }
 
+                function addCities() {
+                    const cities = window.citiesData || [];
+
+                    cities.forEach(city => {
+                        if (!city.x || !city.y) return;
+
+                        // Create group for city marker
+                        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                        group.setAttribute('class', 'city-marker');
+                        group.setAttribute('data-city-slug', city.slug);
+                        group.style.cursor = 'pointer';
+
+                        // Add logo image if exists
+                        if (city.logo) {
+                            const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+                            image.setAttribute('x', city.x-50);
+                            image.setAttribute('y', city.y-60);
+                            image.setAttribute('width', '60');
+                            image.setAttribute('href', city.logo);
+                            image.setAttribute('pointer-events', 'none');
+                            group.appendChild(image);
+                        }
+
+                        // Create text for city name
+                        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        text.setAttribute('x', city.x-20);
+                        text.setAttribute('y', city.y-30);
+                        text.setAttribute('text-anchor', 'middle');
+                        text.setAttribute('fill', '#ffffff');
+                        text.setAttribute('font-size', '11');
+                        text.setAttribute('font-family', 'Arial, sans-serif');
+                        text.setAttribute('pointer-events', 'none');
+                        text.textContent = city.name;
+                        group.appendChild(text);
+
+                        // Create circle (point)
+                        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        circle.setAttribute('cx', city.x - 20);
+                        circle.setAttribute('cy', city.y - 20);
+                        circle.setAttribute('r', '6');
+                        circle.setAttribute('fill', '#2497E8');
+                        circle.setAttribute('stroke', 'white');
+                        circle.setAttribute('stroke-width', '2');
+                        circle.setAttribute('pointer-events', 'none');
+                        group.appendChild(circle);
+
+                        svg.appendChild(group);
+
+                    });
+                }
+
                 function makeDistrictLinksHover() {
                     districtLinks.forEach(link => {
                         link.addEventListener('mouseenter', () => {
@@ -898,6 +1025,75 @@
                         link.addEventListener('mouseleave', () => {
                             resetHighlight();
                         });
+                    });
+                }
+
+                function makeCitiesHover() {
+                    const cityMarkers = document.querySelectorAll('.city-marker');
+                    const cityLinks = document.querySelectorAll('.city-link');
+
+                    cityMarkers.forEach(marker => {
+                        marker.addEventListener('mouseenter', () => {
+                            const citySlug = marker.getAttribute('data-city-slug');
+                            highlightCity(citySlug);
+                        });
+
+                        marker.addEventListener('mouseleave', () => {
+                            resetCityHighlight();
+                        });
+                    });
+
+                    cityLinks.forEach(link => {
+                        link.addEventListener('mouseenter', () => {
+                            const citySlug = link.getAttribute('data-city-slug');
+                            highlightCity(citySlug);
+                        });
+
+                        link.addEventListener('mouseleave', () => {
+                            resetCityHighlight();
+                        });
+                    });
+                }
+
+                function highlightCity(citySlug) {
+                    const cityMarkers = document.querySelectorAll('.city-marker');
+                    const cityLinks = document.querySelectorAll('.city-link');
+
+                    cityMarkers.forEach(marker => {
+                        const markerSlug = marker.getAttribute('data-city-slug');
+                        if (markerSlug === citySlug) {
+                            marker.querySelector('circle').setAttribute('fill', '#2196F3');
+                            marker.querySelector('circle').setAttribute('r', '8');
+                        } else {
+                            marker.querySelector('circle').setAttribute('fill', '#58aaf1');
+                            marker.querySelector('circle').setAttribute('r', '6');
+                        }
+                    });
+
+                    cityLinks.forEach(link => {
+                        const linkSlug = link.getAttribute('data-city-slug');
+                        if (linkSlug === citySlug) {
+                            link.classList.remove('dimmed');
+                            link.style.opacity = '1';
+                        } else {
+                            link.classList.add('dimmed');
+                            link.style.opacity = '0.3';
+                        }
+                    });
+                }
+
+                function resetCityHighlight() {
+                    const cityMarkers = document.querySelectorAll('.city-marker');
+                    const cityLinks = document.querySelectorAll('.city-link');
+
+                    cityMarkers.forEach(marker => {
+                        marker.querySelector('circle').setAttribute('fill', '#2497E8');
+                        marker.querySelector('circle').setAttribute('r', '6');
+                    });
+
+                    cityLinks.forEach(link => {
+                        link.classList.remove('dimmed');
+                        link.style.opacity = '1';
                     });
                 }
 
@@ -916,6 +1112,7 @@
                 makeRegionsClick();
                 makeRegionsHover();
                 makeDistrictLinksHover();
+                makeCitiesHover();
             }
         );
 
