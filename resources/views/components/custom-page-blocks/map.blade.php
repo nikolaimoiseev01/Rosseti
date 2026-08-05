@@ -645,13 +645,6 @@
               data-region="Херсонская область" data-code="RU-HRNO"
               d="M21.7645 214.647L21.3469 216.627L21.7645 216.594L22.4382 216.547L22.2766 217.833L21.5557 218.945L21.4614 220.777L20.4104 221.33C19.6555 221.744 19.6765 221.983 19.0832 222.359V222.987L19.6559 223.937L20.0129 225.055C19.5796 225.784 19.099 226.479 18.6386 227.191H17.9918L17.7199 227.028L17.4139 226.199L16.9643 225.862L16.6944 225.673C16.6944 225.673 16.4612 225.617 16.371 225.804C16.371 225.804 16.2274 226.332 16.2274 226.35L15.6341 226.369L15.4724 226.105V225.766L15.4363 225.333L15.0401 225.447L14.8604 225.578H14.7529L14.4115 225.296L14.195 224.752V224.243L14.0513 223.564L13.6912 223.094L13.1528 222.435L10.2126 220.777L9.26512 221.762L8.47409 219.712L7.97033 219.315L7.1793 218.922L6.4417 218.716L5.61529 218.451C4.39197 218.131 3.94302 217.285 3.58359 216.927L3.22416 216.118V215.121V214.067L2.8106 213.595L2.43244 213.219C2.43244 213.219 2.00153 213.031 2.00153 212.881C2.00153 212.731 2.21733 212.39 2.21733 212.39L2.00153 211.958L1.67749 211.732V211.168H1.91063C1.91063 211.168 2.23468 211.206 2.43174 211.168C2.63019 211.15 2.35958 210.923 2.43174 210.792C2.5046 210.679 2.03692 209.908 2.03692 209.908L1.85721 209.062V208.44L2.43244 208.326L3.34975 208.683C3.34975 208.683 3.70918 208.91 3.83478 208.966C3.96106 209.041 4.50021 209.268 4.59042 209.192C4.67993 209.118 5.50704 208.91 5.50704 208.91C5.50704 208.91 5.93933 208.778 6.02884 208.778C6.11766 208.778 6.60407 208.628 6.6575 208.76C6.71163 208.872 7.32294 209.438 7.34098 209.626C7.37637 209.814 8.1674 210.491 8.1674 210.491L8.67046 210.735L9.39072 211.074C9.39072 211.074 9.89378 211.264 9.98399 211.264C10.0735 211.264 11.1171 211.074 11.1171 211.074L11.731 210.837L12.0904 210.518L12.4138 210.272L12.8454 210.028C12.8454 210.028 13.0619 210.084 13.1153 210.178C13.1687 210.272 13.4747 210.705 13.4747 210.705L13.6912 210.931L14.4447 211.527C14.4447 211.527 14.9506 212.072 15.0401 212.127C15.1303 212.202 15.607 212.201 15.7146 212.201C15.8041 212.201 16.289 212.32 16.5221 212.32C16.756 212.32 17.222 212.761 17.222 212.761L17.8788 213.219L18.7974 213.71C18.7974 213.71 19.4972 213.805 19.6769 213.805C19.8566 213.805 20.3444 214.053 20.434 214.053C20.5235 214.053 21.7645 214.647 21.7645 214.647Z"
               stroke="#606778" stroke-width="0.22456220687904804"></path>
-
-    {{-- Логотипы городов — рендерятся сервером напрямую в SVG --}}
-    @foreach($cities as $city)
-        @if(isset($city['logo']) && isset($city['logo_x']) && isset($city['logo_y']))
-            <image href="{{ asset($city['logo']) }}" x="{{ $city['logo_x'] }}" y="{{ $city['logo_y'] }}" width="40" height="15" preserveAspectRatio="xMidYMid meet" />
-        @endif
-    @endforeach
 </svg>
     <div id="map-tooltip"></div>
     @php
@@ -942,6 +935,115 @@
 
                 // Call after a short delay to ensure SVG is ready
                 setTimeout(addDistrictNumbers, 100);
+                function addCities() {
+                    if (document.querySelector('.city-group')) return;
+
+                    // Внедряем второго москвича программно, чтобы не трогать админку
+                    if (!window.citiesData.find(c => c.slug === 'moscow2')) {
+                        const moscow = window.citiesData.find(c => c.slug === 'moscow');
+                        if (moscow) {
+                            window.citiesData.push({
+                                slug: 'moscow2',
+                                name: '',
+                                logo: moscow.logo && moscow.logo.includes('http') ? moscow.logo.replace('Centr_centr', 'Centr_mosreg') : '/fixed/Centr_mosreg.png',
+                                x: moscow.x,
+                                y: moscow.y,
+                                hide_marker: true
+                            });
+                        }
+                    }
+
+                    // Математически идеальные координаты логотипов и текста для каждого города (учитывая, что x/y это левый верхний угол)
+                    const exactCoords = {
+                        'kaliningrad': { logo_x: 8, logo_y: 106, text_pos: 'bottom' },
+                        'spb': { logo_x: 65, logo_y: 106, text_pos: 'bottom' },
+                        'moscow': { logo_x: 65, logo_y: 156, text_pos: 'bottom' },
+                        'moscow2': { logo_x: 65, logo_y: 140, text_pos: 'bottom' },
+                        'nizhny': { logo_x: 95, logo_y: 181, text_pos: 'bottom' },
+                        'saratov': { logo_x: 81, logo_y: 248, text_pos: 'top' },
+                        'rostov': { logo_x: 33, logo_y: 223, text_pos: 'bottom' },
+                        'pyatigorsk': { logo_x: 0, logo_y: 260, text_pos: 'bottom' },
+                        'grozny': { logo_x: 29, logo_y: 297, text_pos: 'top' },
+                        'ekb': { logo_x: 173, logo_y: 217, text_pos: 'bottom' },
+                        'tyumen': { logo_x: 193, logo_y: 257, text_pos: 'top' },
+                        'tomsk': { logo_x: 272, logo_y: 260, text_pos: 'bottom' },
+                        'novosibirsk': { logo_x: 257, logo_y: 302, text_pos: 'top' },
+                        'krasnoyarsk': { logo_x: 309, logo_y: 278, text_pos: 'bottom' },
+                        'kyzyl': { logo_x: 317, logo_y: 314, text_pos: 'bottom' }
+                    };
+
+                    window.citiesData.forEach(city => {
+                        if (!city.x || !city.y) return;
+
+                        const cx = parseFloat(city.x);
+                        const cy = parseFloat(city.y);
+
+                        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                        group.setAttribute('class', 'city-group');
+                        group.setAttribute('data-city-slug', city.slug);
+                        group.style.cursor = 'pointer';
+
+                        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        circle.setAttribute('cx', cx);
+                        circle.setAttribute('cy', cy);
+                        circle.setAttribute('r', '4');
+                        circle.setAttribute('fill', '#00355A');
+                        circle.setAttribute('stroke', '#ffffff');
+                        circle.setAttribute('stroke-width', '1');
+                        circle.style.transition = 'all 0.2s ease';
+                        if (city.hide_marker) circle.setAttribute('r', '0');
+                        group.appendChild(circle);
+
+                        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        text.textContent = city.name;
+                        text.setAttribute('font-size', '12px');
+                        text.setAttribute('font-family', 'sans-serif');
+                        text.setAttribute('fill', '#00355A');
+
+                        const logoWidth = 40;
+                        const logoHeight = 15;
+                        const exact = exactCoords[city.slug];
+
+                        if (city.logo) {
+                            const logoUrl = city.logo.startsWith('/') || city.logo.startsWith('http') ? city.logo : '/' + city.logo;
+                            const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+                            logo.setAttribute('href', logoUrl);
+                            logo.setAttribute('width', logoWidth);
+                            logo.setAttribute('height', logoHeight);
+                            
+                            const lx = exact ? exact.logo_x : (cx - logoWidth / 2);
+                            const ly = exact ? exact.logo_y : (cy - logoHeight - 8);
+                            logo.setAttribute('x', lx);
+                            logo.setAttribute('y', ly);
+                            
+                            const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                            rect.setAttribute('x', lx);
+                            rect.setAttribute('y', ly);
+                            rect.setAttribute('width', logoWidth);
+                            rect.setAttribute('height', logoHeight);
+                            rect.setAttribute('fill', 'white');
+                            rect.setAttribute('opacity', '0.75');
+                            rect.setAttribute('rx', '2');
+                            
+                            group.appendChild(rect);
+                            group.appendChild(logo);
+                        }
+
+                        const tPos = exact ? exact.text_pos : (city.text_pos || 'top');
+                        if (tPos === 'bottom') {
+                            text.setAttribute('x', cx);
+                            text.setAttribute('y', cy + 25);
+                            text.setAttribute('text-anchor', 'middle');
+                        } else {
+                            text.setAttribute('x', cx);
+                            text.setAttribute('y', cy - 15);
+                            text.setAttribute('text-anchor', 'middle');
+                        }
+                        group.appendChild(text);
+                        svg.appendChild(group);
+                    });
+                }
+
                 setTimeout(addCities, 100);
 
                 function highlightDistrict(districtSlug) {
@@ -1074,67 +1176,74 @@
                         const logoWidth = 40;
                         const logoHeight = 15;
 
-                        // Skip circle and text for hidden helper entries (e.g. moscow2)
+                        const exact = exactCoords[city.slug];
+
                         if (city.hide_marker) {
                             circle.setAttribute('r', '0');
                         }
 
-                        // Logos with explicit coordinates are rendered server-side in SVG
-                        // Only use JS rendering for logos WITHOUT explicit coordinates
-                        if (city.logo && city.logo_x === undefined) {
+                        if (city.logo) {
+                            const logoUrl = city.logo.startsWith('/') || city.logo.startsWith('http') ? city.logo : '/' + city.logo;
                             const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-                            logo.setAttribute('href', city.logo);
+                            logo.setAttribute('href', logoUrl);
+                            logo.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', logoUrl);
                             logo.setAttribute('width', logoWidth);
                             logo.setAttribute('height', logoHeight);
                             logo.setAttribute('preserveAspectRatio', 'xMidYMid meet');
                             
-                            const lPos = city.logo_pos || 'top';
-                            
-                            if (lPos === 'bottom') {
-                                logo.setAttribute('x', cx - (logoWidth / 2));
-                                logo.setAttribute('y', cy + 8);
-                                if (city.text_pos === 'bottom' || !city.text_pos) {
-                                    textYOffset = logoHeight + 4; 
-                                }
-                            } else if (lPos === 'left') {
-                                logo.setAttribute('x', cx - logoWidth - 8);
-                                logo.setAttribute('y', cy - (logoHeight / 2));
-                                if (city.text_pos === 'left' || !city.text_pos) {
-                                    textXOffset = -logoWidth - 8;
-                                }
-                            } else if (lPos === 'right') {
-                                logo.setAttribute('x', cx + 8);
-                                logo.setAttribute('y', cy - (logoHeight / 2));
-                                if (city.text_pos === 'right') {
-                                    textXOffset = logoWidth + 8;
-                                }
-                            } else { // top
-                                logo.setAttribute('x', cx - (logoWidth / 2));
-                                logo.setAttribute('y', cy - logoHeight - 8);
-                                if (city.text_pos === 'top' || (!city.text_pos && city.logo_pos === 'top')) {
-                                    textYOffset = -logoHeight - 4;
+                            if (exact) {
+                                logo.setAttribute('x', exact.logo_x);
+                                logo.setAttribute('y', exact.logo_y);
+                            } else {
+                                // Fallback
+                                const lPos = city.logo_pos || 'top';
+                                if (lPos === 'bottom') {
+                                    logo.setAttribute('x', cx - (logoWidth / 2));
+                                    logo.setAttribute('y', cy + 8);
+                                } else if (lPos === 'left') {
+                                    logo.setAttribute('x', cx - logoWidth - 8);
+                                    logo.setAttribute('y', cy - (logoHeight / 2));
+                                } else if (lPos === 'right') {
+                                    logo.setAttribute('x', cx + 8);
+                                    logo.setAttribute('y', cy - (logoHeight / 2));
+                                } else { // top
+                                    logo.setAttribute('x', cx - (logoWidth / 2));
+                                    logo.setAttribute('y', cy - logoHeight - 8);
                                 }
                             }
+                            
+                            // Подкладываем белый фон под логотип, чтобы черточки карты не просвечивали
+                            const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                            rect.setAttribute('x', exact ? exact.logo_x : logo.getAttribute('x'));
+                            rect.setAttribute('y', exact ? exact.logo_y : logo.getAttribute('y'));
+                            rect.setAttribute('width', logoWidth);
+                            rect.setAttribute('height', logoHeight);
+                            rect.setAttribute('fill', 'white');
+                            rect.setAttribute('opacity', '0.75'); // Немного прозрачный, чтобы не резал глаз
+                            rect.setAttribute('rx', '2'); // Скругление углов
+                            
+                            group.appendChild(rect);
                             group.appendChild(logo);
                         }
 
-                        const tPos = city.text_pos || (city.logo_pos === 'top' ? 'top' : 'bottom');
+                        // Умное размещение текста, чтобы он никогда не перекрывал логотип
+                        const tPos = exact ? exact.text_pos : (city.text_pos || (city.logo_pos === 'top' ? 'bottom' : 'top'));
                         
                         if (tPos === 'bottom') {
-                            text.setAttribute('x', cx + textXOffset);
-                            text.setAttribute('y', cy + 16 + textYOffset);
+                            text.setAttribute('x', cx);
+                            text.setAttribute('y', cy + 16);
                             text.setAttribute('text-anchor', 'middle');
                         } else if (tPos === 'left') {
-                            text.setAttribute('x', cx - 10 + textXOffset);
-                            text.setAttribute('y', cy + 4 + textYOffset);
+                            text.setAttribute('x', cx - 10);
+                            text.setAttribute('y', cy + 4);
                             text.setAttribute('text-anchor', 'end');
                         } else if (tPos === 'right') {
-                            text.setAttribute('x', cx + 10 + textXOffset);
-                            text.setAttribute('y', cy + 4 + textYOffset);
+                            text.setAttribute('x', cx + 10);
+                            text.setAttribute('y', cy + 4);
                             text.setAttribute('text-anchor', 'start');
-                        } else {
-                            text.setAttribute('x', cx + textXOffset);
-                            text.setAttribute('y', cy - 10 + textYOffset);
+                        } else { // top
+                            text.setAttribute('x', cx);
+                            text.setAttribute('y', cy - 10);
                             text.setAttribute('text-anchor', 'middle');
                         }
 
