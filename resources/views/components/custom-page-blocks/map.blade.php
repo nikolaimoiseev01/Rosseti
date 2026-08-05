@@ -652,7 +652,6 @@
             [
                 'slug' => 'szfo',
                 'name' => 'Северо-Западный',
-                'logos' => ['fixed/SZFO_SZ.png', 'fixed/SZFO_Yantar.png', 'fixed/SZFO_LEN.png'],
                 'info' => [
                     '1 687 тыс. км²',
                     '13,9 млн чел.',
@@ -663,7 +662,6 @@
             [
                 'slug' => 'pfo',
                 'name' => 'Приволжский',
-                'logos' => ['fixed/Priv_volga.png', 'fixed/Priv_centrpriv.png', 'fixed/URFO_ural.png'],
                 'info' => [
                     '1 037 тыс. км²',
                     '28,4 млн чел.',
@@ -674,7 +672,6 @@
             [
                 'slug' => 'urfo',
                 'name' => 'Уральский',
-                'logos' => ['fixed/URFO_ural.png', 'fixed/URFO_Tymen.png'],
                 'info' => [
                     '1 818 тыс. км²',
                     '12,3 млн чел.',
@@ -685,7 +682,6 @@
             [
                 'slug' => 'ufo',
                 'name' => 'Южный',
-                'logos' => ['fixed/UFO_yug.png', 'fixed/Priv_centrpriv.png'],
                 'info' => [
                     '448 тыс. км²',
                     '16,6 млн чел.',
@@ -696,7 +692,6 @@
             [
                 'slug' => 'sbfo',
                 'name' => 'Сибирский',
-                'logos' => ['fixed/SFO_sibir.png', 'fixed/SFO_Tyva.png', 'fixed/SFO_Tomsk.png', 'fixed/SFo_novosib.png'],
                 'info' => [
                     '4 362 тыс. км²',
                     '16,5 млн чел.',
@@ -707,7 +702,6 @@
             [
                 'slug' => 'cfo',
                 'name' => 'Центральный',
-                'logos' => ['fixed/Priv_centrpriv.png', 'fixed/Centr_centr.png', 'fixed/Centr_mosreg.png'],
                 'info' => [
                     '650 тыс. км²',
                     '40,3 млн чел.',
@@ -718,7 +712,6 @@
             [
                 'slug' => 'dfo',
                 'name' => 'Дальневосточный',
-                'logos' => ['fixed/SFO_sibir.png'],
                 'info' => [
                     '6 953 тыс. км²',
                     '7,9 млн чел.',
@@ -729,7 +722,6 @@
             [
                 'slug' => 'skfo',
                 'name' => 'Северо-Кавказский',
-                'logos' => ['fixed/SKFO_SK.png', 'fixed/SKFO_Chech.png'],
                 'info' => [
                     '170 тыс. км²',
                     '10,3 млн чел.',
@@ -740,20 +732,20 @@
         ];
 
         $cities = $cities ?? [
-            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'x' => 28, 'y' => 125 ],
-            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom' ],
-            [ 'slug' => 'moscow', 'name' => 'Москва', 'x' => 85, 'y' => 175 ],
-            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom' ],
-            [ 'slug' => 'saratov', 'name' => 'Саратов', 'x' => 101, 'y' => 240 ],
-            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'x' => 53, 'y' => 242 ],
-            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'x' => 43, 'y' => 268 ],
-            [ 'slug' => 'grozny', 'name' => 'Грозный', 'x' => 49, 'y' => 289 ],
-            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'x' => 193, 'y' => 236 ],
-            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'x' => 213, 'y' => 249 ],
-            [ 'slug' => 'tomsk', 'name' => 'Томск', 'x' => 292, 'y' => 279 ],
-            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom' ],
-            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'x' => 329, 'y' => 297 ],
-            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'x' => 337, 'y' => 333 ]
+            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'logo' => 'fixed/SZFO_Yantar.png', 'x' => 28, 'y' => 125, 'logo_pos' => 'top' ],
+            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'logo' => 'fixed/SZFO_SZ.png', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom', 'logo_pos' => 'top' ],
+            [ 'slug' => 'moscow', 'name' => 'Москва', 'logo' => 'fixed/Centr_centr.png', 'x' => 85, 'y' => 175, 'logo_pos' => 'top' ],
+            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'logo' => 'fixed/Priv_centrpriv.png', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom', 'logo_pos' => 'top' ],
+            [ 'slug' => 'saratov', 'name' => 'Саратов', 'logo' => 'fixed/Priv_volga.png', 'x' => 101, 'y' => 240, 'logo_pos' => 'bottom' ],
+            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'logo' => 'fixed/UFO_yug.png', 'x' => 53, 'y' => 242, 'logo_pos' => 'top' ],
+            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'logo' => 'fixed/SKFO_SK.png', 'x' => 43, 'y' => 268, 'logo_pos' => 'left' ],
+            [ 'slug' => 'grozny', 'name' => 'Грозный', 'logo' => 'fixed/SKFO_Chech.png', 'x' => 49, 'y' => 289, 'logo_pos' => 'bottom' ],
+            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'logo' => 'fixed/URFO_ural.png', 'x' => 193, 'y' => 236, 'logo_pos' => 'top' ],
+            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'logo' => 'fixed/URFO_Tymen.png', 'x' => 213, 'y' => 249, 'logo_pos' => 'bottom' ],
+            [ 'slug' => 'tomsk', 'name' => 'Томск', 'logo' => 'fixed/SFO_Tomsk.png', 'x' => 292, 'y' => 279, 'logo_pos' => 'top' ],
+            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'logo' => 'fixed/SFo_novosib.png', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom', 'logo_pos' => 'bottom' ],
+            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'logo' => 'fixed/SFO_sibir.png', 'x' => 329, 'y' => 297, 'logo_pos' => 'top' ],
+            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'logo' => 'fixed/SFO_Tyva.png', 'x' => 337, 'y' => 333, 'logo_pos' => 'top' ]
         ];
     @endphp
     @php
@@ -776,14 +768,6 @@
         @foreach($districts as $key => $district)
             <div data-district-slug="{{ $district['slug'] }}" class="district-link transition-all cursor-pointer w-fit min-w-[200px]">
                 <div class="font-bold text-lg text-blue-900 mb-2 block w-fit">{{$key + 1}} {{ $district['name'] }}</div>
-                
-                @if(isset($district['logos']) && count($district['logos']) > 0)
-                    <div class="flex flex-wrap gap-4 mb-4 mt-2">
-                        @foreach($district['logos'] as $logo)
-                            <img src="{{ asset($logo) }}" alt="Logo" class="w-24 h-auto object-contain">
-                        @endforeach
-                    </div>
-                @endif
                 
                 <div class="flex flex-col gap-y-2 w-fit">
                     @foreach($district['info'] as $key => $item)
@@ -1077,21 +1061,65 @@
 
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                         
-                        if (city.text_pos === 'bottom') {
-                            text.setAttribute('x', cx);
-                            text.setAttribute('y', cy + 16);
+                        let textYOffset = 0;
+                        let textXOffset = 0;
+                        const logoWidth = 40;
+                        const logoHeight = 15;
+
+                        if (city.logo) {
+                            const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+                            logo.setAttribute('href', city.logo);
+                            logo.setAttribute('width', logoWidth);
+                            logo.setAttribute('height', logoHeight);
+                            logo.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+                            
+                            const lPos = city.logo_pos || 'top';
+                            
+                            if (lPos === 'bottom') {
+                                logo.setAttribute('x', cx - (logoWidth / 2));
+                                logo.setAttribute('y', cy + 8);
+                                if (city.text_pos === 'bottom' || !city.text_pos) {
+                                    textYOffset = logoHeight + 4; 
+                                }
+                            } else if (lPos === 'left') {
+                                logo.setAttribute('x', cx - logoWidth - 8);
+                                logo.setAttribute('y', cy - (logoHeight / 2));
+                                if (city.text_pos === 'left' || !city.text_pos) {
+                                    textXOffset = -logoWidth - 8;
+                                }
+                            } else if (lPos === 'right') {
+                                logo.setAttribute('x', cx + 8);
+                                logo.setAttribute('y', cy - (logoHeight / 2));
+                                if (city.text_pos === 'right') {
+                                    textXOffset = logoWidth + 8;
+                                }
+                            } else { // top
+                                logo.setAttribute('x', cx - (logoWidth / 2));
+                                logo.setAttribute('y', cy - logoHeight - 8);
+                                if (city.text_pos === 'top' || (!city.text_pos && city.logo_pos === 'top')) {
+                                    textYOffset = -logoHeight - 4;
+                                }
+                            }
+                            group.appendChild(logo);
+                        }
+
+                        const tPos = city.text_pos || (city.logo_pos === 'top' ? 'top' : 'bottom');
+                        
+                        if (tPos === 'bottom') {
+                            text.setAttribute('x', cx + textXOffset);
+                            text.setAttribute('y', cy + 16 + textYOffset);
                             text.setAttribute('text-anchor', 'middle');
-                        } else if (city.text_pos === 'left') {
-                            text.setAttribute('x', cx - 10);
-                            text.setAttribute('y', cy + 4);
+                        } else if (tPos === 'left') {
+                            text.setAttribute('x', cx - 10 + textXOffset);
+                            text.setAttribute('y', cy + 4 + textYOffset);
                             text.setAttribute('text-anchor', 'end');
-                        } else if (city.text_pos === 'right') {
-                            text.setAttribute('x', cx + 10);
-                            text.setAttribute('y', cy + 4);
+                        } else if (tPos === 'right') {
+                            text.setAttribute('x', cx + 10 + textXOffset);
+                            text.setAttribute('y', cy + 4 + textYOffset);
                             text.setAttribute('text-anchor', 'start');
                         } else {
-                            text.setAttribute('x', cx);
-                            text.setAttribute('y', cy - 8);
+                            text.setAttribute('x', cx + textXOffset);
+                            text.setAttribute('y', cy - 10 + textYOffset);
                             text.setAttribute('text-anchor', 'middle');
                         }
 
