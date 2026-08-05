@@ -127,10 +127,22 @@
     }
 
     .rf-map #map-svg path {
-        stroke: #050505;
+        stroke: #a3a3a3;
         stroke-width: 1;
         stroke-linejoin: round;
         will-change: fill;
+    }
+
+    .rf-map #map-svg .district-border path {
+        fill: none;
+        stroke: #ffffff;
+        stroke-width: 1.5;
+        pointer-events: none;
+    }
+
+    .rf-map #map-svg mask path {
+        fill: #000;
+        stroke: none;
     }
 
     .rf-map [data-code] {
@@ -141,6 +153,10 @@
     .region-hover {
         fill: #2196F3 !important;
         cursor: pointer;
+    }
+
+    .rf-map [data-code].region-outline {
+        fill: #ffffff !important;
     }
 
     .rf-map svg path.dimmed {
@@ -760,9 +776,23 @@
             ],
         ];
     @endphp
+    @php
+        // Регионы, которые отображаются белым фоном (только границы)
+        $whiteRegions = $whiteRegions ?? [
+            'RU-TA',  // Республика Татарстан
+            'RU-CHU', // Чукотский автономный округ
+            'RU-KAM', // Камчатский край
+            'RU-MAG', // Магаданская область
+            'RU-SAK', // Сахалинская область
+            'RU-BA',  // Республика Татарстан
+            'RU-STA',
+            'RU-SAK', // Сахалинская область
+        ];
+    @endphp
     <script>
         window.districtsData = @json($districts);
         window.citiesData = @json($cities);
+        window.whiteRegions = @json($whiteRegions);
     </script>
     <div class="district-links flex gap-y-2 mt-8">
         @foreach($districts as $key => $district)
@@ -817,22 +847,86 @@
                 console.log('INIT MAP');
 
                 const regions = document.querySelectorAll('.rf-map svg path');
+
+                (window.whiteRegions || []).forEach(code => {
+                    document.querySelectorAll(`.rf-map svg path[data-code="${code}"]`).forEach(path => {
+                        path.classList.add('region-outline');
+                    });
+                });
                 const districtLinks = document.querySelectorAll('.district-link');
                 const tooltip = document.getElementById('map-tooltip');
                 const svg = document.getElementById('map-svg');
+
+                // Draw blue outer borders for each federal district
+                function addDistrictBorders() {
+                    const svgNS = 'http://www.w3.org/2000/svg';
+                    const districtPaths = {};
+
+                    regions.forEach(path => {
+                        const slug = (path.getAttribute('data-district-slug') || '').split(' ')[0];
+                        if (!slug) return;
+                        (districtPaths[slug] = districtPaths[slug] || []).push(path);
+                    });
+
+                    let defs = svg.querySelector('defs');
+                    if (!defs) {
+                        defs = document.createElementNS(svgNS, 'defs');
+                        svg.insertBefore(defs, svg.firstChild);
+                    }
+
+                    Object.keys(districtPaths).forEach(slug => {
+                        // Mask hides the stroke inside the district, leaving only the outer border
+                        const mask = document.createElementNS(svgNS, 'mask');
+                        mask.setAttribute('id', `district-mask-${slug}`);
+                        mask.setAttribute('maskUnits', 'userSpaceOnUse');
+                        mask.setAttribute('x', '0');
+                        mask.setAttribute('y', '0');
+                        mask.setAttribute('width', '708.9');
+                        mask.setAttribute('height', '458.9');
+
+                        const rect = document.createElementNS(svgNS, 'rect');
+                        rect.setAttribute('x', '0');
+                        rect.setAttribute('y', '0');
+                        rect.setAttribute('width', '708.9');
+                        rect.setAttribute('height', '458.9');
+                        rect.setAttribute('fill', '#fff');
+                        mask.appendChild(rect);
+
+                        districtPaths[slug].forEach(path => {
+                            const hole = document.createElementNS(svgNS, 'path');
+                            hole.setAttribute('d', path.getAttribute('d'));
+                            mask.appendChild(hole);
+                        });
+                        defs.appendChild(mask);
+
+                        const group = document.createElementNS(svgNS, 'g');
+                        group.setAttribute('class', 'district-border');
+                        group.setAttribute('mask', `url(#district-mask-${slug})`);
+                        group.setAttribute('pointer-events', 'none');
+
+                        districtPaths[slug].forEach(path => {
+                            const clone = document.createElementNS(svgNS, 'path');
+                            clone.setAttribute('d', path.getAttribute('d'));
+                            group.appendChild(clone);
+                        });
+                        svg.appendChild(group);
+                    });
+                }
+
+                addDistrictBorders();
 
                 // Calculate district centroids and add numbers
                 function addDistrictNumbers() {
                     // Manual center positions for each district based on SVG viewBox coordinates (0 0 708.9 458.9)
                     const districtCentroids = {
                         'szfo': { x: 170, y: 140, number: 1 },   // Северо-Западный
-                        'pfo': { x: 130, y: 210, number: 2 },   // Приволжский
+                        'pfo': { x: 160, y: 210, number: 2 },   // Приволжский
                         'urfo': { x: 270, y: 190, number: 3 },   // Уральский
                         'ufo': { x: 60, y: 240, number: 4 },   // Южный
                         'sbfo': { x: 340, y: 200, number: 5 },  // Сибирский
                         'cfo': { x: 75, y: 180, number: 6 },   // Центральный
                         'dfo': { x: 520, y: 200, number: 7 },    // Дальневосточный
-                        'skfo': { x: 50, y: 280, number: 8 }  // Северо-Кавказский
+                        'skfo': { x: 50, y: 290, number: 8 }  // Северо-Кавказский
                     };
 
                     // Add text elements to SVG
