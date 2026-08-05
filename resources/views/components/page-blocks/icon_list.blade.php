@@ -60,7 +60,7 @@
     }
 
 </style>
-<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }} [&_a]:text-[#2196F3] [&_a]:underline hover:[&_a]:text-[#005B9C]">
     @foreach($items as $item)
         @php
             $isTitleAccent = ($item['title_style'] ?? 'large_bold') === 'accent';
