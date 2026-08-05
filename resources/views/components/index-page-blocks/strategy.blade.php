@@ -1,6 +1,6 @@
 <section x-data="revealOnScroll()"
          class="page-block page-block--strategy container mb-14">
-    <div class="page-block p-6 rounded-lg max-w-4xl">
+    <div class="page-block p-8 rounded-2xl max-w-4xl mx-auto bg-[#F4F7FB]">
         <h3 class="text-blue-500 text-2xl inline-block" style="color: #00355A; line-height: 1.15; margin-bottom: 32px;">
             Каковы стратегические цели и практическая значимость подготовки ПАО «Россети» Отчета о социальной ответственности и корпоративном устойчивом развитии?
         </h3>
