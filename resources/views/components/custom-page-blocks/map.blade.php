@@ -732,20 +732,23 @@
         ];
 
         $cities = $cities ?? [
-            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'logo' => 'fixed/SZFO_Yantar.png', 'x' => 28, 'y' => 125, 'logo_pos' => 'top' ],
-            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'logo' => 'fixed/SZFO_SZ.png', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom', 'logo_pos' => 'top' ],
-            [ 'slug' => 'moscow', 'name' => 'Москва', 'logo' => 'fixed/Centr_centr.png', 'x' => 85, 'y' => 175, 'logo_pos' => 'top' ],
-            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'logo' => 'fixed/Priv_centrpriv.png', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom', 'logo_pos' => 'top' ],
-            [ 'slug' => 'saratov', 'name' => 'Саратов', 'logo' => 'fixed/Priv_volga.png', 'x' => 101, 'y' => 240, 'logo_pos' => 'bottom' ],
-            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'logo' => 'fixed/UFO_yug.png', 'x' => 53, 'y' => 242, 'logo_pos' => 'top' ],
-            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'logo' => 'fixed/SKFO_SK.png', 'x' => 43, 'y' => 268, 'logo_pos' => 'left' ],
-            [ 'slug' => 'grozny', 'name' => 'Грозный', 'logo' => 'fixed/SKFO_Chech.png', 'x' => 49, 'y' => 289, 'logo_pos' => 'bottom' ],
-            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'logo' => 'fixed/URFO_ural.png', 'x' => 193, 'y' => 236, 'logo_pos' => 'top' ],
-            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'logo' => 'fixed/URFO_Tymen.png', 'x' => 213, 'y' => 249, 'logo_pos' => 'bottom' ],
-            [ 'slug' => 'tomsk', 'name' => 'Томск', 'logo' => 'fixed/SFO_Tomsk.png', 'x' => 292, 'y' => 279, 'logo_pos' => 'top' ],
-            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'logo' => 'fixed/SFo_novosib.png', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom', 'logo_pos' => 'bottom' ],
-            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'logo' => 'fixed/SFO_sibir.png', 'x' => 329, 'y' => 297, 'logo_pos' => 'top' ],
-            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'logo' => 'fixed/SFO_Tyva.png', 'x' => 337, 'y' => 333, 'logo_pos' => 'top' ]
+            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'x' => 28, 'y' => 125, 'logos' => [['url' => 'fixed/SZFO_Yantar.png', 'x' => 27, 'y' => 111]] ],
+            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom', 'logos' => [['url' => 'fixed/SZFO_SZ.png', 'x' => 84, 'y' => 110]] ],
+            [ 'slug' => 'moscow', 'name' => 'Москва', 'x' => 85, 'y' => 175, 'logos' => [
+                ['url' => 'fixed/Centr_centr.png', 'x' => 84, 'y' => 161],
+                ['url' => 'fixed/Centr_mosreg.png', 'x' => 84, 'y' => 145]
+            ] ],
+            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom', 'logos' => [['url' => 'fixed/Priv_centrpriv.png', 'x' => 113, 'y' => 188]] ],
+            [ 'slug' => 'saratov', 'name' => 'Саратов', 'x' => 101, 'y' => 240, 'logos' => [['url' => 'fixed/Priv_volga.png', 'x' => 103, 'y' => 268]] ],
+            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'x' => 53, 'y' => 242, 'logos' => [['url' => 'fixed/UFO_yug.png', 'x' => 52, 'y' => 229]] ],
+            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'x' => 43, 'y' => 268, 'logos' => [['url' => 'fixed/SKFO_SK.png', 'x' => 5, 'y' => 273]] ],
+            [ 'slug' => 'grozny', 'name' => 'Грозный', 'x' => 49, 'y' => 289, 'logos' => [['url' => 'fixed/SKFO_Chech.png', 'x' => 57, 'y' => 315]] ],
+            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'x' => 193, 'y' => 236, 'logos' => [['url' => 'fixed/URFO_ural.png', 'x' => 193, 'y' => 222]] ],
+            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'x' => 213, 'y' => 249, 'logos' => [['url' => 'fixed/URFO_Tymen.png', 'x' => 212, 'y' => 277]] ],
+            [ 'slug' => 'tomsk', 'name' => 'Томск', 'x' => 292, 'y' => 279, 'logos' => [['url' => 'fixed/SFO_Tomsk.png', 'x' => 292, 'y' => 263]] ],
+            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom', 'logos' => [['url' => 'fixed/SFo_novosib.png', 'x' => 278, 'y' => 324]] ],
+            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'x' => 329, 'y' => 297, 'logos' => [['url' => 'fixed/SFO_sibir.png', 'x' => 329, 'y' => 281]] ],
+            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'x' => 337, 'y' => 333, 'logos' => [['url' => 'fixed/SFO_Tyva.png', 'x' => 337, 'y' => 360]] ]
         ];
     @endphp
     @php
@@ -1061,65 +1064,37 @@
 
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                         
-                        let textYOffset = 0;
-                        let textXOffset = 0;
                         const logoWidth = 40;
                         const logoHeight = 15;
 
-                        if (city.logo) {
-                            const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-                            logo.setAttribute('href', city.logo);
-                            logo.setAttribute('width', logoWidth);
-                            logo.setAttribute('height', logoHeight);
-                            logo.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-                            
-                            const lPos = city.logo_pos || 'top';
-                            
-                            if (lPos === 'bottom') {
-                                logo.setAttribute('x', cx - (logoWidth / 2));
-                                logo.setAttribute('y', cy + 8);
-                                if (city.text_pos === 'bottom' || !city.text_pos) {
-                                    textYOffset = logoHeight + 4; 
-                                }
-                            } else if (lPos === 'left') {
-                                logo.setAttribute('x', cx - logoWidth - 8);
-                                logo.setAttribute('y', cy - (logoHeight / 2));
-                                if (city.text_pos === 'left' || !city.text_pos) {
-                                    textXOffset = -logoWidth - 8;
-                                }
-                            } else if (lPos === 'right') {
-                                logo.setAttribute('x', cx + 8);
-                                logo.setAttribute('y', cy - (logoHeight / 2));
-                                if (city.text_pos === 'right') {
-                                    textXOffset = logoWidth + 8;
-                                }
-                            } else { // top
-                                logo.setAttribute('x', cx - (logoWidth / 2));
-                                logo.setAttribute('y', cy - logoHeight - 8);
-                                if (city.text_pos === 'top' || (!city.text_pos && city.logo_pos === 'top')) {
-                                    textYOffset = -logoHeight - 4;
-                                }
-                            }
-                            group.appendChild(logo);
+                        if (city.logos) {
+                            city.logos.forEach(logoData => {
+                                const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+                                logo.setAttribute('href', logoData.url);
+                                logo.setAttribute('width', logoWidth);
+                                logo.setAttribute('height', logoHeight);
+                                logo.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+                                logo.setAttribute('x', logoData.x);
+                                logo.setAttribute('y', logoData.y);
+                                group.appendChild(logo);
+                            });
                         }
 
-                        const tPos = city.text_pos || (city.logo_pos === 'top' ? 'top' : 'bottom');
-                        
-                        if (tPos === 'bottom') {
-                            text.setAttribute('x', cx + textXOffset);
-                            text.setAttribute('y', cy + 16 + textYOffset);
+                        if (city.text_pos === 'bottom') {
+                            text.setAttribute('x', cx);
+                            text.setAttribute('y', cy + 16);
                             text.setAttribute('text-anchor', 'middle');
-                        } else if (tPos === 'left') {
-                            text.setAttribute('x', cx - 10 + textXOffset);
-                            text.setAttribute('y', cy + 4 + textYOffset);
+                        } else if (city.text_pos === 'left') {
+                            text.setAttribute('x', cx - 10);
+                            text.setAttribute('y', cy + 4);
                             text.setAttribute('text-anchor', 'end');
-                        } else if (tPos === 'right') {
-                            text.setAttribute('x', cx + 10 + textXOffset);
-                            text.setAttribute('y', cy + 4 + textYOffset);
+                        } else if (city.text_pos === 'right') {
+                            text.setAttribute('x', cx + 10);
+                            text.setAttribute('y', cy + 4);
                             text.setAttribute('text-anchor', 'start');
-                        } else {
-                            text.setAttribute('x', cx + textXOffset);
-                            text.setAttribute('y', cy - 10 + textYOffset);
+                        } else { // top
+                            text.setAttribute('x', cx);
+                            text.setAttribute('y', cy - 8);
                             text.setAttribute('text-anchor', 'middle');
                         }
 
