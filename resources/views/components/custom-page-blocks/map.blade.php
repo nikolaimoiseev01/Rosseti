@@ -146,7 +146,7 @@
     }
 
     .rf-map [data-code] {
-        fill: #58aaf1 !important;
+        fill: #8ac5f6 !important;
         transition: fill 0.15s ease-out;
     }
 
@@ -760,9 +760,7 @@
             'RU-KAM', // Камчатский край
             'RU-MAG', // Магаданская область
             'RU-SAK', // Сахалинская область
-            'RU-BA',  // Республика Татарстан
-            'RU-STA',
-            'RU-SAK', // Сахалинская область
+            'RU-BA',  // Республика Башкортостан
         ];
     @endphp
     <script>
