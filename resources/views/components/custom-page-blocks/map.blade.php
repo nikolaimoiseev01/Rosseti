@@ -1073,48 +1073,93 @@
                     cities.forEach(city => {
                         if (!city.x || !city.y) return;
 
+                        // Parse coordinates (in case they are strings)
+                        const cx = parseFloat(city.x);
+                        const cy = parseFloat(city.y);
+
                         // Create group for city marker
                         const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
                         group.setAttribute('class', 'city-marker');
                         group.setAttribute('data-city-slug', city.slug);
                         group.style.cursor = 'pointer';
 
-                        // Add logo image if exists
+                        // Add logo image if exists (hidden by default to avoid clutter)
+                        let image = null;
                         if (city.logo) {
-                            const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-                            image.setAttribute('x', city.x-50);
-                            image.setAttribute('y', city.y-60);
+                            image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+                            image.setAttribute('x', cx - 30);
+                            image.setAttribute('y', cy - 70);
                             image.setAttribute('width', '60');
                             image.setAttribute('href', city.logo);
+                            image.setAttribute('opacity', '0');
+                            image.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+                            image.style.transformOrigin = `${cx}px ${cy}px`;
+                            image.style.transform = 'translateY(10px)';
                             image.setAttribute('pointer-events', 'none');
                             group.appendChild(image);
                         }
 
-                        // Create text for city name
+                        // Create circle (point)
+                        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        circle.setAttribute('cx', cx);
+                        circle.setAttribute('cy', cy);
+                        circle.setAttribute('r', '4.5');
+                        circle.setAttribute('fill', '#00355A');
+                        circle.setAttribute('stroke', '#ffffff');
+                        circle.setAttribute('stroke-width', '1.5');
+                        circle.style.transition = 'all 0.2s ease';
+                        group.appendChild(circle);
+
+                        // Create text for city name with white halo for readability
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                        text.setAttribute('x', city.x-20);
-                        text.setAttribute('y', city.y-30);
+                        text.setAttribute('x', cx);
+                        text.setAttribute('y', cy - 10);
                         text.setAttribute('text-anchor', 'middle');
-                        text.setAttribute('fill', '#ffffff');
-                        text.setAttribute('font-size', '11');
+                        text.setAttribute('fill', '#00355A');
+                        text.setAttribute('font-size', '12');
+                        text.setAttribute('font-weight', 'bold');
                         text.setAttribute('font-family', 'Arial, sans-serif');
+                        text.setAttribute('paint-order', 'stroke');
+                        text.setAttribute('stroke', '#ffffff');
+                        text.setAttribute('stroke-width', '3');
+                        text.setAttribute('stroke-linecap', 'round');
+                        text.setAttribute('stroke-linejoin', 'round');
+                        text.style.transition = 'all 0.2s ease';
                         text.setAttribute('pointer-events', 'none');
                         text.textContent = city.name;
                         group.appendChild(text);
 
-                        // Create circle (point)
-                        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                        circle.setAttribute('cx', city.x - 20);
-                        circle.setAttribute('cy', city.y - 20);
-                        circle.setAttribute('r', '6');
-                        circle.setAttribute('fill', '#2497E8');
-                        circle.setAttribute('stroke', 'white');
-                        circle.setAttribute('stroke-width', '2');
-                        circle.setAttribute('pointer-events', 'none');
-                        group.appendChild(circle);
+                        // Hover effects
+                        group.addEventListener('mouseenter', () => {
+                            circle.setAttribute('r', '6');
+                            circle.setAttribute('fill', '#2196F3');
+                            text.setAttribute('fill', '#2196F3');
+                            text.setAttribute('font-size', '13');
+                            text.setAttribute('y', cy - 12);
+                            
+                            if (image) {
+                                image.setAttribute('opacity', '1');
+                                image.style.transform = 'translateY(0)';
+                            }
+
+                            // Bring group to front so it overlaps other elements
+                            group.parentNode.appendChild(group);
+                        });
+
+                        group.addEventListener('mouseleave', () => {
+                            circle.setAttribute('r', '4.5');
+                            circle.setAttribute('fill', '#00355A');
+                            text.setAttribute('fill', '#00355A');
+                            text.setAttribute('font-size', '12');
+                            text.setAttribute('y', cy - 10);
+                            
+                            if (image) {
+                                image.setAttribute('opacity', '0');
+                                image.style.transform = 'translateY(10px)';
+                            }
+                        });
 
                         svg.appendChild(group);
-
                     });
                 }
 
