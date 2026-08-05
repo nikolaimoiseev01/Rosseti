@@ -902,7 +902,7 @@
                         'sbfo': { x: 342, y: 251, number: 5 },
                         'cfo': { x: 65, y: 195, number: 6 },
                         'dfo': { x: 491, y: 240, number: 7 },
-                        'skfo': { x: 32, y: 296, number: 8 }
+                        'skfo': { x: 32, y: 296, number: 8, color: '#000000' }
                     };
 
                     // Add text elements to SVG
@@ -916,7 +916,7 @@
                         text.setAttribute('y', centroid.y);
                         text.setAttribute('text-anchor', 'middle');
                         text.setAttribute('dominant-baseline', 'middle');
-                        text.setAttribute('fill', '#ffffff');
+                        text.setAttribute('fill', centroid.color || '#ffffff');
                         text.setAttribute('font-size', '14');
                         text.setAttribute('font-weight', 'bold');
                         text.setAttribute('font-family', 'Arial, sans-serif');
@@ -930,7 +930,7 @@
                         circle.setAttribute('cy', centroid.y);
                         circle.setAttribute('r', '12');
                         circle.setAttribute('fill', 'rgba(0,0,0,0)');
-                        circle.setAttribute('stroke', 'white');
+                        circle.setAttribute('stroke', centroid.color || 'white');
                         circle.setAttribute('stroke-width', '1');
                         circle.setAttribute('pointer-events', 'none');
                         circle.setAttribute('class', 'district-number-bg');
@@ -1094,18 +1094,7 @@
                         text.textContent = city.name;
                         group.appendChild(text);
 
-                        group.addEventListener('mouseenter', () => {
-                            circle.setAttribute('r', '5');
-                            circle.setAttribute('fill', '#2196F3');
-                            text.setAttribute('fill', '#2196F3');
-                            group.parentNode.appendChild(group);
-                        });
 
-                        group.addEventListener('mouseleave', () => {
-                            circle.setAttribute('r', '4');
-                            circle.setAttribute('fill', '#00355A');
-                            text.setAttribute('fill', '#00355A');
-                        });
 
                         svg.appendChild(group);
                     });
