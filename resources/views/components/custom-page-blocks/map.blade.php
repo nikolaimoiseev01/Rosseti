@@ -1069,15 +1069,21 @@
 
                         if (city.logos) {
                             city.logos.forEach(logoData => {
-                                const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-                                logo.setAttribute('href', logoData.url);
-                                logo.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', logoData.url);
-                                logo.setAttribute('width', logoWidth);
-                                logo.setAttribute('height', logoHeight);
-                                logo.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-                                logo.setAttribute('x', logoData.x);
-                                logo.setAttribute('y', logoData.y);
-                                group.appendChild(logo);
+                                const fo = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+                                fo.setAttribute('width', logoWidth);
+                                fo.setAttribute('height', logoHeight);
+                                fo.setAttribute('x', logoData.x);
+                                fo.setAttribute('y', logoData.y);
+
+                                const img = document.createElement('img');
+                                img.setAttribute('src', logoData.url);
+                                img.style.width = '100%';
+                                img.style.height = '100%';
+                                img.style.objectFit = 'contain';
+                                img.style.pointerEvents = 'none'; // Prevent interfering with map clicks
+
+                                fo.appendChild(img);
+                                group.appendChild(fo);
                             });
                         }
 
