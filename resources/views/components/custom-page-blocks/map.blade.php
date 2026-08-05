@@ -1068,9 +1068,25 @@
                         group.appendChild(circle);
 
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                        text.setAttribute('x', cx);
-                        text.setAttribute('y', cy - 8);
-                        text.setAttribute('text-anchor', 'middle');
+                        
+                        if (city.text_pos === 'bottom') {
+                            text.setAttribute('x', cx);
+                            text.setAttribute('y', cy + 16);
+                            text.setAttribute('text-anchor', 'middle');
+                        } else if (city.text_pos === 'left') {
+                            text.setAttribute('x', cx - 10);
+                            text.setAttribute('y', cy + 4);
+                            text.setAttribute('text-anchor', 'end');
+                        } else if (city.text_pos === 'right') {
+                            text.setAttribute('x', cx + 10);
+                            text.setAttribute('y', cy + 4);
+                            text.setAttribute('text-anchor', 'start');
+                        } else {
+                            text.setAttribute('x', cx);
+                            text.setAttribute('y', cy - 8);
+                            text.setAttribute('text-anchor', 'middle');
+                        }
+
                         text.setAttribute('fill', '#00355A');
                         text.setAttribute('font-size', '10');
                         text.style.transition = 'all 0.2s ease';
@@ -1143,10 +1159,13 @@
                         const markerSlug = marker.getAttribute('data-city-slug');
                         if (markerSlug === citySlug) {
                             marker.querySelector('circle').setAttribute('fill', '#2196F3');
-                            marker.querySelector('circle').setAttribute('r', '8');
+                            marker.querySelector('circle').setAttribute('r', '5');
+                            marker.querySelector('text').setAttribute('fill', '#2196F3');
+                            marker.parentNode.appendChild(marker);
                         } else {
-                            marker.querySelector('circle').setAttribute('fill', '#58aaf1');
-                            marker.querySelector('circle').setAttribute('r', '6');
+                            marker.querySelector('circle').setAttribute('fill', '#00355A');
+                            marker.querySelector('circle').setAttribute('r', '4');
+                            marker.querySelector('text').setAttribute('fill', '#00355A');
                         }
                     });
 
@@ -1167,8 +1186,9 @@
                     const cityLinks = document.querySelectorAll('.city-link');
 
                     cityMarkers.forEach(marker => {
-                        marker.querySelector('circle').setAttribute('fill', '#2497E8');
-                        marker.querySelector('circle').setAttribute('r', '6');
+                        marker.querySelector('circle').setAttribute('fill', '#00355A');
+                        marker.querySelector('circle').setAttribute('r', '4');
+                        marker.querySelector('text').setAttribute('fill', '#00355A');
                     });
 
                     cityLinks.forEach(link => {
