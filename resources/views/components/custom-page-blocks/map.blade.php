@@ -652,6 +652,7 @@
             [
                 'slug' => 'szfo',
                 'name' => 'Северо-Западный',
+                'logos' => ['fixed/SZFO_SZ.png', 'fixed/SZFO_Yantar.png', 'fixed/SZFO_LEN.png'],
                 'info' => [
                     '1 687 тыс. км²',
                     '13,9 млн чел.',
@@ -662,6 +663,7 @@
             [
                 'slug' => 'pfo',
                 'name' => 'Приволжский',
+                'logos' => ['fixed/Priv_volga.png', 'fixed/Priv_centrpriv.png', 'fixed/URFO_ural.png'],
                 'info' => [
                     '1 037 тыс. км²',
                     '28,4 млн чел.',
@@ -672,6 +674,7 @@
             [
                 'slug' => 'urfo',
                 'name' => 'Уральский',
+                'logos' => ['fixed/URFO_ural.png', 'fixed/URFO_Tymen.png'],
                 'info' => [
                     '1 818 тыс. км²',
                     '12,3 млн чел.',
@@ -682,6 +685,7 @@
             [
                 'slug' => 'ufo',
                 'name' => 'Южный',
+                'logos' => ['fixed/UFO_yug.png', 'fixed/Priv_centrpriv.png'],
                 'info' => [
                     '448 тыс. км²',
                     '16,6 млн чел.',
@@ -692,6 +696,7 @@
             [
                 'slug' => 'sbfo',
                 'name' => 'Сибирский',
+                'logos' => ['fixed/SFO_sibir.png', 'fixed/SFO_Tyva.png', 'fixed/SFO_Tomsk.png', 'fixed/SFo_novosib.png'],
                 'info' => [
                     '4 362 тыс. км²',
                     '16,5 млн чел.',
@@ -702,6 +707,7 @@
             [
                 'slug' => 'cfo',
                 'name' => 'Центральный',
+                'logos' => ['fixed/Priv_centrpriv.png', 'fixed/Centr_centr.png', 'fixed/Centr_mosreg.png'],
                 'info' => [
                     '650 тыс. км²',
                     '40,3 млн чел.',
@@ -712,6 +718,7 @@
             [
                 'slug' => 'dfo',
                 'name' => 'Дальневосточный',
+                'logos' => ['fixed/SFO_sibir.png'],
                 'info' => [
                     '6 953 тыс. км²',
                     '7,9 млн чел.',
@@ -722,6 +729,7 @@
             [
                 'slug' => 'skfo',
                 'name' => 'Северо-Кавказский',
+                'logos' => ['fixed/SKFO_SK.png', 'fixed/SKFO_Chech.png'],
                 'info' => [
                     '170 тыс. км²',
                     '10,3 млн чел.',
@@ -732,20 +740,20 @@
         ];
 
         $cities = $cities ?? [
-            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'logo' => 'fixed/SZFO_Yantar.png', 'x' => 28, 'y' => 125 ],
-            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'logo' => 'fixed/SZFO_SZ.png', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom' ],
-            [ 'slug' => 'moscow', 'name' => 'Москва', 'logo' => 'fixed/Centr_centr.png', 'x' => 85, 'y' => 175 ],
-            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'logo' => 'fixed/Priv_centrpriv.png', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom' ],
-            [ 'slug' => 'saratov', 'name' => 'Саратов', 'logo' => 'fixed/Priv_volga.png', 'x' => 101, 'y' => 240 ],
-            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'logo' => 'fixed/UFO_yug.png', 'x' => 53, 'y' => 242 ],
-            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'logo' => 'fixed/SKFO_SK.png', 'x' => 43, 'y' => 268 ],
-            [ 'slug' => 'grozny', 'name' => 'Грозный', 'logo' => 'fixed/SKFO_Chech.png', 'x' => 49, 'y' => 289 ],
-            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'logo' => 'fixed/URFO_ural.png', 'x' => 193, 'y' => 236 ],
-            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'logo' => 'fixed/URFO_Tymen.png', 'x' => 213, 'y' => 249 ],
-            [ 'slug' => 'tomsk', 'name' => 'Томск', 'logo' => 'fixed/SFO_Tomsk.png', 'x' => 292, 'y' => 279 ],
-            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'logo' => 'fixed/SFo_novosib.png', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom' ],
-            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'logo' => 'fixed/SFO_sibir.png', 'x' => 329, 'y' => 297 ],
-            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'logo' => 'fixed/SFO_Tyva.png', 'x' => 337, 'y' => 333 ]
+            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'x' => 28, 'y' => 125 ],
+            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom' ],
+            [ 'slug' => 'moscow', 'name' => 'Москва', 'x' => 85, 'y' => 175 ],
+            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom' ],
+            [ 'slug' => 'saratov', 'name' => 'Саратов', 'x' => 101, 'y' => 240 ],
+            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'x' => 53, 'y' => 242 ],
+            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'x' => 43, 'y' => 268 ],
+            [ 'slug' => 'grozny', 'name' => 'Грозный', 'x' => 49, 'y' => 289 ],
+            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'x' => 193, 'y' => 236 ],
+            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'x' => 213, 'y' => 249 ],
+            [ 'slug' => 'tomsk', 'name' => 'Томск', 'x' => 292, 'y' => 279 ],
+            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom' ],
+            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'x' => 329, 'y' => 297 ],
+            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'x' => 337, 'y' => 333 ]
         ];
     @endphp
     @php
@@ -764,10 +772,19 @@
         window.citiesData = @json($cities);
         window.whiteRegions = @json($whiteRegions);
     </script>
-    <div class="district-links flex gap-y-2 mt-8">
+    <div class="district-links flex flex-wrap gap-x-8 gap-y-12 mt-8">
         @foreach($districts as $key => $district)
-            <div data-district-slug="{{ $district['slug'] }}" class="district-link transition-all cursor-pointer w-fit">
+            <div data-district-slug="{{ $district['slug'] }}" class="district-link transition-all cursor-pointer w-fit min-w-[200px]">
                 <div class="font-bold text-lg text-blue-900 mb-2 block w-fit">{{$key + 1}} {{ $district['name'] }}</div>
+                
+                @if(isset($district['logos']) && count($district['logos']) > 0)
+                    <div class="flex flex-wrap gap-4 mb-4 mt-2">
+                        @foreach($district['logos'] as $logo)
+                            <img src="{{ asset($logo) }}" alt="Logo" class="w-24 h-auto object-contain">
+                        @endforeach
+                    </div>
+                @endif
+                
                 <div class="flex flex-col gap-y-2 w-fit">
                     @foreach($district['info'] as $key => $item)
                         <div class="flex gap-2 w-fit">
@@ -785,13 +802,10 @@
         @endforeach
     </div>
 
-    <div class="cities-links flex flex-col gap-y-3 mt-8">
+    <div class="cities-links flex flex-col gap-y-3 mt-8 hidden">
         @foreach($cities as $city)
             <div data-city-slug="{{ $city['slug'] }}" class="city-link transition-all cursor-pointer w-fit">
                 <div class="flex items-center gap-3 w-fit">
-                    @if(!empty($city['logo']))
-                        <img src="{{ asset($city['logo']) }}" alt="{{ $city['name'] }}" class="w-20 h-auto object-contain">
-                    @endif
                         <span class="text-sm font-medium text-blue-900">{{ $city['name'] }}</span>
                     <div class="relative flex items-center justify-center w-[18px] min-w-[18px] bg-white h-[18px] border rounded-full" style="border-color: #2497E8;">
                         <div class="w-1 h-1 bg-blue-400 rounded-full"></div>
