@@ -67,7 +67,7 @@
         @endphp
         <div class="flex items-center gap-4">
             @if(!empty($item['icon']))
-                <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0">
+                <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0 pointer-events-none">
             @endif
             <div style="color: #1A1A1A !important;" class="text-lg leading-6">
                 {!! str_replace(['<p>', '</p>'], '', $item['title'] ?? '') !!}
