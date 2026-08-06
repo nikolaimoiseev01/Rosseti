@@ -1364,19 +1364,6 @@
                     });
                 }
 
-                function makeDistrictLinksHover() {
-                    districtLinks.forEach(link => {
-                        link.addEventListener('mouseenter', () => {
-                            const districtSlug = link.getAttribute('data-district-slug');
-                            highlightDistrict(districtSlug);
-                        });
-
-                        link.addEventListener('mouseleave', () => {
-                            resetHighlight();
-                        });
-                    });
-                }
-
                 function makeCitiesHover() {
                     const cityMarkers = document.querySelectorAll('.city-marker');
                     const cityLinks = document.querySelectorAll('.city-link');
@@ -1504,7 +1491,6 @@
 
                 makeRegionsClick();
                 makeRegionsHover();
-                makeDistrictLinksHover();
             }
 
             initMap();
