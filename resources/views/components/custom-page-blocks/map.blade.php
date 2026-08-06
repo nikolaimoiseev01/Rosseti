@@ -1102,7 +1102,7 @@
                         'sbfo': { x: 342, y: 251, number: 5 },
                         'cfo': { x: 65, y: 195, number: 6 },
                         'dfo': { x: 491, y: 240, number: 7 },
-                        'skfo': { x: 32, y: 296, number: 8, color: '#000000' }
+                        'skfo': { x: 24, y: 296, number: 8, color: '#a1a1a1' }
                     };
 
                     // Add text elements to SVG
