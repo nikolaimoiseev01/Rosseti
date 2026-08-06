@@ -124,6 +124,141 @@
     #map-svg {
         width: 100%;
         height: 100%;
+        transition: transform 0.3s ease;
+        transform-origin: center center;
+    }
+
+    .rf-map:not(.fullscreen) #map-svg {
+        cursor: pointer;
+    }
+
+    .rf-map:not(.fullscreen) #map-svg:hover {
+        transform: scale(1.04);
+    }
+
+    .rf-map .map-expand-hint {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid #2497E8;
+        border-radius: 24px;
+        color: #00355A;
+        font-size: 13px;
+        line-height: 1;
+        pointer-events: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .rf-map .map-expand-hint svg {
+        flex-shrink: 0;
+    }
+
+    .rf-map.fullscreen .map-expand-hint {
+        display: none;
+    }
+
+    .rf-map .map-interactive-note {
+        display: none;
+        align-items: center;
+        gap: 10px;
+        width: fit-content;
+        margin: 0 auto 12px;
+        padding: 10px 18px;
+        background: linear-gradient(90deg, rgba(36, 151, 232, 0.08), rgba(36, 151, 232, 0.16));
+        border: 1px solid rgba(36, 151, 232, 0.35);
+        border-radius: 24px;
+        color: #00355A;
+        font-size: 14px;
+        line-height: 1.3;
+    }
+
+    .rf-map .map-interactive-note svg {
+        flex-shrink: 0;
+    }
+
+    .rf-map .map-interactive-note b {
+        font-weight: 600;
+    }
+
+    .rf-map.fullscreen .map-interactive-note {
+        display: flex;
+    }
+
+    .rf-map .city-logo {
+        display: none;
+    }
+
+    .rf-map .city-marker text {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .rf-map.fullscreen .city-marker text {
+        opacity: 1;
+    }
+
+    .rf-map #map-tooltip {
+        animation: tooltip-in 0.25s ease;
+    }
+
+    @keyframes tooltip-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .rf-map #map-tooltip .tooltip-logo {
+        display: block;
+        width: 120px;
+        height: auto;
+        margin-top: 8px;
+    }
+
+    .rf-map.fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        margin: 0;
+        padding: 24px 32px;
+        background: #fff;
+        overflow: auto;
+    }
+
+    .rf-map.fullscreen #map-svg {
+        max-height: calc(100vh - 60px);
+    }
+
+    .rf-map .close-map {
+        display: none;
+        position: absolute;
+        top: 16px;
+        right: 24px;
+        z-index: 1001;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        line-height: 1;
+        color: #00355A;
+        cursor: pointer;
+    }
+
+    .rf-map.fullscreen .close-map {
+        display: flex;
     }
 
     .rf-map #map-svg path {
@@ -285,6 +420,26 @@
     }
 </style>
 <div class="rf-map margin-top-20">
+    <div class="close-map" role="button" aria-label="Закрыть карту">&times;</div>
+    <div class="map-expand-hint" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2497E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
+            <path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
+            <path d="M3 16v3a2 2 0 0 0 2 2h3"/>
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
+        </svg>
+        <span>Нажмите, чтобы развернуть карту</span>
+    </div>
+    <div class="map-interactive-note" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2497E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 9l5 12 1.8-5.2L21 14z"/>
+            <path d="M7.2 2.2l.8 2.7"/>
+            <path d="M2.2 7.2l2.7.8"/>
+            <path d="M12.6 3.4l-2 2"/>
+            <path d="M3.4 12.6l2-2"/>
+        </svg>
+        <span><b>Карта интерактивная.</b> Наводите мышкой на округа и города</span>
+    </div>
     <svg class="md:hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 708.9 458.9" enable-background="new 0 0 708.9 458.9" id="map-svg" xml:space="preserve">
 <path data-district-slug="szfo" data-district="Северо-Западный федеральный округ" data-id="enabled"
@@ -649,7 +804,7 @@
     {{-- Логотипы городов — рендерятся сервером напрямую в SVG --}}
     @foreach($cities as $city)
         @if(isset($city['logo']) && isset($city['logo_x']) && isset($city['logo_y']))
-            <image href="{{ asset($city['logo']) }}" x="{{ $city['logo_x'] }}" y="{{ $city['logo_y'] }}" width="40" height="15" preserveAspectRatio="xMidYMid meet" />
+            <image class="city-logo" href="{{ asset($city['logo']) }}" x="{{ $city['logo_x'] }}" y="{{ $city['logo_y'] }}" width="40" height="15" preserveAspectRatio="xMidYMid meet" />
         @endif
     @endforeach
 </svg>
@@ -737,24 +892,6 @@
                 ],
             ],
         ];
-
-        $cities = $cities ?? [
-            [ 'slug' => 'kaliningrad', 'name' => 'Калининград', 'logo' => 'fixed/SZFO_Yantar.png', 'x' => 28, 'y' => 125, 'logo_pos' => 'top', 'logo_x' => 27, 'logo_y' => 111 ],
-            [ 'slug' => 'spb', 'name' => 'Санкт-Петербург', 'logo' => 'fixed/SZFO_SZ.png', 'x' => 85, 'y' => 125, 'text_pos' => 'bottom', 'logo_pos' => 'top', 'logo_x' => 84, 'logo_y' => 110 ],
-            [ 'slug' => 'moscow', 'name' => 'Москва', 'logo' => 'fixed/Centr_centr.png', 'x' => 85, 'y' => 175, 'logo_pos' => 'top', 'logo_x' => 84, 'logo_y' => 161 ],
-            [ 'slug' => 'moscow2', 'name' => '', 'logo' => 'fixed/Centr_mosreg.png', 'x' => 85, 'y' => 175, 'logo_pos' => 'top', 'logo_x' => 84, 'logo_y' => 145, 'hide_marker' => true ],
-            [ 'slug' => 'nizhny', 'name' => 'Нижний Новгород', 'logo' => 'fixed/Priv_centrpriv.png', 'x' => 115, 'y' => 200, 'text_pos' => 'bottom', 'logo_pos' => 'top', 'logo_x' => 113, 'logo_y' => 188 ],
-            [ 'slug' => 'saratov', 'name' => 'Саратов', 'logo' => 'fixed/Priv_volga.png', 'x' => 101, 'y' => 240, 'logo_pos' => 'bottom', 'logo_x' => 103, 'logo_y' => 268 ],
-            [ 'slug' => 'rostov', 'name' => 'Ростов-на-Дону', 'logo' => 'fixed/UFO_yug.png', 'x' => 53, 'y' => 242, 'logo_pos' => 'top', 'logo_x' => 52, 'logo_y' => 229 ],
-            [ 'slug' => 'pyatigorsk', 'name' => 'Пятигорск', 'logo' => 'fixed/SKFO_SK.png', 'x' => 43, 'y' => 268, 'logo_pos' => 'left', 'logo_x' => 5, 'logo_y' => 273 ],
-            [ 'slug' => 'grozny', 'name' => 'Грозный', 'logo' => 'fixed/SKFO_Chech.png', 'x' => 49, 'y' => 289, 'logo_pos' => 'bottom', 'logo_x' => 57, 'logo_y' => 315 ],
-            [ 'slug' => 'ekb', 'name' => 'Екатеринбург', 'logo' => 'fixed/URFO_ural.png', 'x' => 193, 'y' => 236, 'logo_pos' => 'top', 'logo_x' => 193, 'logo_y' => 222 ],
-            [ 'slug' => 'tyumen', 'name' => 'Тюмень', 'logo' => 'fixed/URFO_Tymen.png', 'x' => 213, 'y' => 249, 'logo_pos' => 'bottom', 'logo_x' => 212, 'logo_y' => 277 ],
-            [ 'slug' => 'tomsk', 'name' => 'Томск', 'logo' => 'fixed/SFO_Tomsk.png', 'x' => 292, 'y' => 279, 'logo_pos' => 'top', 'logo_x' => 292, 'logo_y' => 263 ],
-            [ 'slug' => 'novosibirsk', 'name' => 'Новосибирск', 'logo' => 'fixed/SFo_novosib.png', 'x' => 277, 'y' => 294, 'text_pos' => 'bottom', 'logo_pos' => 'bottom', 'logo_x' => 278, 'logo_y' => 324 ],
-            [ 'slug' => 'krasnoyarsk', 'name' => 'Красноярск', 'logo' => 'fixed/SFO_sibir.png', 'x' => 329, 'y' => 297, 'logo_pos' => 'top', 'logo_x' => 329, 'logo_y' => 281 ],
-            [ 'slug' => 'kyzyl', 'name' => 'Кызыл', 'logo' => 'fixed/SFO_Tyva.png', 'x' => 337, 'y' => 333, 'logo_pos' => 'top', 'logo_x' => 337, 'logo_y' => 360 ]
-        ];
     @endphp
     @php
         // Регионы, которые отображаются белым фоном (только границы)
@@ -776,7 +913,7 @@
         @foreach($districts as $key => $district)
             <div data-district-slug="{{ $district['slug'] }}" class="district-link transition-all cursor-pointer w-fit min-w-[200px]">
                 <div class="font-bold text-lg text-blue-900 mb-2 block w-fit">{{$key + 1}} {{ $district['name'] }}</div>
-                
+
                 <div class="flex flex-col gap-y-2 w-fit">
                     @foreach($district['info'] as $key => $item)
                         <div class="flex gap-2 w-fit">
@@ -832,6 +969,69 @@
                 const districtLinks = document.querySelectorAll('.district-link');
                 const tooltip = document.getElementById('map-tooltip');
                 const svg = document.getElementById('map-svg');
+                const closeMapBtn = mapRoot.querySelector('.close-map');
+
+                function isMapFullscreen() {
+                    return mapRoot.classList.contains('fullscreen');
+                }
+
+                function openMapFullscreen() {
+                    if (isMapFullscreen()) return;
+
+                    // FLIP: плавный переход из текущего положения в полноэкранный режим
+                    const first = mapRoot.getBoundingClientRect();
+
+                    mapRoot.classList.add('fullscreen');
+                    document.body.style.overflow = 'hidden';
+
+                    const last = mapRoot.getBoundingClientRect();
+                    const dx = first.left - last.left;
+                    const dy = first.top - last.top;
+                    const sx = first.width / last.width;
+                    const sy = first.height / last.height;
+
+                    mapRoot.style.transition = 'none';
+                    mapRoot.style.transformOrigin = 'top left';
+                    mapRoot.style.transform = `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`;
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            mapRoot.style.transition = 'transform 0.35s ease';
+                            mapRoot.style.transform = '';
+                            setTimeout(() => {
+                                mapRoot.style.transition = '';
+                                mapRoot.style.transformOrigin = '';
+                            }, 400);
+                        });
+                    });
+                }
+
+                function closeMapFullscreen() {
+                    if (!isMapFullscreen()) return;
+                    mapRoot.classList.remove('fullscreen');
+                    document.body.style.overflow = '';
+                    resetHighlight();
+                    tooltip.style.display = 'none';
+                }
+
+                svg.addEventListener('click', () => {
+                    if (!isMapFullscreen()) {
+                        openMapFullscreen();
+                    }
+                });
+
+                if (closeMapBtn) {
+                    closeMapBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        closeMapFullscreen();
+                    });
+                }
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        closeMapFullscreen();
+                    }
+                });
 
                 // Draw blue outer borders for each federal district
                 function addDistrictBorders() {
@@ -942,7 +1142,10 @@
 
                 // Call after a short delay to ensure SVG is ready
                 setTimeout(addDistrictNumbers, 100);
-                setTimeout(addCities, 100);
+                setTimeout(() => {
+                    addCities();
+                    makeCitiesHover();
+                }, 100);
 
                 function highlightDistrict(districtSlug) {
                     // Подсветка регионов на карте
@@ -986,6 +1189,7 @@
 
                     regions.forEach(region => {
                         region.addEventListener('mouseenter', (e) => {
+                            if (!isMapFullscreen()) return;
                             const districtSlug = region.getAttribute('data-district-slug');
                             const regionName = region.getAttribute('data-region') || 'Неизвестный регион';
                             const districtName = region.getAttribute('data-district') || 'Неизвестный округ';
@@ -1068,7 +1272,7 @@
                         group.appendChild(circle);
 
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                        
+
                         let textYOffset = 0;
                         let textXOffset = 0;
                         const logoWidth = 40;
@@ -1083,18 +1287,19 @@
                         // Only use JS rendering for logos WITHOUT explicit coordinates
                         if (city.logo && city.logo_x === undefined) {
                             const logo = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+                            logo.setAttribute('class', 'city-logo');
                             logo.setAttribute('href', city.logo);
                             logo.setAttribute('width', logoWidth);
                             logo.setAttribute('height', logoHeight);
                             logo.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-                            
+
                             const lPos = city.logo_pos || 'top';
-                            
+
                             if (lPos === 'bottom') {
                                 logo.setAttribute('x', cx - (logoWidth / 2));
                                 logo.setAttribute('y', cy + 8);
                                 if (city.text_pos === 'bottom' || !city.text_pos) {
-                                    textYOffset = logoHeight + 4; 
+                                    textYOffset = logoHeight + 4;
                                 }
                             } else if (lPos === 'left') {
                                 logo.setAttribute('x', cx - logoWidth - 8);
@@ -1119,7 +1324,7 @@
                         }
 
                         const tPos = city.text_pos || (city.logo_pos === 'top' ? 'top' : 'bottom');
-                        
+
                         if (tPos === 'bottom') {
                             text.setAttribute('x', cx + textXOffset);
                             text.setAttribute('y', cy + 16 + textYOffset);
@@ -1169,13 +1374,21 @@
                     const cityLinks = document.querySelectorAll('.city-link');
 
                     cityMarkers.forEach(marker => {
-                        marker.addEventListener('mouseenter', () => {
+                        marker.addEventListener('mouseenter', (e) => {
                             const citySlug = marker.getAttribute('data-city-slug');
                             highlightCity(citySlug);
+                            showCityTooltip(citySlug, e);
+                        });
+
+                        marker.addEventListener('mousemove', (e) => {
+                            if (tooltip.style.display !== 'block') return;
+                            tooltip.style.left = `${e.clientX + 15}px`;
+                            tooltip.style.top = `${e.clientY + 15}px`;
                         });
 
                         marker.addEventListener('mouseleave', () => {
                             resetCityHighlight();
+                            hideCityTooltip();
                         });
                     });
 
@@ -1189,6 +1402,36 @@
                             resetCityHighlight();
                         });
                     });
+                }
+
+                function showCityTooltip(citySlug, e) {
+                    if (!isMapFullscreen()) return;
+
+                    const cities = window.citiesData || [];
+                    const city = cities.find(c => c.slug === citySlug);
+                    if (!city) return;
+
+                    // Все логотипы в этой точке (например, moscow + moscow2)
+                    const related = cities.filter(c => c.logo && c.x == city.x && c.y == city.y);
+                    if (!related.length && !city.name) return;
+
+                    let html = '';
+                    if (city.name) {
+                        html += `<div class="tooltip-title">${city.name}</div>`;
+                    }
+                    related.forEach(c => {
+                        const src = /^(https?:)?\//.test(c.logo) ? c.logo : `/${c.logo}`;
+                        html += `<img class="tooltip-logo" src="${src}" alt="">`;
+                    });
+
+                    tooltip.innerHTML = html;
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = `${e.clientX + 15}px`;
+                    tooltip.style.top = `${e.clientY + 15}px`;
+                }
+
+                function hideCityTooltip() {
+                    tooltip.style.display = 'none';
                 }
 
                 function highlightCity(citySlug) {
@@ -1239,6 +1482,7 @@
                 function makeRegionsClick() {
                     document.querySelectorAll('.rf-map svg path, .district-links').forEach(el => {
                         el.addEventListener('click', function () {
+                            if (this.closest('#map-svg') && !isMapFullscreen()) return;
                             const slug = this.getAttribute('data-district-slug');
                             if (slug && slug !== 'skfo') {
                                 Livewire.dispatch('updateRightCardDistrict', {slug: slug})
@@ -1253,7 +1497,6 @@
                 makeRegionsClick();
                 makeRegionsHover();
                 makeDistrictLinksHover();
-                makeCitiesHover();
             }
 
             initMap();
