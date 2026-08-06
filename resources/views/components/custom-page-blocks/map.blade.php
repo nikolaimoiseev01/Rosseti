@@ -415,13 +415,20 @@
         }
 
         .rf-map .district-links {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .rf-map .district-links {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
         }
     }
 </style>
 <div class="rf-map margin-top-20">
     <div class="close-map" role="button" aria-label="Закрыть карту">&times;</div>
-    <div class="map-expand-hint" aria-hidden="true">
+    <div class="map-expand-hint md:!hidden" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2497E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
             <path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
@@ -438,9 +445,10 @@
             <path d="M12.6 3.4l-2 2"/>
             <path d="M3.4 12.6l2-2"/>
         </svg>
-        <span><b>Карта интерактивная.</b> Наводите мышкой на округа и города</span>
+        <span class="md:!hidden"><b>Карта интерактивная.</b> Наводите мышкой на округа и города</span>
+        <span class="hidden md:block"><b>Карта интерактивная.</b> Нажмите на округ или город</span>
     </div>
-    <svg class="md:hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    <svg class="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 708.9 458.9" enable-background="new 0 0 708.9 458.9" id="map-svg" xml:space="preserve">
 <path data-district-slug="szfo" data-district="Северо-Западный федеральный округ" data-id="enabled"
       data-region="Ненецкий автономный округ" data-code="RU-NEN"
@@ -909,9 +917,9 @@
         window.citiesData = @json($cities);
         window.whiteRegions = @json($whiteRegions);
     </script>
-    <div class="district-links flex flex-wrap gap-x-8 gap-y-12 mt-8">
+    <div class="district-links flex flex-wrap gap-x-4 gap-y-8 mt-8">
         @foreach($districts as $key => $district)
-            <div data-district-slug="{{ $district['slug'] }}" class="district-link transition-all cursor-pointer w-fit min-w-[200px]">
+            <div data-district-slug="{{ $district['slug'] }}" class="district-link transition-all cursor-pointer w-fit">
                 <div class="font-bold text-lg text-blue-900 mb-2 block w-fit">{{$key + 1}} {{ $district['name'] }}</div>
 
                 <div class="flex flex-col gap-y-2 w-fit">
