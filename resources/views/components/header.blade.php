@@ -87,7 +87,7 @@
                                     <a
                                        @click="megaOpen = null"
                                        href="{{ route('article.index', $link['slug']) }}#{{ $heading['anchor'] }}"
-                                       class="{{ !empty($heading['is_big']) ? 'text-xl font-semibold text-black-500' : 'text-lg text-black-400' }} block break-inside-avoid mb-2 hover:text-blue-500 leading-snug transition-colors">
+                                       class="{{ !empty($heading['is_big']) ? 'text-xl text-blue-500' : 'text-lg text-black-400' }} block break-inside-avoid mb-2 hover:text-blue-500 leading-snug transition-colors">
                                         {{ $heading['title'] }}
                                     </a>
                                 @endforeach
