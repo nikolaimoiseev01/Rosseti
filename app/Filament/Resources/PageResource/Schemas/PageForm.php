@@ -61,6 +61,13 @@ class PageForm
                             ->image()
                             ->maxFiles(1)
                             ->columnSpanFull(),
+                        SpatieMediaLibraryFileUpload::make('cover_extra')
+                            ->label('Доп обложка')
+                            ->collection('cover_extra')
+                            ->image()
+                            ->maxFiles(1)
+                            ->helperText('Если задана, в гипер-хедере обе обложки выводятся в колонку')
+                            ->columnSpanFull(),
                         SpatieMediaLibraryFileUpload::make('cover_mobile')
                             ->label('Обложка мобильная версия')
                             ->collection('cover_mobile')

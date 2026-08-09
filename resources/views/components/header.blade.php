@@ -58,7 +58,7 @@
         <!-- Mega Menu (Desktop) -->
         @foreach($navLinks as $link)
             @php
-                $mega = $megaMenu[$link['slug']] ?? ['headings' => [], 'cover' => null];
+                $mega = $megaMenu[$link['slug']] ?? ['headings' => [], 'cover' => null, 'cover_extra' => null];
                 $megaLinkTitle = !empty($link->title_languages) && isset($link->title_languages[$currentLang])
                     ? $link->title_languages[$currentLang]
                     : $link->title;
@@ -82,23 +82,31 @@
                                class="block text-lg font-semibold text-black-500 hover:text-blue-500 mb-4">
                                 {{ $megaLinkTitle }}
                             </a>
-                            <nav class="grid grid-cols-2 gap-x-8 gap-y-2">
+                            <nav class="columns-2 gap-x-8">
                                 @foreach($mega['headings'] as $heading)
                                     <a
                                        @click="megaOpen = null"
                                        href="{{ route('article.index', $link['slug']) }}#{{ $heading['anchor'] }}"
-                                       class="{{ !empty($heading['is_big']) ? 'text-xl font-semibold text-black-500' : 'text-lg text-black-400' }} hover:text-blue-500 leading-snug transition-colors">
+                                       class="{{ !empty($heading['is_big']) ? 'text-xl font-semibold text-black-500' : 'text-lg text-black-400' }} block break-inside-avoid mb-2 hover:text-blue-500 leading-snug transition-colors">
                                         {{ $heading['title'] }}
                                     </a>
                                 @endforeach
                             </nav>
                         </div>
-                        @if($mega['cover'])
-                            <div class="w-[220px] flex-shrink-0">
-                                <img src="{{ $mega['cover'] }}"
-                                     class="w-full h-[140px] object-cover rounded-xl"
-                                     alt="{{ $megaLinkTitle }}"
-                                     data-no-lightbox>
+                        @if($mega['cover'] || !empty($mega['cover_extra']))
+                            <div class="w-[220px] flex-shrink-0 flex gap-4">
+                                @if($mega['cover'])
+                                    <img src="{{ $mega['cover'] }}"
+                                         class="w-full h-[140px] object-cover rounded-xl"
+                                         alt="{{ $megaLinkTitle }}"
+                                         data-no-lightbox>
+                                @endif
+                                @if(!empty($mega['cover_extra']))
+                                    <img src="{{ $mega['cover_extra'] }}"
+                                         class="w-full h-[140px] object-cover rounded-xl"
+                                         alt="{{ $megaLinkTitle }}"
+                                         data-no-lightbox>
+                                @endif
                             </div>
                         @endif
                     </div>
