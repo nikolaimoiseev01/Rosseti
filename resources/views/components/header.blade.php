@@ -79,7 +79,7 @@
                         <div class="flex-1 min-w-0">
                             <a  href="{{ route('article.index', $link['slug']) }}"
                                @click="megaOpen = null"
-                               class="block text-lg font-semibold text-black-500 hover:text-blue-500 mb-4">
+                               class="block text-xl  text-blue-500 hover:text-blue-500 mb-4">
                                 {{ $megaLinkTitle }}
                             </a>
                             @php
