@@ -22,7 +22,7 @@
                     <a
                        @mouseenter="openMega('{{ $link['slug'] }}')"
                        @focus="openMega('{{ $link['slug'] }}')"
-                       class="text-base py-4 {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}"
+                       class="text-sm py-4 {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}"
                        :class="megaOpen === '{{ $link['slug'] }}' ? 'text-blue-500' : ''"
                        href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
                 @endforeach
