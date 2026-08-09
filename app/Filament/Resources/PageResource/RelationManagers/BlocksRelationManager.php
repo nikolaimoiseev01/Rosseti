@@ -455,6 +455,10 @@ class BlocksRelationManager extends RelationManager
                         'h4' => 'H4 — Маленький',
                     ])
                     ->default('h2'),
+                Forms\Components\Toggle::make('data_languages.is_big')
+                    ->label('Большой заголовок')
+                    ->helperText('Выделяется в навигации страницы и в меню хедера')
+                    ->default(false),
                 ...$this->textColorSelectFields('data_languages.color'),
                 ...$this->spacingSelectFields(),
             ],

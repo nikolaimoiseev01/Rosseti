@@ -109,12 +109,18 @@
                 heading.id = 'heading-' + index + '-' + text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
             }
 
+            heading.classList.add('scroll-mt-24');
+
+            const isBig = heading.hasAttribute('data-toc-big');
+
             // Desktop sidebar navigation
             if ($tocNav) {
                 const link = document.createElement('a');
                 link.href = '#' + heading.id;
                 link.textContent = heading.textContent.trim();
-                link.className = 'block hover:underline text-black-400 leading-snug';
+                link.className = isBig
+                    ? 'block hover:underline text-black-500 leading-snug text-xl font-semibold'
+                    : 'block hover:underline text-black-400 leading-snug';
                 $tocNav.appendChild(link);
             }
 
@@ -123,7 +129,9 @@
                 const link = document.createElement('a');
                 link.href = '#' + heading.id;
                 link.textContent = heading.textContent.trim();
-                link.className = 'whitespace-nowrap text-lg text-black-400 hover:text-blue-500 transition-colors';
+                link.className = isBig
+                    ? 'whitespace-nowrap text-xl font-semibold text-black-500 hover:text-blue-500 transition-colors'
+                    : 'whitespace-nowrap text-lg text-black-400 hover:text-blue-500 transition-colors';
                 $tocNavHorizontal.appendChild(link);
             }
         });

@@ -32,8 +32,8 @@
     $content = preg_replace('/СУРИВК/ui', '<span class="preserve-case">СУРиВК</span>', $content);
     $subtitle = preg_replace('/СУРИВК/ui', '<span class="preserve-case">СУРиВК</span>', $subtitle);
 @endphp
-<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--heading {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
-    <{{ $level }} class="{{colorHelper('color', $data)}} {{colorHelper('font_weight', $data)}} {{ $hasSubtitle ? '!mb-1' : '' }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--heading scroll-mt-24 {{ "!" . $spacingTop }} {{ "!" . $spacingBottom }}">
+    <{{ $level }} @if(!empty($data['is_big'])) data-toc-big @endif class="{{colorHelper('color', $data)}} {{colorHelper('font_weight', $data)}} {{ $hasSubtitle ? '!mb-1' : '' }}">
         {!! $content !!}
     </{{ $level }}>
     @if($hasSubtitle)

@@ -1,4 +1,9 @@
-<header class="fixed z-40 w-full bg-white top-0 border-b border-black-100" x-data="{ mobileMenuOpen: false }">
+<header class="fixed z-40 w-full bg-white top-0 border-b border-black-100"
+        x-data="{ mobileMenuOpen: false, megaOpen: null, megaTimer: null,
+            openMega(slug) { clearTimeout(this.megaTimer); this.megaOpen = slug; },
+            closeMega() { this.megaTimer = setTimeout(() => this.megaOpen = null, 150); }
+        }"
+        @mouseleave="closeMega()">
 
         <div class="flex container items-center justify-between text-sm text-white/90">
             <x-logo class="w-[100px]"/>
@@ -14,7 +19,12 @@
                             ? $link->title_languages[$currentLang]
                             : $link->title;
                     @endphp
-                    <a wire:navigate class="text-sm {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}" href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
+                    <a
+                       @mouseenter="openMega('{{ $link['slug'] }}')"
+                       @focus="openMega('{{ $link['slug'] }}')"
+                       class="text-base py-4 {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}"
+                       :class="megaOpen === '{{ $link['slug'] }}' ? 'text-blue-500' : ''"
+                       href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
                 @endforeach
 {{--                    <a download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-sm" >{{ $currentLang === 'ru' ? 'Приложения' : 'Appendices' }}</a>--}}
             </nav>
@@ -44,6 +54,57 @@
                 </button>
             </div>
         </div>
+
+        <!-- Mega Menu (Desktop) -->
+        @foreach($navLinks as $link)
+            @php
+                $mega = $megaMenu[$link['slug']] ?? ['headings' => [], 'cover' => null];
+                $megaLinkTitle = !empty($link->title_languages) && isset($link->title_languages[$currentLang])
+                    ? $link->title_languages[$currentLang]
+                    : $link->title;
+            @endphp
+            @if(!empty($mega['headings']))
+                <div x-show="megaOpen === '{{ $link['slug'] }}'"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-2"
+                     @mouseenter="openMega('{{ $link['slug'] }}')"
+                     @mouseleave="closeMega()"
+                     class="absolute md:hidden left-0 right-0 top-full w-full bg-white border-b border-black-100 shadow-xl"
+                     style="display: none;">
+                    <div class="container flex gap-10 py-8">
+                        <div class="flex-1 min-w-0">
+                            <a  href="{{ route('article.index', $link['slug']) }}"
+                               @click="megaOpen = null"
+                               class="block text-lg font-semibold text-black-500 hover:text-blue-500 mb-4">
+                                {{ $megaLinkTitle }}
+                            </a>
+                            <nav class="grid grid-cols-2 gap-x-8 gap-y-2">
+                                @foreach($mega['headings'] as $heading)
+                                    <a
+                                       @click="megaOpen = null"
+                                       href="{{ route('article.index', $link['slug']) }}#{{ $heading['anchor'] }}"
+                                       class="{{ !empty($heading['is_big']) ? 'text-xl font-semibold text-black-500' : 'text-lg text-black-400' }} hover:text-blue-500 leading-snug transition-colors">
+                                        {{ $heading['title'] }}
+                                    </a>
+                                @endforeach
+                            </nav>
+                        </div>
+                        @if($mega['cover'])
+                            <div class="w-[220px] flex-shrink-0">
+                                <img src="{{ $mega['cover'] }}"
+                                     class="w-full h-[140px] object-cover rounded-xl"
+                                     alt="{{ $megaLinkTitle }}"
+                                     data-no-lightbox>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endif
+        @endforeach
 
         <!-- Mobile Menu Overlay -->
         <div x-show="mobileMenuOpen"
@@ -84,7 +145,7 @@
                                 ? $link->title_languages[$currentLang]
                                 : $link->title;
                         @endphp
-                        <a wire:navigate @click="mobileMenuOpen = false" class="text-xl {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-bold' : 'hover:text-blue-500' }}" href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
+                        <a  @click="mobileMenuOpen = false" class="text-xl {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-bold' : 'hover:text-blue-500' }}" href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
                     @endforeach
 {{--                    <a @click="mobileMenuOpen = false" download="Приложения.pdf" href="/fixed/additionals.pdf" class="text-xl hover:text-blue-500">{{ $currentLang === 'ru' ? 'Приложения' : 'Appendices' }}</a>--}}
                 </nav>
