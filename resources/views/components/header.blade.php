@@ -82,14 +82,21 @@
                                class="block text-lg font-semibold text-black-500 hover:text-blue-500 mb-4">
                                 {{ $megaLinkTitle }}
                             </a>
-                            <nav class="columns-2 gap-x-8">
-                                @foreach($mega['headings'] as $heading)
-                                    <a
-                                       @click="megaOpen = null"
-                                       href="{{ route('article.index', $link['slug']) }}#{{ $heading['anchor'] }}"
-                                       class="{{ !empty($heading['is_big']) ? 'text-xl text-blue-500' : 'text-lg text-black-400' }} block break-inside-avoid mb-2 hover:text-blue-500 leading-snug transition-colors">
-                                        {{ $heading['title'] }}
-                                    </a>
+                            @php
+                                $headingColumns = array_chunk($mega['headings'], max(1, (int) ceil(count($mega['headings']) / 2)));
+                            @endphp
+                            <nav class="grid grid-cols-2 gap-x-8 items-start">
+                                @foreach($headingColumns as $column)
+                                    <div class="flex flex-col gap-y-2">
+                                        @foreach($column as $heading)
+                                            <a
+                                               @click="megaOpen = null"
+                                               href="{{ route('article.index', $link['slug']) }}#{{ $heading['anchor'] }}"
+                                               class="{{ !empty($heading['is_big']) ? 'text-xl text-blue-500' : 'text-lg text-black-400' }} hover:text-blue-500 leading-snug transition-colors">
+                                                {{ $heading['title'] }}
+                                            </a>
+                                        @endforeach
+                                    </div>
                                 @endforeach
                             </nav>
                         </div>
