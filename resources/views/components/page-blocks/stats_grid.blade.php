@@ -67,15 +67,19 @@
             $suffix = isset($matches[3]) ? $matches[3] : '';
         @endphp
         <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $prefix }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center flex flex-col">
-            <div class="flex flex-col items-center" style="min-height: 120px; justify-content: flex-end;">
-                <div class="text-[80px] font-normal leading-none mb-1 {{colorHelper('main_color', $data)}}">
+            {{-- Зона 1: Число — всегда одинаковая высота --}}
+            <div class="flex items-end justify-center" style="min-height: 80px;">
+                <div class="text-[80px] font-normal leading-none {{colorHelper('main_color', $data)}}">
                     <span class="{{colorHelper('main_color', $data)}}" x-text="displayValue"></span>
                 </div>
+            </div>
+            {{-- Зона 2: Единица измерения — всегда занимает место, даже если пустая --}}
+            <div class="flex items-start justify-center" style="min-height: 28px;">
                 @if(!empty($item['unit']))
-                    <div class="text-xl font-light mb-1 {{colorHelper('unit_color', $data)}}">{{ $item['unit'] }}</div>
+                    <div class="text-xl font-light {{colorHelper('unit_color', $data)}}">{{ $item['unit'] }}</div>
                 @endif
             </div>
-            <div class="flex-1"></div>
+            {{-- Зона 3: Описание — выравнивается по верхнему краю --}}
             <p class="mt-2 {{colorHelper('text_color', $data)}}">{{ $item['description'] }}</p>
         </div>
     @endforeach
