@@ -68,12 +68,9 @@
     if (!function_exists('formatChartValue')) {
         function formatChartValue($val) {
             $float = (float) str_replace(',', '.', $val);
-            if ($float == (int) $float) {
-                return number_format($float, 0, ',', ' ');
-            }
-            // Count decimal places from original value
+            // Always respect the original decimal places from the input
             $parts = preg_split('/[.,]/', $val);
-            $decimals = isset($parts[1]) ? strlen($parts[1]) : 1;
+            $decimals = isset($parts[1]) ? strlen($parts[1]) : 0;
             return number_format($float, $decimals, ',', ' ');
         }
     }
