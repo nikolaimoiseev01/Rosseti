@@ -9,7 +9,7 @@
             <x-logo class="w-[100px]"/>
 
             <!-- Desktop Navigation (hidden on mobile) -->
-            <nav class="flex md:hidden gap-3 text-base text-black-400 text-nowrap">
+            <nav class="flex flex-wrap md:hidden gap-x-3 gap-y-1 py-3 text-base text-black-400 text-nowrap px-16">
                 @php
                     $currentLang = session('locale', 'ru');
                 @endphp
@@ -22,7 +22,7 @@
                     <a
                        @mouseenter="openMega('{{ $link['slug'] }}')"
                        @focus="openMega('{{ $link['slug'] }}')"
-                       class="text-sm py-4 {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}"
+                       class="text-sm {{ request()->route('slug') === $link['slug'] ? 'text-blue-500 font-medium' : '' }}"
                        :class="megaOpen === '{{ $link['slug'] }}' ? 'text-blue-500' : ''"
                        href="{{ route('article.index', $link['slug'])}}">{{ $linkTitle }}</a>
                 @endforeach
