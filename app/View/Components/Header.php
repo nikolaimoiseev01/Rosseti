@@ -61,7 +61,10 @@ class Header extends Component
 
             $this->megaMenu[$page->slug] = [
                 'headings' => $headings,
-                'cover' => $page->getFirstMediaUrl('cover', 'thumb') ?: $page->getFirstMediaUrl('cover'),
+                'cover' => $page->getFirstMediaUrl('cover_mobile', 'thumb')
+                    ?: $page->getFirstMediaUrl('cover_mobile')
+                    ?: $page->getFirstMediaUrl('cover', 'thumb')
+                    ?: $page->getFirstMediaUrl('cover'),
                 'cover_extra' => $page->getFirstMediaUrl('cover_extra', 'thumb') ?: $page->getFirstMediaUrl('cover_extra'),
             ];
         }
