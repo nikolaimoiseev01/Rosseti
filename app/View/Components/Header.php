@@ -18,7 +18,7 @@ class Header extends Component
 
     public function __construct()
     {
-        $this->navLinks = Page::with('blocks')->get();
+        $this->navLinks = Page::with('blocks')->orderBy('sort')->get();
 
         $locale = session('locale', 'ru');
 
