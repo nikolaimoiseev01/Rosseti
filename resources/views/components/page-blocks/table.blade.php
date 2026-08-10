@@ -79,7 +79,7 @@
                 @else
                     @php
                         $rowColor = $row['row_color'] ?? '';
-                        $isDarkRow = in_array($rowColor, ['#00355A', '#005B9C']);
+                        $isDarkRow = in_array($rowColor, ['#00355A', '#005B9C', '#2196F3']);
                         $rowBg = $rowColor ? '' : ($index % 2 === 0 ? 'bg-white' : 'bg-[#F7F9FC]');
                     @endphp
                     <tr class="{{ $tableUid }}-row {{ $rowBg }} {{ $isDarkRow ? $tableUid . '-dark-row' : '' }}"

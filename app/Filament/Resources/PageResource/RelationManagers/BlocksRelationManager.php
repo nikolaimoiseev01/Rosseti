@@ -614,6 +614,7 @@ class BlocksRelationManager extends RelationManager
                                                 '#E0F2FE' => 'Небесный',
                                                 '#F0FFF4' => 'Светло-зелёный',
                                                 '#FFFBEB' => 'Светло-жёлтый',
+                                                '#2196F3' => 'Фирменный голубой (белый текст)',
                                                 '#00355A' => 'Тёмно-синий (белый текст)',
                                                 '#005B9C' => 'Синий (белый текст)',
                                             ])
@@ -709,6 +710,7 @@ class BlocksRelationManager extends RelationManager
                                                 '#E0F2FE' => 'Sky',
                                                 '#F0FFF4' => 'Light green',
                                                 '#FFFBEB' => 'Light yellow',
+                                                '#2196F3' => 'Brand blue (white text)',
                                                 '#00355A' => 'Dark blue (white text)',
                                                 '#005B9C' => 'Blue (white text)',
                                             ])
