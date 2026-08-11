@@ -65,7 +65,7 @@
         @php
             $isTitleAccent = ($item['title_style'] ?? 'large_bold') === 'accent';
         @endphp
-        <div class="flex items-center gap-4">
+        <div class="flex items-start gap-4">
             @if(!empty($item['icon']))
                 <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0 pointer-events-none">
             @endif
