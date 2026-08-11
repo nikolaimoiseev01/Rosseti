@@ -31,7 +31,7 @@ export default defineConfig({
                     mkdirSync(targetDir, { recursive: true });
                 }
 
-                const files = ['tooltip.js', 'text-color.js'];
+                const files = ['tooltip.js', 'text-color.js', 'checkmark.js'];
                 files.forEach(file => {
                     const sourceFile = resolve(sourceDir, file);
                     const targetFile = resolve(targetDir, file);
