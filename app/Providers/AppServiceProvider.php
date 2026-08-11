@@ -41,6 +41,10 @@ class AppServiceProvider extends ServiceProvider
                     allowedElements: 'img',
                 )
                 ->allowAttribute(
+                    'data-checkmark',
+                    allowedElements: 'img',
+                )
+                ->allowAttribute(
                     'data-color',
                     allowedElements: 'span',
                 ),
@@ -58,6 +62,12 @@ class AppServiceProvider extends ServiceProvider
                 'rich-content-plugins/tooltip',
                 resource_path(
                     'js/filament/rich-content-plugins/tooltip.js'
+                ),
+            )->loadedOnRequest(),
+            Js::make(
+                'rich-content-plugins/checkmark',
+                resource_path(
+                    'js/filament/rich-content-plugins/checkmark.js'
                 ),
             )->loadedOnRequest(),
         ]);

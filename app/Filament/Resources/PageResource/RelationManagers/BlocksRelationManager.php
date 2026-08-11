@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\PageResource\RelationManagers;
 
 use App\Filament\RichContent\TooltipRichContentPlugin;
+use App\Filament\RichContent\CheckmarkRichContentPlugin;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -106,9 +107,11 @@ class BlocksRelationManager extends RelationManager
                                     ->live()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -122,9 +125,11 @@ class BlocksRelationManager extends RelationManager
                                     ->live()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -145,9 +150,11 @@ class BlocksRelationManager extends RelationManager
                                     ->live()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                         'textColor',
                                     ])
@@ -171,9 +178,11 @@ class BlocksRelationManager extends RelationManager
                                     ->live()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                         'textColor',
                                     ])
@@ -239,9 +248,11 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Левая колонка')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->required()
@@ -250,9 +261,11 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Правая колонка')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->required()
@@ -264,9 +277,11 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Left column')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -274,9 +289,11 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Right column')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -392,9 +409,11 @@ class BlocksRelationManager extends RelationManager
                                     ->required()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -403,9 +422,11 @@ class BlocksRelationManager extends RelationManager
                                     ->helperText('Отображается под заголовком мелким шрифтом')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -416,9 +437,11 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Heading text')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -426,9 +449,11 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Subtitle (small text)')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -583,7 +608,8 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\RichEditor::make('text')
                                             ->label('Название столбца')
                                             ->plugins([TooltipRichContentPlugin::make()])
-                                            ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                            ->enableToolbarButtons(['tooltip',
+                                        'checkmark', 'removeTooltip', 'textColor'])
                                             ->textColors([
                                                 '#00355A' => 'Тёмно-синий',
                                                 '#005A99' => 'Синий',
@@ -623,7 +649,8 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\RichEditor::make('accent_text')
                                             ->label('Текст акцентной строки')
                                             ->plugins([TooltipRichContentPlugin::make()])
-                                            ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                            ->enableToolbarButtons(['tooltip',
+                                        'checkmark', 'removeTooltip', 'textColor'])
                                             ->textColors([
                                                 '#00355A' => 'Тёмно-синий',
                                                 '#005A99' => 'Синий',
@@ -641,7 +668,8 @@ class BlocksRelationManager extends RelationManager
                                                 Forms\Components\RichEditor::make('text')
                                                     ->label('Значение')
                                                     ->plugins([TooltipRichContentPlugin::make()])
-                                                    ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                                    ->enableToolbarButtons(['tooltip',
+                                        'checkmark', 'removeTooltip', 'textColor'])
                                                     ->textColors([
                                                         '#00355A' => 'Тёмно-синий',
                                                         '#005A99' => 'Синий',
@@ -679,7 +707,8 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\RichEditor::make('text')
                                             ->label('Column name')
                                             ->plugins([TooltipRichContentPlugin::make()])
-                                            ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                            ->enableToolbarButtons(['tooltip',
+                                        'checkmark', 'removeTooltip', 'textColor'])
                                             ->textColors([
                                                 '#00355A' => 'Тёмно-синий',
                                                 '#005A99' => 'Синий',
@@ -719,7 +748,8 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\RichEditor::make('accent_text')
                                             ->label('Accent row text')
                                             ->plugins([TooltipRichContentPlugin::make()])
-                                            ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                            ->enableToolbarButtons(['tooltip',
+                                        'checkmark', 'removeTooltip', 'textColor'])
                                             ->textColors([
                                                 '#00355A' => 'Тёмно-синий',
                                                 '#005A99' => 'Синий',
@@ -737,7 +767,8 @@ class BlocksRelationManager extends RelationManager
                                                 Forms\Components\RichEditor::make('text')
                                                     ->label('Value')
                                                     ->plugins([TooltipRichContentPlugin::make()])
-                                                    ->enableToolbarButtons(['tooltip', 'removeTooltip', 'textColor'])
+                                                    ->enableToolbarButtons(['tooltip',
+                                        'checkmark', 'removeTooltip', 'textColor'])
                                                     ->textColors([
                                                         '#00355A' => 'Тёмно-синий',
                                                         '#005A99' => 'Синий',
@@ -784,9 +815,11 @@ class BlocksRelationManager extends RelationManager
                 Forms\Components\RichEditor::make('data_languages.context')
                     ->plugins([
                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                     ])
                     ->enableToolbarButtons([
                         'tooltip',
+                                        'checkmark',
                         'removeTooltip',
                     ])
                     ->label('Контекст (необязательный текст рядом)')
@@ -855,9 +888,11 @@ class BlocksRelationManager extends RelationManager
                                     ->required()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -882,9 +917,11 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Text / quote')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -921,9 +958,11 @@ class BlocksRelationManager extends RelationManager
                                     ->required()
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->required()
@@ -935,9 +974,11 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Text')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
                                         'tooltip',
+                                        'checkmark',
                                         'removeTooltip',
                                     ])
                                     ->columnSpanFull(),
@@ -1153,9 +1194,11 @@ class BlocksRelationManager extends RelationManager
                                             })
                                             ->plugins([
                                                 TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                             ])
                                             ->enableToolbarButtons([
                                                 'tooltip',
+                                        'checkmark',
                                                 'removeTooltip',
                                             ])
                                             ->columnSpanFull(),
@@ -1163,9 +1206,11 @@ class BlocksRelationManager extends RelationManager
                                             ->label('Описание')
                                             ->plugins([
                                                 TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                             ])
                                             ->enableToolbarButtons([
                                                 'tooltip',
+                                        'checkmark',
                                                 'removeTooltip',
                                             ])
                                             ->columnSpanFull(),
@@ -1186,9 +1231,11 @@ class BlocksRelationManager extends RelationManager
                                             ->label('Title')
                                             ->plugins([
                                                 TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                             ])
                                             ->enableToolbarButtons([
                                                 'tooltip',
+                                        'checkmark',
                                                 'removeTooltip',
                                             ])
                                             ->formatStateUsing(function ($state) {
@@ -1203,9 +1250,11 @@ class BlocksRelationManager extends RelationManager
                                             ->label('Description')
                                             ->plugins([
                                                 TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                             ])
                                             ->enableToolbarButtons([
                                                 'tooltip',
+                                        'checkmark',
                                                 'removeTooltip',
                                             ])
                                             ->columnSpanFull(),
@@ -1307,18 +1356,22 @@ class BlocksRelationManager extends RelationManager
                                     ->placeholder('Консолидированные активы,')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
-                                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                                        'bold', 'italic', 'tooltip',
+                                        'checkmark', 'removeTooltip', 'superscript'
                                     ]),
                                 Forms\Components\RichEditor::make('data_languages.ru.unit')
                                     ->label('Подзаголовок / единицы')
                                     ->placeholder('тыс. шт. / млрд руб. / чел.')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
-                                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                                        'bold', 'italic', 'tooltip',
+                                        'checkmark', 'removeTooltip', 'superscript'
                                     ]),
                                 Forms\Components\Repeater::make('data_languages.ru.values')
                                     ->label('Значения')
@@ -1361,17 +1414,21 @@ class BlocksRelationManager extends RelationManager
                                     ->label('Title')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
-                                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                                        'bold', 'italic', 'tooltip',
+                                        'checkmark', 'removeTooltip', 'superscript'
                                     ]),
                                 Forms\Components\RichEditor::make('data_languages.en.unit')
                                     ->label('Subtitle / unit')
                                     ->plugins([
                                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                                     ])
                                     ->enableToolbarButtons([
-                                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                                        'bold', 'italic', 'tooltip',
+                                        'checkmark', 'removeTooltip', 'superscript'
                                     ]),
                                 Forms\Components\Repeater::make('data_languages.en.values')
                                     ->label('Values')
@@ -1485,18 +1542,22 @@ class BlocksRelationManager extends RelationManager
                     ->placeholder('Консолидированные активы,')
                     ->plugins([
                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                     ])
                     ->enableToolbarButtons([
-                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                        'bold', 'italic', 'tooltip',
+                                        'checkmark', 'removeTooltip', 'superscript'
                     ]),
                 Forms\Components\RichEditor::make('data_languages.unit')
                     ->label('Подзаголовок / единицы')
                     ->placeholder('млрд руб.')
                     ->plugins([
                         TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
                     ])
                     ->enableToolbarButtons([
-                        'bold', 'italic', 'tooltip', 'removeTooltip', 'superscript'
+                        'bold', 'italic', 'tooltip',
+                                        'checkmark', 'removeTooltip', 'superscript'
                     ]),
 
                 // --- Simple donut fields ---
