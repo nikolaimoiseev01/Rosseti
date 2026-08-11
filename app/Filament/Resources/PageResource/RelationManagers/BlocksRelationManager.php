@@ -607,7 +607,7 @@ class BlocksRelationManager extends RelationManager
                                     ->schema([
                                         Forms\Components\RichEditor::make('text')
                                             ->label('Название столбца')
-                                            ->plugins([TooltipRichContentPlugin::make()])
+                                            ->plugins([TooltipRichContentPlugin::make(), CheckmarkRichContentPlugin::make()])
                                             ->enableToolbarButtons(['tooltip',
                                         'checkmark', 'removeTooltip', 'textColor'])
                                             ->textColors([
@@ -648,7 +648,7 @@ class BlocksRelationManager extends RelationManager
                                             ->visible(fn ($get) => !$get('is_accent')),
                                         Forms\Components\RichEditor::make('accent_text')
                                             ->label('Текст акцентной строки')
-                                            ->plugins([TooltipRichContentPlugin::make()])
+                                            ->plugins([TooltipRichContentPlugin::make(), CheckmarkRichContentPlugin::make()])
                                             ->enableToolbarButtons(['tooltip',
                                         'checkmark', 'removeTooltip', 'textColor'])
                                             ->textColors([
@@ -667,7 +667,7 @@ class BlocksRelationManager extends RelationManager
                                             ->schema([
                                                 Forms\Components\RichEditor::make('text')
                                                     ->label('Значение')
-                                                    ->plugins([TooltipRichContentPlugin::make()])
+                                                    ->plugins([TooltipRichContentPlugin::make(), CheckmarkRichContentPlugin::make()])
                                                     ->enableToolbarButtons(['tooltip',
                                         'checkmark', 'removeTooltip', 'textColor'])
                                                     ->textColors([
@@ -706,7 +706,7 @@ class BlocksRelationManager extends RelationManager
                                     ->schema([
                                         Forms\Components\RichEditor::make('text')
                                             ->label('Column name')
-                                            ->plugins([TooltipRichContentPlugin::make()])
+                                            ->plugins([TooltipRichContentPlugin::make(), CheckmarkRichContentPlugin::make()])
                                             ->enableToolbarButtons(['tooltip',
                                         'checkmark', 'removeTooltip', 'textColor'])
                                             ->textColors([
@@ -747,7 +747,7 @@ class BlocksRelationManager extends RelationManager
                                             ->visible(fn ($get) => !$get('is_accent')),
                                         Forms\Components\RichEditor::make('accent_text')
                                             ->label('Accent row text')
-                                            ->plugins([TooltipRichContentPlugin::make()])
+                                            ->plugins([TooltipRichContentPlugin::make(), CheckmarkRichContentPlugin::make()])
                                             ->enableToolbarButtons(['tooltip',
                                         'checkmark', 'removeTooltip', 'textColor'])
                                             ->textColors([
@@ -766,7 +766,7 @@ class BlocksRelationManager extends RelationManager
                                             ->schema([
                                                 Forms\Components\RichEditor::make('text')
                                                     ->label('Value')
-                                                    ->plugins([TooltipRichContentPlugin::make()])
+                                                    ->plugins([TooltipRichContentPlugin::make(), CheckmarkRichContentPlugin::make()])
                                                     ->enableToolbarButtons(['tooltip',
                                         'checkmark', 'removeTooltip', 'textColor'])
                                                     ->textColors([
