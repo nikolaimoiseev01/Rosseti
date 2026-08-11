@@ -27,7 +27,7 @@ class CheckmarkNode extends Node
                     'src' => '/fixed/galochka.png',
                     'data-checkmark' => 'true',
                     'class' => 'table-check-icon',
-                    'style' => 'width: 1.2em; height: 1.2em; display: inline-block; vertical-align: middle; margin: 0 4px;',
+                    'style' => 'width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin: 0 4px;',
                     'alt' => '✓'
                 ],
                 $HTMLAttributes,
