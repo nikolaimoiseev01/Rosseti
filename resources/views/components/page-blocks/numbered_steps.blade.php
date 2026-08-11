@@ -58,7 +58,7 @@
         <div class="flex gap-5 items-center {{ $align === 'center' ? 'justify-center' : '' }} {{ !$isLast ? 'mb-0' : '' }}">
             @if(!$hideIcons)
                 {{-- Circle + connecting line --}}
-                <div class="relative flex flex-col items-center shrink-0" style="width: 44px;">
+                <div class="relative flex flex-col items-center shrink-0" style="width: 48px;">
                     @if($connected && !$isLast)
                         <div class="absolute top-[48px] w-[2px] h-full {{ colorHelper('bg_color', $data) . '/20' }}" style="left: 50%; transform: translateX(-50%);"></div>
                     @endif
@@ -78,9 +78,9 @@
 
             {{-- Content --}}
             <div class="{{ $hideIcons ? '' : 'flex-1' }}">
-                <h3 class="text-[#1A1A1A] {{colorHelper('title_color', $data)}}">{{ $step['title'] }}</h3>
+                <h3 class="text-[#1A1A1A]">{{ $step['title'] }}</h3>
                 @if(!empty($step['description']))
-                    <p class="text-[#1A1A1A] {{colorHelper('text_color', $data)}}">{{ $step['description'] }}</p>
+                    <p class="text-[#1A1A1A]">{{ $step['description'] }}</p>
                 @endif
             </div>
         </div>
