@@ -60,25 +60,27 @@
                 {{-- Circle + connecting line --}}
                 <div class="relative flex flex-col items-center shrink-0" style="width: 44px;">
                     @if($connected && !$isLast)
-                        <div class="absolute top-[44px] w-[2px] h-full {{ colorHelper('bg_color', $data) . '/20' }}" style="left: 50%; transform: translateX(-50%);"></div>
+                        <div class="absolute top-[48px] w-[2px] h-full {{ colorHelper('bg_color', $data) . '/20' }}" style="left: 50%; transform: translateX(-50%);"></div>
                     @endif
-                    <div class="w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 {{colorHelper('bg_color', $data)}}" >
-                        @if($iconStyle === 'checkmarks')
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                        @elseif($iconStyle === 'dots')
-                            <span class="w-3 h-3 rounded-full bg-white"></span>
-                        @else
-                            {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
-                        @endif
-                    </div>
+                    @if($iconStyle === 'checkmarks')
+                        <img src="/fixed/galochka.png" class="w-12 h-12 shrink-0" alt="✓" />
+                    @else
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 {{colorHelper('bg_color', $data)}}" >
+                            @if($iconStyle === 'dots')
+                                <span class="w-3 h-3 rounded-full bg-white"></span>
+                            @else
+                                {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                            @endif
+                        </div>
+                    @endif
                 </div>
             @endif
 
             {{-- Content --}}
             <div class="{{ $hideIcons ? '' : 'flex-1' }}">
-                <h3 class="{{colorHelper('title_color', $data)}}">{{ $step['title'] }}</h3>
+                <h3 class="text-[#1A1A1A] {{colorHelper('title_color', $data)}}">{{ $step['title'] }}</h3>
                 @if(!empty($step['description']))
-                    <p class="{{colorHelper('text_color', $data)}}">{{ $step['description'] }}</p>
+                    <p class="text-[#1A1A1A] {{colorHelper('text_color', $data)}}">{{ $step['description'] }}</p>
                 @endif
             </div>
         </div>
