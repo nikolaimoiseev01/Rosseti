@@ -76,7 +76,7 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
             observer.observe(this.$el);
         },
 
-        animateCounter(targetValue, suffix = '', prefix = '', decimals = -1) {
+        animateCounter(targetValue, suffix = '', prefix = '', decimals = -1, finalFormatted = '') {
             this.counterTarget = targetValue;
             this.counterSuffix = suffix;
             this.counterPrefix = prefix;
@@ -102,6 +102,12 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
                 const easedProgress = 1 - Math.pow(1 - progress, 3);
 
                 const currentValue = startValue + (targetValue - startValue) * easedProgress;
+
+                // At 100% use the exact original formatted value if provided
+                if (progress >= 1 && finalFormatted) {
+                    this.displayValue = prefix + finalFormatted + suffix;
+                    return;
+                }
 
                 // Format the number
                 let formattedValue = currentValue.toFixed(decimals);
