@@ -77,7 +77,7 @@
         .block-row-grid > * > .page-block--chart {
             flex: 1;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .block-row-grid > * {
                 grid-column: span 12 !important;
             }
