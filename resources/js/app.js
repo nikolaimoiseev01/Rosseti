@@ -50,6 +50,8 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
         counterTarget: null,
         counterSuffix: '',
         counterPrefix: '',
+        counterDecimals: -1,
+        counterFinal: '',
 
         init() {
             this.$el.classList.add('reveal-on-scroll');
@@ -61,7 +63,7 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
                             this.shown = true;
                             this.$el.classList.add('is-visible');
                             if (this.counterTarget !== null) {
-                                this.animateCounter(this.counterTarget, this.counterSuffix, this.counterPrefix);
+                                this.animateCounter(this.counterTarget, this.counterSuffix, this.counterPrefix, this.counterDecimals, this.counterFinal);
                             }
                         }, this.delay);
                         observer.unobserve(this.$el);
@@ -80,6 +82,8 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
             this.counterTarget = targetValue;
             this.counterSuffix = suffix;
             this.counterPrefix = prefix;
+            this.counterDecimals = decimals;
+            this.counterFinal = finalFormatted;
 
             if (!this.shown) {
                 return;
