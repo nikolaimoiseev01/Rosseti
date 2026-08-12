@@ -57,8 +57,8 @@
     <p class="text-lg font-bold text-[#00355A] mb-2">{!! $data['caption'] !!}</p>
 @endif
 
-<div id="{{ $blockId }}" x-data="revealOnScroll()" style="max-width: 1100px; margin-left: auto; margin-right: auto; overflow-x: auto;" class="page-block page-block--table rounded-xl border border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
-    <table class="w-full text-lg {{ $tableUid }}" style="table-layout: fixed;">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" style="overflow-x: auto;" class="page-block page-block--table rounded-xl border border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
+    <table class="w-full text-lg {{ $tableUid }}">
         @if(!empty($data['headers']))
             <thead>
                 <tr @if($headerBgColor) style="background-color: {{ $headerBgColor }}" @endif>
