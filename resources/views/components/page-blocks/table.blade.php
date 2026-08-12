@@ -163,10 +163,4 @@
     .{{ $tableUid }}-dark-row:hover td a {
         color: #2196F3 !important;
     }
-    /* --- Prevent first column from hogging all width --- */
-    .{{ $tableUid }} th:not(:first-child),
-    .{{ $tableUid }} td:not(:first-child) {
-        white-space: nowrap;
-        min-width: 90px;
-    }
 </style>
