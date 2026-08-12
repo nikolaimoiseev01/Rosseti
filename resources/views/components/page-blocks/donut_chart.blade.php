@@ -198,7 +198,7 @@
             <p class="text-lg leading-6 text-black-500 mb-5">{!! str_replace(['<p>', '</p>'], '', $unit) !!}</p>
         @endif
 
-        <div class="flex items-center gap-6 md:flex-col">
+        <div class="flex items-center gap-6 {{ $inGroup ? 'flex-col' : 'md:flex-col' }}">
             <div class="relative shrink-0 {{ $uid }}-wrap" style="width: {{ $svgSize }}px; height: {{ $svgSize }}px">
                 <svg class="w-full h-full" viewBox="0 0 {{ $svgSize }} {{ $svgSize }}" style="transform: rotate(-90deg); overflow: visible">
                     <circle cx="{{ $cx }}" cy="{{ $cy }}" r="{{ $radius }}" fill="none" stroke="#E8EEF4" stroke-width="{{ $strokeWidth }}"/>
