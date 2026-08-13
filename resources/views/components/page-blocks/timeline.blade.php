@@ -43,15 +43,15 @@
 
                 <div class="flex flex-col gap-1">
                     @if($event['year'])
-                        <h3 class="font-light {{colorHelper('year_color', $data)}}">{{ $event['year'] }}</h3>
+                        <h3 class="font-light text-[#1A1A1A]">{{ $event['year'] }}</h3>
                     @endif
                     @if($event['title'] || $event['description'])
                         <div>
                             @if($event['title'])
-                                <p class="{{colorHelper('title_color', $data)}} leading-tight whitespace-pre-line">{!! $event['title'] !!}</p>
+                                <p class="text-[#1A1A1A] leading-tight whitespace-pre-line">{!! $event['title'] !!}</p>
                             @endif
                             @if(!empty($event['description']))
-                                <p class="{{colorHelper('text_color', $data)}} leading-relaxed whitespace-pre-line">{{ $event['description'] }}</p>
+                                <p class="text-[#1A1A1A] leading-relaxed whitespace-pre-line">{{ $event['description'] }}</p>
                             @endif
                         </div>
                     @endif
