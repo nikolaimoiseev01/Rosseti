@@ -99,7 +99,7 @@ class TooltipRichContentPlugin implements RichContentPlugin
                     TextInput::make('text')
                         ->label('Текст подсказки')
                         ->required()
-                        ->maxLength(300),
+                        ->maxLength(700),
                 ])
                 ->action(
                     function (
