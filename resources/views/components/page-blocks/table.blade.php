@@ -57,7 +57,7 @@
     <p class="text-lg font-bold text-[#00355A] mb-2">{!! $data['caption'] !!}</p>
 @endif
 
-<div id="{{ $blockId }}" x-data="revealOnScroll()" style="overflow-x: auto; overflow-y: visible;" class="page-block page-block--table rounded-xl border border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
+<div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--table rounded-xl border border-[#E1E7F0] {{ $spacingTop }} {{ $spacingBottom }}">
     <table class="w-full text-lg {{ $tableUid }}">
         @if(!empty($data['headers']))
             <thead>
