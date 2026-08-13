@@ -60,6 +60,15 @@
         color: inherit !important;
     }
 
+    .page-block--icon-list a {
+        color: #2196F3 !important;
+        text-decoration: underline;
+    }
+
+    .page-block--icon-list a:hover {
+        color: #005B9C !important;
+    }
+
 </style>
 <div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }} [&_a]:text-[#2196F3] [&_a]:underline hover:[&_a]:text-[#005B9C]">
     @foreach($items as $item)
