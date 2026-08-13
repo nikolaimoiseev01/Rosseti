@@ -272,12 +272,8 @@
                         data-lbl="{{ $seg['label'] }}"
                     >
                         <div class="w-3.5 h-3.5 rounded-[4px] shrink-0 shadow-sm" style="background-color: {{ $seg['color'] }}"></div>
-                        <span class="text-sm text-[#2D3E50] leading-snug {{ $seg['tooltip_label'] ? 'donut-has-tooltip' : '' }}"
-                            @if($seg['tooltip_label']) title="{{ $seg['tooltip_label'] }}" @endif
-                        >{{ $seg['label'] }}</span>
-                        <span class="text-sm font-bold ml-auto pl-4 shrink-0 {{ $seg['tooltip_value'] ? 'donut-has-tooltip' : '' }}" style="color: {{ $seg['color'] }}"
-                            @if($seg['tooltip_value']) title="{{ $seg['tooltip_value'] }}" @endif
-                        >{{ str_replace('.', ',', $seg['value']) }}</span>
+                        <span class="text-sm text-[#2D3E50] leading-snug">@if(!empty($seg['tooltip_label']))<span class="has-tooltip" data-tooltip="{{ $seg['tooltip_label'] }}">{{ $seg['label'] }}</span>@else{{ $seg['label'] }}@endif</span>
+                        <span class="text-sm font-bold ml-auto pl-4 shrink-0" style="color: {{ $seg['color'] }}">@if(!empty($seg['tooltip_value']))<span class="has-tooltip" data-tooltip="{{ $seg['tooltip_value'] }}">{{ str_replace('.', ',', $seg['value']) }}</span>@else{{ str_replace('.', ',', $seg['value']) }}@endif</span>
                     </div>
                 @endforeach
             </div>
