@@ -1289,6 +1289,7 @@ class BlocksRelationManager extends RelationManager
 //                        'muted' => 'Приглушённый',
 //                    ])
 //                    ->default('large_bold'),
+                ...$this->textColorSelectFields('data_languages.text_color', 'Цвет текста'),
                 ...$this->spacingSelectFields()
 
             ],

@@ -12,6 +12,7 @@
         'accent' => '#2196F3',
         default => '#00355A',
     };
+    $textColorClass = colorHelper('text_color', $data);
     $iconSize = match($data['icon_size'] ?? 'medium') {
         'small' => 'w-6 h-6',
         'large' => 'w-[60px] h-[60px]',
@@ -56,7 +57,7 @@
     }
 
     .page-block--icon-list p {
-        color: #1A1A1A !important;
+        color: inherit !important;
     }
 
 </style>
@@ -69,10 +70,10 @@
             @if(!empty($item['icon']))
                 <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0 pointer-events-none">
             @endif
-            <div style="color: #1A1A1A !important;" class="text-lg leading-6">
+            <div class="text-lg leading-6 {{ $textColorClass }}">
                 {!! str_replace(['<p>', '</p>'], '', $item['title'] ?? '') !!}
                 @if(!empty($item['text']))
-                    <div class="mt-1 prose prose-sm max-w-none text-[#333]">{!! $item['text'] !!}</div>
+                    <div class="mt-1 prose prose-sm max-w-none {{ $textColorClass }}">{!! $item['text'] !!}</div>
                 @endif
             </div>
         </div>
