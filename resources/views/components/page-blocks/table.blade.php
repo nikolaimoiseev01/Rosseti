@@ -88,7 +88,15 @@
                         @foreach($row['cells'] ?? [] as $cell)
                             @php $cs = (int)($cell['colspan'] ?? 1); @endphp
                             <td class="{{ $cellPadding }} border-t border-[#E1E7F0] {{ !$loop->last ? 'border-r border-r-[#E1E7F0]' : '' }}" @if($cs > 1) colspan="{{ $cs }}" @endif>
-                                <div class="prose prose-sm max-w-none">{!! $cell['text'] ?? '' !!}</div>
+                                <div class="prose prose-sm max-w-none">
+                                    @php
+                                        try {
+                                            echo $cell['text'] ?? '';
+                                        } catch (\Throwable $e) {
+                                            echo e(strip_tags($cell['text'] ?? ''));
+                                        }
+                                    @endphp
+                                </div>
                             </td>
                         @endforeach
                     </tr>
