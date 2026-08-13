@@ -243,3 +243,9 @@ span.color {
     text-transform: none !important;
     color: inherit !important;
 }
+
+/* Donut chart tooltip indicator */
+.donut-has-tooltip {
+    border-bottom: 1px dashed currentColor;
+    cursor: help;
+}

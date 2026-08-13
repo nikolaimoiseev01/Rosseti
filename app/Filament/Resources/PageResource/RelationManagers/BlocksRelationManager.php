@@ -1632,6 +1632,14 @@ class BlocksRelationManager extends RelationManager
                                 '#6B7785' => 'Тёмно-серый (#6B7785)',
                             ])
                             ->default('#2196F3'),
+                        Forms\Components\TextInput::make('tooltip_label')
+                            ->label('Тултип к названию')
+                            ->placeholder('Пояснение к названию сегмента')
+                            ->helperText('Появится при наведении на название'),
+                        Forms\Components\TextInput::make('tooltip_value')
+                            ->label('Тултип к значению')
+                            ->placeholder('Пояснение к значению')
+                            ->helperText('Появится при наведении на значение'),
                     ])
                     ->columns(3)
                     ->defaultItems(3)

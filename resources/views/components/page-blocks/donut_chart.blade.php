@@ -155,6 +155,8 @@
             $segmentData[] = [
                 'label' => $seg['label'] ?? '', 'value' => $seg['value'] ?? '0',
                 'percent' => round($percent, 2), 'offset' => round($cumulativePercent, 2), 'color' => $color,
+                'tooltip_label' => $seg['tooltip_label'] ?? '',
+                'tooltip_value' => $seg['tooltip_value'] ?? '',
             ];
             $cumulativePercent += $percent;
         }
@@ -270,8 +272,12 @@
                         data-lbl="{{ $seg['label'] }}"
                     >
                         <div class="w-3.5 h-3.5 rounded-[4px] shrink-0 shadow-sm" style="background-color: {{ $seg['color'] }}"></div>
-                        <span class="text-sm text-[#2D3E50] leading-snug">{{ $seg['label'] }}</span>
-                        <span class="text-sm font-bold ml-auto pl-4 shrink-0" style="color: {{ $seg['color'] }}">{{ str_replace('.', ',', $seg['value']) }}</span>
+                        <span class="text-sm text-[#2D3E50] leading-snug {{ $seg['tooltip_label'] ? 'donut-has-tooltip' : '' }}"
+                            @if($seg['tooltip_label']) title="{{ $seg['tooltip_label'] }}" @endif
+                        >{{ $seg['label'] }}</span>
+                        <span class="text-sm font-bold ml-auto pl-4 shrink-0 {{ $seg['tooltip_value'] ? 'donut-has-tooltip' : '' }}" style="color: {{ $seg['color'] }}"
+                            @if($seg['tooltip_value']) title="{{ $seg['tooltip_value'] }}" @endif
+                        >{{ str_replace('.', ',', $seg['value']) }}</span>
                     </div>
                 @endforeach
             </div>
