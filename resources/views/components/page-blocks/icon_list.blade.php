@@ -60,14 +60,25 @@
         color: inherit !important;
     }
 
-    .page-block--icon-list a {
+    .page-block--icon-list a,
+    .page-block--icon-list strong a,
+    .page-block--icon-list a strong {
         color: #2196F3 !important;
         text-decoration: underline;
     }
 
-    .page-block--icon-list a:hover {
+    .page-block--icon-list a:hover,
+    .page-block--icon-list strong a:hover {
         color: #005B9C !important;
     }
+
+    .page-block--icon-list .has-tooltip,
+    .page-block--icon-list strong .has-tooltip,
+    .page-block--icon-list .has-tooltip strong {
+        color: #2196F3 !important;
+        border-bottom-color: #2196F3 !important;
+    }
+
 
 </style>
 <div id="{{ $blockId }}" x-data="revealOnScroll()" class="page-block page-block--icon-list space-y-4 {{ $spacingTop }} {{ $spacingBottom }} [&_a]:text-[#2196F3] [&_a]:underline hover:[&_a]:text-[#005B9C]">
