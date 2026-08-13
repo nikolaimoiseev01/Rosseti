@@ -4,9 +4,27 @@
 /*@import "tailwindcss";*/
 /*@plugin "@tailwindcss/typography";*/
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-    display: none;
+/* Custom scrollbar */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #2196F3 #E8EEF4;
+}
+
+html::-webkit-scrollbar {
+    width: 8px;
+}
+
+html::-webkit-scrollbar-track {
+    background: #E8EEF4;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #2196F3;
+    border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: #1976D2;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
