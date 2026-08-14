@@ -219,8 +219,8 @@
 
     .rf-map #map-tooltip .tooltip-logo {
         display: block;
-        width: 120px;
-        height: auto;
+        height: 30px;
+        width: auto;
         margin-top: 8px;
     }
 
