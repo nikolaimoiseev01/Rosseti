@@ -25,8 +25,12 @@
                         <p class="text-white/80 text-2xl mt-1">региона присутствия</p>
                     </div>
                     <div>
-                        <div class="text-white text-7xl font-light md:text-5xl">69</div>
-                        <p class="text-white/80 text-2xl mt-1">регионов имеют статус СТСО</p>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-white/80 text-2xl">в</span>
+                            <span class="text-white text-7xl font-light md:text-5xl">69</span>
+                            <span class="text-white/80 text-2xl">регионах России</span>
+                        </div>
+                        <p class="text-white/80 text-2xl mt-1">компании Группы имеют статус СТСО</p>
                     </div>
                     <div>
                         <div class="text-white text-7xl font-light md:text-5xl">122</div>

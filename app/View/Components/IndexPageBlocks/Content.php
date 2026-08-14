@@ -24,7 +24,7 @@ class Content extends Component
      */
     public function render(): View|Closure|string
     {
-        $this->pages = Page::all();
+        $this->pages = Page::orderBy('sort')->get();
         return view('components.index-page-blocks.content', [
             'pages' => $this->pages
         ]);

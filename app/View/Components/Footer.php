@@ -15,7 +15,7 @@ class Footer extends Component
     public $navLinks = [];
     public function __construct()
     {
-        $this->navLinks = Page::all();
+        $this->navLinks = Page::orderBy('sort')->get();
     }
 
     /**

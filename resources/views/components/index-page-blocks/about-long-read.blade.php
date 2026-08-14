@@ -6,7 +6,7 @@
             линий
             электропередачи и ввели около 15 тыс. МВА трансформаторной мощности, присоединили к сети 340 тыс. новых
             потребителей.</p>
-        <div  x-data="revealOnScroll()" class="rounded-2xl bg-blue-700 flex flex-col justify-between p-6 min-h-[250px] mb-2">
+        <div  x-data="revealOnScroll()" class="rounded-2xl bg-blue-400 flex flex-col justify-between p-6 min-h-[250px] mb-2">
             <p class="mb-5 text-white">Инвестиции в модернизацию и развитие сетевой инфраструктуры увеличились до 725
                 млрд рублей.
                 Выполненные проекты важны для всех 82 регионов, в которых работает Группа «Россети». Они создают новые
@@ -15,7 +15,7 @@
             <p class="text-5xl text-white">725 млрд руб.</p>
             <p class="text-white">инвестиции в модернизацию и развитие сетевой инфраструктуры</p>
         </div>
-        <div  x-data="revealOnScroll()" class="text-white rounded-2xl bg-blue-700 flex flex-col justify-between p-6 min-h-[250px] mb-6">
+        <div  x-data="revealOnScroll()" class="text-white rounded-2xl bg-blue-400 flex flex-col justify-between p-6 min-h-[250px] mb-6">
             <p class="mb-5 text-white">Группа «Россети» входит в число крупнейших налогоплательщиков страны. Высокие
                 финансовые результаты, которые мы получили в 2025 году, позволили увеличить налоговые и социальные
                 отчисления в бюджеты всех уровней до 270 млрд рублей.</p>

@@ -43,7 +43,7 @@
 
     <x-index-page-blocks.values/>
 
-    <x-index-page-blocks.business-model/>
+
 
     <x-index-page-blocks.content/>
 </section>

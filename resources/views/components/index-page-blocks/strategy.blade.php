@@ -11,7 +11,7 @@
         </div>
 
         <div class="flex items-center gap-5">
-            <img src="/fixed/zam-director.png" alt="А. А. Полинов" class="w-[100px] h-[100px] rounded-full object-cover shrink-0 object-top" data-no-lightbox>
+            <img src="/fixed/zam-director.png" alt="А. А. Полинов" class="w-[100px] h-[100px] rounded-full object-cover shrink-0 object-top" style="transform: scale(1.3); transform-origin: top center;" data-no-lightbox>
             <div>
                 <p class="font-bold text-[#1A1A1A]">А. А. Полинов</p>
                 <p class="text-sm text-[#6B7785]">Врио Заместителя Генерального директора по стратегии</p>
