@@ -234,6 +234,16 @@ nav a[href],
     color: inherit !important;
 }
 
+/* Active menu items keep their blue highlight */
+header a.text-blue-500,
+nav a.text-blue-500 {
+    color: #005A99 !important;
+}
+header a.text-blue-400,
+nav a.text-blue-400 {
+    color: #2196F3 !important;
+}
+
 /* Tooltips in headings keep heading color */
 h1 .has-tooltip, h2 .has-tooltip, h3 .has-tooltip, h4 .has-tooltip, h5 .has-tooltip, h6 .has-tooltip {
     color: inherit !important;
