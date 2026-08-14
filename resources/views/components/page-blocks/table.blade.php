@@ -147,10 +147,18 @@
     .{{ $tableUid }} .prose p + p {
         margin-top: 0.25em;
     }
-    /* --- Inline text colors from RichEditor (uses CSS var --color) --- */
+    /* --- Inline text colors from RichEditor --- */
     .{{ $tableUid }} span[data-color],
     .{{ $tableUid }} span.color {
         color: var(--color) !important;
+    }
+    /* Ensure prose doesn't override inline style colors */
+    .{{ $tableUid }} .prose,
+    .{{ $tableUid }} .prose p,
+    .{{ $tableUid }} .prose span,
+    .{{ $tableUid }} .prose strong,
+    .{{ $tableUid }} .prose em {
+        color: inherit;
     }
     /* --- Links in table cells --- */
     .{{ $tableUid }} a {
