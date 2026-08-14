@@ -219,9 +219,22 @@ section {
     transform: translateX(-50%) translateY(0);
 }
 
-/* Ensure headings keep their color even if they contain links */
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
-.prose h1 a, .prose h2 a, .prose h3 a, .prose h4 a, .prose h5 a, .prose h6 a,
+/* Global: all links are blue */
+a[href] {
+    color: #2196F3 !important;
+}
+
+/* Exception: nav, header, footer, buttons keep their own styles */
+header a[href],
+footer a[href],
+nav a[href],
+.bg-blue-400 a[href],
+.bg-blue-500 a[href],
+.page-block--content a[href] {
+    color: inherit !important;
+}
+
+/* Tooltips in headings keep heading color */
 h1 .has-tooltip, h2 .has-tooltip, h3 .has-tooltip, h4 .has-tooltip, h5 .has-tooltip, h6 .has-tooltip {
     color: inherit !important;
     text-decoration: inherit !important;
