@@ -58,15 +58,32 @@
     {{ $gridCols }}
     gap-5
     {{ $spacingTop }} {{ $spacingBottom }}">
+    @php $currentLang = session('locale', 'ru'); @endphp
     @foreach($data['items'] as $item)
         @php
             $valueText = $item['value'] ?? '0';
             preg_match('/^([><= ~+-]*?)([\d.,]+(?:\s+[\d.,]+)*)(.*)$/s', $valueText, $matches);
-            $prefix = isset($matches[1]) ? $matches[1] : '';
-            $numericValue = isset($matches[2]) ? (float) str_replace(',', '.', $matches[2]) : 0;
+            $itemPrefix = isset($matches[1]) ? $matches[1] : '';
+            $rawNumeric = isset($matches[2]) ? trim($matches[2]) : '0';
+            $numericValue = (float) str_replace([',', ' '], ['.', ''], $rawNumeric);
             $suffix = isset($matches[3]) ? $matches[3] : '';
+            $decimalCount = (str_contains($rawNumeric, ',') || str_contains($rawNumeric, '.'))
+                ? strlen(preg_replace('/^.*[.,]/', '', $rawNumeric))
+                : 0;
+            if ($currentLang === 'en') {
+                $formattedFinal = number_format($numericValue, $decimalCount, '.', ',');
+            } else {
+                $formattedFinal = number_format($numericValue, $decimalCount, ',', ' ');
+            }
+            $valuePrefix = $item['value_prefix'] ?? '';
         @endphp
-        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $prefix }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center flex flex-col">
+        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $itemPrefix }}', {{ $decimalCount }}, '{{ $formattedFinal }}', '{{ $currentLang }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center flex flex-col">
+            {{-- Зона 0: Префикс единицы (e.g. "RUB" в EN) --}}
+            @if(!empty($valuePrefix))
+                <div class="flex items-end justify-center" style="min-height: 28px;">
+                    <div class="text-xl font-light {{colorHelper('unit_color', $data)}}">{{ $valuePrefix }}</div>
+                </div>
+            @endif
             {{-- Зона 1: Число — всегда одинаковая высота --}}
             <div class="flex items-end justify-center" style="min-height: 80px;">
                 <div class="text-[80px] font-normal leading-none {{colorHelper('main_color', $data)}}">
@@ -84,3 +101,4 @@
         </div>
     @endforeach
 </div>
+

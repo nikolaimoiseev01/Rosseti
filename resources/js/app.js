@@ -63,7 +63,7 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
                             this.shown = true;
                             this.$el.classList.add('is-visible');
                             if (this.counterTarget !== null) {
-                                this.animateCounter(this.counterTarget, this.counterSuffix, this.counterPrefix, this.counterDecimals, this.counterFinal);
+                                this.animateCounter(this.counterTarget, this.counterSuffix, this.counterPrefix, this.counterDecimals, this.counterFinal, this.counterLocale);
                             }
                         }, this.delay);
                         observer.unobserve(this.$el);
@@ -78,12 +78,13 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
             observer.observe(this.$el);
         },
 
-        animateCounter(targetValue, suffix = '', prefix = '', decimals = -1, finalFormatted = '') {
+        animateCounter(targetValue, suffix = '', prefix = '', decimals = -1, finalFormatted = '', locale = 'ru') {
             this.counterTarget = targetValue;
             this.counterSuffix = suffix;
             this.counterPrefix = prefix;
             this.counterDecimals = decimals;
             this.counterFinal = finalFormatted;
+            this.counterLocale = locale;
 
             if (!this.shown) {
                 return;
@@ -115,12 +116,18 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
 
                 // Format the number
                 let formattedValue = currentValue.toFixed(decimals);
-                // Comma as decimal separator
-                formattedValue = formattedValue.replace('.', ',');
-                // Space as thousands separator
-                const parts = formattedValue.split(',');
-                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-                formattedValue = parts.join(',');
+                if (locale === 'en') {
+                    // Dot as decimal, comma as thousands
+                    const parts = formattedValue.split('.');
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    formattedValue = parts.join('.');
+                } else {
+                    // Comma as decimal, space as thousands
+                    formattedValue = formattedValue.replace('.', ',');
+                    const parts = formattedValue.split(',');
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+                    formattedValue = parts.join(',');
+                }
 
                 this.displayValue = prefix + formattedValue + suffix;
 
