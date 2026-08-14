@@ -319,11 +319,8 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\TextInput::make('description')
                                             ->label('Описание')
                                             ->required(),
-                                        Forms\Components\TextInput::make('value_prefix')
-                                            ->label('Префикс (перед числом)')
-                                            ->placeholder('например: RUB'),
                                     ])
-                                    ->columns(4)
+                                    ->columns(3)
                                     ->defaultItems(3)
                                     ->columnSpanFull(),
                             ]),
@@ -338,11 +335,8 @@ class BlocksRelationManager extends RelationManager
                                             ->label('Unit'),
                                         Forms\Components\TextInput::make('description')
                                             ->label('Description'),
-                                        Forms\Components\TextInput::make('value_prefix')
-                                            ->label('Prefix (before number)')
-                                            ->placeholder('e.g. RUB'),
                                     ])
-                                    ->columns(4)
+                                    ->columns(3)
                                     ->defaultItems(3)
                                     ->columnSpanFull(),
                             ]),
@@ -810,59 +804,25 @@ class BlocksRelationManager extends RelationManager
             ],
 
             'key_figure' => [
-                Tabs::make('language_tabs')
-                    ->tabs([
-                        Tab::make('Русский')
-                            ->schema([
-                                Forms\Components\TextInput::make('data_languages.ru.value')
-                                    ->label('Значение (число)')
-                                    ->placeholder('725 млрд руб.')
-                                    ->required(),
-                                Forms\Components\TextInput::make('data_languages.ru.value_prefix')
-                                    ->label('Префикс (перед числом)')
-                                    ->placeholder('обычно пусто для русского'),
-                                Forms\Components\TextInput::make('data_languages.ru.description')
-                                    ->label('Описание')
-                                    ->placeholder('инвестиции в модернизацию')
-                                    ->required(),
-                                Forms\Components\RichEditor::make('data_languages.ru.context')
-                                    ->plugins([
-                                        TooltipRichContentPlugin::make(),
+                Forms\Components\TextInput::make('data_languages.value')
+                    ->label('Значение (число)')
+                    ->placeholder('725 млрд руб.')
+                    ->required(),
+                Forms\Components\TextInput::make('data_languages.description')
+                    ->label('Описание')
+                    ->placeholder('инвестиции в модернизацию')
+                    ->required(),
+                Forms\Components\RichEditor::make('data_languages.context')
+                    ->plugins([
+                        TooltipRichContentPlugin::make(),
                                         CheckmarkRichContentPlugin::make(),
-                                    ])
-                                    ->enableToolbarButtons([
-                                        'tooltip',
-                                        'checkmark',
-                                        'removeTooltip',
-                                    ])
-                                    ->label('Контекст (необязательный текст рядом)')
-                                    ->columnSpanFull(),
-                            ]),
-                        Tab::make('English')
-                            ->schema([
-                                Forms\Components\TextInput::make('data_languages.en.value')
-                                    ->label('Value (number)')
-                                    ->placeholder('725 RUB billion'),
-                                Forms\Components\TextInput::make('data_languages.en.value_prefix')
-                                    ->label('Prefix (before number)')
-                                    ->placeholder('e.g. RUB'),
-                                Forms\Components\TextInput::make('data_languages.en.description')
-                                    ->label('Description')
-                                    ->placeholder('investments in modernization'),
-                                Forms\Components\RichEditor::make('data_languages.en.context')
-                                    ->plugins([
-                                        TooltipRichContentPlugin::make(),
-                                        CheckmarkRichContentPlugin::make(),
-                                    ])
-                                    ->enableToolbarButtons([
-                                        'tooltip',
-                                        'checkmark',
-                                        'removeTooltip',
-                                    ])
-                                    ->label('Context (optional text nearby)')
-                                    ->columnSpanFull(),
-                            ]),
                     ])
+                    ->enableToolbarButtons([
+                        'tooltip',
+                                        'checkmark',
+                        'removeTooltip',
+                    ])
+                    ->label('Контекст (необязательный текст рядом)')
                     ->columnSpanFull(),
                 Forms\Components\Select::make('data_languages.style')
                     ->label('Стиль оформления')
@@ -1871,7 +1831,7 @@ class BlocksRelationManager extends RelationManager
                             'text-with-title' => $data_languages['title'] ?? '',
                             'rich_text' => strip_tags($data_languages['content'] ?? ''),
                             'quote' => $data_languages['text'] ?? '',
-                            'key_figure' => $data_languages['ru']['value'] ?? $data_languages['value'] ?? '',
+                            'key_figure' => $data_languages['value'] ?? '',
                             'person_card' => $data_languages['name'] ?? '',
                             'info_block' => strip_tags($data_languages['content'] ?? ''),
                             'timeline' => $data_languages['title'] ?? '',
