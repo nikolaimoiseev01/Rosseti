@@ -63,10 +63,18 @@
             $valueText = $item['value'] ?? '0';
             preg_match('/^([><= ~+-]*?)([\d.,]+(?:\s+[\d.,]+)*)(.*)$/s', $valueText, $matches);
             $prefix = isset($matches[1]) ? $matches[1] : '';
-            $numericValue = isset($matches[2]) ? (float) str_replace(',', '.', $matches[2]) : 0;
+            $rawNumeric = isset($matches[2]) ? trim($matches[2]) : '0';
+            $numericValue = (float) str_replace([',', ' '], ['.', ''], $rawNumeric);
             $suffix = isset($matches[3]) ? $matches[3] : '';
+            $decimalCount = (str_contains($rawNumeric, ',') || str_contains($rawNumeric, '.'))
+                ? strlen(preg_replace('/^.*[.,]/', '', $rawNumeric))
+                : 0;
+            $formattedFinal = str_replace('.', ',', $rawNumeric);
+            $parts = explode(',', $formattedFinal);
+            $parts[0] = number_format((int)str_replace(' ', '', $parts[0]), 0, '', ' ');
+            $formattedFinal = implode(',', $parts);
         @endphp
-        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $prefix }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center flex flex-col">
+        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $prefix }}', {{ $decimalCount }}, '{{ $formattedFinal }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center flex flex-col">
             {{-- Зона 1: Число — всегда одинаковая высота --}}
             <div class="flex items-end justify-center" style="min-height: 80px;">
                 <div class="text-[80px] font-normal leading-none {{colorHelper('main_color', $data)}}">
