@@ -225,9 +225,7 @@ a[href] {
 }
 
 /* Exception: nav, header, footer, buttons keep their own styles */
-header a[href] {
-    color: #00355A !important;
-}
+header a[href],
 footer a[href],
 nav a[href],
 .bg-blue-400 a[href],
