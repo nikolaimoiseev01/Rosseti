@@ -84,7 +84,13 @@
                 <img src="{{ Storage::url($item['icon']) }}" alt="" class="{{ $iconSize }} object-contain shrink-0 pointer-events-none">
             @endif
             <div class="text-lg leading-6 {{ $textColorClass }}">
-                {!! str_replace(['<p>', '</p>'], '', str_replace('</p><p>', '<br>', $item['title'] ?? '')) !!}
+                @php
+                    $titleHtml = $item['title'] ?? '';
+                    // Replace paragraph breaks with <br>, then unwrap remaining <p> wrappers
+                    $titleHtml = preg_replace('#</p>\s*<p[^>]*>#u', '<br>', $titleHtml);
+                    $titleHtml = preg_replace('#^<p[^>]*>(.*)</p>$#us', '$1', trim($titleHtml));
+                @endphp
+                {!! $titleHtml !!}
                 @if(!empty($item['text']))
                     <div class="mt-1 prose prose-sm max-w-none {{ $textColorClass }}">{!! $item['text'] !!}</div>
                 @endif
