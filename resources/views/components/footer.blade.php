@@ -3,7 +3,7 @@
         <x-logo class="w-44" color="white"/>
         <div class="flex flex-col">
             @foreach($navLinks as $link)
-                <a class="text-white leading-8" wire:navigate href="{{ route('article.index', $link['slug'])}}">{{ $link->title }}</a>
+                <a class="!text-white leading-8" wire:navigate href="{{ route('article.index', $link['slug'])}}">{{ $link->title }}</a>
             @endforeach
             <p class="mt-14 text-white/75">© 2025 ПАО «Россети»</p>
         </div>
