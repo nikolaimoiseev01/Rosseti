@@ -112,17 +112,14 @@
             class="welcome-reveal-item mb-4 uppercase text-white"
             style="--welcome-reveal-delay: 180ms"
         >
-            Создаем потенциал<br>
-            развития страны
+            {!! __('Создаем потенциал<br>развития страны') !!}
         </h1>
 
         <h3
             class="welcome-reveal-item text-2xl font-normal text-white md:!text-xl mb-20"
             style="--welcome-reveal-delay: 360ms"
         >
-            Отчет о социальной ответственности
-            <br>
-            и корпоративном устойчивом развитии
+            {!! __('Отчет о социальной ответственности<br>и корпоративном устойчивом развитии') !!}
         </h3>
 
         <h3

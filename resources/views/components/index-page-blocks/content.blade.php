@@ -1,6 +1,6 @@
 <section x-data="revealOnScroll()" id="contents" class="page-block page-block--content container py-24 md:py-16">
     <h2 x-data="revealOnScroll()" class="mb-4 text-5xl text-blue-900 uppercase leading-none md:text-[26px]">
-        Содержание
+        {{ __('Содержание') }}
     </h2>
 
     <div class="grid grid-cols-4 gap-5 xl:grid-cols-2 md:!grid-cols-1">
@@ -31,7 +31,7 @@
                     <h3 class="text-2xl mb-0">{{ $pageTitle }}</h3>
                     <div class="flex flex-col mt-auto">
                         {{--                        <p class="text-lg text-black-400">{{ $page->description }}</p>--}}
-                        <span class="text-blue-400 inline-block text-lg group-hover:translate-x-1 transition-transform">Подробнее →</span>
+                        <span class="text-blue-400 inline-block text-lg group-hover:translate-x-1 transition-transform">{{ __('Подробнее →') }}</span>
                     </div>
                 </div>
             </a>

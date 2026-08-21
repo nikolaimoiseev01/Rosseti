@@ -2,10 +2,10 @@
     <div class="absolute inset-0 w-full h-full bg-black-900/10"></div>
     <div class="z-10 flex lg:flex-col justify-between w-full">
         <div class="flex flex-col lg:mb-8" x-data="revealOnScroll()">
-            <h2 class="text-white mb-2">ОБ ОТЧЕТЕ</h2>
+            <h2 class="text-white mb-2">{{ __('ОБ ОТЧЕТЕ') }}</h2>
             <div class="max-w-[436px] mt-6">
-                <p class="text-white font-bold text-[24px]">Наша цель</p>
-                <p class="text-white text-lg leading-tight mt-2">максимально полно представлять информацию о деятельности Компании для широкого круга заинтересованных сторон.</p>
+                <p class="text-white font-bold text-[24px]">{{ __('Наша цель') }}</p>
+                <p class="text-white text-lg leading-tight mt-2">{{ __('максимально полно представлять информацию о деятельности Компании для широкого круга заинтересованных сторон.') }}</p>
             </div>
         </div>
         <div x-data="revealOnScroll()" class="ml-auto flex flex-col rounded-[10px]
@@ -13,9 +13,9 @@
             backdrop-blur-2xl
             border border-white/15
             p-5 text-white">
-            <p class="text-white mb-5 text-2xl font-normal">Принципы подготовки нефинансовой отчетности ПАО «Россети»</p>
+            <p class="text-white mb-5 text-2xl font-normal">{{ __('Принципы подготовки нефинансовой отчетности ПАО «Россети»') }}</p>
             @php
-                $items = ['Существенность', 'Сравнимость', 'Прозрачность', 'Учет мнений заинтересованных сторон', 'Актуальность', 'Достоверность']
+                $items = [__('Существенность'), __('Сравнимость'), __('Прозрачность'), __('Учет мнений заинтересованных сторон'), __('Актуальность'), __('Достоверность')]
             @endphp
             <div class="grid grid-cols-[max-content_max-content_max-content] lg:flex lg:flex-wrap gap-x-12 gap-y-6">
                 @foreach($items as $item)
@@ -32,18 +32,18 @@
         </div>
     </div>
     <div x-data="revealOnScroll()" class="flex flex-col">
-        <p class="text-2xl text-white mb-6">Стандарты и рекомендации, на которые мы опирались при подготовке Отчета</p>
+        <p class="text-2xl text-white mb-6">{{ __('Стандарты и рекомендации, на которые мы опирались при подготовке Отчета') }}</p>
         <div class="grid grid-cols-2 lg:grid-cols-1 gap-2">
             <div class="ml-auto flex flex-col rounded-[10px]
             bg-gradient-to-br from-white/25 to-white/[0.03]
             backdrop-blur-2xl
             border border-white/15
             p-5 text-white">
-                <p class="text-white">Российские</p>
+                <p class="text-white">{{ __('Российские') }}</p>
                 <ul class="list-disc list-outside pl-6">
-                    <li class="text-white text-lg">Рекомендации Банка России по раскрытию публичными акционерными обществами нефинансовой информации, связанной с деятельностью таких обществ</li>
-                    <li class="text-white text-lg">Рекомендации ПАО Московская Биржа об утверждении Дополнительных правил, требований и рекомендаций по раскрытию информации эмитентами, акции которых включены в Первый или Второй уровень</li>
-                    <li class="text-white text-lg">Методологии российских рейтинговых агентств по присвоению ESG-рейтингов нефинансовым компаниям</li>
+                    <li class="text-white text-lg">{{ __('Рекомендации Банка России по раскрытию публичными акционерными обществами нефинансовой информации, связанной с деятельностью таких обществ') }}</li>
+                    <li class="text-white text-lg">{{ __('Рекомендации ПАО Московская Биржа об утверждении Дополнительных правил, требований и рекомендаций по раскрытию информации эмитентами, акции которых включены в Первый или Второй уровень') }}</li>
+                    <li class="text-white text-lg">{{ __('Методологии российских рейтинговых агентств по присвоению ESG-рейтингов нефинансовым компаниям') }}</li>
                 </ul>
             </div>
             <div class="ml-auto flex flex-col rounded-[10px]
@@ -51,11 +51,11 @@
             backdrop-blur-2xl
             border border-white/15
             p-5 text-white">
-                <p class="text-white">Международные</p>
+                <p class="text-white">{{ __('Международные') }}</p>
                 <ul class="list-disc list-outside pl-6">
-                    <li class="text-white text-lg">Стандарты Глобальной инициативы по отчетности в области устойчивого развития 2021 (Global Reporting Initiative (GRI) Standards, GRI) </li>
-                    <li class="text-white text-lg">Стандарт по взаимодействию со стейкхолдерами АА1000SES</li>
-                    <li class="text-white text-lg">Отраслевое приложение GRI для электроэнергетической отрасли, The Electric Utilities Sector Disclosures</li>
+                    <li class="text-white text-lg">{{ __('Стандарты Глобальной инициативы по отчетности в области устойчивого развития 2021 (Global Reporting Initiative (GRI) Standards, GRI) ') }}</li>
+                    <li class="text-white text-lg">{{ __('Стандарт по взаимодействию со стейкхолдерами АА1000SES') }}</li>
+                    <li class="text-white text-lg">{{ __('Отраслевое приложение GRI для электроэнергетической отрасли, The Electric Utilities Sector Disclosures') }}</li>
                 </ul>
             </div>
         </div>

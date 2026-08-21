@@ -13,7 +13,7 @@
         <div class="relative z-10 flex flex-col justify-between h-full p-12 lg:p-8 sm:p-6 min-h-[767px]">
             {{-- Title --}}
             <h2 x-data="revealOnScroll()" class="text-[72px] text-white font-light uppercase leading-none md:text-[32px] lg:mb-16">
-                Масштаб Группы компаний «Россети»
+                {{ __('Масштаб Группы компаний «Россети»') }}
             </h2>
 
             {{-- Stats layout --}}
@@ -22,26 +22,26 @@
                 <div class="flex flex-col gap-8">
                     <div>
                         <div class="text-white text-7xl font-light md:text-5xl">82</div>
-                        <p class="text-white/80 text-2xl mt-1">региона присутствия</p>
+                        <p class="text-white/80 text-2xl mt-1">{{ __('региона присутствия') }}</p>
                     </div>
                     <div>
                         <div class="flex items-baseline gap-2">
-                            <span class="text-white/80 text-2xl">в</span>
+                            <span class="text-white/80 text-2xl">{{ __('в') }}</span>
                             <span class="text-white text-7xl font-light md:text-5xl">69</span>
-                            <span class="text-white/80 text-2xl">регионах России</span>
+                            <span class="text-white/80 text-2xl">{{ __('регионах России') }}</span>
                         </div>
-                        <p class="text-white/80 text-2xl mt-1">компании Группы имеют статус СТСО</p>
+                        <p class="text-white/80 text-2xl mt-1">{{ __('компании Группы имеют статус СТСО') }}</p>
                     </div>
                     <div>
                         <div class="text-white text-7xl font-light md:text-5xl">122</div>
-                        <p class="text-white/80 text-2xl mt-1 max-w-[280px]">межгосударственные линии электропередачи, по которым осуществляется учет перетоков электроэнергии</p>
+                        <p class="text-white/80 text-2xl mt-1 max-w-[280px]">{{ __('межгосударственные линии электропередачи, по которым осуществляется учет перетоков электроэнергии') }}</p>
                     </div>
                 </div>
 
                 {{-- Right: large percentage --}}
                 <div class="text-right lg:text-left">
                     <div class="text-white text-[320px] font-normal leading-[300px] lg:text-[100px] md:!text-[80px] md:!leading-[60px]">~80%</div>
-                    <p class="text-white/80 text-2xl max-w-[350px] ml-auto lg:ml-0">вырабатываемой электроэнергии<br> передается по сетям Группы</p>
+                    <p class="text-white/80 text-2xl max-w-[350px] ml-auto lg:ml-0">{!! __('вырабатываемой электроэнергии<br> передается по сетям Группы') !!}</p>
                 </div>
             </div>
         </div>

@@ -58,7 +58,7 @@ Route::middleware('auth')->prefix('account')->group(function () {
     Route::get('settings', SettingsPage::class)->middleware(['auth', 'verified'])->name('account.settings');
 });
 
-Route::middleware('auth')->get('/language/{language}', [LanguageController::class, 'switch'])
+Route::get('/language/{language}', [LanguageController::class, 'switch'])
     ->where('language', 'ru|en')
     ->name('language.switch');
 
