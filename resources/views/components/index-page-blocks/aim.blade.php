@@ -14,7 +14,7 @@
         style="background-image: url('/fixed/aim-bg.jpg');"
     >
         <h2 x-data="revealOnScroll()" class="mb-7 text-white text-7xl font-light uppercase leading-[1.08] md:text-[34px]">
-            {!! __('Ключевая цель в области<br>{{ __('устойчивого развития\') !!}') }}</h2>
+            {!! __('Ключевая цель в области') !!}<br>{{ __('устойчивого развития\') !!}') }}</h2>
 
         <p x-data="revealOnScroll()" class="max-w-[620px] text-white text-2xl md:text-xl leading-[28px]">
             {{ __('Группа компаний «Россети» стремится максимально содействовать достижению Целей устойчивого развития ООН') }}

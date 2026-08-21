@@ -804,25 +804,53 @@ class BlocksRelationManager extends RelationManager
             ],
 
             'key_figure' => [
-                Forms\Components\TextInput::make('data_languages.value')
-                    ->label('Значение (число)')
-                    ->placeholder('725 млрд руб.')
-                    ->required(),
-                Forms\Components\TextInput::make('data_languages.description')
-                    ->label('Описание')
-                    ->placeholder('инвестиции в модернизацию')
-                    ->required(),
-                Forms\Components\RichEditor::make('data_languages.context')
-                    ->plugins([
-                        TooltipRichContentPlugin::make(),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\TextInput::make('data_languages.ru.value')
+                                    ->label('Значение (число)')
+                                    ->placeholder('725 млрд руб.')
+                                    ->required(),
+                                Forms\Components\TextInput::make('data_languages.ru.description')
+                                    ->label('Описание')
+                                    ->placeholder('инвестиции в модернизацию')
+                                    ->required(),
+                                Forms\Components\RichEditor::make('data_languages.ru.context')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
                                         CheckmarkRichContentPlugin::make(),
-                    ])
-                    ->enableToolbarButtons([
-                        'tooltip',
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'tooltip',
                                         'checkmark',
-                        'removeTooltip',
+                                        'removeTooltip',
+                                    ])
+                                    ->label('Контекст (необязательный текст рядом)')
+                                    ->columnSpanFull(),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\TextInput::make('data_languages.en.value')
+                                    ->label('Value (number)')
+                                    ->placeholder('725 bn RUB'),
+                                Forms\Components\TextInput::make('data_languages.en.description')
+                                    ->label('Description')
+                                    ->placeholder('investments in modernization'),
+                                Forms\Components\RichEditor::make('data_languages.en.context')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'tooltip',
+                                        'checkmark',
+                                        'removeTooltip',
+                                    ])
+                                    ->label('Context (optional text)')
+                                    ->columnSpanFull(),
+                            ]),
                     ])
-                    ->label('Контекст (необязательный текст рядом)')
                     ->columnSpanFull(),
                 Forms\Components\Select::make('data_languages.style')
                     ->label('Стиль оформления')
@@ -1024,18 +1052,41 @@ class BlocksRelationManager extends RelationManager
             'timeline' => [
 //                Forms\Components\TextInput::make('data_languages.title')
 //                    ->label('Заголовок таймлайна'),
-                Forms\Components\Repeater::make('data_languages.events')
-                    ->label('События')
-                    ->schema([
-                        Forms\Components\TextInput::make('year')
-                            ->label('Год / дата'),
-                        Forms\Components\Textarea::make('title')
-                            ->label('Заголовок')
-                            ->rows(2),
-                        Forms\Components\Textarea::make('description')
-                            ->label('Описание'),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\Repeater::make('data_languages.ru.events')
+                                    ->label('События')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('year')
+                                            ->label('Год / дата'),
+                                        Forms\Components\Textarea::make('title')
+                                            ->label('Заголовок')
+                                            ->rows(2),
+                                        Forms\Components\Textarea::make('description')
+                                            ->label('Описание'),
+                                    ])
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\Repeater::make('data_languages.en.events')
+                                    ->label('Events')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('year')
+                                            ->label('Year / date'),
+                                        Forms\Components\Textarea::make('title')
+                                            ->label('Title')
+                                            ->rows(2),
+                                        Forms\Components\Textarea::make('description')
+                                            ->label('Description'),
+                                    ])
+                                    ->defaultItems(3)
+                                    ->columnSpanFull(),
+                            ]),
                     ])
-                    ->defaultItems(3)
                     ->columnSpanFull(),
                 ...$this->textColorSelectFields('data_languages.year_color', 'Цвет года'),
                 ...$this->textColorSelectFields('data_languages.title_color', 'Цвет заголовков'),
@@ -1538,47 +1589,131 @@ class BlocksRelationManager extends RelationManager
                     ->label('Начинать с новой строки')
                     ->helperText('Не объединять с соседними блоками')
                     ->default(false),
-                Forms\Components\RichEditor::make('data_languages.title')
-                    ->label('Заголовок')
-                    ->placeholder('Консолидированные активы,')
-                    ->plugins([
-                        TooltipRichContentPlugin::make(),
+                Tabs::make('language_tabs')
+                    ->tabs([
+                        Tab::make('Русский')
+                            ->schema([
+                                Forms\Components\RichEditor::make('data_languages.ru.title')
+                                    ->label('Заголовок')
+                                    ->placeholder('Консолидированные активы,')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
                                         CheckmarkRichContentPlugin::make(),
-                    ])
-                    ->enableToolbarButtons([
-                        'bold', 'italic', 'tooltip',
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'bold', 'italic', 'tooltip',
                                         'checkmark', 'removeTooltip', 'superscript'
-                    ]),
-                Forms\Components\RichEditor::make('data_languages.unit')
-                    ->label('Подзаголовок / единицы')
-                    ->placeholder('млрд руб.')
-                    ->plugins([
-                        TooltipRichContentPlugin::make(),
+                                    ]),
+                                Forms\Components\RichEditor::make('data_languages.ru.unit')
+                                    ->label('Подзаголовок / единицы')
+                                    ->placeholder('млрд руб.')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
                                         CheckmarkRichContentPlugin::make(),
-                    ])
-                    ->enableToolbarButtons([
-                        'bold', 'italic', 'tooltip',
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'bold', 'italic', 'tooltip',
                                         'checkmark', 'removeTooltip', 'superscript'
-                    ]),
+                                    ]),
 
-                // --- Simple donut fields ---
-                Forms\Components\TextInput::make('data_languages.value')
-                    ->label('Значение (%)')
-                    ->placeholder('80')
-                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
-                Forms\Components\TextInput::make('data_languages.prefix')
-                    ->label('Префикс (перед числом)')
-                    ->placeholder('~')
-                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
-                Forms\Components\TextInput::make('data_languages.suffix')
-                    ->label('Суффикс (после числа)')
-                    ->placeholder('%')
-                    ->default('%')
-                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
-                Forms\Components\TextInput::make('data_languages.description')
-                    ->label('Описание')
-                    ->placeholder('электроэнергии передаётся по сетям Группы')
-                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                                // --- Simple donut fields ---
+                                Forms\Components\TextInput::make('data_languages.ru.value')
+                                    ->label('Значение (%)')
+                                    ->placeholder('80')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                                Forms\Components\TextInput::make('data_languages.ru.prefix')
+                                    ->label('Префикс (перед числом)')
+                                    ->placeholder('~')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                                Forms\Components\TextInput::make('data_languages.ru.suffix')
+                                    ->label('Суффикс (после числа)')
+                                    ->placeholder('%')
+                                    ->default('%')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                                Forms\Components\TextInput::make('data_languages.ru.description')
+                                    ->label('Описание')
+                                    ->placeholder('электроэнергии передаётся по сетям Группы')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+
+                                // --- Multi donut fields ---
+                                Forms\Components\TextInput::make('data_languages.ru.center_value')
+                                    ->label('Центральное значение')
+                                    ->placeholder('725')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+                                Forms\Components\TextInput::make('data_languages.ru.center_label')
+                                    ->label('Подпись центра')
+                                    ->placeholder('млрд руб.')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+                                Forms\Components\Repeater::make('data_languages.ru.segments')
+                                    ->label('Сегменты')
+                                    ->schema($this->donutSegmentFields('ru'))
+                                    ->columns(3)
+                                    ->defaultItems(3)
+                                    ->columnSpanFull()
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+                            ]),
+                        Tab::make('English')
+                            ->schema([
+                                Forms\Components\RichEditor::make('data_languages.en.title')
+                                    ->label('Title')
+                                    ->placeholder('Consolidated assets,')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'bold', 'italic', 'tooltip',
+                                        'checkmark', 'removeTooltip', 'superscript'
+                                    ]),
+                                Forms\Components\RichEditor::make('data_languages.en.unit')
+                                    ->label('Subtitle / units')
+                                    ->placeholder('bn RUB')
+                                    ->plugins([
+                                        TooltipRichContentPlugin::make(),
+                                        CheckmarkRichContentPlugin::make(),
+                                    ])
+                                    ->enableToolbarButtons([
+                                        'bold', 'italic', 'tooltip',
+                                        'checkmark', 'removeTooltip', 'superscript'
+                                    ]),
+
+                                // --- Simple donut fields ---
+                                Forms\Components\TextInput::make('data_languages.en.value')
+                                    ->label('Value (%)')
+                                    ->placeholder('80')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                                Forms\Components\TextInput::make('data_languages.en.prefix')
+                                    ->label('Prefix (before number)')
+                                    ->placeholder('~')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                                Forms\Components\TextInput::make('data_languages.en.suffix')
+                                    ->label('Suffix (after number)')
+                                    ->placeholder('%')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+                                Forms\Components\TextInput::make('data_languages.en.description')
+                                    ->label('Description')
+                                    ->placeholder('of electricity is transmitted via the Group grids')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
+
+                                // --- Multi donut fields ---
+                                Forms\Components\TextInput::make('data_languages.en.center_value')
+                                    ->label('Center value')
+                                    ->placeholder('725')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+                                Forms\Components\TextInput::make('data_languages.en.center_label')
+                                    ->label('Center label')
+                                    ->placeholder('bn RUB')
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+                                Forms\Components\Repeater::make('data_languages.en.segments')
+                                    ->label('Segments')
+                                    ->schema($this->donutSegmentFields('en'))
+                                    ->columns(3)
+                                    ->defaultItems(3)
+                                    ->columnSpanFull()
+                                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
+                            ]),
+                    ])
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('data_languages.center_text_size')
                     ->label('Размер текста в центре')
                     ->options([
@@ -1593,58 +1728,12 @@ class BlocksRelationManager extends RelationManager
                     ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'simple'),
                 ...$this->textColorSelectFields('data_languages.ring_color', 'Цвет кольца'),
 
-                // --- Multi donut fields ---
-                Forms\Components\TextInput::make('data_languages.center_value')
-                    ->label('Центральное значение')
-                    ->placeholder('725')
-                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
-                Forms\Components\TextInput::make('data_languages.center_label')
-                    ->label('Подпись центра')
-                    ->placeholder('млрд руб.')
-                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
                 Forms\Components\FileUpload::make('data_languages.center_image')
                     ->label('Иконка в центре (вместо текста)')
                     ->helperText('Если загружена — при наведении на сегмент скрывается, показывая значение')
                     ->image()
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'])
                     ->directory('donut-icons')
-                    ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
-                Forms\Components\Repeater::make('data_languages.segments')
-                    ->label('Сегменты')
-                    ->schema([
-                        Forms\Components\TextInput::make('label')
-                            ->label('Название')
-                            ->required(),
-                        Forms\Components\TextInput::make('value')
-                            ->label('Значение')
-                            ->required(),
-                        Forms\Components\Select::make('color')
-                            ->label('Цвет')
-                            ->options([
-                                '#00355A' => 'Тёмно-синий (#00355A)',
-                                '#005B9C' => 'Синий (#005B9C)',
-                                '#2196F3' => 'Голубой (#2196F3)',
-                                '#4FC3F7' => 'Светло-голубой (#4FC3F7)',
-                                '#B3E5FC' => 'Очень светлый (#B3E5FC)',
-                                '#00BCD4' => 'Бирюзовый (#00BCD4)',
-                                '#009688' => 'Зелёно-синий (#009688)',
-                                '#80CBC4' => 'Мятный (#80CBC4)',
-                                '#CDD6DE' => 'Серый (#CDD6DE)',
-                                '#6B7785' => 'Тёмно-серый (#6B7785)',
-                            ])
-                            ->default('#2196F3'),
-                        Forms\Components\TextInput::make('tooltip_label')
-                            ->label('Тултип к названию')
-                            ->placeholder('Пояснение к названию сегмента')
-                            ->helperText('Появится при наведении на название'),
-                        Forms\Components\TextInput::make('tooltip_value')
-                            ->label('Тултип к значению')
-                            ->placeholder('Пояснение к значению')
-                            ->helperText('Появится при наведении на значение'),
-                    ])
-                    ->columns(3)
-                    ->defaultItems(3)
-                    ->columnSpanFull()
                     ->visible(fn (Get $get) => ($get('data_languages.donut_style') ?? 'simple') === 'multi'),
 
                 ...$this->spacingSelectFields(),
@@ -1930,6 +2019,43 @@ class BlocksRelationManager extends RelationManager
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    private function donutSegmentFields(string $locale): array
+    {
+        $ru = $locale === 'ru';
+
+        return [
+            Forms\Components\TextInput::make('label')
+                ->label($ru ? 'Название' : 'Label')
+                ->required($ru),
+            Forms\Components\TextInput::make('value')
+                ->label($ru ? 'Значение' : 'Value')
+                ->required($ru),
+            Forms\Components\Select::make('color')
+                ->label($ru ? 'Цвет' : 'Color')
+                ->options([
+                    '#00355A' => 'Тёмно-синий (#00355A)',
+                    '#005B9C' => 'Синий (#005B9C)',
+                    '#2196F3' => 'Голубой (#2196F3)',
+                    '#4FC3F7' => 'Светло-голубой (#4FC3F7)',
+                    '#B3E5FC' => 'Очень светлый (#B3E5FC)',
+                    '#00BCD4' => 'Бирюзовый (#00BCD4)',
+                    '#009688' => 'Зелёно-синий (#009688)',
+                    '#80CBC4' => 'Мятный (#80CBC4)',
+                    '#CDD6DE' => 'Серый (#CDD6DE)',
+                    '#6B7785' => 'Тёмно-серый (#6B7785)',
+                ])
+                ->default('#2196F3'),
+            Forms\Components\TextInput::make('tooltip_label')
+                ->label($ru ? 'Тултип к названию' : 'Label tooltip')
+                ->placeholder($ru ? 'Пояснение к названию сегмента' : 'Explanation for the segment label')
+                ->helperText($ru ? 'Появится при наведении на название' : 'Shown on label hover'),
+            Forms\Components\TextInput::make('tooltip_value')
+                ->label($ru ? 'Тултип к значению' : 'Value tooltip')
+                ->placeholder($ru ? 'Пояснение к значению' : 'Explanation for the value')
+                ->helperText($ru ? 'Появится при наведении на значение' : 'Shown on value hover'),
+        ];
     }
 
     private function textColorSelectFields($column, $label='Цвет текста', $isBg=false): array

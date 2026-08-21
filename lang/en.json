@@ -3,16 +3,18 @@
     "Отчет о социальной ответственности и корпоративном устойчивом развитии": "Social Responsibility and Corporate Sustainability Report",
     "2025": "2025",
 
-    "Мы — Группа компаний «Россети»": "WE ARE THE ROSSETI GROUP!",
-    "За каждым щелчком выключателя — линии электропередачи, подстанции, диспетчерские центры по всей стране. Мы обслуживаем эту систему ежедневно и развиваем с расчетом на десятилетия. Модернизируем оборудование, подключаем новые объекты, создаем инфраструктуру и сервисы для следующих поколений — формируя потенциал развития страны.": "Behind every flick of a light switch, there are power transmission lines, substations and control centers across the country. We maintain this system on a daily basis and develop it to support its operation in the decades to come. We build the potential for national development by upgrading equipment, connecting new facilities to power grids, and developing infrastructure and services for the coming generations.",
-    "Мы стремимся быть надежной опорой, чтобы вы могли жить, работать и развиваться.": "WE SEEK TO PROVIDE A SOLID FOUNDATION FOR PEOPLE'S LIFE, WORK AND DEVELOPMENT.",
+    "Мы — Группа": "WE ARE",
+    "компаний «Россети»": "THE ROSSETI GROUP!",
+    "За каждым щелчком выключателя — линии электропередачи, подстанции, диспетчерские центры по всей стране.": "Behind every flick of a light switch, there are power transmission lines, substations and control centers across the country.",
+    "Мы обслуживаем эту систему ежедневно и развиваем с расчетом на десятилетия. Модернизируем оборудование, подключаем новые объекты, создаем инфраструктуру и сервисы для следующих поколений — формируя потенциал развития страны.": "We maintain this system on a daily basis and develop it to support its operation in the decades to come. We build the potential for national development by upgrading equipment, connecting new facilities to power grids, and developing infrastructure and services for the coming generations.",
+    "Мы стремимся быть надежной": "WE SEEK TO PROVIDE A SOLID",
+    "опорой, чтобы вы могли жить,": "FOUNDATION FOR PEOPLE'S LIFE,",
+    "работать и развиваться.": "WORK AND DEVELOPMENT.",
     "МЫ —": "WE ARE",
     "лучших энергетиков России": "best power engineers in Russia",
 
-    "Обращение генерального директора": "MESSAGE FROM THE GENERAL DIRECTOR",
-    "А. В. Рюмин": "Andrey Ryumin",
-    "Генеральный директор": "General Director",
-    "ПАО «Россети»": "Rosseti PJSC",
+    "Обращение<br>генерального<br>директора": "MESSAGE FROM THE<br>GENERAL<br>DIRECTOR",
+    "А. В. Рюмин<br>Генеральный директор<br>ПАО «Россети»<br>": "Andrey Ryumin<<br>General Director<br>Rosseti PJSC",
 
     "Уважаемые коллеги!": "DEAR COLLEAGUES,",
     "Группа «Россети» завершила прошедший год с высокими результатами. Мы построили более 35 тыс. км линий электропередачи и ввели около 15 тыс. МВА трансформаторной мощности, присоединили к сети 340 тыс. новых потребителей.": "Last year, the Rosseti Group delivered a strong performance. We built more than 35,000 km of power transmission lines, commissioned transformer capacities totaling about 15,000 MVA, and connected 340,000 new consumers to power grids.",
@@ -165,6 +167,8 @@
     "Трансформаторной мощности построено": "of transformer capacities",
     "Мощности выделено": "of capacity",
     "ЛЭП построено": "of power transmission lines built",
+
+    "МЫ -": "WE are",
 
     "Ключевая цель в области устойчивого развития": "Key Sustainable Development Goal",
     "Группа компаний «Россети» стремится максимально содействовать достижению Целей устойчивого развития ООН в рамках своей операционной деятельности, а также формировать дополнительную ценность для всех заинтересованных сторон в контексте национальных и глобальных задач.": "The Rosseti Group seeks to maximize its contribution to the achievement of the UN Sustainable Development Goals in the course of its operations, and to create added value for all stakeholders in the context of national and global objectives.",
