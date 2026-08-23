@@ -8,9 +8,9 @@
             : $page->title;
     @endphp
     <article class="container mx-auto py-16 md:py-10">
-        @if ($page->getFirstMediaUrl('cover'))
+        @if ($page->coverUrl('cover'))
             <div class="mb-10">
-                <img src="{{ $page->getFirstMediaUrl('cover') }}" alt="{{ $pageTitle }}" class="w-full rounded-2xl object-cover">
+                <img src="{{ $page->coverUrl('cover') }}" alt="{{ $pageTitle }}" class="w-full rounded-2xl object-cover">
             </div>
         @endif
 

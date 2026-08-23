@@ -51,6 +51,23 @@ class Page extends Model implements HasMedia
             ->nonQueued();
     }
 
+    public function coverUrl(string $collection, string $conversion = '', ?string $locale = null): string
+    {
+        $locale = $locale ?? session('locale', 'ru');
+
+        if ($locale !== 'ru') {
+            $url = $this->getFirstMediaUrl("{$collection}_{$locale}", $conversion)
+                ?: $this->getFirstMediaUrl("{$collection}_{$locale}");
+
+            if ($url !== '') {
+                return $url;
+            }
+        }
+
+        return $this->getFirstMediaUrl($collection, $conversion)
+            ?: $this->getFirstMediaUrl($collection);
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

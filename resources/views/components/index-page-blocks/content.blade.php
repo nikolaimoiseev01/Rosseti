@@ -9,10 +9,10 @@
                class="group flex flex-col overflow-hidden rounded-[28px] bg-white border border-1 border-black-100 transition duration-300 hover:-translate-y-1">
                 <div class="relative overflow-hidden">
                     <img
-                        @if($page->getFirstMediaUrl('cover_card'))
-                            src="{{ $page->getFirstMediaUrl('cover_card') }}"
+                        @if($page->coverUrl('cover_card'))
+                            src="{{ $page->coverUrl('cover_card') }}"
                         @else
-                            src="{{ $page->getFirstMediaUrl('cover') }}"
+                            src="{{ $page->coverUrl('cover') }}"
                         @endif
                         class="min-h-60 max-h-60 w-full object-cover transition duration-700 group-hover:scale-110"
                         data-no-lightbox
