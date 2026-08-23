@@ -426,8 +426,118 @@
         }
     }
 </style>
+@php
+    $mapLocale = session('locale', 'ru');
+    $isMapEn = $mapLocale === 'en';
+
+    // Для англ. версии у города можно задать поле "name_en" в JSON данных компонента.
+    // Если "name_en" не задано, название берётся из словаря или транслитерируется.
+    $mapCityNamesEn = [
+        'Москва' => 'Moscow',
+        'Санкт-Петербург' => 'Saint Petersburg',
+        'Екатеринбург' => 'Yekaterinburg',
+        'Нижний Новгород' => 'Nizhny Novgorod',
+        'Новосибирск' => 'Novosibirsk',
+        'Красноярск' => 'Krasnoyarsk',
+        'Ростов-на-Дону' => 'Rostov-on-Don',
+        'Пятигорск' => 'Pyatigorsk',
+        'Самара' => 'Samara',
+        'Казань' => 'Kazan',
+        'Уфа' => 'Ufa',
+        'Пермь' => 'Perm',
+        'Челябинск' => 'Chelyabinsk',
+        'Тюмень' => 'Tyumen',
+        'Омск' => 'Omsk',
+        'Иркутск' => 'Irkutsk',
+        'Хабаровск' => 'Khabarovsk',
+        'Владивосток' => 'Vladivostok',
+        'Краснодар' => 'Krasnodar',
+        'Воронеж' => 'Voronezh',
+        'Волгоград' => 'Volgograd',
+        'Саратов' => 'Saratov',
+        'Калининград' => 'Kaliningrad',
+        'Мурманск' => 'Murmansk',
+        'Архангельск' => 'Arkhangelsk',
+        'Ярославль' => 'Yaroslavl',
+        'Тула' => 'Tula',
+        'Рязань' => 'Ryazan',
+        'Белгород' => 'Belgorod',
+        'Курск' => 'Kursk',
+        'Смоленск' => 'Smolensk',
+        'Тверь' => 'Tver',
+        'Ставрополь' => 'Stavropol',
+        'Махачкала' => 'Makhachkala',
+        'Грозный' => 'Grozny',
+        'Владикавказ' => 'Vladikavkaz',
+        'Нальчик' => 'Nalchik',
+        'Черкесск' => 'Cherkessk',
+        'Магас' => 'Magas',
+        'Астрахань' => 'Astrakhan',
+        'Севастополь' => 'Sevastopol',
+        'Симферополь' => 'Simferopol',
+        'Кемерово' => 'Kemerovo',
+        'Томск' => 'Tomsk',
+        'Барнаул' => 'Barnaul',
+        'Чита' => 'Chita',
+        'Улан-Удэ' => 'Ulan-Ude',
+        'Якутск' => 'Yakutsk',
+        'Благовещенск' => 'Blagoveshchensk',
+        'Южно-Сахалинск' => 'Yuzhno-Sakhalinsk',
+        'Петропавловск-Камчатский' => 'Petropavlovsk-Kamchatsky',
+        'Магадан' => 'Magadan',
+        'Анадырь' => 'Anadyr',
+        'Биробиджан' => 'Birobidzhan',
+        'Сыктывкар' => 'Syktyvkar',
+        'Петрозаводск' => 'Petrozavodsk',
+        'Вологда' => 'Vologda',
+        'Великий Новгород' => 'Veliky Novgorod',
+        'Псков' => 'Pskov',
+        'Киров' => 'Kirov',
+        'Ижевск' => 'Izhevsk',
+        'Оренбург' => 'Orenburg',
+        'Пенза' => 'Penza',
+        'Ульяновск' => 'Ulyanovsk',
+        'Саранск' => 'Saransk',
+        'Чебоксары' => 'Cheboksary',
+        'Йошкар-Ола' => 'Yoshkar-Ola',
+        'Курган' => 'Kurgan',
+        'Сургут' => 'Surgut',
+        'Ханты-Мансийск' => 'Khanty-Mansiysk',
+        'Салехард' => 'Salekhard',
+        'Абакан' => 'Abakan',
+        'Кызыл' => 'Kyzyl',
+        'Горно-Алтайск' => 'Gorno-Altaysk',
+    ];
+
+    $mapTransliterateRu = function ($text) {
+        $tr = [
+            'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo',
+            'ж' => 'zh', 'з' => 'z', 'и' => 'i', 'й' => 'y', 'к' => 'k', 'л' => 'l', 'м' => 'm',
+            'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u',
+            'ф' => 'f', 'х' => 'kh', 'ц' => 'ts', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'shch',
+            'ъ' => '', 'ы' => 'y', 'ь' => '', 'э' => 'e', 'ю' => 'yu', 'я' => 'ya',
+            'А' => 'A', 'Б' => 'B', 'В' => 'V', 'Г' => 'G', 'Д' => 'D', 'Е' => 'E', 'Ё' => 'Yo',
+            'Ж' => 'Zh', 'З' => 'Z', 'И' => 'I', 'Й' => 'Y', 'К' => 'K', 'Л' => 'L', 'М' => 'M',
+            'Н' => 'N', 'О' => 'O', 'П' => 'P', 'Р' => 'R', 'С' => 'S', 'Т' => 'T', 'У' => 'U',
+            'Ф' => 'F', 'Х' => 'Kh', 'Ц' => 'Ts', 'Ч' => 'Ch', 'Ш' => 'Sh', 'Щ' => 'Shch',
+            'Ъ' => '', 'Ы' => 'Y', 'Ь' => '', 'Э' => 'E', 'Ю' => 'Yu', 'Я' => 'Ya',
+        ];
+        return strtr($text, $tr);
+    };
+
+    $cities = array_map(function ($city) use ($isMapEn, $mapCityNamesEn, $mapTransliterateRu) {
+        if ($isMapEn) {
+            if (!empty($city['name_en'])) {
+                $city['name'] = $city['name_en'];
+            } elseif (!empty($city['name'])) {
+                $city['name'] = $mapCityNamesEn[$city['name']] ?? $mapTransliterateRu($city['name']);
+            }
+        }
+        return $city;
+    }, $cities ?? []);
+@endphp
 <div class="rf-map margin-top-20">
-    <div class="close-map" role="button" aria-label="Закрыть карту">&times;</div>
+    <div class="close-map" role="button" aria-label="{{ $isMapEn ? 'Close the map' : 'Закрыть карту' }}">&times;</div>
     <div class="map-expand-hint md:!hidden" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2497E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
@@ -435,7 +545,7 @@
             <path d="M3 16v3a2 2 0 0 0 2 2h3"/>
             <path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
         </svg>
-        <span>Нажмите, чтобы развернуть карту</span>
+        <span>{{ $isMapEn ? 'Click to expand the map' : 'Нажмите, чтобы развернуть карту' }}</span>
     </div>
     <div class="map-interactive-note" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2497E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -445,8 +555,13 @@
             <path d="M12.6 3.4l-2 2"/>
             <path d="M3.4 12.6l2-2"/>
         </svg>
-        <span class="md:!hidden"><b>Карта интерактивная.</b> Наводите мышкой на округа и города</span>
-        <span class="hidden md:block"><b>Карта интерактивная.</b> Нажмите на округ или город</span>
+        @if($isMapEn)
+            <span class="md:!hidden"><b>The map is interactive.</b> Hover over districts and cities</span>
+            <span class="hidden md:block"><b>The map is interactive.</b> Tap a district or a city</span>
+        @else
+            <span class="md:!hidden"><b>Карта интерактивная.</b> Наводите мышкой на округа и города</span>
+            <span class="hidden md:block"><b>Карта интерактивная.</b> Нажмите на округ или город</span>
+        @endif
     </div>
     <svg class="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 708.9 458.9" enable-background="new 0 0 708.9 458.9" id="map-svg" xml:space="preserve">
@@ -822,84 +937,149 @@
             [
                 'slug' => 'szfo',
                 'name' => 'Северо-Западный',
+                'name_en' => 'North-Western',
                 'info' => [
                     '1 687 тыс. км²',
                     '13,9 млн чел.',
                     "МЭС Северо-Запада<br>МЭС Центра",
                     "ПАО «Россети Северо-Запад»<br>ПАО «Россети Янтарь»<br>ПАО «Россети Ленэнерго»",
                 ],
+                'info_en' => [
+                    '1,687 thousand km²',
+                    '13.9 mn people',
+                    "North-West MES<br>Center MES",
+                    "Rosseti North-West, PJSC<br>Rosseti Yantar, PJSC<br>Rosseti Lenenergo, PJSC",
+                ],
             ],
             [
                 'slug' => 'pfo',
                 'name' => 'Приволжский',
+                'name_en' => 'Volga',
                 'info' => [
                     '1 037 тыс. км²',
                     '28,4 млн чел.',
                     "МЭС Волги<br>МЭС Урала",
                     "ПАО «Россети Волга»<br>ПАО «Россети Центр<br> и Приволжье»<br>ПАО «Россети Урал»",
                 ],
+                'info_en' => [
+                    '1,037 thousand km²',
+                    '28.4 mn people',
+                    "Volga MES<br>Ural MES",
+                    "Rosseti Volga, PJSC<br>Rosseti Center<br> and Volga Region, PJSC<br>Rosseti Ural, PJSC",
+                ],
             ],
             [
                 'slug' => 'urfo',
                 'name' => 'Уральский',
+                'name_en' => 'Ural',
                 'info' => [
                     '1 818 тыс. км²',
                     '12,3 млн чел.',
                     "МЭС Урала",
                     "ПАО «Россети Урал»<br>АО «Россети Тюмень»",
                 ],
+                'info_en' => [
+                    '1,818 thousand km²',
+                    '12.3 mn people',
+                    "Ural MES",
+                    "Rosseti Ural, PJSC<br>Rosseti Tyumen, JSC",
+                ],
             ],
             [
                 'slug' => 'ufo',
                 'name' => 'Южный',
+                'name_en' => 'Southern',
                 'info' => [
                     '448 тыс. км²',
                     '16,6 млн чел.',
                     "МЭС Юга<br>МЭС Центра",
                     "ПАО «Россети Юг»<br>ПАО «Россети Центр<br> и Приволжье»",
                 ],
+                'info_en' => [
+                    '448 thousand km²',
+                    '16.6 mn people',
+                    "South MES<br>Center MES",
+                    "Rosseti South, PJSC<br>Rosseti Center<br> and Volga Region, PJSC",
+                ],
             ],
             [
                 'slug' => 'sbfo',
                 'name' => 'Сибирский',
+                'name_en' => 'Siberian',
                 'info' => [
                     '4 362 тыс. км²',
                     '16,5 млн чел.',
                     "МЭС Сибири<br>АО «Электромагистраль»",
                     "ПАО «Россети Сибирь»<br>АО «Россети Сибирь Тываэнерго»<br>ПАО «Россети Томск»<br>АО «РЭС»",
                 ],
+                'info_en' => [
+                    '4,362 thousand km²',
+                    '16.5 mn people',
+                    "Siberia MES<br>Elektromagistral, JSC",
+                    "Rosseti Siberia, PJSC<br>Rosseti Siberia Tyvaenergo, JSC<br>Rosseti Tomsk, PJSC<br>RES, JSC",
+                ],
             ],
             [
                 'slug' => 'cfo',
                 'name' => 'Центральный',
+                'name_en' => 'Central',
                 'info' => [
                     '650 тыс. км²',
                     '40,3 млн чел.',
                     "МЭС Центра<br>МЭС Северо-Запада",
                     "ПАО «Россети Центр<br> и Приволжье»<br>ПАО «Россети Центр»<br>ПАО «Россети Московский регион»",
                 ],
+                'info_en' => [
+                    '650 thousand km²',
+                    '40.3 mn people',
+                    "Center MES<br>North-West MES",
+                    "Rosseti Center<br> and Volga Region, PJSC<br>Rosseti Center, PJSC<br>Rosseti Moscow Region, PJSC",
+                ],
             ],
             [
                 'slug' => 'dfo',
                 'name' => 'Дальневосточный',
+                'name_en' => 'Far Eastern',
                 'info' => [
                     '6 953 тыс. км²',
                     '7,9 млн чел.',
                     "МЭС Сибири<br>МЭС Востока",
                     "ПАО «Россети Сибирь»",
                 ],
+                'info_en' => [
+                    '6,953 thousand km²',
+                    '7.9 mn people',
+                    "Siberia MES<br>East MES",
+                    "Rosseti Siberia, PJSC",
+                ],
             ],
             [
                 'slug' => 'skfo',
                 'name' => 'Северо-Кавказский',
+                'name_en' => 'North Caucasian',
                 'info' => [
                     '170 тыс. км²',
                     '10,3 млн чел.',
                     "МЭС Юга",
                     "ПАО «Россети Северный Кавказ»",
                 ],
+                'info_en' => [
+                    '170 thousand km²',
+                    '10.3 mn people',
+                    "South MES",
+                    "Rosseti North Caucasus, PJSC",
+                ],
             ],
         ];
+
+        // Выбираем языковую версию: остальной шаблон и JS работают с name/info без изменений
+        $districts = array_map(function ($district) use ($isMapEn) {
+            return [
+                'slug' => $district['slug'],
+                'name' => $isMapEn ? ($district['name_en'] ?? $district['name']) : $district['name'],
+                'info' => $isMapEn ? ($district['info_en'] ?? $district['info']) : $district['info'],
+            ];
+        }, $districts);
     @endphp
     @php
         // Регионы, которые отображаются белым фоном (только границы)

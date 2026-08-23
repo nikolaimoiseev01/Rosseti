@@ -186,6 +186,14 @@ class BlocksRelationManager extends RelationManager
                                         'removeTooltip',
                                         'textColor',
                                     ])
+                                    ->textColors([
+                                        '#00355A' => 'Тёмно-синий',
+                                        '#005A99' => 'Синий',
+                                        '#2196F3' => 'Голубой',
+                                        '#595959' => 'Чёрный',
+                                        '#ffffff' => 'Белый',
+                                        'grey' => 'Серый',
+                                    ])
                                     ->columnSpanFull()
                                     ->default('')
                                     ->fileAttachmentsVisibility('public'),
@@ -1846,7 +1854,7 @@ class BlocksRelationManager extends RelationManager
                     ->label('Данные компонента (JSON)')
                     ->rows(10)
                     ->columnSpanFull()
-                    ->helperText('Передайте данные в компонент в формате JSON. Например: {"title": "Привет", "items": ["a", "b"]}'),
+                    ->helperText('Передайте данные в компонент в формате JSON. Например: {"title": "Привет", "items": ["a", "b"]}. Для компонента "map" у городов можно задать поле "name_en" — оно будет использовано в английской версии сайта.'),
                 Forms\Components\Select::make('data_languages.html_width')
                     ->label('Ширина блока')
                     ->options([
