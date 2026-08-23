@@ -1,5 +1,6 @@
 <section x-data="revealOnScroll()" class="page-block page-block--current-topics container py-8 mb-20">
-    {!! __('<h2 x-data="revealOnScroll()" class="mb-4 text-[34px] leading-none uppercase lg:text-[28px] md:text-[24px]"> Существенные темы отчета') !!}
+    <h2 x-data="revealOnScroll()" class="mb-4 text-[34px] leading-none uppercase lg:text-[28px] md:text-[24px]">
+        @lang('Существенные темы отчета')
     </h2>
 
     <x-g-r-i gri="3-1, 3-2"/>
