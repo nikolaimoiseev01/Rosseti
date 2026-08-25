@@ -12,7 +12,7 @@
     <!-- Table of Contents (Desktop Sidebar) -->
     <aside class="w-[263px] flex-shrink-0 flex lg:hidden self-start sticky top-20">
         <div>
-            <h3 class="mb-4 text-[28px] uppercase ">Навигация</h3>
+            <h3 class="mb-4 text-[28px] uppercase ">@lang('Навигация')</h3>
             <nav class="space-y-2 mb-10 text-lg" id="toc-nav">
                 <!-- TOC will be populated by JavaScript -->
             </nav>
