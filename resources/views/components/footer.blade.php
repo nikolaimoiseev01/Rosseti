@@ -3,10 +3,10 @@
         <x-logo class="w-44" color="white"/>
         <div class="flex flex-col">
             @foreach($navLinks as $link)
-                <a style="color: white !important;" class="!text-white leading-8" wire:navigate href="{{ route('article.index', $link['slug'])}}">{{ $link->title }}</a>
+                <a style="color: white !important;" class="!text-white leading-8" wire:navigate href="{{ route('article.index', $link['slug'])}}">{{ $link->title_languages[app()->getLocale()] ?? $link->title }}</a>
             @endforeach
-            <a style="color: white !important;" href="/prilozeniia#8-1461" class="text-white border-b border-white w-fit mb-4">Контактная информация</a>
-            <p class="mt-14 text-white/75">© 2025 ПАО «Россети»</p>
+            <a style="color: white !important;" href="/prilozeniia#8-1461" class="text-white border-b border-white w-fit mb-4">{{ __('Контактная информация') }}</a>
+            <p class="mt-14 text-white/75">{{ __('© 2025 ПАО «Россети»') }}</p>
         </div>
         <div class="flex flex-col ml-auto mr-10 md:mx-auto md:text-center md:items-center">
 {{--            <p class="text-white border-b border-white w-fit mb-4">+7 (495) 995-53-33 (доб. 35-29)</p>--}}
@@ -15,9 +15,9 @@
             <a href="https://metrika.yandex.ru/stat/?id=110978392&amp;from=informer" target="_blank" rel="nofollow">
                 <img src="https://informer.yandex.ru/informer/110978392/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
                      style="width:88px; height:31px; border:0;"
-                     alt="Яндекс.Метрика"
-                     title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)"
-                     class="ym-advanced-informer" data-cid="110978392" data-lang="ru"/>
+                     alt="{{ __('Яндекс.Метрика') }}"
+                     title="{{ __('Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)') }}"
+                     class="ym-advanced-informer" data-cid="110978392" data-lang="{{ app()->getLocale() }}"/>
             </a>
             <!-- /Yandex.Metrika informer -->
             <div class="flex gap-4 mt-auto">

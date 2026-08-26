@@ -53,7 +53,7 @@
             p-5 text-white">
                 <p class="text-white">{{ __('Международные') }}</p>
                 <ul class="list-disc list-outside pl-6">
-                    <li class="text-white text-lg">{{ __('Стандарты Глобальной инициативы по отчетности в области устойчивого развития 2021 (Global Reporting Initiative (GRI) Standards, GRI) ') }}</li>
+                    <li class="text-white text-lg">{{ __('Стандарты Глобальной инициативы по отчетности в области устойчивого развития 2021 (Global Reporting Initiative (GRI) Standards, GRI)') }}</li>
                     <li class="text-white text-lg">{{ __('Стандарт по взаимодействию со стейкхолдерами АА1000SES') }}</li>
                     <li class="text-white text-lg">{{ __('Отраслевое приложение GRI для электроэнергетической отрасли, The Electric Utilities Sector Disclosures') }}</li>
                 </ul>
