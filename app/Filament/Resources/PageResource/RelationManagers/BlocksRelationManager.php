@@ -337,6 +337,9 @@ class BlocksRelationManager extends RelationManager
                                 Forms\Components\Repeater::make('data_languages.en.items')
                                     ->label('Items')
                                     ->schema([
+                                        Forms\Components\TextInput::make('value_prefix')
+                                            ->label('Prefix (e.g. RUB)')
+                                            ->placeholder('RUB'),
                                         Forms\Components\TextInput::make('value')
                                             ->label('Value'),
                                         Forms\Components\TextInput::make('unit')
@@ -344,7 +347,7 @@ class BlocksRelationManager extends RelationManager
                                         Forms\Components\TextInput::make('description')
                                             ->label('Description'),
                                     ])
-                                    ->columns(3)
+                                    ->columns(4)
                                     ->defaultItems(3)
                                     ->columnSpanFull(),
                             ]),
@@ -839,9 +842,12 @@ class BlocksRelationManager extends RelationManager
                             ]),
                         Tab::make('English')
                             ->schema([
+                                Forms\Components\TextInput::make('data_languages.en.value_prefix')
+                                    ->label('Value prefix (e.g. RUB, USD)')
+                                    ->placeholder('RUB'),
                                 Forms\Components\TextInput::make('data_languages.en.value')
                                     ->label('Value (number)')
-                                    ->placeholder('725 bn RUB'),
+                                    ->placeholder('725 bn'),
                                 Forms\Components\TextInput::make('data_languages.en.description')
                                     ->label('Description')
                                     ->placeholder('investments in modernization'),

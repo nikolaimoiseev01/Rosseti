@@ -89,7 +89,7 @@
                         const progress = Math.min(elapsed / duration, 1);
                         const eased = 1 - Math.pow(1 - progress, 3);
                         const current = eased * target;
-                        const display = isInt ? Math.round(current) : current.toFixed(1).replace('.', ',');
+                        const display = isInt ? Math.round(current) : current.toFixed(1).replace('.', '{{ session("locale", "ru") === "en" ? "." : "," }}');
                         displayValue = pfx + display + sfx;
                         if (progress < 1) requestAnimationFrame(tick);
                     };
@@ -268,12 +268,13 @@
                         :class="shown ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'"
                         :style="'transition-delay: {{ 0.3 + $i * 0.1 }}s'"
                         data-index="{{ $i }}"
-                        data-val="{{ str_replace('.', ',', $seg['value']) }}"
+                        data-val="{{ session('locale', 'ru') === 'en' ? $seg['value'] : str_replace('.', ',', $seg['value']) }}"
                         data-lbl="{{ $seg['label'] }}"
                     >
                         <div class="w-3.5 h-3.5 rounded-[4px] shrink-0 shadow-sm" style="background-color: {{ $seg['color'] }}"></div>
                         <span class="text-sm text-[#2D3E50] leading-snug">@if(!empty($seg['tooltip_label']))<span class="has-tooltip" data-tooltip="{{ $seg['tooltip_label'] }}">{{ $seg['label'] }}</span>@else{{ $seg['label'] }}@endif</span>
-                        <span class="text-sm font-bold ml-auto pl-4 shrink-0" style="color: {{ $seg['color'] }}">@if(!empty($seg['tooltip_value']))<span class="has-tooltip" data-tooltip="{{ $seg['tooltip_value'] }}">{{ str_replace('.', ',', $seg['value']) }}</span>@else{{ str_replace('.', ',', $seg['value']) }}@endif</span>
+                        @php $formattedSegVal = session('locale', 'ru') === 'en' ? $seg['value'] : str_replace('.', ',', $seg['value']); @endphp
+                        <span class="text-sm font-bold ml-auto pl-4 shrink-0" style="color: {{ $seg['color'] }}">@if(!empty($seg['tooltip_value']))<span class="has-tooltip" data-tooltip="{{ $seg['tooltip_value'] }}">{{ $formattedSegVal }}</span>@else{{ $formattedSegVal }}@endif</span>
                     </div>
                 @endforeach
             </div>

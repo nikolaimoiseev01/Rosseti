@@ -64,14 +64,17 @@
     $inGroup = $inGroup ?? false;
     $chartWidth = $inGroup ? '100%' : (($data['chart_width'] ?? '100') . '%');
 
-    // Format value for display
+    // Format value for display (locale-aware)
+    $locale = session('locale', 'ru');
     if (!function_exists('formatChartValue')) {
-        function formatChartValue($val) {
+        function formatChartValue($val, $locale = 'ru') {
             $float = (float) str_replace(',', '.', $val);
             // Always respect the original decimal places from the input
             $parts = preg_split('/[.,]/', $val);
             $decimals = isset($parts[1]) ? strlen($parts[1]) : 0;
-            return number_format($float, $decimals, ',', ' ');
+            $decSep = $locale === 'en' ? '.' : ',';
+            $thousandsSep = $locale === 'en' ? ',' : ' ';
+            return number_format($float, $decimals, $decSep, $thousandsSep);
         }
     }
 
@@ -180,7 +183,7 @@
                 @php
                     $val = $numericValues[$i];
                     $heightPct = $maxValue > 0 ? round(($val / $maxValue) * 90, 1) : 0;
-                    $displayVal = formatChartValue($item['value'] ?? '0');
+                    $displayVal = formatChartValue($item['value'] ?? '0', $locale);
                     $val2 = $numericValues2[$i] ?? 0;
                     $heightPct2 = ($hasSecondValue && $maxValue > 0) ? round(($val2 / $maxValue) * 90, 1) : 0;
                     $val3 = $numericValues3[$i] ?? 0;
@@ -215,14 +218,14 @@
                                 <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; pointer-events: none; z-index: 5;">
                                     <div class="lolli-stem-2" style="height: 0; width: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1); position: relative;">
                                         <div style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; margin-bottom: 8px;">
-                                            <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 18px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                            <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 18px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0', $locale) }}</div>
                                             <div class="lolli-dot {{ $scopeId }}-s-value2" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff2 }}; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;"></div>
                                         </div>
                                     </div>
                                 </div>
                             @else
                                 <div style="display: flex; flex-direction: column; align-items: center">
-                                    <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 18px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                    <div class="lolli-val {{ $scopeId }}-s-value2" style="font-size: 18px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s">{{ formatChartValue($item['value2'] ?? '0', $locale) }}</div>
                                     <div class="lolli-dot {{ $scopeId }}-s-value2" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff2 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s; flex-shrink: 0"></div>
                                     <div class="lolli-stem-2 {{ $scopeId }}-s-value2" style="width: 3px; background: linear-gradient(to top, #E8EEF4, {{ $eff2 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
                                 </div>
@@ -231,7 +234,7 @@
                         {{-- Tertiary --}}
                         @if($hasThirdValue && $val3 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="lolli-val {{ $scopeId }}-s-value3" style="font-size: 18px; font-weight: 700; color: {{ $eff3 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s">{{ formatChartValue($item['value3'] ?? '0') }}</div>
+                                <div class="lolli-val {{ $scopeId }}-s-value3" style="font-size: 18px; font-weight: 700; color: {{ $eff3 }}; margin-bottom: 8px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s">{{ formatChartValue($item['value3'] ?? '0', $locale) }}</div>
                                 <div class="lolli-dot {{ $scopeId }}-s-value3" style="width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid {{ $eff3 }}; position: relative; z-index: 2; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s; flex-shrink: 0"></div>
                                 <div class="lolli-stem-3 {{ $scopeId }}-s-value3" style="width: 3px; background: linear-gradient(to top, #F1F5FC, {{ $eff3 }}); border-radius: 3px 3px 0 0; height: 0; transition: height 1s cubic-bezier(0.25, 1, 0.5, 1)"></div>
                             </div>
@@ -288,7 +291,7 @@
                 @php
                     $val = $numericValues[$i];
                     $heightPct = $maxValue > 0 ? round(($val / $maxValue) * 90, 1) : 0;
-                    $displayVal = formatChartValue($item['value'] ?? '0');
+                    $displayVal = formatChartValue($item['value'] ?? '0', $locale);
                     $val2 = $numericValues2[$i] ?? 0;
                     $heightPct2 = ($hasSecondValue && $maxValue > 0) ? round(($val2 / $maxValue) * 90, 1) : 0;
                     $val3 = $numericValues3[$i] ?? 0;
@@ -320,7 +323,7 @@
                         {{-- Secondary bar --}}
                         @if($hasSecondValue && $val2 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="bar-val {{ $scopeId }}-s-value2" style="font-size: 13px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.9s, transform 0.5s ease 0.9s; white-space: nowrap">{{ formatChartValue($item['value2'] ?? '0') }}</div>
+                                <div class="bar-val {{ $scopeId }}-s-value2" style="font-size: 13px; font-weight: 700; color: {{ $eff2 }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 0.9s, transform 0.5s ease 0.9s; white-space: nowrap">{{ formatChartValue($item['value2'] ?? '0', $locale) }}</div>
                                 <div class="bar-col-2 {{ $scopeId }}-s-value2" style="width: {{ $barW }}; border-radius: 8px 8px 0 0; background: linear-gradient(to top, #E8EEF4, {{ $eff2 }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer"
                                      onmouseenter="this.style.filter='brightness(1.1)'" onmouseleave="this.style.filter='none'"></div>
                             </div>
@@ -328,7 +331,7 @@
                         {{-- Tertiary bar --}}
                         @if($hasThirdValue && $val3 > 0)
                             <div style="display: flex; flex-direction: column; align-items: center">
-                                <div class="bar-val {{ $scopeId }}-s-value3" style="font-size: 12px; font-weight: 600; color: {{ $eff3 }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 1s, transform 0.5s ease 1s; white-space: nowrap">{{ formatChartValue($item['value3'] ?? '0') }}</div>
+                                <div class="bar-val {{ $scopeId }}-s-value3" style="font-size: 12px; font-weight: 600; color: {{ $eff3 }}; margin-bottom: 8px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease 1s, transform 0.5s ease 1s; white-space: nowrap">{{ formatChartValue($item['value3'] ?? '0', $locale) }}</div>
                                 <div class="bar-col-3 {{ $scopeId }}-s-value3" style="width: 24px; border-radius: 6px 6px 0 0; background: linear-gradient(to top, #F1F5FC, {{ $eff3 }}); height: 0; transition: height 1.2s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer"
                                      onmouseenter="this.style.filter='brightness(1.1)'" onmouseleave="this.style.filter='none'"></div>
                             </div>
@@ -376,7 +379,7 @@
                 @php
                     $val = $numericValues[$i];
                     $widthPct = $maxValue > 0 ? round(($val / $maxValue) * 85, 1) : 0;
-                    $displayVal = formatChartValue($item['value'] ?? '0');
+                    $displayVal = formatChartValue($item['value'] ?? '0', $locale);
                     $accent = (!empty($item['accent_color'])) ? ($accentColorMap[$item['accent_color']] ?? $cc) : $cc;
                 @endphp
                 <div class="hbar-row" style="display: flex; align-items: center; gap: 20px">
@@ -471,7 +474,7 @@
                     @foreach($points2 as $i => $pt)
                         @php $lY = (abs(($points[$i]['y'] ?? 0) - $pt['y']) < 22) ? $pt['y'] + 18 : $pt['y'] - 12; @endphp
                         <text class="lc-label" x="{{ $pt['x'] }}" y="{{ $lY }}" text-anchor="middle"
-                            style="font-family: Inter, PFDinTextCondPro, sans-serif; font-size: 13px; font-weight: 600; fill: {{ $cc['light'] }}; opacity: 0; transition: opacity 0.5s ease">{{ formatChartValue($values[$i]['value2'] ?? '0') }}</text>
+                            style="font-family: Inter, PFDinTextCondPro, sans-serif; font-size: 13px; font-weight: 600; fill: {{ $cc['light'] }}; opacity: 0; transition: opacity 0.5s ease">{{ formatChartValue($values[$i]['value2'] ?? '0', $locale) }}</text>
                     @endforeach
                 @endif
 
@@ -482,7 +485,7 @@
                 @endforeach
                 @foreach($points as $i => $pt)
                     <text class="lc-label" x="{{ $pt['x'] }}" y="{{ $pt['y'] - 14 }}" text-anchor="middle"
-                        style="font-family: Inter, PFDinTextCondPro, sans-serif; font-size: 15px; font-weight: 700; fill: {{ $cc['text'] }}; opacity: 0; transition: opacity 0.5s ease">{{ formatChartValue($values[$i]['value'] ?? '0') }}</text>
+                        style="font-family: Inter, PFDinTextCondPro, sans-serif; font-size: 15px; font-weight: 700; fill: {{ $cc['text'] }}; opacity: 0; transition: opacity 0.5s ease">{{ formatChartValue($values[$i]['value'] ?? '0', $locale) }}</text>
                 @endforeach
 
                 <defs>

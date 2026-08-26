@@ -78,12 +78,18 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
             observer.observe(this.$el);
         },
 
-        animateCounter(targetValue, suffix = '', prefix = '', decimals = -1, finalFormatted = '') {
+        animateCounter(targetValue, suffix = '', prefix = '', decimals = -1, finalFormatted = '', locale = '') {
             this.counterTarget = targetValue;
             this.counterSuffix = suffix;
             this.counterPrefix = prefix;
             this.counterDecimals = decimals;
             this.counterFinal = finalFormatted;
+
+            // Determine locale: explicit > data attribute > html lang > default 'ru'
+            const lang = locale || this.$el.dataset.locale || document.documentElement.lang || 'ru';
+            const isEn = lang === 'en';
+            const decSep = isEn ? '.' : ',';
+            const thousandsSep = isEn ? ',' : ' ';
 
             if (!this.shown) {
                 return;
@@ -113,14 +119,14 @@ window.revealOnScroll = function revealOnScroll(delay = 0) {
                     return;
                 }
 
-                // Format the number
+                // Format the number with locale-aware separators
                 let formattedValue = currentValue.toFixed(decimals);
-                // Comma as decimal separator
-                formattedValue = formattedValue.replace('.', ',');
-                // Space as thousands separator
-                const parts = formattedValue.split(',');
-                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-                formattedValue = parts.join(',');
+                // Replace decimal separator
+                formattedValue = formattedValue.replace('.', decSep);
+                // Add thousands separator
+                const parts = formattedValue.split(decSep);
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSep);
+                formattedValue = parts.join(decSep);
 
                 this.displayValue = prefix + formattedValue + suffix;
 

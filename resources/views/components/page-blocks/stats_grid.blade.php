@@ -50,6 +50,11 @@
         4 => 'grid-cols-4 lg:grid-cols-1',
         default => 'grid-cols-[repeat(auto-fit,minmax(200px,1fr))]',
     };
+
+    // Locale-aware formatting
+    $locale = session('locale', 'ru');
+    $decSep = $locale === 'en' ? '.' : ',';
+    $thousandsSep = $locale === 'en' ? ',' : ' ';
 @endphp
 
 <div id="{{ $blockId }}" class="    page-block
@@ -69,14 +74,21 @@
             $decimalCount = (str_contains($rawNumeric, ',') || str_contains($rawNumeric, '.'))
                 ? strlen(preg_replace('/^.*[.,]/', '', $rawNumeric))
                 : 0;
-            $formattedFinal = str_replace('.', ',', $rawNumeric);
-            $parts = explode(',', $formattedFinal);
-            $parts[0] = number_format((int)str_replace(' ', '', $parts[0]), 0, '', ' ');
-            $formattedFinal = implode(',', $parts);
+            // Locale-aware final formatted value
+            $cleanNumeric = str_replace([',', ' '], ['.', ''], $rawNumeric);
+            $numParts = explode('.', $cleanNumeric);
+            $numParts[0] = number_format((int)$numParts[0], 0, '', $thousandsSep);
+            $formattedFinal = count($numParts) > 1 ? $numParts[0] . $decSep . $numParts[1] : $numParts[0];
+
+            // Value prefix (e.g. "RUB")
+            $valuePrefix = $item['value_prefix'] ?? '';
         @endphp
-        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $prefix }}', {{ $decimalCount }}, '{{ $formattedFinal }}')" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center flex flex-col">
-            {{-- Зона 1: Число — всегда одинаковая высота --}}
-            <div class="flex items-end justify-center" style="min-height: 80px;">
+        <div x-data="revealOnScroll()" x-init="animateCounter({{ $numericValue }}, '{{ $suffix }}', '{{ $prefix }}', {{ $decimalCount }}, '{{ $formattedFinal }}')" data-locale="{{ $locale }}" class="{{ $bgColor }} rounded-2xl p-6 border {{ $borderColor }} text-center flex flex-col">
+            {{-- Зона 1: Префикс + Число на одной строке --}}
+            <div class="flex items-baseline justify-center gap-2" style="min-height: 80px;">
+                @if($valuePrefix)
+                    <span class="text-lg font-light {{colorHelper('unit_color', $data)}}">{{ $valuePrefix }}</span>
+                @endif
                 <div class="text-[80px] font-normal leading-none {{colorHelper('main_color', $data)}}">
                     <span class="{{colorHelper('main_color', $data)}}" x-text="displayValue"></span>
                 </div>
