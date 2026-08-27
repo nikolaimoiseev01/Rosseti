@@ -36,7 +36,7 @@
                     <th class="px-3 py-1.5 font-normal text-white">{{ __('Тема') }}</th>
                     <th class="w-[140px] px-3 py-1.5 font-normal text-white">{{ __('Аспект') }}</th>
                     <th class="w-[120px] px-3 py-1.5 font-normal text-white">
-                        <span class="has-tooltip !text-white" data-tooltip="На основе средней оценки по трем критериям, где < 3 — низкий приоритет, 3-4 — средний приоритет,  4 -5 —высокий приоритет" aria-label="На основе средней оценки по трем критериям, где < 3 — низкий приоритет, 3-4 — средний приоритет,  4 -5 —высокий приоритет" data-alpine-devtools-right-click="">{{ __('Приоритет') }}</span>
+                        <span class="has-tooltip !text-white" data-tooltip="{{__('На основе средней оценки по трем критериям, где < 3 — низкий приоритет, 3-4 — средний приоритет,  4 -5 —высокий приоритет')}}" aria-label="На основе средней оценки по трем критериям, где < 3 — низкий приоритет, 3-4 — средний приоритет,  4 -5 —высокий приоритет" data-alpine-devtools-right-click="">{{ __('Приоритет') }}</span>
                     </th>
                 </tr>
                 </thead>
