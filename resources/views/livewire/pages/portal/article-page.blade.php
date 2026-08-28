@@ -65,7 +65,7 @@
         @if($nextPage)
             <a href="{{ route('article.index', $nextPage->slug) }}" wire:navigate
                class="flex w-full bg-blue-400 items-center gap-2 justify-center px-6 py-3 rounded-lg shadow hover:shadow-md transition-shadow">
-                <span class="text-lg text-white font-medium">Следующий раздел</span>
+                <span class="text-lg text-white font-medium">{{ session('locale', 'ru') === 'en' ? 'Next section' : 'Следующий раздел' }}</span>
             </a>
         @else
             <div></div>
@@ -74,7 +74,7 @@
         @if($previousPage)
             <a href="{{ route('article.index', $previousPage->slug) }}" wire:navigate
                class="w-full flex justify-center items-center text-center gap-2 px-6 py-3 text-white text-lg rounded-lg">
-                <span class="text-lg font-medium">Предыдущий раздел</span>
+                <span class="text-lg font-medium">{{ session('locale', 'ru') === 'en' ? 'Previous section' : 'Предыдущий раздел' }}</span>
             </a>
         @else
             <div></div>
